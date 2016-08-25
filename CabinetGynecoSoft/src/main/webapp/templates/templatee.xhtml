@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+      
+<h:head>
+<link rel="stylesheet" type="text/css" href="../css/styles.css">
+
+</link>
+</h:head>
+<h:body  style="background-image: url(../imagesMenu/fond.png);">
+<ui:insert name="entete">
+ <ui:include src="../templates/includes/entete.xhtml"/>
+</ui:insert>
+
+<ui:insert name="header">
+ <ui:include src="../templates/includes/header.xhtml"/>
+</ui:insert>
+<div align="right">
+
+<h:form>
+<h:outputText value="#{connectionBean.connecte}" />
+<h:commandLink value="Déconnecter" action="/pages/connection" style="font-size:11pt;font-weight:bold"/>
+</h:form>
+</div>
+
+<div align="center" style="height: 90%">
+<ui:insert name="body">
+
+</ui:insert>
+</div>
+<hr></hr>
+<ui:insert name="footer">
+ <ui:include src="../templates/includes/footer.xhtml"/>
+</ui:insert>
+
+</h:body>
+</html>

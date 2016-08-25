@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Rendez-vous</ui:define>
+	<ui:define name="body">
+
+		<h:form id="formeGenerale">
+			<p:poll interval="3000" update="formeGenerale:schedule" />
+			<p:graphicImage value="/imagesTitre/rendezvous.png" width="100%"></p:graphicImage>
+			<br />
+			<p:growl id="growl" life="4000" showDetail="true"
+				sticky="#{rendezVousBean.permenent}" />
+			<table width="100%" align="center">
+				<tr>
+					<td width="13%" align="left" valign="top"><h:commandLink
+							actionListener="#{rendezVousBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> <h:commandLink actionListener="#{rendezVousBean.retour()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink> <br></br> <br></br> <br></br> <h:panelGrid columns="7"
+							style="font-size: 9pt;">
+							<p:commandButton value="+7J" update=":formeGenerale"
+								style="width: 40pt"
+								actionListener="#{rendezVousBean.addDays(7)}" />
+							<p:commandButton value="+15J" update=":formeGenerale"
+								style="width: 40pt"
+								actionListener="#{rendezVousBean.addDays(15)}" />
+							<p:commandButton value="+30J" update=":formeGenerale"
+								style="width: 40pt"
+								actionListener="#{rendezVousBean.addDays(30)}" />
+
+						</h:panelGrid> <br></br> <p:inputText value="#{rendezVousBean.NBR}"
+							placeholder="NBR" style="font-size:small;width:30px" size="1" />
+						&nbsp; <p:commandButton value="Jours Après"
+							style="font-size:small;width:110px;height:30px"
+							update=":formeGenerale"
+							actionListener="#{rendezVousBean.addDays(rendezVousBean.NBR)}" />
+						<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+						<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+						<br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+						<br></br> <br></br> <br></br> <br></br>
+						<div align="center">
+							<table>
+								<tr>
+									<td><h:commandLink
+											actionListener="#{rendezVousBean.goToGestionJourFr()}"
+											title="Réglage les jours fériers"
+											disabled="#{connectionBean.gestionJourFr}">
+											<p:graphicImage value="/images/calendar.png" height="60px"
+												width="60px"></p:graphicImage>
+											<f:setPropertyActionListener value="RendezVous"
+												target="#{jourFrBean.destination}"></f:setPropertyActionListener>
+										</h:commandLink></td>
+									<td><h:commandLink title="Réglage Les horaires de travail"
+											disabled="#{connectionBean.gestHoraire}"
+											actionListener="#{rendezVousBean.goToHoraire()}">
+											<p:graphicImage value="/images/horloge.png" height="60px"
+												width="60px"></p:graphicImage>
+										</h:commandLink></td>
+								</tr>
+							</table>
+
+						</div></td>
+
+					<td width="80%">
+						<table width="100%" border="0">
+							<tr>
+								<td width="40%"><h:panelGrid columns="4">
+										<p:selectOneMenu id="jours" value="#{rendezVousBean.jj}"
+											panelStyle="width:80px" filter="true" style="font-size:small"
+											filterMatchMode="startsWith" effect="fade">
+											<f:selectItem itemLabel="Jour" itemValue="-1" />
+											<f:selectItems value="#{rendezVousBean.jours}" var="jo"
+												itemLabel="#{jo}" itemValue="#{jo}" />
+										</p:selectOneMenu>
+
+										<p:selectOneMenu id="mois" value="#{rendezVousBean.mm}"
+											panelStyle="width:80px" filter="true" style="font-size:small"
+											filterMatchMode="startsWith" effect="fade">
+											<f:selectItem itemLabel="Mois" itemValue="-1" />
+											<f:selectItems value="#{rendezVousBean.moiss}" var="mo"
+												itemLabel="#{mo.nomMois} " itemValue="#{mo.numberMois}" />
+										</p:selectOneMenu>
+
+										<p:selectOneMenu id="annee" value="#{rendezVousBean.aaaa}"
+											panelStyle="width:80px" filter="true" style="font-size:small"
+											filterMatchMode="startsWith" effect="fade">
+											<f:selectItem itemLabel="Annee" itemValue="-1" />
+											<f:selectItems value="#{rendezVousBean.annee}" var="no"
+												itemLabel="#{no.intValue()}" itemValue="#{no}" />
+										</p:selectOneMenu>
+
+										<p:commandButton value="Allez à " update=":formeGenerale"
+											style="font-size: 11pt"
+											actionListener="#{rendezVousBean.selectionnezDate()}" />
+									</h:panelGrid></td>
+
+								<td>
+									<table border="0">
+
+										<tr>
+											<td width="65%"><div style="font-size: 11pt">
+													<p:commandButton update=":formeGenerale"
+														icon="ui-icon-circle-triangle-w"
+														actionListener="#{rendezVousBean.prev()}" />
+													&nbsp;
+													<p:commandButton value="Aujourd'hui"
+														update=":formeGenerale" disabled="#{rendezVousBean.toDay}"
+														actionListener="#{rendezVousBean.toDay()}"
+														style="width:130px;font-size:13pt" />
+													&nbsp;&nbsp;
+													<p:commandButton update=":formeGenerale"
+														icon="ui-icon-circle-triangle-e"
+														actionListener="#{rendezVousBean.next()}" />
+
+
+												</div></td>
+
+											<td align="left"><p:selectOneButton layout="grid"
+													columns="1" style="font-size: 10pt"
+													value="#{rendezVousBean.view}">
+													<f:selectItem itemLabel="Jour" itemValue="agendaDay" />
+													<f:selectItem itemLabel="Semaine" itemValue="agendaWeek" />
+													<f:selectItem itemLabel="Mois" itemValue="month" />
+													<p:ajax update=":formeGenerale" />
+												</p:selectOneButton></td>
+										</tr>
+									</table>
+								</td>
+
+							</tr>
+							<tr>
+								<td colspan="2"><p:schedule locale="fr" id="schedule"
+										showHeader="false" timeZone="Europe/Paris"
+										ignoreTimezone="false" draggable="false" resizable="false"
+										leftHeaderTemplate="hjh" rightHeaderTemplate=""
+										timeFormat="HH:mm" firstHour="#{horaireBean.minHeurs}"
+										slotMinutes="30" axisFormat="HH:mm"
+										minTime="#{horaireBean.minHeurs}"
+										maxTime="#{horaireBean.maxHeurs}" tooltip="false"
+										initialDate="#{rendezVousBean.selectedDate}"
+										view="#{rendezVousBean.view}"
+										value="#{rendezVousBean.rendezVouss}" widgetVar="myschedule"
+										columnFormat="month:'ddd', week:'ddd dd/MM/yyyy', day:'dd/MMMM/yyyy'}, titleFormat: {day: 'dddd, dd  MMMM  yyyy'">
+										<p:ajax event="dateSelect"
+											update=":formeGenerale,:formeGenerale:growl"
+											listener="#{rendezVousBean.onDateSelect}" />
+									</p:schedule></td>
+							</tr>
+						</table>
+					</td>
+
+					<td width="13%" align="center" valign="top">
+						<div>
+							<table border="0">
+								<tr>
+									<td align="center"><h:commandLink
+											actionListener="#{connectionBean.deconnecter()}">
+											<p:graphicImage value="/images/dec.png" />
+										</h:commandLink></td>
+								</tr>
+								<tr>
+									<td align="center"><h:outputText
+											value="#{connectionBean.utilisateur}"
+											style="font-size:18px;font-weight:bold;font-style: italic" />
+									</td>
+								</tr>
+								<tr>
+									<td height="10px"></td>
+								</tr>
+								<tr>
+									<td height="10px"></td>
+								</tr>
+
+
+								<tr>
+									<td><h:commandLink
+											rendered="#{not connectionBean.menuGestionPat}"
+											disabled="#{connectionBean.menuGestionPat}"
+											actionListener="#{rendezVousBean.goToListePatientsParRendezVous()}">
+											<p:graphicImage value="/imagesMenu/patient.png" height="60px"
+												width="60px" />
+										</h:commandLink></td>
+								</tr>
+								<tr>
+									<td height="10px"></td>
+								</tr>
+								<tr>
+									<td><h:commandLink
+											actionListener="#{rendezVousBean.goToSalleattente()}"
+											disabled="#{connectionBean.menuSalle}">
+											<p:graphicImage
+												value="/imagesMenu/salleAttenteRendezVous.png" height="65px"
+												width="60px" />
+										</h:commandLink></td>
+								</tr>
+							</table>
+
+
+
+
+
+
+
+
+						</div>
+					</td>
+				</tr>
+			</table>
+
+			<p:dialog id="gestionRendezVous" widgetVar="eventDialog"
+				closeOnEscape="true" width="70%" modal="true"
+				header="#{rendezVousBean.selectedDateToString()} (#{rendezVousBean.rendezVoussParDate.size()} Rendez-vous)"
+				showEffect="clip" hideEffect="clip">
+				<div align="center">
+					<h:panelGroup>
+						<p:dataTable var="rendezVous" id="tabrend" emptyMessage="Pas des rendez-vous!!"
+							value="#{rendezVousBean.rendezVoussParDate}" border="1"
+							paginator="true" paginatorPosition="bottom"
+							paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							rows="7">
+							<p:column width="65%"
+								styleClass="#{rendezVousBean.getClasse(rendezVous.date, rendezVous)}">
+								<f:facet name="header">
+									<h:outputLabel value="Patient" />
+								</f:facet>
+   								#{rendezVous.codeclient.nom} #{rendezVous.codeclient.prenom} (#{rendezVous.codeclient.dateNaiss})
+							</p:column>
+							<p:column width="50%"
+								styleClass="#{rendezVousBean.getClasse(rendezVous.date, rendezVous)}">
+								<f:facet name="header">
+									<h:outputLabel value="Date" />
+								</f:facet>
+		    					#{rendezVous.date.toLocaleString()}
+							</p:column>
+							<p:column width="100%"
+								styleClass="#{rendezVousBean.getClasse(rendezVous.date, rendezVous)}">
+								<f:facet name="header">
+									<h:outputLabel value="Remarque" />
+								</f:facet>
+		    					#{rendezVous.note}
+							</p:column>
+							<p:column style="width:60%"
+								styleClass="#{rendezVousBean.getClasse(rendezVous.date, rendezVous)}">
+								<p:commandButton icon="ui-icon-arrowthickstop-1-e"
+									title="Vers salle d'attente"
+									actionListener="#{rendezVousBean.versSalle(rendezVous)}"
+									update=":formeGenerale:vsa" oncomplete="PF('dlgsalle').show()" />
+								<p:commandButton title="Modification" icon="ui-icon-pencil"
+									update=":formeGenerale:modif"
+									oncomplete="PF('modifDialog').show()"
+									actionListener="#{rendezVousBean.modifierRendezVous(rendezVous)}" />
+
+								<p:commandButton icon="ui-icon-help"
+									rendered="#{connectionBean.chargerPat}" title="charger patient"
+									actionListener="#{cfclientBean.versFiche(rendezVous.codeclient.code)}"
+									 />
+
+								<p:commandButton
+									actionListener="#{rendezVousBean.supprimerRendezVous(rendezVous.idrendezVous)}"
+									icon="ui-icon-trash" title="Suppression Rendez-Vous"
+									update=":formeGenerale" oncomplete="PF('eventDialog').show()">
+									<p:confirm header="Suppression Rendez-vous"
+										message="Voulez-vous vraiment supprimer cet rendez-vous ?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Oui" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Non" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</h:panelGroup>
+				</div>
+			</p:dialog>
+
+			<p:dialog id="vsa" widgetVar="dlgsalle" resizable="false"
+				closable="false" model="true" width="300pt" height="200pt"
+				hideEffect="explode">
+				<p:outputPanel id="n">
+					<h:panelGrid columns="2" cellspacing="5">
+						<h:outputText value="Patiente: " />
+						<h:outputText
+							value="#{rendezVousBean.codeclient.prenom} #{rendezVousBean.codeclient.nom} " />
+						<h:outputText value="Heure : " />
+						<h:outputText
+							value="#{rendezVousBean.avoirHeure(rendezVousBean.selectedDate)}" />
+						<h:outputText value="Consultation: " />
+						<p:selectOneMenu value="#{rendezVousBean.motif}"
+							style="font-size:small;font-weight:bold;width:200px;"
+							filter="true" filterMatchMode="startsWith" effect="fade">
+							<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+							<f:selectItems value="#{connectionBean.tabSallesActiv}" var="s"
+								itemLabel="#{s.nomTab}" itemValue="#{s.nomTab}" />
+						</p:selectOneMenu>
+
+
+
+						<h:outputText value="Notes : " />
+						<p:inputTextarea value="#{rendezVousBean.noteSalle}" />
+
+
+					</h:panelGrid>
+					<br></br>
+					<div align="center">
+						<p:commandButton value="Envoyer" oncomplete="dlgsalle.hide();"
+							ajax="false" actionListener="#{rendezVousBean.versSalle()}" />
+						<p:commandButton value="Annuler" oncomplete="dlgsalle.hide();"
+							ajax="false"></p:commandButton>
+					</div>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog id="modif" widgetVar="modifDialog" closeOnEscape="true"
+				width="50%" modal="true" header="Modifier Rendez-vous"
+				showEffect="clip" hideEffect="fade">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Patient :" />
+					<p:inputText
+						value="#{rendezVousBean.codeclient.nom} #{rendezVousBean.codeclient.prenom} (#{rendezVousBean.codeclient.dateNaiss})"
+						readonly="true" style="width: 100%" />
+
+					<p:outputLabel value="Date :" />
+					<p:calendar locale="fr" id="date" value="#{rendezVousBean.date}"
+						pattern="MM/dd/yyyy HH:mm" stepMinute="15" style="width: 100%" />
+
+					<p:outputLabel value="Remarque : " />
+					<p:inputTextarea value="#{rendezVousBean.note}" id="note"
+						placeholder="Remarque" rows="4" cols="40" autoResize="false"
+						style="width: 100%" />
+				</h:panelGrid>
+				<p:separator />
+				<h:panelGrid columns="2">
+					<p:commandButton value="Valider" icon="ui-icon-check"
+						update=":formeGenerale" oncomplete="PF('eventDialog').show();"
+						actionListener="#{rendezVousBean.modifier()}" />
+					<p:commandButton value="Annuler"
+						icon="ui-icon-arrowreturnthick-1-n" update=":formeGenerale"
+						oncomplete="PF('eventDialog').show();" />
+				</h:panelGrid>
+			</p:dialog>
+
+
+			<p:dialog id="idAffect" widgetVar="menu" showHeader="true"
+				width="350px" showEffect="fade" hideEffect="fade" closable="true"
+				draggable="false" modal="true" resizable="false"
+				closeOnEscape="true" header="#{rendezVousBean.dateChoisi}">
+				<p:panel>
+					<table border="0" width="100%">
+						<tr>
+							<td width="60%"><h:outputText value="Durée: "
+									style="font-size:small;font-weight:bold" /> <h:inputText
+									value="#{rendezVousBean.dureeRDV}" style="width:20px" /> <h:outputText
+									value="  jour(s)" style="font-size:small;font-weight:bold" />
+							</td>
+							<td><p:commandButton value="Affecter"
+									style="font-size:small;font-weight:bold;width:88px"
+									actionListener="#{rendezVousBean.affect()}"
+									update=":formeGenerale:growl, :formeGenerale:schedule"
+									oncomplete="PF('menu').hide()" /></td>
+						</tr>
+						<tr>
+							<td><h:outputText value="Liste des RDV  "
+									style="font-size:small;font-weight:bold" /></td>
+							<td><p:commandButton value="Consulter"
+									style="font-size:small;font-weight:bold"
+									oncomplete="PF('eventDialog').show(), PF('menu').hide()" /></td>
+						</tr>
+
+
+					</table>
+
+				</p:panel>
+			</p:dialog>
+		</h:form>
+		<script type="text/javascript">
+			PrimeFaces.locales ['fr'] = {
+		    closeText: 'Fermer',
+		    prevText: 'Précédent',
+		    nextText: 'Suivant',
+		    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+		    monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ],
+		    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		    dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+		    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		    weekHeader: 'Semaine',
+		    firstDay: 1,
+		    isRTL: false,
+		    showMonthAfterYear: false,
+		    yearSuffix:'',
+		    timeOnlyTitle: 'Choisir l\'heure',
+		    timeText: 'Heure',
+		    hourText: 'Heures',
+		    minuteText: 'Minutes',
+		    secondText: 'Secondes',
+		    currentText: 'Aujourd\'hui',
+		    ampm: false,
+		    month: 'Mois',
+		    week: 'Semaine',
+		    day: 'Jour',
+		    allDayText: 'Toute la journée',
+		};
+	</script>
+		<style type="text/css">
+.value {
+	width: 900px;
+}
+
+.fc-header-title {
+	color: #007eb1;
+	text-shadow: 1px 1px 1px #808080;
+}
+
+.fc-today.ui-state-highlight {
+	background-color: #A8D6DA;
+	color: #5CD5CD;
+	font-style: inherit;
+	font-size: 15pt;
+	font-family: inherit;
+	text-shadow: 1px 1px 1px #808080;
+	background: #94FABB;
+}
+
+.default {
+	border: 1px solid #44f;
+	background-color: #44f;
+}
+
+.retard {
+	border: 1px solid #f44;
+	background-color: #f44;
+}
+
+.passer {
+	border: 1px solid #3a3;
+	background-color: #3a3;
+}
+
+.default2 {
+	background-color: #acd;
+}
+
+.retard2 {
+	background-color: #fcc;
+}
+
+.passer2 {
+	background-color: #afa;
+}
+
+.nbrrdv {
+	border: 0px;
+	color: #123456;
+	text-shadow: 1px 1px 1px #808080;
+	background-color: #B0E0E6;
+}
+
+.nbr {
+	border: 0px;
+	color: #123456;
+	text-shadow: 1px 1px 1px #808080;
+	background-color: #58ACFA;
+}
+#{
+rendezVousBean
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.script
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+</style>
+	</ui:define>
+</ui:composition>
+</html>

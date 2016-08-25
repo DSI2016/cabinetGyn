@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.doctor.persistance.MoyenContraception" table="moyencontraception"
+		>
+		<id name="idmoyenContraception" type="java.lang.Integer">
+			<column name="idmoyenContraception" />
+			<generator class="increment" />
+		</id>
+		<property name="libMoyenContraception" type="string">
+			<column name="moyen" length="255" />
+		</property>
+
+	</class>
+	</hibernate-mapping>

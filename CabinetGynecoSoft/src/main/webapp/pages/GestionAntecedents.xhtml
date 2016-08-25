@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Antécédents</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/antecedents.png" width="100%"> </p:graphicImage>
+		<br />
+		<h:form id="f1">
+			<table width="100%" border="0">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{accueilBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink actionListener="#{accueilBean.goToParametrage()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+
+					<td>
+						<div align="left">
+							<h:panelGrid columns="4">
+								<h:outputText value="Recherche: "
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{gestionAntecedentBean.valeurRecherche}" />
+
+								<p:commandButton icon="ui-icon-search" title="Recherche Ville"
+									update=":f1" />
+								<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+									actionListener="#{gestionAntecedentBean.annulerRecherche}" update=":f1" />
+
+							</h:panelGrid>
+						</div></td>
+				   <td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+				
+			</table>
+
+			<p:growl id="growl" life="3000" />
+			<div align="center">
+				<p:panel style="width:70%;height:550px">
+
+
+					<p:tabView style="font-size:12pt;height:520px" 
+						activeIndex="#{gestionAntecedentBean.index}">
+
+						<p:tab title="Antécédent Médical"
+							rendered="#{connectionBean.tabMedAnt}" >
+
+							<div align="right">
+								<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+									rendered="#{connectionBean.ajoutGestAntMed}"
+									actionListener="#{gestionAntecedentBean.ajouterAntecedentMed()}"
+									oncomplete="PF('dialogAntMed').show();"
+									update=":f1:idDialogAntMed"
+									style="font-size:10pt;font-weight:bold">
+								</p:commandButton>
+								<br />
+							</div>
+							<h:panelGrid columns="1">
+
+								<p:dataTable id="l" var="anteced" first="#{gestionAntecedentBean.currentP1}"
+									style="font-size:small;font-weight:bold"
+									value="#{gestionAntecedentBean.antecedentMeds}"
+									emptyMessage="Pas d'antécédents !" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+									rows="10">
+
+									<p:column headerText="Antécédent Médical" width="75%"
+										style="font-size:small;font-weight:bold">
+
+										<h:outputText value="#{anteced.antMedical}"
+											style="font-size:small;font-weight:bold;" />
+									</p:column>
+
+									<p:column>
+										<p:commandButton icon="ui-icon-pencil" title="Modifier"
+											rendered="#{connectionBean.modifGestAntMed}"
+											actionListener="#{gestionAntecedentBean.modificationAntMed(anteced)}"
+											oncomplete="PF('dialogAntMed').show();"
+											update=":f1:idDialogAntMed"
+											style="font-size:10pt;font-weight:bold">
+										</p:commandButton>
+										<p:commandButton icon="ui-icon-trash" title="Supprimer"
+											rendered="#{connectionBean.suppGestAntMed}"
+											actionListener="#{gestionAntecedentBean.suppressionAntMed(anteced)}"
+											update=":f1" style="font-size:10pt;font-weight:bold">
+											<p:confirm header="Supprimer un antécédent médical ?"
+												message="Voulez-vous vraiment supprimer cet antécédent ?"
+												icon="ui-icon-alert" />
+										</p:commandButton>
+									</p:column>
+
+								</p:dataTable>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="explode">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="Antécédent Chirugical"
+							rendered="#{connectionBean.tabChirAnt}">
+
+							<div align="right">
+								<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+									rendered="#{connectionBean.ajoutGestChirg}"
+									actionListener="#{gestionAntecedentBean.ajouterAntecedentChir()}"
+									oncomplete="PF('dialogAntMed').show();"
+									update=":f1:idDialogAntMed"
+									style="font-size:10pt;font-weight:bold">
+								</p:commandButton>
+
+							</div>
+							<h:panelGrid columns="1">
+
+								<p:dataTable id="ll" var="anteced" first="#{gestionAntecedentBean.currentP2}"
+									style="font-size:small;font-weight:bold"
+									value="#{gestionAntecedentBean.antecedentChirs}"
+									emptyMessage="Pas d'antécédents !" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+									rows="10">
+
+									<p:column headerText="Antécédent Chirugical" width="75%"
+										style="font-size:small;font-weight:bold">
+
+										<h:outputText value="#{anteced.antChirugical}"
+											style="font-size:small;font-weight:bold;" />
+									</p:column>
+
+									<p:column>
+										<p:commandButton icon="ui-icon-pencil" title="Modifier"
+											actionListener="#{gestionAntecedentBean.modificationAntChir(anteced)}"
+											rendered="#{connectionBean.modifGestChirg}"
+											oncomplete="PF('dialogAntMed').show();"
+											update=":f1:idDialogAntMed"
+											style="font-size:10pt;font-weight:bold">
+										</p:commandButton>
+										<p:commandButton icon="ui-icon-trash" title="Supprimer"
+											actionListener="#{gestionAntecedentBean.suppressionAntChir(anteced)}"
+											rendered="#{connectionBean.suppGestAntChirg}" update=":f1"
+											style="font-size:10pt;font-weight:bold">
+											<p:confirm header="Supprimer un antécédent chirugical?"
+												message="Voulez-vous vraiment supprimer cet antécédent ?"
+												icon="ui-icon-alert" />
+										</p:commandButton>
+									</p:column>
+
+								</p:dataTable>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="explode">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="Antécédent Familial"
+							rendered="#{connectionBean.tabFamAnt}">
+
+
+							<div align="right">
+								<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+									rendered="#{connectionBean.ajoutGestFam}"
+									actionListener="#{gestionAntecedentBean.ajouterAntecedentFam()}"
+									oncomplete="PF('dialogAntMed').show();"
+									update=":f1:idDialogAntMed"
+									style="font-size:10pt;font-weight:bold">
+								</p:commandButton>
+								<br />
+							</div>
+							<h:panelGrid columns="1">
+
+								<p:dataTable id="lll" var="anteced" first="#{gestionAntecedentBean.currentP3}"
+									style="font-size:small;font-weight:bold"
+									value="#{gestionAntecedentBean.antecedentFams}"
+									emptyMessage="Pas d'antécédents !" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+									rows="10">
+
+									<p:column headerText="Antécédent Familial" width="75%"
+										style="font-size:small;font-weight:bold">
+
+										<h:outputText value="#{anteced.antFamilial}"
+											style="font-size:small;font-weight:bold;" />
+									</p:column>
+
+									<p:column>
+										<p:commandButton icon="ui-icon-pencil" title="Modifier"
+											actionListener="#{gestionAntecedentBean.modificationAntFam(anteced)}"
+											rendered="#{connectionBean.modifGestFam}"
+											oncomplete="PF('dialogAntMed').show();"
+											update=":f1:idDialogAntMed"
+											style="font-size:10pt;font-weight:bold">
+										</p:commandButton>
+										<p:commandButton icon="ui-icon-trash" title="Suprimer"
+											actionListener="#{gestionAntecedentBean.suppressionAntFam(anteced)}"
+											rendered="#{connectionBean.suppGestAntFam}" update=":f1"
+											style="font-size:10pt;font-weight:bold">
+											<p:confirm header="Supprimerun antécédent familial ?"
+												message="Voulez-vous vraiment supprimer cet antécédent ?"
+												icon="ui-icon-alert" />
+										</p:commandButton>
+									</p:column>
+
+								</p:dataTable>
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="explode">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</h:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+
+
+
+				</p:panel>
+			</div>
+			<div align="center">
+				<p:dialog id="idDialogAntMed" widgetVar="dialogAntMed" modal="true"
+					resizable="false" closable="false" showHeader="false">
+					<p:panel
+						header="#{gestionAntecedentBean.actionAnt}  antécédent #{gestionAntecedentBean.typeAnt} ">
+						<h:panelGrid columns="2">
+							<h:outputText value="Antécédent : "
+								style="font-size:14;font-weight:bold;" />
+							<p:inputText size="20" value="#{gestionAntecedentBean.nomAntecedent}"></p:inputText>
+						</h:panelGrid>
+
+						<h:panelGrid columns="2">
+							<p:commandButton value="Valider"
+								actionListener="#{gestionAntecedentBean.validerAntecedent()}"
+								oncomplete="handleLoginRequest(xhr, status, args)"
+								update=":f1:growl" icon="ui-icon-check"
+								style="font-size:10pt;font-weight:bold">
+							</p:commandButton>
+							<p:commandButton value="Annuler"
+								style="font-size:10pt;font-weight:bold"
+								icon="ui-icon-arrowreturnthick-1-n" update=":f1">
+
+							</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+				</p:dialog>
+			</div>
+		</h:form>
+		<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogAntMed').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogAntMed').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+	</ui:define>
+</ui:composition>
+</html>

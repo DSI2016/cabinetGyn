@@ -1,0 +1,360 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Cfclient"
+		>
+		<id name="code" type="java.lang.Integer">
+			<column name="code" />
+			<generator class="increment" />
+		</id>
+		<many-to-one class="com.doctor.persistance.Ville" fetch="select"
+			name="ville">
+			<column name="ville" />
+		</many-to-one>
+
+		<many-to-one class="com.doctor.persistance.Clinique"
+			fetch="select" name="clinique">
+			<column name="idclinique" />
+		</many-to-one>
+
+		<many-to-one class="com.doctor.persistance.Profession"
+			fetch="select" name="professionByProfesscp">
+			<column name="professcp" />
+		</many-to-one>
+
+		<many-to-one class="com.doctor.persistance.Docteur" fetch="select"
+			name="doctor">
+			<column name="iddoctor" />
+		</many-to-one>
+
+		<many-to-one class="com.doctor.persistance.Profession"
+			fetch="select" name="professionByProfessp">
+			<column name="professp" />
+		</many-to-one>
+
+		<property generated="never" lazy="false" name="prefix" type="string">
+			<column length="45" name="prefix" />
+		</property>
+		
+		<property name="ddgCorigee" type="boolean">
+			<column name="ddgCorigee" length="1" not-null="true"
+				default="false" />
+		</property>
+		<property generated="never" lazy="false" name="nom" type="string">
+			<column length="255" name="nom" />
+		</property>
+		<property generated="never" lazy="false" name="prenom" type="string">
+			<column length="255" name="prenom" />
+		</property>
+		<property generated="never" lazy="false" name="cnss" type="string">
+			<column length="45" name="Cnss" />
+		</property>
+		<property generated="never" lazy="false" name="sexe" type="string">
+			<column length="45" name="sexe" />
+		</property>
+		<property generated="never" lazy="false" name="civil" type="string">
+			<column length="45" name="civil" />
+		</property>
+		<property generated="never" lazy="false" name="categoriEtoile" type="string">
+			<column length="45" name="categoriEtoile" />
+		</property>
+		
+		<property generated="never" lazy="false" name="dateNaiss"
+			type="string">
+			<column length="10" name="date_naiss" />
+		</property>
+		<property name="prenomNomConjoint" type="string">
+			<column name="prenomNomConjoint" length="255" />
+		</property>
+		<property generated="never" lazy="false" name="resultatFrotti" type="string">
+   <column name="resultatFrotti" sql-type="longtext"/>
+</property>
+		<property generated="never" lazy="false" name="rue" type="string">
+			<column length="255" name="rue" />
+		</property>
+
+<property generated="never" lazy="false" name="dateFrotti" type="string">
+			<column length="45" name="dateFrotti" />
+		</property>
+
+		<property generated="never" lazy="false" name="village" type="string">
+			<column length="255" name="village" />
+		</property>
+
+		<property generated="never" lazy="false" name="professionP"
+			type="string">
+			<column length="45" name="professionP" />
+		</property>
+
+		<property generated="never" lazy="false" name="professionC"
+			type="string">
+			<column length="45" name="professionC" />
+		</property>
+
+		<property name="codePost" type="string">
+			<column name="code_post" />
+		</property>
+		<property generated="never" lazy="false" name="pays" type="string">
+			<column length="45" name="pays" />
+		</property>
+		<property generated="never" lazy="false" name="telephone"
+			type="string">
+			<column length="45" name="telephone" />
+		</property>
+		<property generated="never" lazy="false" name="notes" type="string">
+			<column length="2000" name="notes" />
+		</property>
+		<property generated="never" lazy="false" name="typCons" type="string">
+			<column length="45" name="typ_cons" />
+		</property>
+		<property generated="never" lazy="false" name="nbCons" type="int">
+			<column name="nb_cons" />
+		</property>
+		<property generated="never" lazy="false" name="dateCons"
+			type="string">
+			<column length="45" name="date_cons" />
+		</property>
+		<property generated="never" lazy="false" name="datesaisie"
+			type="string">
+			<column length="45" name="datesaisie" />
+		</property>
+		<property generated="never" lazy="false" name="ant11" type="string">
+			<column length="45" name="ant11" />
+		</property>
+		<property generated="never" lazy="false" name="dpr"
+			type="java.lang.Integer">
+			<column name="dpr" not-null="false" />
+		</property>
+		<property name="mariage" type="java.util.Date">
+			<column name="mariage" />
+		</property>
+		<property generated="never" lazy="false" name="consang" type="string">
+			<column length="45" name="consang" />
+		</property>
+		<property generated="never" lazy="false" name="dureeReg"
+			type="string">
+			<column length="45" name="duree_reg" />
+		</property>
+		<property generated="never" lazy="false" name="regles" type="string">
+			<column length="45" name="regles" />
+		</property>
+		<property generated="never" lazy="false" name="dysmenorhe"
+			type="string">
+			<column sql-type="longtext" name="dysmenorhe" />
+		</property>
+		<property generated="never" lazy="false" name="mastodynie"
+			type="string">
+			<column  sql-type="longtext" name="mastodynie" />
+		</property>
+		<property generated="never" lazy="false" name="menopose"
+			type="java.lang.Integer">
+			<column name="menopose" />
+		</property>
+		<property generated="never" lazy="false" name="ant3" type="string">
+			<column length="45" name="ant3" />
+		</property>
+		<property generated="never" lazy="false" name="dateFr" type="string">
+			<column length="10" name="date_fr" />
+		</property>
+		<property generated="never" lazy="false" name="resultFr"
+			type="string">
+			<column length="45" name="result_fr" />
+		</property>
+		<property generated="never" lazy="false" name="ddr" type="string">
+			<column length="10" name="ddr" />
+		</property>
+		<property generated="never" lazy="false" name="spanio" type="boolean">
+			<column name="spanio" length="1" default="false" />
+		</property>
+		<property generated="never" lazy="false" name="ddg" type="string">
+			<column length="10" name="ddg" />
+		</property>
+		<property generated="never" lazy="false" name="dateMoyen"
+			type="string">
+			<column length="10" name="date_moyen" />
+		</property>
+		<property generated="never" lazy="false" name="moyen" type="string">
+			<column length="45" name="moyen" />
+		</property>
+		<property generated="never" lazy="false" name="gestite" type="int">
+			<column name="gestite" />
+		</property>
+		<property generated="never" lazy="false" name="partie"
+			type="java.lang.Integer">
+			<column name="partie" />
+		</property>
+		<property generated="never" lazy="false" name="gviv"
+			type="java.lang.Integer">
+			<column name="gviv" />
+		</property>
+		<property generated="never" lazy="false" name="fviv"
+			type="java.lang.Integer">
+			<column name="fviv" />
+		</property>
+		<property generated="never" lazy="false" name="cesar" type="int">
+			<column name="cesar" />
+		</property>
+
+		<property generated="never" lazy="false" name="telephone2"
+			type="string">
+			<column name="telephone2" />
+		</property>
+
+		<property generated="never" lazy="false" name="telC" type="string">
+			<column name="telC" />
+		</property>
+
+		<property generated="never" lazy="false" name="gsmC" type="string">
+			<column name="gsmC" />
+		</property>
+
+		<property generated="never" lazy="false" name="gsm1" type="string">
+			<column name="gsm1" />
+		</property>
+
+		<property generated="never" lazy="false" name="gsm2" type="string">
+			<column name="gsm2" />
+		</property>
+
+		<property generated="never" lazy="false" name="eMailP" type="string">
+			<column name="eMailP" />
+		</property>
+
+		<property generated="never" lazy="false" name="eMailC" type="string">
+			<column name="eMailC" />
+		</property>
+
+		<property generated="never" lazy="false" name="nomC" type="string">
+			<column name="nomC" length="255"/>
+		</property>
+
+		<property generated="never" lazy="false" name="prenomC" type="string">
+			<column name="prenomC" length="255"/>
+		</property>
+
+		<property generated="never" lazy="false" name="taille" type="string">
+			<column name="taille" />
+		</property>
+
+		<property generated="never" lazy="false" name="poids" type="string">
+			<column name="poids" />
+		</property>
+
+		<property generated="never" lazy="false" name="gs" type="string">
+			<column name="gs" />
+		</property>
+
+		<property generated="never" lazy="false" name="rh" type="string">
+			<column name="rh" />
+		</property>
+
+		<property generated="never" lazy="false" name="dateNaissC"
+			type="string">
+			<column name="dateNaissC" />
+		</property>
+
+		<property generated="never" lazy="false" name="allergie"
+			type="string">
+			<column name="allergie"  sql-type="longtext" />
+		</property>
+
+		<property generated="never" lazy="false" name="dernierVisite"
+			type="string">
+			<column name="dernierVisite" />
+		</property>
+
+
+		<property generated="never" lazy="false" name="assurance1"
+			type="string">
+			<column name="assurance1" />
+		</property>
+
+		<property generated="never" lazy="false" name="assurance2"
+			type="string">
+			<column name="assurance2" />
+		</property>
+
+		<set fetch="select" inverse="true" lazy="true" name="salles" sort="unsorted"
+			table="salle">
+			<key>
+				<column name="codeclient" />
+			</key>
+			<one-to-many class="com.doctor.persistance.Salle" />
+		</set>
+
+		<property name="remarque" type="string">
+			<column name="remarque" length="45" />
+		</property>
+
+		<property name="tPrevu" type="string">
+			<column name="tPrevu" length="45" />
+		</property>
+
+		<property name="tActuel" type="string">
+			<column name="tActuel" length="45" />
+		</property>
+
+		<property name="toxo" type="string">
+			<column name="toxo" length="45" />
+		</property>
+
+		<property name="tpha" type="string">
+			<column name="tpha" length="45" />
+		</property>
+
+		<property name="rubeole" type="string">
+			<column name="rubeole" length="45" />
+		</property>
+
+		<property name="nbrGarcon" type="int">
+			<column name="nbrGarcon" default="0" />
+		</property>
+
+		<property name="nbrFille" type="int">
+			<column name="nbrFille" default="0" />
+		</property>
+		<property name="notes2" type="string">
+			<column name="notes2" length="2000" />
+		</property>
+
+		<property name="cycleType" type="string">
+			<column name="cycleType" length="45" />
+		</property>
+
+		<property name="cycle" type="string">
+			<column name="cycle" length="45" />
+		</property>
+
+		<property name="regleType" type="string">
+			<column name="regleType" length="45" />
+		</property>
+		<property name="categorie" type="string">
+			<column name="categorie" length="100" />
+		</property>
+		<property name="glycemie" type="string">
+			<column name="glycemie" length="100" />
+		</property>
+		<property name="aghbs" type="string">
+			<column name="aghbs" length="100" />
+		</property>
+		<property name="nomprenom" type="string">
+			<column name="nomprenom" length="255" />
+		</property>
+		<property name="prenomnom" type="string">
+			<column name="prenomnom" length="255" />
+		</property>
+		<property name="archive" type="boolean">
+			<column name="archive" length="1" default="false"/>
+		</property>
+
+
+		<set fetch="select" inverse="true" lazy="true" name="historiqueCertifs"
+			table="historiquecertif">
+			<key>
+				<column name="idPatient" />
+			</key>
+			<one-to-many class="com.doctor.persistance.HistoriqueCertif" />
+		</set>
+	</class>
+</hibernate-mapping>

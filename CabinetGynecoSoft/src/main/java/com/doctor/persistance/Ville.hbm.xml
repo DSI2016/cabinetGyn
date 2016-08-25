@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.doctor.persistance.Ville" table="ville" >
+        <id name="idville" type="java.lang.Integer">
+            <column name="idville" />
+              <generator class="increment" />
+        </id>
+      
+        <property name="ville" type="string">
+            <column name="ville" length="255" not-null="true" />
+        </property>
+        
+        
+        <set name="cfclients" table="cfclient" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ville" not-null="true" />
+            </key>
+            <one-to-many class="com.doctor.persistance.Cfclient" />
+        </set>
+    </class>
+</hibernate-mapping>

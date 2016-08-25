@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>CIMF Supervision</title>
+
+	<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+</h:head>
+
+<h:body>
+	<div align="center">
+		<img src="../images/templateImage.jpg" align="middle" />
+	</div>
+	<ui:insert name="header">
+		<ui:include src="../templates/includes/header.xhtml"></ui:include>
+	</ui:insert>
+
+	<table align="left" cellspacing="5">
+		<tr>
+			<td><ui:insert name="menu">
+					<ui:include src="../templates/includes/menu.xhtml" />
+				</ui:insert></td>
+		</tr>
+	</table>
+
+
+	<div align="center">
+
+		<ui:insert name="body">
+
+Body
+</ui:insert>
+	</div>
+
+</h:body>
+</html>

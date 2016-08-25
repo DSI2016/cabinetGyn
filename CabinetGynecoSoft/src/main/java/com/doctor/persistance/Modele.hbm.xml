@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Modele" table="modele"
+		>
+		<id name="idmodele" type="java.lang.Integer">
+			<column name="idmodele" />
+			<generator class="increment" />
+		</id>
+		<property name="nommodele" type="string">
+			<column name="nommodele" length="45" />
+		</property>
+		
+		<property name="contours" type="string">
+			<column name="contours" length="45" />
+		</property>
+		
+		<property name="indications" type="string">
+			<column name="indications" length="255" />
+		</property>
+		
+		<property name="echostructure" type="string">
+			<column name="echostructure" length="45" />
+		</property>
+		
+		
+		<property name="ligne" type="string">
+			<column name="ligne" sql-type="longtext" />
+		</property>
+
+		<property name="annexes" type="string">
+			<column name="annexes" length="255" />
+		</property>
+
+		<property name="conclusion" type="string">
+			<column name="conclusion" sql-type="longtext"/>
+		</property>
+
+		<property name="longueur" type="int">
+			<column name="longueur" />
+		</property>
+
+		<property name="larg" type="int">
+			<column name="larg" />
+		</property>
+
+		<property name="diam" type="int">
+			<column name="diam" />
+		</property>
+		
+		
+		
+         <many-to-one lazy="false" name="uterus" class="com.doctor.persistance.Uterus" fetch="select">
+            <column name="iduterus"  />
+        </many-to-one>
+	</class>
+	</hibernate-mapping>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">
+		Cabinet
+	</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/listeCabinet.png" width="100%"></p:graphicImage>
+		<br />
+		<h:form id="f1">
+			<table width="100%" >
+				<tr>
+					<td width="35%" align="left"><h:panelGrid columns="2">
+							<h:commandLink  actionListener="#{accueilBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink actionListener="#{accueilBean.goToParametrage()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+						</h:panelGrid>
+					  </td>
+					  <td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+						
+						
+				</tr>
+				
+			</table>
+			<div align="center">
+			<p:panel
+							header="Informations générales de cabinet"
+							style="width: 60%; font-size: 12pt">
+							<table>
+								<tr>
+									<td><p:graphicImage value="/images/adresse.png"
+											width="5%" />  <p:outputLabel value="Adresse : " /> <p:inputText
+											value="#{cabinetBean.adresse}" placeholder="Adresse" style="width:400px"
+											
+											 />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div> <p:graphicImage value="/images/docteurCab.png" width="5%" />  <p:outputLabel
+											value="Nom du docteur : " /> <p:inputText
+											value="#{cabinetBean.docteur}" placeholder="Nom du docteur" style="width:350px"
+											
+											 />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div> <p:graphicImage value="/images/SacDocteur.png" width="5%" />  <p:outputLabel
+											value="Spécialité : " /> <p:inputText
+											value="#{cabinetBean.specialite}" placeholder="Spécialité" style="width:390px"
+											
+											 />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div> <p:graphicImage value="/images/tel.png" width="5%" />  <p:outputLabel
+											value="Téléphones : " /> <p:inputText
+											value="#{cabinetBean.tel1}" placeholder="xx xxx xxx"
+											
+											 size="8" />  <p:inputText
+											value="#{cabinetBean.tel2}" placeholder="xx xxx xxx"
+											
+											 size="8" />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div> <p:graphicImage value="/images/gsm.png" width="5%" />  <p:outputLabel
+											value="GSMs : " /> <p:inputText value="#{cabinetBean.gsm1}"
+											placeholder="xx xxx xxx"
+											
+											 size="8" />  <p:inputText
+											value="#{cabinetBean.gsm2}" placeholder="xx xxx xxx"
+											
+											 size="8" />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div> <p:graphicImage value="/images/fax.png" width="5%" />  <p:outputLabel
+											value="Fax : " /> <p:inputText value="#{cabinetBean.fax}"
+											placeholder="xx xxx xxx"
+											
+											 />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div> <p:graphicImage value="/images/eMail.png" width="5%" />  <p:outputLabel
+											value="E-Mail : " /> <p:inputText
+											value="#{cabinetBean.eMail}" placeholder="exemple@exemple.ex" style="width:400px"
+											
+											 />
+										<div style="font-size: 4px">
+											<br /> <br />
+										</div></td>
+									<td align="right" valign="top"><p:graphicImage
+											value="/images/info2.png" width="80%" /></td>
+								</tr>
+							</table>
+							<p:separator />
+							<div align="right">
+								<p:commandButton value="Valider" icon="ui-icon-check"
+									actionListener="#{cabinetBean.valider()}" update=":f1"
+									rendered="#{connectionBean.modifCab}" />
+									
+								<p:commandButton icon="ui-icon-refresh"
+									actionListener="#{cabinetBean.init()}" update=":f1" />
+							</div>
+						</p:panel>
+		   </div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

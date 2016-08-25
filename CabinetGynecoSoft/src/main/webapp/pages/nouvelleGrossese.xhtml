@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Consultation Grossese</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/consechoobstetrique.png"></p:graphicImage>
+		<br />
+
+		<h:form id="form">
+
+			<table width="100%">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink action="Accueil">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+								<h:commandLink action="FichePatient"
+									actionListener="#{consultationDetailBean.changeRead()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+				</tr>
+			</table>
+			<div align="center">
+				<p:panel style="width:40%; heigth:800px">
+
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="2">
+						<h:outputText for="fingros" value="Date Fin Grossesse: " />
+						<h:inputText id="fingros" value="#{antecedentBean.finGross}" />
+
+						<h:outputText value="Etat Fin Grossesse: " />
+						<h:inputText value="#{antecedentBean.etatFinGross}" />
+
+						<h:outputText value="Terme: " />
+						<h:inputText value="#{antecedentBean.terme}" />
+
+						<h:outputText value="Lieu: " />
+						<h:inputText value="#{antecedentBean.lieu}" />
+
+
+
+
+						<h:outputText value="Prénom Bébé: " />
+						<h:inputText value="#{antecedentBean.prenomBebe}" />
+
+						<h:outputText value="sexe Bébé: " />
+						<h:panelGrid columns="2">
+							<p:selectOneRadio id="console" layout="grid" columns="1"
+								value="#{antecedentBean.sexeBebe}">
+								<f:selectItem itemLabel="Masculin" itemValue="Masculin" />
+								<f:selectItem itemLabel="Féminin" itemValue="Féminin" />
+							</p:selectOneRadio>
+							<h:panelGrid columns="1">
+								<p:graphicImage url="/images/symboleM.jpg" />
+								<p:graphicImage url="/images/symboleF.jpg" />
+							</h:panelGrid>
+						</h:panelGrid>
+
+
+						<h:outputText value="Etat Bébé: " />
+						<p:selectOneMenu value="#{antecedentBean.etatBebe}"
+							style="width:160px" panelStyle="width:180px" effect="fade">
+
+							<f:selectItems value="#{antecedentBean.etatBebes}" var="a"
+								itemLabel="#{a.etatBebe}" itemValue="#{a.etatBebe}" />
+						</p:selectOneMenu>
+
+
+						<h:outputText value="Poids Bébé: " />
+						<h:panelGrid columns="2">
+							<h:inputText value="#{antecedentBean.poids}" style="width:40px" />Kg
+						</h:panelGrid>
+
+						<p:commandButton value="Valider" update=":form:growl"
+							actionListener="#{antecedentBean.validerBebe()}"></p:commandButton>
+						<p:commandButton value="Annuler" action="Antecedent"></p:commandButton>
+					</h:panelGrid>
+
+				</p:panel>
+				<h:messages></h:messages>
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

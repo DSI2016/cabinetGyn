@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">
+Historique Analyses</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/HistoAna.png" width="100%"></p:graphicImage>
+		<br />
+		<div align="left">
+			<h:form id="f1">
+				<p:growl id="growl" showDetail="true" life="3000" />
+				<table border="0" width="100%">
+					<tr>
+						<td width="90%"><h:commandLink
+								actionListener="#{analyseDemandeeBean.goToAcceuil()}">
+								<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+							</h:commandLink> <h:commandLink
+								actionListener="#{analyseDemandeeBean.retourliste()}">
+								<p:graphicImage value="/images/retour.png"></p:graphicImage>
+							</h:commandLink></td>
+						<td><h:commandLink
+								actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"
+								target="_blanc" rendered="#{analyseDemandeeBean.desibledImpr}">
+								<p:graphicImage value="/imagesMenu/imprimente10.png">
+								</p:graphicImage>
+							</h:commandLink></td>
+						<td align="right"><h:panelGrid columns="3">
+
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+
+								<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+									<p:graphicImage value="/images/dec.png" width="25px" />
+								</h:commandLink>
+
+							</h:panelGrid></td>
+					</tr>
+				</table>
+
+				<p:panel style="height:450px">
+					<div align="center">
+
+						<h:outputText
+							value="Patiente : #{analyseDemandeeBean.cfclient.prenom} #{analyseDemandeeBean.cfclient.nom} "
+							style="font-size:15pt;font-weight:bold" />
+					</div>
+					<p:dataTable id="patiente" var="ana"
+						style="font-size:small;font-weight:bold"
+						value="#{analyseDemandeeBean.analysesParPatient}"
+						emptyMessage="Pas des analyses !" paginator="true"
+						currentPageReportTemplate="{currentPage} / {totalPages}"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rows="10" selectionMode="single" paginatorPosition="bottom"
+						rowKey="#{ana.idanalyseDemandee}"
+						selection="#{analyseDemandeeBean.selectedAnalyse}">
+						<p:ajax event="rowSelect"
+							listener="#{analyseDemandeeBean.onRowSelectAnalyse}"
+							update=":f1:patiente"></p:ajax>
+
+						<p:column headerText="Date" width="7%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.dateAnalyse}"
+								style="font-size:small;font-weight:bold">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Paris" />
+							</h:outputText>
+						</p:column>
+
+
+						<p:column headerText="Analyses" width="25%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.analyses}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Toxo"
+							style="font-size:small;font-weight:bold" width="10%">
+							<h:outputText value="#{ana.toxo}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Tpha" width="10%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.tpha}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Rubeole" width="10%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.rubeole}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="AgHbs" width="10%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.agHbs}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Glycemie" width="10%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.glycemie}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column headerText="frottis" width="10%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{ana.frottis}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+
+						<p:column style="text-align: center" width="10%">
+
+							<p:commandButton icon="ui-icon-pencil"
+								title="Modification Analyse"
+								rendered="#{connectionBean.modifAnalyse}"
+								style="font-size:small;font-weight:bold"
+								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.idanalyseDemandee)}"
+								oncomplete="PF('modifAnalyse').show();" update=":f1:ma" />
+
+							<p:commandButton icon="ui-icon-search" title="Detail Analyse"
+								rendered="#{connectionBean.detAnal}"
+								style="font-size:small;font-weight:bold"
+								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.consultationDetail.idConsultationDetail)}"
+								oncomplete="PF('detailAnalyse').show();" update=":f1:madetail" />
+
+							<p:commandButton update=":f1"
+								rendered="#{connectionBean.supAnalyse}" icon="ui-icon-trash"
+								title="Suppression Analyse"
+								style="font-size:small;font-weight:bold"
+								actionListener="#{analyseDemandeeBean.SupprimerAnalyse(ana.idanalyseDemandee)}">
+								<p:confirm header="Suppression analyse"
+									message="Voulez-vous vraiment supprimer cette Analyse ?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:confirmDialog global="true" showEffect="fade"
+					hideEffect="explode">
+					<p:commandButton value="Oui" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Non" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+
+				<p:dialog id="ma" widgetVar="modifAnalyse" resizable="false"
+					closable="false" model="true" width="720pt" showHeader="false">
+					<p:outputPanel>
+						<p:panel>
+							<table border="0" style="width: 100%; heigth: 2cm">
+								<tr>
+									<td align="center"><p:graphicImage
+											value="/images/demandeanalyse.png" width="100%" ></p:graphicImage></td>
+								</tr>
+							</table>
+
+							<div align="left">
+								<table border="0" align="center" width="100%">
+									<tr>
+										<td><h:outputText value="Date:"
+												style="font-size:12pt;font-weight:bold" /> <p:calendar
+												id="button" value="#{analyseDemandeeBean.dateAna}"
+												disabled="#{analyseDemandeeBean.consultation}"
+												showOn="button" size="7" pattern="dd/MM/yyyy" /></td>
+										<td align="right"><h:panelGrid columns="3">
+												<h:outputText value="Analyse pour : "
+													style="font-size:13pt;font-weight:bold" />
+												<h:panelGrid columns="2">
+													<p:selectOneRadio id="consolee" layout="grid" columns="2"
+														style="font-size:13pt;font-weight:bold"
+														disabled="#{analyseDemandeeBean.consultation}"
+														value="#{analyseDemandeeBean.proprietaire}">
+														<p:ajax event="change"
+															listener="#{analyseDemandeeBean.changeProp}"
+															update="nomP"></p:ajax>
+														<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+														<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+													</p:selectOneRadio>
+												</h:panelGrid>
+												<p:inputText id="nomP"
+													disabled="#{analyseDemandeeBean.consultation}"
+													value="#{analyseDemandeeBean.nomProprietaire}" size="33"></p:inputText>
+
+											</h:panelGrid></td>
+									</tr>
+								</table>
+
+							</div>
+
+							<br></br>
+							<div align="center">
+								<h:panelGrid columns="4">
+									<h:outputText value="Analyses demandées :"
+										style="font-size:12pt;font-weight:bold" />
+									<p:selectOneMenu value="#{analyseDemandeeBean.analyseDemandee}"
+										style="width:20px" panelStyle="width:180px" filter="true"
+										filterMatchMode="startsWith" effect="fade">
+										<p:ajax listener="#{analyseDemandeeBean.onanalyseChange}"
+											event="change" update=":f1:a" />
+
+										<f:selectItem itemLabel="--- Analyses ---" itemValue="" />
+										<f:selectItems value="#{analyseDemandeeBean.analyses}" var="a"
+											itemLabel="#{a.libAnalyse}" itemValue="#{a.libAnalyse}" />
+									</p:selectOneMenu>
+									<p:spacer width="10"></p:spacer>
+
+									<h:inputTextarea id="a"
+										value="#{analyseDemandeeBean.analyseDemandees}"
+										style="font-size:12pt;font-weight:bold;height:100px;width:480px">
+										<p:ajax listener="#{analyseDemandeeBean.ontextanalyseChange}"
+											event="change" />
+
+									</h:inputTextarea>
+								</h:panelGrid>
+								<br></br>
+								<h:panelGrid columns="3">
+
+									<h:panelGrid columns="2">
+										<h:outputText value="Toxo :"
+											style="font-size:12pt;font-weight:bold" />
+										<h:inputText value="#{analyseDemandeeBean.toxo}"
+											style="font-size:12pt;font-weight:bold" />
+
+										<h:outputText value="TPHA :"
+											style="font-size:12pt;font-weight:bold" />
+										<h:inputText value="#{analyseDemandeeBean.tpha}"
+											style="font-size:12pt;font-weight:bold" />
+
+
+										<h:outputText value="Rubéole :"
+											style="font-size:12pt;font-weight:bold" />
+										<h:inputText value="#{analyseDemandeeBean.rubeole}"
+											style="font-size:12pt;font-weight:bold" />
+
+
+										<h:outputText value="AgHbs :"
+											style="font-size:12pt;font-weight:bold" />
+										<h:inputText value="#{analyseDemandeeBean.agHbs}"
+											style="font-size:12pt;font-weight:bold" />
+									</h:panelGrid>
+									<p:spacer width="10"></p:spacer>
+									<h:panelGrid columns="2">
+										<h:outputText value="Glycémie:"
+											style="font-size:12pt;font-weight:bold" />
+										<h:inputText value="#{analyseDemandeeBean.glycemie}"
+											style="font-size:12pt;font-weight:bold;width:343px" />
+
+
+										<h:outputText value="Frottis:"
+											style="font-size:12pt;font-weight:bold;" />
+
+										<h:inputTextarea value="#{analyseDemandeeBean.frottis}"
+											style="font-size:12pt;font-weight:bold;height:100px;width:343px" />
+									</h:panelGrid>
+								</h:panelGrid>
+							</div>
+							<div align="center">
+								<h:panelGrid columns="2">
+									<p:commandButton value="Valider"
+										actionListener="#{analyseDemandeeBean.validerListeAnalyse}"
+										style="font-size:small;font-weight:bold"
+										oncomplete="PF('modifAnalyse').hide();" update=":f1,:f1:growl">
+									</p:commandButton>
+
+									<p:commandButton value="Annuler"
+										oncomplete="PF('modifAnalyse').hide();" update=":f1"
+										style="font-size:small;font-weight:bold"></p:commandButton>
+								</h:panelGrid>
+							</div>
+						</p:panel>
+					</p:outputPanel>
+
+				</p:dialog>
+				<p:dialog id="madetail" widgetVar="detailAnalyse" resizable="false"
+					closable="false" model="true" width="620pt" showHeader="false">
+					<p:outputPanel>
+						<p:panel>
+							<table border="0" style="width: 100%; heigth: 2cm">
+								<tr>
+									<td align="center"><p:graphicImage
+											value="/images/demandeanalyse.png" width="100%"></p:graphicImage></td>
+								</tr>
+							</table>
+
+							<div align="left">
+								<table>
+									<tr>
+
+										<td align="left" width="90%"><h:outputText
+												value="Patiente :"
+												style="font-size:12pt;font-weight:bold;width:300;color:#1F6C8B" />
+											<h:outputLabel
+												value="#{analyseDemandeeBean.cfclient.prefix} #{analyseDemandeeBean.cfclient.prenom} #{analyseDemandeeBean.cfclient.nom}"
+												style="font-size:12pt;font-weight:bold;width:300;color:#00C0F6"
+												readonly="true" /></td>
+
+
+										<td><h:outputText value="Le:"
+												style="font-size:12pt;font-weight:bold" /> <h:inputText
+												readonly="true" value="#{analyseDemandeeBean.dateAnalyse}"
+												id="datedetail"
+												style="width:80px;font-size:12pt;font-weight:bold">
+												<p:ajax event="blur" update=":f1:growl,:f1:datedetail"
+													listener="#{analyseDemandeeBean.verifierDate()}">
+												</p:ajax>
+											</h:inputText></td>
+									</tr>
+								</table>
+
+							</div>
+
+							<br></br>
+							<h:panelGrid columns="4">
+								<h:outputText value="Analyses demandées :"
+									style="font-size:12pt;font-weight:bold" />
+								<p:selectOneMenu value="#{analyseDemandeeBean.analyseDemandee}"
+									disabled="true" style="width:20px" panelStyle="width:180px"
+									filter="true" filterMatchMode="startsWith" effect="fade">
+									<p:ajax listener="#{analyseDemandeeBean.onanalyseChange}"
+										event="change" />
+
+									<f:selectItem itemLabel="--- Analyses ---" itemValue="" />
+									<f:selectItems value="#{analyseDemandeeBean.analyses}"
+										itemLabel="#{a.libAnalyse}" itemValue="#{a.libAnalyse}" />
+								</p:selectOneMenu>
+								<p:spacer width="10"></p:spacer>
+
+								<h:inputTextarea value="#{analyseDemandeeBean.analyseDemandees}"
+									readonly="true"
+									style="font-size:12pt;font-weight:bold;height:100px;width:480px">
+									<p:ajax listener="#{analyseDemandeeBean.ontextanalyseChange}"
+										event="change" />
+
+								</h:inputTextarea>
+							</h:panelGrid>
+							<br></br>
+							<h:panelGrid columns="3">
+
+								<h:panelGrid columns="2">
+									<h:outputText value="Toxo :"
+										style="font-size:12pt;font-weight:bold" />
+									<h:inputText value="#{analyseDemandeeBean.toxo}"
+										readonly="true" style="font-size:12pt;font-weight:bold" />
+
+									<h:outputText value="TPHA :"
+										style="font-size:12pt;font-weight:bold" />
+									<h:inputText value="#{analyseDemandeeBean.tpha}"
+										readonly="true" style="font-size:12pt;font-weight:bold" />
+
+
+									<h:outputText value="Rubéole :"
+										style="font-size:12pt;font-weight:bold" />
+									<h:inputText value="#{analyseDemandeeBean.rubeole}"
+										readonly="true" style="font-size:12pt;font-weight:bold" />
+
+
+									<h:outputText value="AgHbs :"
+										style="font-size:12pt;font-weight:bold" />
+									<h:inputText value="#{analyseDemandeeBean.agHbs}"
+										readonly="true" style="font-size:12pt;font-weight:bold" />
+								</h:panelGrid>
+								<p:spacer width="10"></p:spacer>
+								<h:panelGrid columns="2">
+									<h:outputText value="Glycémie:"
+										style="font-size:12pt;font-weight:bold" />
+									<h:inputText value="#{analyseDemandeeBean.glycemie}"
+										readonly="true"
+										style="font-size:12pt;font-weight:bold;width:343px" />
+
+
+									<h:outputText value="Frottis:"
+										style="font-size:12pt;font-weight:bold;" />
+
+									<h:inputTextarea value="#{analyseDemandeeBean.frottis}"
+										readonly="true"
+										style="font-size:12pt;font-weight:bold;height:100px;width:343px" />
+								</h:panelGrid>
+							</h:panelGrid>
+
+							<div align="center">
+
+
+
+								<p:commandButton value="OK"
+									oncomplete="PF('modifAnalysedetail').hide();" update=":f1"
+									style="font-size:small;font-weight:bold"></p:commandButton>
+
+							</div>
+						</p:panel>
+					</p:outputPanel>
+
+				</p:dialog>
+
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

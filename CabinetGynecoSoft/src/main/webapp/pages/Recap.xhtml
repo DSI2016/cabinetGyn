@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Salle D'Attente</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/recap.png" width="100%"></p:graphicImage>
+
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true" life="2000" />
+
+
+			<table width="100%">
+				<tr>
+					<td align="left"><h:commandLink
+							actionListener="#{accueilBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> <p:commandLink actionListener="#{salleBean.goToListePatient}"
+							ajax="false" style="font-size:small;font-weight:bold"
+							disabled="#{connectionBean.menuGestionPat}">
+							<p:graphicImage value="/imagesMenu/patient1.png" />
+						</p:commandLink></td>
+
+
+
+					<td align="right" width="30%"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+
+						</h:panelGrid></td>
+				</tr>
+			</table>
+
+			<table border="0" width="100%">
+				<tr>
+					<td align="left"><h:outputText
+							value="Total Consultations: #{recapBean.totalCons}"
+							style="font-size:24px;font-weight:bold" /></td>
+					<td align="right"><h:outputText
+							value="Total honnoraire: #{recapBean.totalHon} DT"
+							style="font-size:24px;font-weight:bold" /></td>
+				</tr>
+			</table>
+
+			<p:accordionPanel multiple="true"  >
+				<p:tab rendered="#{recapBean.consultations.get(0).active}"
+					title="#{recapBean.consultations.get(0).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(0).idconsultation)})">
+
+
+					<p:dataTable id="tabc1" var="detCons" 
+						style="font-size:small;font-weight:bold"
+						value="#{recapBean.consDetavecId(recapBean.consultations.get(0).idconsultation)}" emptyMessage="Pas de Patients !"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+						rows="5">
+
+						<p:column width="30%">
+							<f:facet name="header">
+								<h:outputLabel value="Patiente" />
+							</f:facet>
+							<h:outputText
+								value="#{detCons.cfclient.nom} #{detCons.cfclient.prenom} "
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+							<h:outputText value="#{detCons.motifCons}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+							<h:outputText value="#{recapBean.consultations.get(0).honoraire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Payé" />
+							</f:facet>
+							<h:outputText value="#{detCons.honoraire}"
+								style="font-size:small;font-weight:bold" />
+
+						</p:column>
+						<p:column width="7%">
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								actionListener="#{recapBean.lePatient(detCons.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+
+
+				</p:tab>
+			    <p:tab rendered="#{recapBean.consultations.get(1).active}"
+					title="#{recapBean.consultations.get(1).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(1).idconsultation)})">
+
+
+					<p:dataTable id="tabc" var="detCons" 
+						style="font-size:small;font-weight:bold"
+						value="#{recapBean.consDetavecId(recapBean.consultations.get(1).idconsultation)}" emptyMessage="Pas de Patients !"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+						rows="5">
+
+						<p:column width="30%">
+							<f:facet name="header">
+								<h:outputLabel value="Patiente" />
+							</f:facet>
+							<h:outputText
+								value="#{detCons.cfclient.nom} #{detCons.cfclient.prenom} "
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+							<h:outputText value="#{detCons.motifCons}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+							<h:outputText value="#{recapBean.consultations.get(1).honoraire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Payé" />
+							</f:facet>
+							<h:outputText value="#{detCons.honoraire}"
+								style="font-size:small;font-weight:bold" />
+
+						</p:column>
+						<p:column width="7%">
+                        <p:commandButton icon="ui-icon-help" title="charger patient"
+								actionListener="#{recapBean.lePatient(detCons.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+						</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</p:tab>
+				
+				<p:tab rendered="#{recapBean.consultations.get(2).active}"
+					title="#{recapBean.consultations.get(2).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(2).idconsultation)})">
+
+
+					<p:dataTable id="tabc2" var="detCons" 
+						style="font-size:small;font-weight:bold"
+						value="#{recapBean.consDetavecId(recapBean.consultations.get(2).idconsultation)}" emptyMessage="Pas de Patients !"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+						rows="5">
+
+						<p:column width="30%">
+							<f:facet name="header">
+								<h:outputLabel value="Patiente" />
+							</f:facet>
+							<h:outputText
+								value="#{detCons.cfclient.nom} #{detCons.cfclient.prenom} "
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+							<h:outputText value="#{detCons.motifCons}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+							<h:outputText value="#{recapBean.consultations.get(2).honoraire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Payé" />
+							</f:facet>
+							<h:outputText value="#{detCons.honoraire}"
+								style="font-size:small;font-weight:bold" />
+
+						</p:column>
+						<p:column width="7%">
+                       
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								actionListener="#{recapBean.lePatient(detCons.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+							</p:commandButton>
+						
+						</p:column>
+
+					</p:dataTable>
+
+
+				</p:tab>
+	            <p:tab rendered="#{recapBean.consultations.get(3).active}"
+					title="#{recapBean.consultations.get(3).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(3).idconsultation)})">
+
+
+					<p:dataTable id="tabc4" var="detCons" 
+						style="font-size:small;font-weight:bold"
+						value="#{recapBean.consDetavecId(recapBean.consultations.get(3).idconsultation)}" emptyMessage="Pas de Patients !"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+						rows="5">
+
+						<p:column width="30%">
+							<f:facet name="header">
+								<h:outputLabel value="Patiente" />
+							</f:facet>
+							<h:outputText
+								value="#{detCons.cfclient.nom} #{detCons.cfclient.prenom} "
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+							<h:outputText value="#{detCons.motifCons}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+							<h:outputText value="#{recapBean.consultations.get(3).honoraire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Payé" />
+							</f:facet>
+							<h:outputText value="#{detCons.honoraire}"
+								style="font-size:small;font-weight:bold" />
+
+						</p:column>
+						<p:column width="7%">
+                        <p:commandButton icon="ui-icon-help" title="charger patient"
+								actionListener="#{recapBean.lePatient(detCons.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+						</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</p:tab> 		
+			    <p:tab rendered="#{recapBean.consultations.get(4).active}"
+					title="#{recapBean.consultations.get(4).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(4).idconsultation)})">
+
+
+					<p:dataTable id="tabc3" var="detCons" 
+						style="font-size:small;font-weight:bold"
+						value="#{recapBean.consDetavecId(recapBean.consultations.get(4).idconsultation)}" emptyMessage="Pas de Patients !"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+						rows="5">
+
+						<p:column width="30%">
+							<f:facet name="header">
+								<h:outputLabel value="Patiente" />
+							</f:facet>
+							<h:outputText
+								value="#{detCons.cfclient.nom} #{detCons.cfclient.prenom} "
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+							<h:outputText value="#{detCons.motifCons}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+							<h:outputText value="#{recapBean.consultations.get(4).honoraire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Payé" />
+							</f:facet>
+							<h:outputText value="#{detCons.honoraire}"
+								style="font-size:small;font-weight:bold" />
+
+						</p:column>
+						<p:column width="7%">
+                        <p:commandButton icon="ui-icon-help" title="charger patient"
+								actionListener="#{recapBean.lePatient(detCons.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+						</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</p:tab>
+			    <p:tab rendered="#{recapBean.consultations.get(5).active}"
+					title="#{recapBean.consultations.get(5).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(5).idconsultation)})">
+
+
+					<p:dataTable id="tabc6" var="detCons" 
+						style="font-size:small;font-weight:bold"
+						value="#{recapBean.consDetavecId(recapBean.consultations.get(5).idconsultation)}" emptyMessage="Pas de Patients !"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+						rows="5">
+						<p:column width="30%">
+							<f:facet name="header">
+								<h:outputLabel value="Patiente" />
+							</f:facet>
+							<h:outputText
+								value="#{detCons.cfclient.nom} #{detCons.cfclient.prenom} "
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+							<h:outputText value="#{detCons.motifCons}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+							<h:outputText value="#{recapBean.consultations.get(5).honoraire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Payé" />
+							</f:facet>
+							<h:outputText value="#{detCons.honoraire}"
+								style="font-size:small;font-weight:bold" />
+
+						</p:column>
+						<p:column width="7%">
+                        <p:commandButton icon="ui-icon-help" title="charger patient"
+								actionListener="#{recapBean.lePatient(detCons.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+						</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+				</p:tab> 
+			</p:accordionPanel>
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

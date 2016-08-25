@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.doctor.persistance.JourFrSp" table="jour_fr_sp">
+		<id name="idjourFrSp" type="java.lang.Integer">
+			<column name="idjour_fr_sp" />
+			<generator class="increment" />
+		</id>
+
+		<property name="debut" type="java.util.Date">
+			<column name="debut" not-null="true" sql-type="DATETIME" />
+		</property>
+
+		<property name="fin" type="java.util.Date">
+			<column name="fin" not-null="true" sql-type="DATETIME" />
+		</property>
+		
+		<property name="nbjs" type="int">
+			<column name="nbjs" />
+		</property>
+		
+		<property name="disc" type="string">
+			<column name="disc" length="45" not-null="true" default=" " />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.doctor.persistance.JourFr" table="jour_fr">
+		<id name="idjourFr" type="java.lang.Integer">
+			<column name="idjour_fr" />
+			<generator class="increment" />
+		</id>
+
+		<property name="date" type="java.util.Date">
+			<column name="date" sql-type="DATETIME" />
+		</property>
+		<property name="dateFin" type="java.util.Date">
+			<column name="dateFin" sql-type="DATE" />
+		</property>
+		<property name="nbj" type="int">
+			<column name="nbj" />
+		</property>
+		<property name="disc" type="string">
+			<column name="disc" length="45" not-null="true" default=" " />
+		</property>
+	</class>
+</hibernate-mapping>

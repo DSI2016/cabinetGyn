@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Echographie Gynécologuque</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/echogyn1.png" width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+
+			<p:growl id="growl" showDetail="true"
+				sticky="#{consultationDetailBean.blocage}"
+				life="#{consultationDetailBean.tempsface}" />
+			<table border="0" width="100%">
+				<tr>
+					<td width="10%"><h:commandLink
+							actionListener="#{consultationDetailBean.gotoAcceuil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> <h:commandLink
+							actionListener="#{consultationDetailBean.changeRead()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink></td>
+
+
+					<td>
+						<table border="0">
+							<tr>
+								<td><p:outputLabel value="Modéles"
+										rendered="#{connectionBean.appliquemodelechogyneco}"></p:outputLabel></td>
+								<td><p:selectOneMenu id="modeleid"
+										value="#{consultationDetailBean.idmodele}"
+										panelStyle="width:180px" filter="true"
+										filterMatchMode="startsWith" effect="fade"
+										placeholder="Modele"
+										rendered="#{connectionBean.appliquemodelechogyneco}">
+										<p:ajax event="change" update=":f1"
+											listener="#{ordonnanceBean.modeleSelectionChanged}" />
+										<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+										<f:selectItems value="#{consultationDetailBean.modeles}"
+											var="pro" itemLabel="#{pro.nommodele}"
+											itemValue="#{pro.idmodele}" />
+									</p:selectOneMenu></td>
+
+								<td><p:commandButton title="Ajouter Un Modéle"
+										rendered="#{connectionBean.ajoutmodelechogyneco}"
+										icon="ui-icon-plusthick" oncomplete="PF('diag2').show();">
+									</p:commandButton></td>
+								<td><p:commandButton title="Apliquer Un Modéle"
+										icon="ui-icon-check" disabled="#{consultationDetailBean.app}"
+										rendered="#{connectionBean.appliquemodelechogyneco}"
+										actionListener="#{consultationDetailBean.apliquerModele(consultationDetailBean.idmodele)}"
+										update=":f1:p2,:f1:p3,:f1:p4,:f1:growl,:f1:eventsDT">
+									</p:commandButton></td>
+
+								<td><p:commandButton icon="ui-icon-trash"
+										rendered="#{connectionBean.suppmodelechogyneco}"
+										title="Suppression Modéle"
+										disabled="#{consultationDetailBean.app}"
+										actionListener="#{consultationDetailBean.supprimerModeleConsEchoGyn(consultationDetailBean.idmodele)}"
+										update=":f1">
+
+										<p:confirm header="Suppression Modéle Echo Gynécologie"
+											message="Voulez-vous vraiment supprimer cet Modéle ?"
+											icon="ui-icon-alert" />
+									</p:commandButton></td>
+
+
+								<td style="width: 20%" align="right"><h:commandLink
+										actionListener="#{consultationDetailBean.viewEchogyneco}"
+										target="_blanc"
+										rendered="#{connectionBean.imprechogyneco and not consultationDetailBean.desibledImpr()}">
+										<p:graphicImage value="/imagesMenu/imprimente10.png">
+										</p:graphicImage>
+									</h:commandLink></td>
+
+							</tr>
+
+						</table>
+					</td>
+				<td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				
+				
+				</tr>
+			</table>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			<div align="center">
+			
+
+				<h:panelGrid columns="1" style=" width : 1205px;">
+					<p:panel style="width:100%;font-size:13pt;font-weight:bold">
+
+						<table style="width: 100%">
+							<tr>
+								<td align="left"><h:outputText
+										value="Patiente : #{consultationDetailBean.cfclient.prenom} #{consultationDetailBean.cfclient.nom}"
+										style="font-size:14pt;font-weight:bold" /></td>
+
+								<td align="center"></td>
+
+								<td align="right"></td>
+							</tr>
+						</table>
+
+
+						<table border="0">
+							<tr>
+
+								<td valign="top">
+									<table border="0">
+										<tr>
+											<td width="140px"><p:outputLabel value="Date"
+													style="font-size:small;font-weight:bold"></p:outputLabel> 
+													<p:inputMask mask="99/99/9999"
+													id="iddate"
+													style="width:68px;font-size:small;font-weight:bold"
+													value="#{consultationDetailBean.dateConsultation}"
+													disabled="#{consultationDetailBean.lireReadOnly()}">
+													<p:ajax event="blur" update=":f1:growl,:f1:iddate"
+														listener="#{consultationDetailBean.verifierDate()}" /></p:inputMask>
+												</td>
+											<td width="180px"><h:outputText value="Honoraires :"
+													style="font-size:small;font-weight:bold" /> <p:inputText
+													value="#{consultationDetailBean.honorairestring}"
+													id="idhonoraire"
+													style="width:50px;font-size:small;font-weight:bold"
+													disabled="#{consultationDetailBean.lireReadOnly()}"
+													update=":f1:growl">
+													
+												</p:inputText></td>
+											<td>
+												<div align="right">
+
+													<p:commandButton value="Nouvelle Consultation"
+														actionListener="#{consultationDetailBean.ajoutConsEchoGyneco()}"
+														update=":f1:p2,:f1:p3,:f1:p4,:f1"
+														style="font-size:small;font-weight:bold"
+														rendered="#{connectionBean.nouvchogyneco}"></p:commandButton>
+												</div>
+											</td>
+										</tr>
+
+									</table> <h:panelGrid columns="2">
+										<p:panel id="p4" style="width:95%;height:10%">
+											<h:panelGrid columns="2">
+												<h:outputText value="Uterus"
+													style="font-size:small;font-weight:bold" />
+												<p:selectOneMenu id="uterusid"
+													disabled="#{consultationDetailBean.lireReadOnly()}"
+													value="#{consultationDetailBean.idUterus}"
+													style="width:140px"
+													 filter="true"
+													filterMatchMode="startsWith" effect="fade"
+													placeholder="Uterus">
+													<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+													<f:selectItems value="#{consultationDetailBean.uteruss}"
+														var="pro" itemLabel="#{pro.uterus}"
+														itemValue="#{pro.iduterus}" />
+												</p:selectOneMenu>
+
+
+
+												<h:outputText value="Contours :"
+													style="font-size:small;font-weight:bold" />
+												<p:selectOneMenu id="contourss"
+													disabled="#{consultationDetailBean.lireReadOnly()}"
+													value="#{consultationDetailBean.contours}"
+													panelStyle="width:80px" filter="true"
+													filterMatchMode="startsWith" effect="fade">
+													<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+													<f:selectItem itemLabel="Réguliers" itemValue="Réguliers" />
+													<f:selectItem itemLabel="Iréguliers" itemValue="Iréguliers" />
+												</p:selectOneMenu>
+
+												<h:outputText value="Echostructure:"
+													style="font-size:small;font-weight:bold" />
+												<p:selectOneMenu id="echostructures"
+													disabled="#{consultationDetailBean.lireReadOnly()}"
+													value="#{consultationDetailBean.echostructure}"
+													panelStyle="width:80px" filter="true"
+													filterMatchMode="startsWith" effect="fade">
+													<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+													<f:selectItem itemLabel="Homogéne" itemValue="Homogene" />
+													<f:selectItem itemLabel="Hétérogène" itemValue="Heterogene" />
+												</p:selectOneMenu>
+											</h:panelGrid>
+										</p:panel>
+										<p:panel id="p2" style="width:195px;height:70%">
+											<div align="center">
+												<h:panelGrid columns="2"
+													style=" width : 100px; height : 47px;">
+
+													<h:outputText value="Long(mm)"
+														style="font-size:small;font-weight:bold" />
+
+
+													<p:spinner value="#{consultationDetailBean.longueur}"
+														disabled="#{consultationDetailBean.lireReadOnly()}"
+														readonly="#{consultationDetailBean.lireReadOnly()}"
+														min="0" max="100" size="1">
+
+													</p:spinner>
+
+													<h:outputText value="Larg(mm)"
+														style="font-size:small;font-weight:bold" />
+													<p:spinner value="#{consultationDetailBean.larg}"
+														disabled="#{consultationDetailBean.lireReadOnly()}"
+														readonly="#{consultationDetailBean.lireReadOnly()}"
+														min="0" max="100" size="1">
+
+													</p:spinner>
+
+
+													<h:outputText value="Diam A_P(mm)"
+														style="font-size:small;font-weight:bold" />
+													<p:spinner value="#{consultationDetailBean.diam}"
+														disabled="#{consultationDetailBean.lireReadOnly()}"
+														readonly="#{consultationDetailBean.lireReadOnly()}"
+														min="0" max="100" size="1">
+
+													</p:spinner>
+
+
+
+												</h:panelGrid>
+											</div>
+										</p:panel>
+									</h:panelGrid> <p:panel style="width:492px">
+
+										<p:dataTable id="eventsDT" rows="3"
+											value="#{consultationDetailBean.consultationDetails}"
+											paginator="true" paginatorPosition="bottom"
+											emptyMessage="Pas des Consultations !" 
+											currentPageReportTemplate="{currentPage} / {totalPages}"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											var="cons" selectionMode="single"
+											selection="#{consultationDetailBean.selectedCons}"
+											
+											rowKey="#{cons.idConsultationDetail}">
+											<p:ajax event="rowSelect"
+												listener="#{consultationDetailBean.onRowSelectEchiGyneco}"
+												update=":f1,:f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
+											<p:column headerText="Date" 
+												style="font-size:small;font-weight:bold;width:10px">
+												<h:outputText value="#{cons.dateConsultation}"
+													style="font-size:small;font-weight:bold" >
+													<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Europe/Paris"/>
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Conclusion"
+												style="font-size:small;font-weight:bold;width:80px">
+												<h:outputText value="#{cons.conclusion}"
+													style="font-size:small;font-weight:bold" styleClass="act" />
+											</p:column>
+											<p:column headerText="" style="width:20px">
+												<p:commandButton icon="ui-icon-pencil"
+													action="#{consultationDetailBean.modiefierConsEchoGyneco(cons)}"
+													update=":f1:p2,:f1:p3,:f1:p4,:f1"
+													rendered="#{connectionBean.modifechogyneco}" />
+												<p:commandButton icon="ui-icon-trash"
+													action="#{consultationDetailBean.supprimerConsultationEchoGyneco(cons)}"
+													title="Suppression Consultation"
+													update=":f1:p2,:f1:p3,:f1:p4,:f1,:f1:eventsDT"
+													rendered="#{connectionBean.suppechogyneco}">
+													<p:confirm header="Suppression Consultation"
+														message="Voulez-vous vraiment supprimer cette Consultation ?"
+														icon="ui-icon-alert" />
+												</p:commandButton>
+
+											</p:column>
+
+										</p:dataTable>
+										<p:confirmDialog global="true" showEffect="fade"
+											hideEffect="explode">
+											<p:commandButton value="Oui" type="button"
+												styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+											<p:commandButton value="Non" type="button"
+												styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+										</p:confirmDialog>
+									</p:panel>
+								</td>
+
+
+
+
+								<td valign="top"><p:panel id="p3" style="height:375px">
+
+										<table>
+											<tr>
+												<td valign="top"><h:panelGrid columns="2">
+														<h:outputLabel value="Ligne intra-utérine "
+															style="font-size:small;font-weight:bold" />
+														<h:inputText value="#{consultationDetailBean.ligne}"
+															disabled="#{consultationDetailBean.lireReadOnly()}"
+															style="font-size:small;font-weight:bold;height:15px;width : 620px;"
+															readonly="#{consultationDetailBean.lireReadOnly()}">
+														</h:inputText>
+
+
+
+
+
+														<p:outputLabel value="Indications:   "
+															style="font-size:small;font-weight:bold" />
+
+														<h:inputTextarea
+															value="#{consultationDetailBean.indications}"
+															style="font-size:small;font-weight:bold;width : 620px; height : 98px;"
+															readonly="#{consultationDetailBean.lireReadOnly()}"
+															disabled="#{consultationDetailBean.lireReadOnly()}" />
+														<p:outputLabel value="Annexes:   "
+															style="font-size:small;font-weight:bold" />
+
+														<h:inputTextarea
+															style="font-size:small;font-weight:bold;height:98px; width : 620px;"
+															value="#{consultationDetailBean.annexes}"
+															readonly="#{consultationDetailBean.lireReadOnly()}"
+															disabled="#{consultationDetailBean.lireReadOnly()}" />
+
+														<p:outputLabel value="Conclusion: "
+															style="font-size:small;font-weight:bold" />
+
+														<h:inputTextarea
+															value="#{consultationDetailBean.conclusion}"
+															style="font-size:small;font-weight:bold;height:95px; width : 620px;"
+															readonly="#{consultationDetailBean.lireReadOnly()}"
+															disabled="#{consultationDetailBean.lireReadOnly()}" />
+													</h:panelGrid></td>
+											</tr>
+										</table>
+
+									</p:panel></td>
+
+							</tr>
+						</table>
+
+
+						<div align="center">
+							<p:commandButton icon="ui-icon-disk" value="Valider"
+								actionListener="#{consultationDetailBean.validerConsEchoGyneco()}"
+								update=":f1,:f1:growl"></p:commandButton>
+							<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
+								value="Annuler"
+								actionListener="#{consultationDetailBean.initialisationechogyneco()}"
+								update=":f1,:f1:growl"></p:commandButton>
+						</div>
+					</p:panel>
+
+				</h:panelGrid>
+				</div>
+			
+			<br />
+			<br />
+			<br />
+			<h:form id="fmodele">
+				<p:dialog header="Nouvelle modéle" widgetVar="diag2" modal="true"
+					resizable="false">
+					<h:panelGrid cellspacing="5" columns="2">
+						<p:outputLabel style="font-weight:bold;"
+							value="Ajouter le modéle sous le nom : " />
+						<p:inputText value="#{consultationDetailBean.nommodele}" />
+					</h:panelGrid>
+					<div align="center">
+						<p:commandButton icon="ui-icon-plusthick" value="Valider"
+							update=":f1,:f1:growl"
+							actionListener="#{consultationDetailBean.ajouterModele()}"
+							oncomplete="PF('diag2').hide();" />
+						<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+							value="Annuler" onclick="PF('diag2').hide();" />
+					</div>
+
+				</p:dialog>
+			</h:form>
+		</h:form>
+		<style type="text/css">
+.act {
+	border-color: red;
+}
+</style>
+
+	</ui:define>
+</ui:composition>
+</html>

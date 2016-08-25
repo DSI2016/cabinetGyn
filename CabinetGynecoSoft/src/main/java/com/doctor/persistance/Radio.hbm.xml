@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Radio" table="radio"
+		>
+		<id name="idradio" type="java.lang.Integer">
+			<column name="idradio" />
+			<generator class="increment" />
+		</id>
+		<property name="dateRadios" type="java.sql.Date">
+			<column name="dateRadios" />
+		</property>
+		
+		<property name="examenComplementaire" type="string">
+			<column name="examenComplementaire" sql-type="longtext"/>
+		</property>
+		
+		<property name="renseignementClinique" type="string">
+			<column name="renseignementClinique" sql-type="longtext" />
+		</property>
+		
+		<property name="resultat" type="string">
+			<column name="resultat" sql-type="longtext" />
+		</property>
+		
+		<property name="proprietaire" type="string">
+			<column name="proprietaire" length="255" />
+		</property>
+		
+		<property name="possesseur" type="string">
+			<column name="possesseur" />
+		</property>
+		
+         <many-to-one name="consultationDetail" class="com.doctor.persistance.ConsultationDetail" fetch="select">
+            <column name="idconsultationDetail"  />
+        </many-to-one>
+   <many-to-one name="patient" class="com.doctor.persistance.Cfclient" fetch="select">
+            <column name="idPatient"  />
+        </many-to-one>
+	</class>
+	</hibernate-mapping>

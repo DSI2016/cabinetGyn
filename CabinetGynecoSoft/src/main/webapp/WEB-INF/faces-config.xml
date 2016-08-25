@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+
+
+	<navigation-rule>
+		<from-view-id>/pages2/connection.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{connectionBean.connecter()}</from-action>
+			<from-outcome>accepted</from-outcome>
+			<to-view-id>/pages/Accueil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+
+
+	<navigation-rule>
+		<from-view-id>/pages/GestionPatient.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{cfclientBean.versAntecedent(code)}</from-action>
+			<from-outcome>anteced</from-outcome>
+			<to-view-id>/pages/Antecedent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>/pages/GestionPatient.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{cfclientBean.versSalleAttente()}</from-action>
+			<from-outcome>versSalle</from-outcome>
+			<to-view-id>/pages/GestionSalleAttente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/FichePatient.xhtml</from-view-id>
+
+		<navigation-case>
+			<from-action>#{fichePatientBean.nouvelleConsult()}</from-action>
+			<from-outcome>consGross</from-outcome>
+			<to-view-id>/pages/NouvelleConsultation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/FichePatient.xhtml</from-view-id>
+
+		<navigation-case>
+			<from-action>#{consultationDetailBean.selectedHisto(ConsultationDetail)}</from-action>
+			<from-outcome>Obst</from-outcome>
+			<to-view-id>/pages/ConsultationGrossesse.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/FichePatient.xhtml</from-view-id>
+
+		<navigation-case>
+			<from-action>#{consultationDetailBean.selectedHisto(c)}</from-action>
+			<from-outcome>Gyneco</from-outcome>
+			<to-view-id>/pages/ConsultationGyneco.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

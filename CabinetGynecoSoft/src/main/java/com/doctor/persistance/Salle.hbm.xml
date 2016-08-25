@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.doctor.persistance.Salle" table="salle" >
+        <id name="code" type="java.lang.Integer">
+            <column name="code" />
+              <generator class="increment" />
+        </id>
+        <many-to-one name="cfclient" class="com.doctor.persistance.Cfclient" fetch="select">
+            <column name="codeclient"  />
+        </many-to-one>
+        <property name="heure" type="string">
+            <column name="heure" length="8"  />
+        </property>
+        <property name="motif" type="string">
+            <column name="motif" length="45"  />
+        </property>
+        
+        <property name="notes" type="string">
+            <column name="notes" sql-type="mediumtext"   />
+        </property>
+         <property name="reponse" type="string">
+            <column name="reponse" sql-type="mediumtext"  />
+        </property>
+        <property name="ordre" type="int">
+            <column name="ordre"  />
+        </property>
+    </class>
+</hibernate-mapping>

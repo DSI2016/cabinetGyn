@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/templates/templateGyneco.xhtml">
+	<ui:define name="title">Horaires De Travail</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/horairetr.png" width="100%"></p:graphicImage>
+		<br />
+		<h:form>
+
+			<table width="100%">
+				<tr>
+					<td width="15%" align="left" valign="top">
+					    <h:commandLink
+							actionListener="#{accueilBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> 
+						<h:commandLink actionListener="#{accueilBean.retourDeHoraire()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink>
+						<p:spacer width="10px"></p:spacer>
+						<h:commandLink
+							actionListener="#{saisonBean.goToReglageSaison()}"
+							title="Réglage des saison" rendered="#{connectionBean.gestSais}">
+							<p:graphicImage value="/images/saison3.png" width="50"
+								height="50"></p:graphicImage>
+						</h:commandLink>
+					</td>
+					<td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form id="f1">
+			<p:growl life="4600" showDetail="true" />
+			<p:panel>
+				<div align="center">
+					<h:panelGrid columns="1">
+						<p:outputLabel
+							value="Les horaires en cours sont les horaires  #{saisonBean.saisonEnCour} " />
+					</h:panelGrid>
+				</div>
+				<h:panelGrid columns="3" width="100%" style="font-size: 10pt">
+
+					<p:panel header="Horaire d'hiver ( #{saisonBean.hiver} )"
+						styleClass="#{saisonBean.getEtat(saisonBean.DEF.select)}">
+						<h:panelGrid columns="1" style="font-size: 8pt" width="100%">
+							<p:panel header="Jours de travaille et horaire"
+								style="height: 100%;">
+								<h:panelGrid columns="2" width="100%">
+									<h:panelGrid columns="2" width="100%">
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.lun)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.lun.active)}"
+											itemLabel="Lundi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefLun}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.mar)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.mar.active)}"
+											itemLabel="Mardi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefMar}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.mer)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.mer.active)}"
+											itemLabel="Mercredi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefMer}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.jeu)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.jeu.active)}"
+											itemLabel="Jeudi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefJeu}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.ven)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.ven.active)}"
+											itemLabel="Vendredi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefVen}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.sam)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.sam.active)}"
+											itemLabel="Samedi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefSam}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.DEF.dim)}"
+											value="#{saisonBean.toBoolean(saisonBean.DEF.dim.active)}"
+											itemLabel="Dimanche">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorDefDim}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+									<h:panelGrid columns="1">
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefLun}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefMar}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefMer}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefJeu}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefVen}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefSam}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2DefDim}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGrid>
+					</p:panel>
+
+					<p:panel header="Horaire d'été ( #{saisonBean.eteDuree} )"
+						styleClass="#{saisonBean.getEtat(saisonBean.ETE.select)}">
+						<h:panelGrid columns="1" style="font-size: 8pt" width="100%">
+							<p:panel header="Jours de travaille et horaire"
+								style="height: 100%;">
+								<h:panelGrid columns="2" width="100%">
+									<h:panelGrid columns="2" width="100%">
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.lun)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.lun.active)}"
+											itemLabel="Lundi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteLun}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.mar)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.mar.active)}"
+											itemLabel="Mardi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteMar}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.mer)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.mer.active)}"
+											itemLabel="Mercredi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteMer}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.jeu)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.jeu.active)}"
+											itemLabel="Jeudi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteJeu}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.ven)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.ven.active)}"
+											itemLabel="Vendredi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteVen}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.sam)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.sam.active)}"
+											itemLabel="Samedi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteSam}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.ETE.dim)}"
+											value="#{saisonBean.toBoolean(saisonBean.ETE.dim.active)}"
+											itemLabel="Dimanche">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorEteDim}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+									<h:panelGrid columns="1">
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteLun}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteMar}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteMer}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteJeu}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteVen}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteSam}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2EteDim}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGrid>
+					</p:panel>
+
+					<p:panel header="Horaire de Ramadhan ( #{saisonBean.ramadhan} )"
+						styleClass="#{saisonBean.getEtat(saisonBean.RAM.select)}">
+						<h:panelGrid columns="1" style="font-size: 8pt" width="100%">
+							<p:panel header="Jours de travaille et horaire"
+								style="height: 100%;">
+								<h:panelGrid columns="2" width="100%">
+									<h:panelGrid columns="2" width="100%">
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.lun)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.lun.active)}"
+											itemLabel="Lundi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamLun}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.mar)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.mar.active)}"
+											itemLabel="Mardi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamMar}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.mer)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.mer.active)}"
+											itemLabel="Mercredi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamMer}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.jeu)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.jeu.active)}"
+											itemLabel="Jeudi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamJeu}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.ven)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.ven.active)}"
+											itemLabel="Vendredi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamVen}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.sam)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.sam.active)}"
+											itemLabel="Samedi">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamSam}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+
+										<p:selectBooleanCheckbox
+											valueChangeListener="#{saisonBean.change(saisonBean.RAM.dim)}"
+											value="#{saisonBean.toBoolean(saisonBean.RAM.dim.active)}"
+											itemLabel="Dimanche">
+											<p:ajax update=":f1" />
+										</p:selectBooleanCheckbox>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHorRamDim}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+									<h:panelGrid columns="1">
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamLun}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamMar}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamMer}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamJeu}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamVen}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamSam}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+										<p:selectOneMenu style="width: 125px"
+											value="#{saisonBean.idHor2RamDim}" panelStyle="width:125px"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="--Horaire--" itemValue="-1" />
+											<f:selectItems value="#{horaireBean.horaires}" var="h"
+												itemLabel="#{h.toString()}" itemValue="#{h.idHoraire}" />
+											<p:ajax update=":f1" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGrid>
+					</p:panel>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<h:form>
+			<p:panel>
+
+			</p:panel>
+			<br />
+			<br />
+		</h:form>
+
+
+		<style type="text/css">
+.active>.ui-panel-titlebar {
+	background: #2E9AFE;
+}
+</style>
+	</ui:define>
+</ui:composition>
+</html>

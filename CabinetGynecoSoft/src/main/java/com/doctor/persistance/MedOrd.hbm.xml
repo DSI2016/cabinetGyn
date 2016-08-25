@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.MedOrd" table="medord"
+		>
+		<id name="idMedOrd" type="java.lang.Integer">
+			<column name="idMedOrd" />
+			<generator class="increment" />
+		</id>
+
+		<property name="posologie" type="string">
+			<column name="posologie" sql-type="longtext" />
+		</property>
+
+
+		<property name="unite" type="string">
+			<column name="unite" length="45" />
+		</property>
+
+		<property name="qte" type="int">
+			<column name="qte" />
+		</property>
+
+
+		<many-to-one class="com.doctor.persistance.Medicament"
+			fetch="join" name="medicament">
+			<column name="idMed" />
+		</many-to-one>
+
+		<many-to-one class="com.doctor.persistance.ModeleOrdonnance"
+			fetch="select" name="modeleOrdonnance">
+			<column name="idModeleOrd" />
+		</many-to-one>
+		
+		<many-to-one class="com.doctor.persistance.Ordonnance"
+			fetch="select" name="ordonnance">
+			<column name="idOrd" />
+		</many-to-one>
+
+
+
+	</class>
+</hibernate-mapping>

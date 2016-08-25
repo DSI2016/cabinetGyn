@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">
+Consultations Infertiluté</ui:define>
+	<ui:define name="body">
+
+		<div align="center">
+			<p:graphicImage value="/imagesTitre/infertilute.png" width="100%"></p:graphicImage>
+		</div>
+
+		<br />
+		<h:form id="f3">
+			<table border="0" width="100%">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{sterileBean.goToAcceuil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+								<h:commandLink actionListener="#{sterileBean.goToRetour()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+
+							</h:panelGrid>
+						</div></td>
+						
+						<td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true" sticky="#{sterileBean.blocage}" />
+			<div align="center">
+				<p:panel style="width:90%">
+				<table><tr><td><h:panelGrid columns="4" cellspacing="10">
+						<h:outputText value="Date mariage"
+							style="font-size:small;font-weight:bold" />
+						<h:inputText id="im" value="#{sterileBean.dateMariage}"
+							readonly="#{connectionBean.modifSterilite}" pattern="dd/MM/yyyy">
+							<p:ajax event="blur" update="im,:f1"
+								listener="#{sterileBean.dateMariageChange()}" />
+						</h:inputText>
+
+						<h:outputText value="Stérilité"
+							style="font-size:small;font-weight:bold" />
+
+						<h:selectOneMenu value="#{sterileBean.sterilite}" style="font-weight:bold;font-size:small"
+							disabled="#{connectionBean.modifSterilite}">
+							<p:ajax event="change" listener="#{sterileBean.sterilChange}">
+							</p:ajax>
+							<f:selectItem itemLabel="Aucune" itemValue="Aucune"
+								style="font-size:small;font-weight:bold" />
+							<f:selectItem itemLabel="Primaire" itemValue="Primaire"
+								style="font-size:small;font-weight:bold" />
+							<f:selectItem itemLabel="Secondaire" itemValue="Secondaire"
+								style="font-size:small;font-weight:bold" />
+						</h:selectOneMenu>
+						</h:panelGrid>
+				</td><td><h:panelGrid columns="4" cellspacing="10">
+
+						<h:outputText value="Depuis"
+							style="font-size:small;font-weight:bold" />
+
+						<h:inputText id="dep" value="#{sterileBean.dateDepuis}"
+							readonly="#{connectionBean.modifSterilite}" pattern="dd/MM/yyyy">
+
+							<p:ajax event="blur" update="dep,:f1"
+								listener="#{sterileBean.depuisChange()}" />
+						</h:inputText>
+
+
+						<h:outputText value="Cohabitation"
+							style="font-size:small;font-weight:bold" />
+
+						<h:selectOneMenu value="#{sterileBean.cohabitation}" style="font-weight:bold;font-size:small"
+							disabled="#{connectionBean.modifSterilite}">
+							<p:ajax event="change"
+								listener="#{sterileBean.cohabitationChange}">
+							</p:ajax>
+							<f:selectItem itemLabel="--Sélectionner--" itemValue=""
+								style="font-size:small;font-weight:bold" />
+							<f:selectItem itemLabel="Régulière" itemValue="Régulière"
+								style="font-size:small;font-weight:bold" />
+							<f:selectItem itemLabel="Irrégulière" itemValue="Irrégulière"
+								style="font-size:small;font-weight:bold" />
+						</h:selectOneMenu>
+
+					</h:panelGrid>
+				</td></tr></table>
+											
+				</p:panel>
+
+				<p:panel style="width: 90%">
+
+					<table>
+						<tr>
+							<td valign="top"><p:panel style="width:450px">
+									<p:outputLabel
+										value="#{sterileBean.cfclient.prenom} #{sterileBean.cfclient.nom} (#{sterileBean.ageFem} ans)"
+										style="font-weight:bold;color:red;font-size:14pt" />
+									<br></br>
+									<br></br>
+									<h:panelGrid columns="3">
+										<h:outputText value="Cycle: "
+											style="font-weight:bold;color:red;font-size:small" />
+
+										<h:inputText value="#{sterileBean.cycle}" id="ip"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small">
+											<p:ajax event="blur" update="ip"
+												listener="#{sterileBean.cycleChange()}" />
+										</h:inputText>
+										<h:selectOneMenu style="font-weight:bold;font-size:small"
+											value="#{sterileBean.cycleList}"
+											disabled="#{connectionBean.modifSterilite}">
+											<p:ajax event="change"
+												listener="#{sterileBean.cycleListChange()}" />
+											<f:selectItem itemLabel="--Sélectionner--" itemValue=""
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Régulier" itemValue="Régulier"
+												disabled="#{connectionBean.modifSterilite}"
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Irrégulier" itemValue="Irrégulier"
+												style="font-size:small;font-weight:bold" />
+										</h:selectOneMenu>
+
+										<h:outputText value="Règles: "
+											style="font-weight:bold;color:red;font-size:small" />
+										<h:inputText value="#{sterileBean.regles}" id="i2"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small">
+											<p:ajax event="blur" update="i2"
+												listener="#{sterileBean.reglesChange() }" />
+										</h:inputText>
+
+										<h:selectOneMenu value="#{sterileBean.reglesList}"
+											disabled="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small">
+
+											<p:ajax event="change"
+												listener="#{sterileBean.regleListChange() }" />
+
+
+											<f:selectItem itemLabel="--Sélectionner--" itemValue=""
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Normales" itemValue="Normales"
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Abondantes" itemValue="Abondantes"
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Faibles" itemValue="Faibles"
+												style="font-size:small;font-weight:bold" />
+										</h:selectOneMenu>
+
+										<h:outputText value="Dysménorrhée: "
+											style="font-weight:bold;color:red;font-size:small" />
+										<h:inputText value="#{sterileBean.dysmenorhe}" id="i3"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small">
+											<p:ajax event="blur" update="i3"
+												listener="#{sterileBean.dysmenoChange() }" />
+										</h:inputText>
+										<h:panelGrid columns="2">
+										<p:selectBooleanCheckbox value="#{sterileBean.spanio}"
+												style="font-size:small;font-weight:bold">
+												<p:ajax envent="change"
+													listener="#{sterileBean.spanioChange}"></p:ajax>
+											</p:selectBooleanCheckbox>
+											<h:outputText value="Spanio: "
+												style="font-size:small;font-weight:bold" />
+										</h:panelGrid>
+										
+										
+									</h:panelGrid>
+
+									<h:panelGrid columns="2">
+										<h:outputText value="Antécédents:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.antecedent}" id="i4"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+
+											<p:ajax event="blur" update="i4"
+												listener="#{sterileBean.anteChange() }" />
+										</h:inputTextarea>
+
+
+										<h:outputText value="Examens Clinique:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.examens}" id="i5"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i5"
+												listener="#{sterileBean.examChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Dosage Hormonaux:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.hormone}" id="i6"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i6"
+												listener="#{sterileBean.hormoneChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Echo. Pelvienne:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.echoPelvienne}" id="i7"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i7"
+												listener="#{sterileBean.echoChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="HSG:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.hsg}" id="i8"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i8"
+												listener="#{sterileBean.hsgChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Hystéroscopie:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.hysteroscopie}" id="i9"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i9"
+												listener="#{sterileBean.hysteroChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Coelioscopie:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.coelioscopie}" id="i10"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i10"
+												listener="#{sterileBean.coelioChange() }" />
+										</h:inputTextarea>
+
+
+										<h:outputText value="Test Post Coital:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.coital}" id="i11"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i11"
+												listener="#{sterileBean.testChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Traitements Suivis:"
+											style="font-weight:bold;font-size:small;color:red" />
+										<h:inputTextarea value="#{sterileBean.traitement}" id="i12"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:40px">
+											<p:ajax event="blur" update="i12"
+												listener="#{sterileBean.traitChange() }" />
+										</h:inputTextarea>
+
+
+									</h:panelGrid>
+
+								</p:panel></td>
+							<td valign="top" align="center"><p:graphicImage
+									url="/images/femhom.jpg"></p:graphicImage></td>
+							<td valign="top"><p:panel style="width:450px">
+
+									<p:outputLabel
+										value="#{sterileBean.cfclient.prenomC} #{sterileBean.cfclient.nomC} (#{sterileBean.ageHom} ans)"
+										style="font-weight:bold;color:blue;font-size:14pt" />
+									<br></br>
+									<br></br>
+									<h:panelGrid columns="2">
+										<h:outputText value="Rap/sem "
+											style="font-weight:bold;color:blue;font-size:small" />
+
+										<p:spinner value="#{sterileBean.rapport}" id="i14" min="0"
+											readonly="#{connectionBean.modifSterilite}" max="100"
+											size="1">
+											<p:ajax event="blur" update="i14"
+												listener="#{sterileBean.rapChange() }"
+												style="font-weight:bold;font-size:small" />
+										</p:spinner>
+
+										<h:outputText value="Habitude: "
+											style="font-weight:bold;color:blue;font-size:small" />
+										<h:inputText value="#{sterileBean.habitude}" id="i13"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;">
+											<p:ajax event="blur" update="i13"
+												listener="#{sterileBean.habitudeChange() }" />
+										</h:inputText>
+
+
+
+
+										<h:outputText value="Antécédents:"
+											style="font-weight:bold;font-size:small;color:blue" />
+										<h:inputTextarea id="i15" value="#{sterileBean.antecedentH}"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:70px">
+											<p:ajax event="blur" update="i15"
+												listener="#{sterileBean.antHChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Examens Cliniques:"
+											style="font-weight:bold;font-size:small;color:blue" />
+										<h:inputTextarea id="i16" value="#{sterileBean.examensH}"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:70px">
+											<p:ajax event="blur" update="i16"
+												listener="#{sterileBean.examHChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Dosage Hormonaux:"
+											style="font-weight:bold;font-size:small;color:blue" />
+										<h:inputTextarea id="i17" value="#{sterileBean.hormoneH}"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:70px">
+											<p:ajax event="blur" update="i17"
+												listener="#{sterileBean.hormoneHChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Spermocytogramme:"
+											style="font-weight:bold;font-size:small;color:blue" />
+										<h:inputTextarea id="i18" value="#{sterileBean.spermH}"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:70px">
+											<p:ajax event="blur" update="i18"
+												listener="#{sterileBean.spermHChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Bilan infectieux:"
+											style="font-weight:bold;font-size:small;color:blue" />
+										<h:inputTextarea id="i19" value="#{sterileBean.bilanH}"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:70px">
+											<p:ajax event="blur" update="i19"
+												listener="#{sterileBean.bilanChange() }" />
+										</h:inputTextarea>
+
+										<h:outputText value="Traitements Suivis:"
+											style="font-weight:bold;font-size:small;color:blue" />
+										<h:inputTextarea id="i20" value="#{sterileBean.traitementH}"
+											readonly="#{connectionBean.modifSterilite}"
+											style="font-weight:bold;font-size:small;width:260px;height:70px">
+											<p:ajax event="blur" update="i20"
+												listener="#{sterileBean.traitementHChange() }" />
+										</h:inputTextarea>
+									</h:panelGrid>
+
+								</p:panel>
+								<div align="center">
+									<br />
+
+								</div></td>
+						</tr>
+					</table>
+				</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

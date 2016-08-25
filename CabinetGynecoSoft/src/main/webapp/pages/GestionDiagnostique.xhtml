@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Diagnostiques</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/listeDiagnostiques.png" width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+			<table width="100%" border="0">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink  actionListener="#{accueilBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink actionListener="#{accueilBean.goToParametrage()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+					<td><p:growl id="growl" life="3000" />
+
+
+						<div align="left">
+							<h:panelGrid columns="4">
+								<h:outputText value="Recherche: "
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{diagnostiqueBean.valeurRecherche}" />
+
+								<p:commandButton icon="ui-icon-search" title="Recherche Docteur"
+									update=":f1" />
+								<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+									actionListener="#{diagnostiqueBean.annulerRecherche}"
+									update=":f1" />
+
+							</h:panelGrid>
+						</div></td>
+				    <td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+			<div align="center">
+				<div style="width: 50%">
+					<div align="right">
+						<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+							rendered="#{connectionBean.ajouterDiag}" update=":f1:f2:idDialog"
+							oncomplete="PF('dialogDiag').show()"
+							actionListener="#{diagnostiqueBean.ajouterDiagnostique()}" />
+					</div>
+
+					<p:dataTable var="diagnostique" id="tabprof" first="#{diagnostiqueBean.currentP}"
+						value="#{diagnostiqueBean.diagnostiques}" border="1"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+						<p:column width="10%">
+							<f:facet name="header">
+								<h:outputLabel value="Code" />
+							</f:facet>
+    #{diagnostique.iddiagnostique}
+</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Diagnostique" />
+							</f:facet>
+    #{diagnostique.diagnostique}
+</p:column>
+						<p:column style="width:20%">
+							<p:commandButton rendered="#{connectionBean.modifierDiag}"
+								actionListener="#{diagnostiqueBean.modifierDiagnostique(diagnostique)}"
+								update=":f1:f2:idDialog" oncomplete="PF('dialogDiag').show()"
+								icon="ui-icon-pencil" title="Modification" />
+							<p:commandButton rendered="#{connectionBean.supprimDiag}"
+								actionListener="#{diagnostiqueBean.Supprimer(diagnostique.iddiagnostique)}"
+								icon="ui-icon-trash" title="Suppression Diagnostique"
+								update=":f1">
+								<p:confirm header="Suppression Diagnostique"
+									message="Voulez-vous vraiment supprimer cette Diagnostique ?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+					<h:form id="f2">
+						<p:dialog id="idDialog" showHeader="false" widgetVar="dialogDiag"
+							modal="true" closable="false" resizable="false">
+
+							<p:panel id="dialog"
+								header="#{diagnostiqueBean.action} de diagnostique">
+								<h:panelGrid columns="2">
+									<p:outputLabel value="Diagnostique : " />
+									<p:inputText value="#{diagnostiqueBean.diagnostique}" id="pro" />
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										oncomplete="handleLoginRequest(xhr, status, args)"
+										actionListener="#{diagnostiqueBean.validation()}"
+										update=":f1:growl" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										actionListener="#{diagnostiqueBean.closeDiag()}" update=":f1" />
+								</h:panelGrid>
+							</p:panel>
+						</p:dialog>
+						<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogDiag').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogDiag').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+					</h:form>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

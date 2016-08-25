@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Analyse" table="analyse">
+		<id name="idanalyse" type="java.lang.Integer">
+			<column name="idanalyse" />
+			<generator class="increment" />
+		</id>
+		
+		<property name="libAnalyse" type="string">
+			<column name="libAnalyse"  sql-type="mediumtext"/>
+		</property>
+
+	</class>
+	</hibernate-mapping>

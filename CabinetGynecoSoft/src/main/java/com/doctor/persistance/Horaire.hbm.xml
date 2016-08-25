@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class 
+  name="com.doctor.persistance.Horaire" table="horaire">
+  <id name="idHoraire" type="java.lang.Integer">
+   <column name="idhoraire"/>
+   <generator class="increment"/>
+  </id>
+  
+  <property generated="never" lazy="false" name="debut" type="java.util.Date">
+   <column default="08:00:00" name="debut" sql-type="TIME"/>
+  </property>
+  
+  <property generated="never" lazy="false" name="fin" type="java.util.Date">
+   <column default="19:00:00" name="fin" sql-type="TIME"/>
+  </property>
+  
+ </class>
+</hibernate-mapping>

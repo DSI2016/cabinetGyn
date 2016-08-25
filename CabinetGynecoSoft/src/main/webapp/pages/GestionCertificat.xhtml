@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+
+	<ui:define name="title">
+	
+		Liste Certificats
+	</ui:define>
+
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/listemodelescertificats.png"
+			width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+		<p:growl id="growl" showDetail="true" life="3000" />
+			<table border="0" width="100%">
+				<tr>
+					<td width="90%"><h:commandLink
+							actionListener="#{analyseDemandeeBean.goToAcceuil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> <h:commandLink actionListener="#{certificatBean.retour()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink></td>
+					<td><h:commandLink
+							actionListener="#{certificatBean.viewCertificat}" target="_blanc">
+							<p:graphicImage value="/imagesMenu/imprimente10.png">
+							</p:graphicImage>
+
+						</h:commandLink></td>
+					<td align="right"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="25px" />
+							</h:commandLink>
+
+						</h:panelGrid></td>
+				</tr>
+			</table>
+			<div align="center">
+				<table>
+					<tr>
+						<td><p:dataTable var="certificat" id="tabprof"
+								value="#{certificatBean.certificats}"
+								style="width:400px;height:600px" border="1" paginator="true"
+								paginatorPosition="bottom"
+								paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+								rows="10" selectionMode="single"
+								selection="#{certificatBean.selectedCertif}"
+								rowKey="#{certificat.idcertificat}">
+								<p:ajax event="rowSelect"
+									listener="#{certificatBean.onRowSelectcertif}"
+									update=":f1:f4:carDetail" />
+								<p:column headerText="Liste certificats"
+									style="font-weight:bold">
+									<h:outputText value="#{certificat.nomCertificat}"
+										style="font-weight:bold" />
+								</p:column>
+
+
+
+
+							</p:dataTable></td>
+
+						<td valign="top"><h:form id="f4">
+								<p:panel id="carDetail"
+									header="#{certificatBean.action} Modéle certificat">
+									<h:panelGrid columns="3">
+										<p:outputLabel value="Certificat" style="font-weight:bold" />
+										<p:inputText value="#{certificatBean.nomCertificat}"
+											style="width:690px" id="pro" />
+										<p:outputLabel>
+											<h:message for="pro"
+												style="FONT-SIZE: small; 
+							FONT-STYLE: italic; color: red;" />
+										</p:outputLabel>
+										<p:outputLabel value="Text" style="font-weight:bold"></p:outputLabel>
+										<p:editor value="#{certificatBean.remarque}"
+											controls="bold underline strikethrough size color highlight bullets numbering image cut copy paste pastetext print"
+											style="width:700px;height:300px">
+										</p:editor>
+										<p:outputPanel />
+									</h:panelGrid>
+									<div align="center">
+										<p:commandButton value="Valider" icon="ui-icon-check"
+											actionListener="#{certificatBean.validation()}"
+											update=":f1:f4:carDetail,:f1:growl,:f1" />
+										<p:commandButton value="Annuler"
+											icon="ui-icon-arrowreturnthick-1-n"
+											actionListener="#{certificatBean.closeDiag()}" update=":f1" />
+
+									</div>
+
+								</p:panel>
+							</h:form></td>
+
+					</tr>
+				</table>
+			</div>
+
+
+
+
+
+
+
+			<br />
+			<br />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

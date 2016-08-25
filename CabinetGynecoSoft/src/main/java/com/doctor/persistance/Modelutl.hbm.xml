@@ -1,0 +1,864 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Modelutl" table="modelutl"
+		>
+		<id name="idmodelUtl" type="java.lang.Integer">
+			<column name="idmodelUtl" />
+			<generator class="increment" />
+		</id>
+		<property name="nomModelUtl" type="string">
+			<column name="nomModelUtl" length="45" />
+		</property>
+		<property name="menuSal" type="string">
+			<column name="menuSal" length="1" />
+		</property>
+
+		<property name="menuGestPat" type="string">
+			<column name="menuGestPat" length="1" />
+		</property>
+
+		<property name="menuParametre" type="string">
+			<column name="menuParametre" length="1" />
+		</property>
+
+		<property name="menuRapport" type="string">
+			<column name="menuRapport" length="1" />
+		</property>
+
+		<property name="menuGestUtl" type="string">
+			<column name="menuGestUtl" length="1" />
+		</property>
+
+		<property name="ajoutPatient" type="string">
+			<column name="ajoutPatient" length="1" />
+		</property>
+
+		<property name="verSal" type="string">
+			<column name="verSal" length="1" />
+		</property>
+
+		<property name="modPatient" type="string">
+			<column name="modPatient" length="1" />
+		</property>
+
+		<property name="detPatient" type="string">
+			<column name="detPatient" length="1" />
+		</property>
+
+		<property name="chargPatient" type="string">
+			<column name="chargPatient" length="1" />
+		</property>
+
+		<property name="supPatient" type="string">
+			<column name="supPatient" length="1" />
+		</property>
+
+		<property name="tabInfGenAjoutPat" type="string">
+			<column name="tabInfGenAjoutPat" length="1" />
+		</property>
+
+		
+
+		<property name="tabCntctAjoutPat" type="string">
+			<column name="tabCntctAjoutPat" length="1" />
+		</property>
+
+		<property name="tabInfoConjAjoutPat" type="string">
+			<column name="tabInfoConjAjoutPat" length="1" />
+		</property>
+
+		<property name="tabAutreInfAjoutPat" type="string">
+			<column name="tabAutreInfAjoutPat" length="1" />
+		</property>
+
+
+		<property name="gestDoc" type="string">
+			<column name="gestDoc" length="1" />
+		</property>
+
+		<property name="gestProf" type="string">
+			<column name="gestProf" length="1" />
+		</property>
+
+		<property name="gestVil" type="string">
+			<column name="gestVil" length="1" />
+		</property>
+
+		<property name="gestClin" type="string">
+			<column name="gestClin" length="1" />
+		</property>
+
+		<property name="rappCertif" type="string">
+			<column name="rappCertif" length="1" />
+		</property>
+
+		<property name="rappOrdnce" type="string">
+			<column name="rappOrdnce" length="1" />
+		</property>
+
+		<property name="rappLettre" type="string">
+			<column name="rappLettre" length="1" />
+		</property>
+
+		<property name="monterPatSal" type="string">
+			<column name="monterPatSal" length="1" />
+		</property>
+
+		<property name="desdrePatSal" type="string">
+			<column name="desdrePatSal" length="1" />
+		</property>
+
+		<property name="permutPatSal" type="string">
+			<column name="permutPatSal" length="1" />
+		</property>
+
+		<property name="premierPatSal" type="string">
+			<column name="premierPatSal" length="1" />
+		</property>
+
+		<property name="dernierPatSal" type="string">
+			<column name="dernierPatSal" length="1" />
+		</property>
+
+		<property name="supPatSal" type="string">
+			<column name="supPatSal" length="1" />
+		</property>
+
+		<property name="chargPatSal" type="string">
+			<column name="chargPatSal" length="1" />
+		</property>
+
+		<property name="ajoutDoc" type="string">
+			<column name="ajoutDoc" length="1" />
+		</property>
+
+		<property name="modifDoc" type="string">
+			<column name="modifDoc" length="1" />
+		</property>
+
+		<property name="supDoc" type="string">
+			<column name="supDoc" length="1" />
+		</property>
+
+		<property name="ajoutProf" type="string">
+			<column name="ajoutProf" length="1" />
+		</property>
+
+		<property name="modifProf" type="string">
+			<column name="modifProf" length="1" />
+		</property>
+
+		<property name="supProf" type="string">
+			<column name="supProf" length="1" />
+		</property>
+
+		<property name="ajoutVil" type="string">
+			<column name="ajoutVil" length="1" />
+		</property>
+
+		<property name="modifVil" type="string">
+			<column name="modifVil" length="1" />
+		</property>
+
+		<property name="supVil" type="string">
+			<column name="supVil" length="1" />
+		</property>
+
+		<property name="ajoutClin" type="string">
+			<column name="ajoutClin" length="1" />
+		</property>
+
+		<property name="modifClin" type="string">
+			<column name="modifClin" length="1" />
+		</property>
+
+		<property name="supClin" type="string">
+			<column name="supClin" length="1" />
+		</property>
+
+		<property name="antecedent" type="string">
+			<column name="antecedent" length="1" />
+		</property>
+
+		<property name="echoGyn" type="string">
+			<column name="echoGyn" length="1" />
+		</property>
+
+		<property name="echoObs" type="string">
+			<column name="echoObs" length="1" />
+		</property>
+
+		<property name="gynecologie" type="string">
+			<column name="gynecologie" length="1" />
+		</property>
+
+		<property name="consultGros" type="string">
+			<column name="consultGros" length="1" />
+		</property>
+
+		<property name="sterilite" type="string">
+			<column name="sterilite" length="1" />
+		</property>
+
+		<property name="tabAntecedent" type="string">
+			<column name="tabAntecedent" length="1" />
+		</property>
+		<property name="tabGynecoObs" type="string">
+			<column name="tabGynecoObs" length="1" />
+		</property>
+		<property name="tabHistGross" type="string">
+			<column name="tabHistGross" length="1" />
+		</property>
+		<property name="tabContraception" type="string">
+			<column name="tabContraception" length="1" />
+		</property>
+		<property name="supHistGross" type="string">
+			<column name="supHistGross" length="1" />
+		</property>
+		<property name="modifHistGross" type="string">
+			<column name="modifHistGross" length="1" />
+		</property>
+		<property name="supConctraeption" type="string">
+			<column name="supConctraeption" length="1" />
+		</property>
+		<property name="modifContraception" type="string">
+			<column name="modifContraception" length="1" />
+		</property>
+		<property name="nouvGross" type="string">
+			<column name="nouvGross" length="1" />
+		</property>
+		<property name="nouvContraception" type="string">
+			<column name="nouvContraception" length="1" />
+		</property>
+
+		<property name="selectAntecedent" type="boolean">
+			<column name="selectAntecedent" length="1" default="false" />
+		</property>
+
+		<property name="ajoutAntecedentListe" type="boolean">
+			<column name="ajoutAntecedentListe" length="1" default="false" />
+		</property>
+		<property name="nouvelleGrossesseAntecedent" type="boolean">
+			<column name="nouvelleGrossesseAntecedent" length="1" default="false" />
+		</property>
+		<property name="nouvelleContraceptionAntecedent" type="boolean">
+			<column name="nouvelleContraceptionAntecedent" length="1"
+				default="false" />
+		</property>
+
+		<property name="ModifGyneco" type="boolean">
+			<column name="ModifGyneco" length="1" default="false" />
+		</property>
+		<property name="imprGyneco" type="boolean">
+			<column name="imprGyneco" length="1" default="false" />
+		</property>
+		<property name="SuppGyneco" type="boolean">
+			<column name="SuppGyneco" length="1" default="false" />
+		</property>
+		<property name="consultPat" type="boolean">
+			<column name="consultPat" length="1" default="false" />
+		</property>
+
+		<property name="nouvchogyneco" type="boolean">
+			<column name="nouvchogyneco" length="1" default="false" />
+		</property>
+
+		<property name="suppmodelechogyneco" type="boolean">
+			<column name="suppmodelechogyneco" length="1" default="false" />
+		</property>
+		<property name="imprechogyneco" type="boolean">
+			<column name="imprechogyneco" length="1" default="false" />
+		</property>
+
+		<property name="appliquemodelechogyneco" type="boolean">
+			<column name="appliquemodelechogyneco" length="1" default="false" />
+		</property>
+
+		<property name="ajoutmodelechogyneco" type="boolean">
+			<column name="ajoutmodelechogyneco" length="1" default="false" />
+		</property>
+		<property name="suppechogyneco" type="boolean">
+			<column name="suppechogyneco" length="1" default="false" />
+		</property>
+		<property name="modifechogyneco" type="boolean">
+			<column name="modifechogyneco" length="1" default="false" />
+		</property>
+		<property name="selectTableConsultation" type="boolean">
+			<column name="selectTableConsultation" length="1" default="false" />
+		</property>
+		<property name="ordonanceLibreFiche" type="boolean">
+			<column name="ordonanceLibreFiche" length="1" default="false" />
+		</property>
+		<property name="nbrEnfentFiche" type="boolean">
+			<column name="nbrEnfentFiche" length="1" default="false" />
+		</property>
+
+		<property name="gynRadio" type="string">
+			<column name="gynRadio" length="1" default="false" />
+		</property>
+
+		<property name="gynAnal" type="string">
+			<column name="gynAnal" length="1" />
+		</property>
+
+		<property name="gynOrd" type="string">
+			<column name="gynOrd" length="1" />
+		</property>
+
+		<property name="consultGrossRadio" type="string">
+			<column name="consultGrossRadio" length="1" />
+		</property>
+
+		<property name="consultGrossAnal" type="string">
+			<column name="consultGrossAnal" length="1" />
+		</property>
+
+		<property name="consultGrossOrd" type="string">
+			<column name="consultGrossOrd" length="1" />
+			
+		</property>
+
+		<property name="nouvConsGyn" type="string">
+			<column name="nouvConsGyn" length="1" />
+		</property>
+
+		<property name="nouvConsGross" type="string">
+			<column name="nouvConsGross" length="1" />
+		</property>
+
+		<property name="menuConfig" type="string">
+			<column name="menuConfig" length="1" />
+		</property>
+
+		<property name="nouvPatSal" type="string">
+			<column name="nouvPatSal" length="1" />
+		</property>
+
+		<property name="verConsult" type="string">
+			<column name="verConsult" length="1" />
+		</property>
+
+		<property name="certifFiche" type="string">
+			<column name="certifFiche" length="1" />
+		</property>
+
+		<property name="lettreFiche" type="string">
+			<column name="lettreFiche" length="1" />
+		</property>
+
+		<property name="analyseFiche" type="string">
+			<column name="analyseFiche" length="1" />
+		</property>
+
+		<property name="radioFiche" type="string">
+			<column name="radioFiche" length="1" />
+		</property>
+
+		<property name="rapportFiche" type="string">
+			<column name="rapportFiche" length="1" />
+		</property>
+
+		<property name="ordnanceFiche" type="string">
+			<column name="ordnanceFiche" length="1" />
+		</property>
+
+		<property name="gestBb" type="string">
+			<column name="gestBb" length="1" />
+		</property>
+
+		<property name="gestAnal" type="string">
+			<column name="gestAnal" length="1" />
+		</property>
+
+		<property name="gestMed" type="string">
+			<column name="gestMed" length="1" />
+		</property>
+
+		<property name="gestExm" type="string">
+			<column name="gestExm" length="1" />
+		</property>
+
+		<property name="gestMoyCtrcep" type="string">
+			<column name="gestMoyCtrcep" length="1" />
+		</property>
+
+		<property name="gestDiag" type="string">
+			<column name="gestDiag" length="1" />
+		</property>
+
+		<property name="gestSyn" type="string">
+			<column name="gestSyn" length="1" />
+		</property>
+
+		<property name="gestExmComp" type="string">
+			<column name="gestExmComp" length="1" />
+		</property>
+
+
+
+		<property name="ajoutEtBb" type="boolean">
+			<column name="ajoutEtBb" length="1" default="false" />
+		</property>
+
+		<property name="supEtBb" type="boolean">
+			<column name="supEtBb" length="1" default="false" />
+		</property>
+
+
+		<property name="modifEtBb" type="boolean">
+			<column name="modifEtBb" length="1" default="false" />
+		</property>
+
+
+		<property name="ajoutAnal" type="boolean">
+			<column name="ajoutAnal" length="1" default="false" />
+		</property>
+		<property name="reponseSal" type="boolean">
+			<column name="reponseSal" length="1" default="false" />
+		</property>
+
+
+		<property name="supAnal" type="boolean">
+			<column name="supAnal" length="1" default="false" />
+		</property>
+
+		<property name="modifAnal" type="boolean">
+			<column name="modifAnal" length="1" default="false" />
+		</property>
+
+		<property name="ajoutMed" type="boolean">
+			<column name="ajoutMed" length="1" default="false" />
+		</property>
+
+		<property name="supMed" type="boolean">
+			<column name="supMed" length="1" default="false" />
+		</property>
+
+		<property name="modifMed" type="boolean">
+			<column name="modifMed" length="1" default="false" />
+		</property>
+
+		<property name="ajoutExm" type="boolean">
+			<column name="ajoutExm" length="1" default="false" />
+		</property>
+
+		<property name="supExm" type="boolean">
+			<column name="supExm" length="1" default="false" />
+		</property>
+
+		<property name="modifExm" type="boolean">
+			<column name="modifExm" length="1" default="false" />
+		</property>
+
+
+		<property name="ajoutMoyCtr" type="boolean">
+			<column name="ajoutMoyCtr" length="1" default="false" />
+		</property>
+
+		<property name="supMoyCtr" type="boolean">
+			<column name="supMoyCtr" length="1" default="false" />
+		</property>
+
+		<property name="modifMoyCtr" type="boolean">
+			<column name="modifMoyCtr" length="1" default="false" />
+		</property>
+
+		<property name="ajoutDiag" type="boolean">
+			<column name="ajoutDiag" length="1" default="false" />
+		</property>
+
+		<property name="supDiag" type="boolean">
+			<column name="supDiag" length="1" default="false" />
+		</property>
+
+		<property name="modifDiag" type="boolean">
+			<column name="modifDiag" length="1" default="false" />
+		</property>
+
+		<property name="ajoutAsym" type="boolean">
+			<column name="ajoutAsym" length="1" default="false" />
+		</property>
+
+		<property name="supAsym" type="boolean">
+			<column name="supAsym" length="1" default="false" />
+		</property>
+
+		<property name="modifAsym" type="boolean">
+			<column name="modifAsym" length="1" default="false" />
+		</property>
+
+		<property name="ajoutExmComp" type="boolean">
+			<column name="ajoutExmComp" length="1" default="false" />
+		</property>
+
+		<property name="supExmComp" type="boolean">
+			<column name="supExmComp" length="1" default="false" />
+		</property>
+
+		<property name="modifExmComp" type="boolean">
+			<column name="modifExmComp" length="1" default="false" />
+		</property>
+
+		<property name="modifCsltGyn" type="boolean">
+			<column name="modifCsltGyn" length="1" default="false" />
+		</property>
+
+		<property name="modifRadio" type="boolean">
+			<column name="modifRadio" length="1" default="false" />
+		</property>
+
+		<property name="supRadio" type="boolean">
+			<column name="supRadio" length="1" default="false" />
+		</property>
+
+		<property name="modifOrdnce" type="boolean">
+			<column name="modifOrdnce" length="1" default="false" />
+		</property>
+		<property name="supOrdnce" type="boolean">
+			<column name="supOrdnce" length="1" default="false" />
+		</property>
+
+		<property name="modifAnalyse" type="boolean">
+			<column name="modifAnalyse" length="1" default="false" />
+		</property>
+
+		<property name="supAnalyse" type="boolean">
+			<column name="supAnalyse" length="1" default="false" />
+		</property>
+
+		<property name="ajoutUt" type="boolean">
+			<column name="ajoutUt" length="1" default="false" />
+		</property>
+
+		<property name="modifUt" type="boolean">
+			<column name="modifUt" length="1" default="false" />
+		</property>
+
+		<property name="supUt" type="boolean">
+			<column name="supUt" length="1" default="false" />
+		</property>
+
+		
+
+		<property name="ajoutFM" type="boolean">
+			<column name="ajoutFM" length="1" default="false" />
+		</property>
+
+		<property name="modifFM" type="boolean">
+			<column name="modifFM" length="1" default="false" />
+		</property>
+
+		<property name="supFM" type="boolean">
+			<column name="supFM" length="1" default="false" />
+		</property>
+
+		<property name="gestEFG" type="string">
+			<column name="gestEFG" length="1"  />
+		</property>
+
+		<property name="ajoutEFG" type="boolean">
+			<column name="ajoutEFG" length="1" default="false" />
+		</property>
+
+		<property name="modifEFG" type="boolean">
+			<column name="modifEFG" length="1" default="false" />
+		</property>
+
+		<property name="supEFG" type="boolean">
+			<column name="supEFG" length="1" default="false" />
+		</property>
+
+		<property name="menuGestRdv" type="string">
+			<column name="menuGestRdv" length="1" default="false" />
+		</property>
+		
+		<property name="menuGestStat" type="boolean">
+			<column name="menuGestStat" length="1" default="false" />
+		</property>
+		
+		<property name="modifAnt" type="boolean">
+			<column name="modifAnt" length="1" default="false" />
+		</property>
+		
+		<property name="suppAnt" type="boolean">
+			<column name="suppAnt" length="1" default="false" />
+		</property>
+
+		<property name="ajoutRdv" type="boolean">
+			<column name="ajoutRdv" length="1" default="false" />
+		</property>
+
+		<property name="modifRdv" type="boolean">
+			<column name="modifRdv" length="1" default="false" />
+		</property>
+
+		<property name="supRdv" type="boolean">
+			<column name="supRdv" length="1" default="false" />
+		</property>
+
+		<property name="modifCab" type="boolean">
+			<column name="modifCab" length="1" default="false" />
+		</property>
+		<property name="nouvechoObs" type="boolean">
+			<column name="nouvechoObs" length="1" default="false" />
+		</property>
+		<property name="modifechoObs" type="boolean">
+			<column name="modifechoObs" length="1" default="false" />
+		</property>
+		<property name="suppechoObs" type="boolean">
+			<column name="suppechoObs" length="1" default="false" />
+		</property>
+		<property name="trim1echoObs" type="boolean">
+			<column name="trim1echoObs" length="1" default="false" />
+		</property>
+
+		<property name="gestAntecedent" type="boolean">
+			<column name="gestAntecedent" length="1" default="false" />
+		</property>
+		<property name="gestConsultation" type="boolean">
+			<column name="gestConsultation" length="1" default="false" />
+		</property>
+		<property name="gestHoraire" type="boolean">
+			<column name="gestHoraire" length="1" default="false" />
+		</property>
+		<property name="gestCabinet" type="boolean">
+			<column name="gestCabinet" length="1" default="false" />
+		</property>
+		<property name="gestionJourFr" type="boolean">
+			<column name="gestionJourFr" length="1" default="false" />
+		</property>
+		<property name="gestionFormMed" type="boolean">
+			<column name="gestionFormMed" length="1" default="false" />
+		</property>
+		<property name="gestionUterus" type="boolean">
+			<column name="gestionUterus" length="1" default="false" />
+		</property>
+		<property name="trim2echoObs" type="boolean">
+			<column name="trim2echoObs" length="1" default="false" />
+		</property>
+		<property name="trim3echoObs" type="boolean">
+			<column name="trim3echoObs" length="1" default="false" />
+		</property>
+		<property name="imprechoObs" type="boolean">
+			<column name="imprechoObs" length="1" default="false" />
+		</property>
+		<property name="selectNouvGross" type="boolean">
+			<column name="selectNouvGross" length="1" default="false" />
+		</property>
+		<property name="tabFerie" type="boolean">
+			<column name="tabFerie" length="1" default="false" />
+		</property>
+		<property name="tabJFerieExp" type="boolean">
+			<column name="tabJFerieExp" length="1" default="false" />
+		</property>
+		<property name="nouvJFerie" type="boolean">
+			<column name="nouvJFerie" length="1" default="false" />
+		</property>
+		<property name="modifJFerie" type="boolean">
+			<column name="modifJFerie" length="1" default="false" />
+		</property>
+		<property name="suppJFerie" type="boolean">
+			<column name="suppJFerie" length="1" default="false" />
+		</property>
+		<property name="modifJFerieExp" type="boolean">
+			<column name="modifJFerieExp" length="1" default="false" />
+		</property>
+		<property name="suppJFerieExp" type="boolean">
+			<column name="suppJFerieExp" length="1" default="false" />
+		</property>
+		<property name="tabMedAnt" type="boolean">
+			<column name="tabMedAnt" length="1" default="false" />
+		</property>
+		<property name="tabChirAnt" type="boolean">
+			<column name="tabChirAnt" length="1" default="false" />
+		</property>
+		<property name="tabFamAnt" type="boolean">
+			<column name="tabFamAnt" length="1" default="false" />
+		</property>
+		<property name="modifGestAntMed" type="boolean">
+			<column name="modifGestAntMed" length="1" default="false" />
+		</property>
+		<property name="suppGestAntMed" type="boolean">
+			<column name="suppGestAntMed" length="1" default="false" />
+		</property>
+		<property name="ajoutGestChirg" type="boolean">
+			<column name="ajoutGestChirg" length="1" default="false" />
+		</property>
+		<property name="ajoutGestAntMed" type="boolean">
+			<column name="ajoutGestAntMed" length="1" default="false" />
+		</property>
+		<property name="suppGestAntChirg" type="boolean">
+			<column name="suppGestAntChirg" length="1" default="false" />
+		</property>
+		<property name="modifGestChirg" type="boolean">
+			<column name="modifGestChirg" length="1" default="false" />
+		</property>
+		<property name="suppGestAntFam" type="boolean">
+			<column name="suppGestAntFam" length="1" default="false" />
+		</property>
+		<property name="ajoutGestFam" type="boolean">
+			<column name="ajoutGestFam" length="1" default="false" />
+		</property>
+		<property name="modifGestFam" type="boolean">
+			<column name="modifGestFam" length="1" default="false" />
+		</property>
+
+		<property name="suppGross" type="boolean">
+			<column name="suppGross" length="1" default="false" />
+		</property>
+
+		<property name="imprGross" type="boolean">
+			<column name="imprGross" length="1" default="false" />
+		</property>
+		<property name="rechercheOrd" type="boolean">
+			<column name="rechercheOrd" length="1" default="false" />
+		</property>
+		<property name="modifhistoOrd" type="boolean">
+			<column name="modifhistoOrd" length="1" default="false" />
+		</property>
+		<property name="supphistoOrd" type="boolean">
+			<column name="supphistoOrd" length="1" default="false" />
+		</property>
+		<property name="selectModeleord" type="boolean">
+			<column name="selectModeleord" length="1" default="false" />
+		</property>
+		<property name="ajoutModeleord" type="boolean">
+			<column name="ajoutModeleord" length="1" default="false" />
+		</property>
+		
+		<property name="suppModeleOrd" type="boolean">
+			<column name="suppModeleOrd" length="1" default="false" />
+		</property>
+		<property name="imprOrd" type="boolean">
+			<column name="imprOrd" length="1" default="false" />
+		</property>
+		<property name="suppOrd" type="boolean">
+			<column name="suppOrd" length="1" default="false" />
+		</property>
+		<property name="nouvCertif" type="boolean">
+			<column name="nouvCertif" length="1" default="false" />
+		</property>
+		<property name="modifCertif" type="boolean">
+			<column name="modifCertif" length="1" default="false" />
+		</property>
+		<property name="suppCertif" type="boolean">
+			<column name="suppCertif" length="1" default="false" />
+		</property><property name="imprCertif" type="boolean">
+			<column name="imprCertif" length="1" default="false" />
+		</property>
+		<property name="nouvLettre" type="boolean">
+			<column name="nouvLettre" length="1" default="false" />
+		</property>
+		<property name="modifLettre" type="boolean">
+			<column name="modifLettre" length="1" default="false" />
+		</property>
+		<property name="suppLettre" type="boolean">
+			<column name="suppLettre" length="1" default="false" />
+		</property>
+		<property name="imprLettre" type="boolean">
+			<column name="imprLettre" length="1" default="false" />
+		</property>
+		<property name="modifSterilite" type="boolean">
+			<column name="modifSterilite" length="1" default="false" />
+		</property>
+		<property name="reglageHoraire" type="boolean">
+			<column name="reglageHoraire" length="1" default="false" />
+		</property>
+		<property name="gestCertif" type="boolean">
+			<column name="gestCertif" length="1" default="false" />
+		</property>
+		<property name="nouvJFerieExp" type="boolean">
+			<column name="nouvJFerieExp" length="1" default="false" />
+		</property>
+		<property name="gestLettre" type="boolean">
+			<column name="gestLettre" length="1" default="false" />
+		</property>
+		
+		<property name="modifPrtSais" type="boolean">
+			<column name="modifPrtSais" length="1" default="false" />
+		</property>
+		
+		<property name="ajoutHeurTrav" type="boolean">
+			<column name="ajoutHeurTrav" length="1" default="false" />
+		</property>
+		
+		<property name="modifHeurTrav" type="boolean">
+			<column name="modifHeurTrav" length="1" default="false" />
+		</property>
+		
+		<property name="supHeurTrav" type="boolean">
+			<column name="supHeurTrav" length="1" default="false" />
+		</property>
+				
+         <property name="modifGross" type="boolean">
+			<column name="modifGross" length="1" default="false" />
+		</property>
+		
+		<property name="gestSais" type="boolean">
+			<column name="gestSais" length="1" default="false" />
+		</property>
+		
+		<property name="donnerRdv" type="boolean">
+			<column name="donnerRdv" length="1" default="false" />
+		</property>
+		
+		<property name="imprmAnal" type="boolean">
+			<column name="imprmAnal" length="1" default="false"/>
+		</property>
+		
+		<property name="imprRadio" type="boolean">
+			<column name="imprRadio" length="1" default="false"/>
+		</property>
+		
+		<property name="consultDetAnal" type="boolean">
+			<column name="consultDetAnal" length="1" default="false"/>
+		</property>
+		
+		<property name="consultDetRad" type="boolean">
+			<column name="consultDetRad" length="1" default="false"/>
+		</property>
+		
+		<property name="consultDetOrd" type="boolean">
+			<column name="consultDetOrd" length="1" default="false"/>
+		</property>
+		
+		
+		
+		<property name="detHistoAnal" type="boolean">
+			<column name="detHistoAnal" length="1" default="false"/>
+		</property>
+		
+		<property name="detHistoRad" type="boolean">
+			<column name="detHistoRad" length="1" default="false"/>
+		</property>
+		
+		<property name="consultArchiv" type="boolean">
+			<column name="consultArchiv" length="1" default="false"/>
+		</property>
+		
+		<property name="archiverPat" type="boolean">
+			<column name="archiverPat" length="1" default="false"/>
+		</property>
+		
+		<property name="tabAnulSal" type="boolean">
+			<column name="tabAnulSal" length="1" default="false"/>
+		</property>
+		
+		<property name="anulSal" type="boolean">
+			<column name="anulSal" length="1" default="false"/>
+		</property>
+		
+		<property name="modifNoteSal" type="boolean">
+			<column name="modifNoteSal" length="1" default="false"/>
+		</property>
+		<property name="modifCons" type="boolean" >
+			<column name="modifCons" length="1" default="false"/>
+		</property>
+		
+		<property name="modifGynObs" type="boolean">
+			<column name="modifGynObs" length="1" default="false" />
+		</property>
+</class>
+</hibernate-mapping>		

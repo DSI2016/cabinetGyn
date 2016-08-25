@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+
+	<ui:define name="title">
+		Historique Lettres
+	</ui:define>
+
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/listeLettre.png" width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true" life="3000"
+				sticky="#{historiqueLettreBean.blocage}" />
+			<table width="100%">
+				<tr>
+					<td><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{utilisateurBean.gotoAcceuil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink
+									actionListener="#{historiqueLettreBean.initialeRetour()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+					<td align="right" width="30%"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+
+						</h:panelGrid></td>
+				</tr>
+			</table>
+			
+			<p:panel>
+				<table>
+					<tr>
+						<td width="500"><p:splitButton value="Lettres"
+								disabled="not#{connectionBean.nouvLettre}"
+								icon="ui-icon-folder-open">
+								<p:menuitem style="width:400px;" styleClass="ui-menuitem-text"
+									value="Lettre Confidentielle" icon="ui-icon-document"
+									actionListener="#{historiqueLettreBean.intialiserDateLettre()}"
+									oncomplete="PF('lettrereponse').show();"
+									update=":fDiag:idLettreReponse">
+									<f:setPropertyActionListener value="Lettre Confidentielle"
+										target="#{historiqueLettreBean.nomLettre}" />
+								</p:menuitem>
+
+								<p:menuitem value="Lettre d'accouchement"
+									actionListener="#{historiqueLettreBean.intialiserDonneesLettreAccouchement()}"
+									icon="ui-icon-document"
+									oncomplete="PF('lettreAccouchement').show();"
+									update=":fDiag:idLettreAccouchement">
+									<f:setPropertyActionListener value="Lettre d'accouchement"
+										target="#{historiqueLettreBean.nomLettre}" />
+								</p:menuitem>
+								<p:menuitem value="Lettre de prise en charge"
+									actionListener="#{historiqueLettreBean.intialiserDateLettre()}"
+									icon="ui-icon-document"
+									oncomplete="PF('lettrepriseencharge').show();"
+									update=":fDiag:idlettrepriseencharge">
+									<f:setPropertyActionListener value="Lettre de prise en charge"
+										target="#{historiqueLettreBean.nomLettre}" />
+								</p:menuitem>
+								<p:menuitem
+									value="Lettre de réponse a une demande de prise en charge"
+									actionListener="#{historiqueLettreBean.intialiserDateLettre()}"
+									icon="ui-icon-document"
+									oncomplete="PF('lettreReponse2').show();"
+									update=":fDiag:idLettreReponse2">
+									<f:setPropertyActionListener
+										value="Lettre de réponse a une demande de prise en charge"
+										target="#{historiqueLettreBean.nomLettre}" />
+								</p:menuitem>
+							</p:splitButton></td>
+						<td><h:commandLink
+								actionListener="#{historiqueLettreBean.viewLettreselect}"
+								rendered="#{connectionBean.imprLettre}" target="_blanc">
+								<p:graphicImage value="/imagesMenu/imprimente10.png">
+								</p:graphicImage>
+							</h:commandLink></td>
+					</tr>
+				</table>
+
+				<table>
+					<tr>
+						<td valign="top" width="700"><p:dataTable var="histo1"
+								style="font-size:small;font-weight:bold;width:550px;"
+								rowKey="#{histo1.idHistoriquelettre}"
+								value="#{historiqueLettreBean.historiqueLettres}"
+								emptyMessage="Pas de lettres !" paginator="true"
+								paginatorPosition="bottom"
+								currentPageReportTemplate="{currentPage} / {totalPages}"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rows="8" selectionMode="single"
+								selection="#{historiqueLettreBean.selectedhistolettre}">
+								<p:ajax event="rowSelect"
+									listener="#{historiqueLettreBean.onRowSelectlettre}"
+									update=":f1:carDetail"></p:ajax>
+
+								<p:column headerText="Date" width="17%"
+									style="font-size:small;font-weight:bold;">
+									<h:outputText value="#{histo1.datelettre}"
+										style="font-size:small;font-weight:bold;">
+										<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="Europe/Paris" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Lettre"
+									style="font-size:small;font-weight:bold;">
+									<h:outputText value="#{histo1.lettre.nomLettre}" />
+								</p:column>
+								<p:column headerText="" width="17%">
+
+									<p:commandButton icon="ui-icon-pencil"
+										actionListener="#{historiqueLettreBean.modifierLettre(histo1)}"
+										rendered="#{connectionBean.modifLettre}"
+										title="Modification Lettre" update=":fDiag">
+
+									</p:commandButton>
+
+									<p:commandButton icon="ui-icon-trash"
+										rendered="#{connectionBean.suppLettre}"
+										action="#{historiqueLettreBean.supprimerLettre(histo1.idHistoriquelettre)}"
+										title="Suppression Lettre" update=":f1">
+										<p:confirm header="Suppression lettre"
+											message="Voulez-vous vraiment supprimer cette lettre ?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+
+								</p:column>
+
+							</p:dataTable> <p:confirmDialog global="true" showEffect="fade"
+								hideEffect="explode">
+								<p:commandButton value="Oui" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Non" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog></td>
+						<td><p:panel id="carDetail"
+								header="#{historiqueLettreBean.action}  Lettre"
+								style="width:750px;height:400px">
+								<h:panelGrid columns="3">
+									<p:outputLabel value="Lettre" />
+									<p:inputText value="#{historiqueLettreBean.nomLettre}" id="pro"
+										style="width:622px" />
+									<p:outputLabel>
+										<h:message for="pro"
+											style="FONT-SIZE: small; 
+							FONT-STYLE: italic; color: red;" />
+									</p:outputLabel>
+									<p:outputLabel value="Text"></p:outputLabel>
+
+
+
+									<p:editor value="#{historiqueLettreBean.textLettre}"
+										controls="underline strikethrough size color highlight bullets numbering image cut copy paste pastetext print"
+										style="width:650px;height:260px">
+									</p:editor>
+
+
+
+									<p:outputPanel />
+								</h:panelGrid>
+								<div align="center">
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										actionListener="#{historiqueLettreBean.ModifierLettrePanel()}"
+										update=":f1:growl,:f1" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										actionListener="#{historiqueLettreBean.annulerModification()}"
+										update=":f1" />
+								</div>
+							</p:panel></td>
+					</tr>
+				</table>
+			</p:panel>
+		</h:form>
+
+		<h:form id="fDiag">
+
+			<p:dialog id="idLettreReponse" widgetVar="lettrereponse" modal="true"
+				showHeader="false" resizable="false">
+				<p:panel header="Lettre Confidentielle">
+					<table>
+						<tr>
+							<td width="330"><h:outputLabel
+									value=" Patiente : #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}">
+								</h:outputLabel></td>
+							<td><h:outputText value="Le " /> <p:inputText id="oi"
+									value="#{historiqueLettreBean.dateLet}" size="6"
+									pattern="dd/MM/yyyy">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.verifierDate()}"
+										update="oi,:f1:growl">
+									</p:ajax>
+								</p:inputText></td>
+						</tr>
+					</table>
+					<br></br>
+					<h:panelGrid columns="2">
+						<h:outputText value="Acte le " />
+						<p:inputText id="o" value="#{historiqueLettreBean.acte}" size="6"
+							pattern="dd/MM/yyyy">
+							<p:ajax event="blur"
+								listener="#{historiqueLettreBean.verifieractele()}"
+								update="o,:f1:growl">
+							</p:ajax>
+						</p:inputText>
+						<h:outputText value="Code: "
+							style="font-size:small;font-weight:bold;" />
+						<p:inputText value="#{historiqueLettreBean.code}"
+							style="font-size:small;font-weight:bold;">
+							<p:ajax event="blur"
+								listener="#{historiqueLettreBean.codeChange}">
+							</p:ajax>
+						</p:inputText>
+						<h:outputText value="Clinique: "
+							style="font-size:small;font-weight:bold;" />
+						<p:inputText value="#{historiqueLettreBean.clinique}"
+							style="font-size:small;font-weight:bold;">
+							<p:ajax event="blur"
+								listener="#{historiqueLettreBean.cliniqueChange}">
+							</p:ajax>
+						</p:inputText>
+						<h:outputText value="Description: "
+							style="font-size:small;font-weight:bold;" />
+						<p:inputTextarea value="#{historiqueLettreBean.description}"
+							style="font-size:small;font-weight:bold;height:70px; width : 400px;">
+							<p:ajax event="blur"
+								listener="#{historiqueLettreBean.descriptionChange}">
+							</p:ajax>
+						</p:inputTextarea>
+					</h:panelGrid>
+				</p:panel>
+				<br></br>
+				<div align="center">
+
+					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+						actionListener="#{historiqueLettreBean.ajoutLettreReponseDemande()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true">
+					</p:commandButton>
+
+					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+						actionListener="#{historiqueLettreBean.refresh()}"
+						oncomplete="PF('lettreReponse2').hide();"></p:commandButton>
+
+				</div>
+			</p:dialog>
+
+			<p:dialog id="idLettreAccouchement" widgetVar="lettreAccouchement"
+				modal="true" showHeader="false" resizable="false">
+				<p:panel id="p2" header="Lettre d'accouchement">
+					<table>
+						<tr>
+							<td width="420"><h:outputLabel
+									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
+							</td>
+							<td width="150"><h:outputText value="Le " /> <p:inputText
+									id="datelel" value="#{historiqueLettreBean.dateLet}" size="6"
+									pattern="dd/MM/yyyy">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.verifierDate()}"
+										update=":f1:growl,datelel">
+									</p:ajax>
+								</p:inputText></td>
+
+						</tr>
+					</table>
+					<h:panelGrid columns="8">
+						<p:panel>
+							<h:panelGrid columns="2">
+								<h:outputText value="DDR"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.ddr}"
+									style="width:70px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.ddrChange}">
+									</p:ajax>
+								</p:inputText>
+								<h:outputText value="DDG"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.debutGross}" id="ddg"
+									style="width:70px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.debutGrossChange}">
+									</p:ajax>
+								</p:inputText>
+								<h:outputText value="T. Prévu :"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.termeprevue}" id="tp"
+									style="width:70px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.termeprevueChange}">
+									</p:ajax>
+								</p:inputText>
+								<h:outputText value="T. Actuel :"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.termeactuel}" id="ta"
+									style="width:70px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.termeactuelChange}">
+									</p:ajax>
+								</p:inputText>
+							</h:panelGrid>
+						</p:panel>
+&nbsp;&nbsp;&nbsp;&nbsp;
+					<p:panel>
+							<h:panelGrid columns="2">
+
+								<h:outputText value="Toxo :"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.toxo}"
+									style="width:100px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.toxoChange}">
+									</p:ajax>
+								</p:inputText>
+								<h:outputText value="TPHA :"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.tpha}"
+									style="width:100px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.tphaChange}">
+									</p:ajax>
+								</p:inputText>
+								<h:outputText value="Rubéole :"
+									style="font-size:small;font-weight:bold" />
+								<p:inputText value="#{historiqueLettreBean.rubeoole}"
+									style="width:100px;font-size:small;font-weight:bold">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.rubeooleChange}">
+									</p:ajax>
+								</p:inputText>
+
+							</h:panelGrid>
+						</p:panel>
+
+					</h:panelGrid>
+					<br></br>
+					<p:panel>
+
+						<table>
+							<tr>
+								<td width="300"><h:outputLabel value="Frotti " /> <p:inputText
+										value="#{historiqueLettreBean.frotti}"
+										style="width:100px;font-size:small;font-weight:bold">
+										<p:ajax event="blur"
+											listener="#{historiqueLettreBean.frottiChange}">
+										</p:ajax>
+									</p:inputText></td>
+								<td><h:outputLabel value="Gs" /> <p:inputText
+										value="#{historiqueLettreBean.gs}"
+										style="width:50px;font-size:small;font-weight:bold">
+										<p:ajax event="blur"
+											listener="#{historiqueLettreBean.gsChange}">
+										</p:ajax>
+									</p:inputText></td>
+								<td><h:outputLabel value="Rh" /> <p:inputText
+										value="#{historiqueLettreBean.rh}"
+										style="width:50px;font-size:small;font-weight:bold">
+										<p:ajax event="blur"
+											listener="#{historiqueLettreBean.rhChange}">
+										</p:ajax>
+									</p:inputText></td>
+
+							</tr>
+						</table>
+						<br></br>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Resultat frotti" />
+							<p:inputTextarea value="#{historiqueLettreBean.resultatfrotti}"
+								style="font-size:small;font-weight:bold;height:70px; width : 400px;">
+								<p:ajax event="blur"
+									listener="#{historiqueLettreBean.resultatfrottiChange}">
+								</p:ajax>
+							</p:inputTextarea>
+
+							<h:outputLabel value="Autre" />
+							<p:inputTextarea value="#{historiqueLettreBean.autre}"
+								style="font-size:small;font-weight:bold;height:70px; width : 400px;">
+								<p:ajax event="blur"
+									listener="#{historiqueLettreBean.autreChange}">
+								</p:ajax>
+							</p:inputTextarea>
+						</h:panelGrid>
+					</p:panel>
+
+				</p:panel>
+
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+						actionListener="#{historiqueLettreBean.ajoutLettreAccouchement()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+						actionListener="#{historiqueLettreBean.refresh()}"
+						oncomplete="PF('lettreReponse2').hide();"></p:commandButton>
+
+				</div>
+			</p:dialog>
+
+			<p:dialog id="idLettreReponse2" widgetVar="lettreReponse2"
+				modal="true" showHeader="false" resizable="false">
+				<p:panel id="p3"
+					header="Lettre de réponse a une demande de prise en charge">
+					<table>
+						<tr>
+							<td width="350"><h:outputLabel
+									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
+							</td>
+							<td><h:outputText value="Le: " /> <p:inputText
+									value="#{historiqueLettreBean.dateLet}" size="6"
+									pattern="dd/MM/yyyy" id="date1">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.verifierDate()}"
+										update="date1,:f1:growl">
+									</p:ajax>
+								</p:inputText></td>
+						</tr>
+					</table>
+
+					<br></br>
+					<h:panelGrid columns="2">
+						<h:outputText value="Diagnostique" />
+						<p:inputTextarea value="#{historiqueLettreBean.diagnostic}"
+							style="font-weight:bold;font-size:small;height : 80px; width : 400px;">
+							<p:ajax event="blur"
+								listener="#{historiqueLettreBean.diagnosticChange}">
+							</p:ajax>
+						</p:inputTextarea>
+
+					</h:panelGrid>
+
+				</p:panel>
+				<br></br>
+
+				<div align="center">
+
+					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+						actionListener="#{historiqueLettreBean.ajoutLettreReponse()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+
+					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+						actionListener="#{historiqueLettreBean.refresh()}"
+						oncomplete="PF('lettreReponse2').hide();"></p:commandButton>
+
+				</div>
+
+			</p:dialog>
+			<p:dialog id="idlettrepriseencharge" widgetVar="lettrepriseencharge"
+				modal="true" showHeader="false" resizable="false">
+				<p:panel id="p44" header="Lettre de prise en charge">
+					<table>
+						<tr>
+							<td width="350"><h:outputLabel
+									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
+							</td>
+							<td><h:outputText value="Le: " /> <p:inputText
+									value="#{historiqueLettreBean.dateLet}" size="6"
+									pattern="dd/MM/yyyy" id="date144">
+									<p:ajax event="blur"
+										listener="#{historiqueLettreBean.verifierDate()}"
+										update="date144,:f1:growl">
+									</p:ajax>
+								</p:inputText></td>
+						</tr>
+					</table>
+
+					<br></br>
+					<h:panelGrid columns="2">
+						<h:outputText value="Nature" />
+						<p:selectOneMenu value="#{historiqueLettreBean.v1Nature}"
+							panelStyle="width:80px" filter="true"
+							filterMatchMode="startsWith" effect="fade">
+							<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+							<f:selectItem itemLabel="GR.Arréter" itemValue="GR.Arréter" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Signe clinique" />
+						<p:inputTextarea value="#{historiqueLettreBean.v2SigneClinique}"
+							style="font-weight:bold;font-size:small;height : 80px; width : 400px;">
+							<p:ajax event="blur"
+								listener="#{historiqueLettreBean.V2SigneCliniqueChange}">
+							</p:ajax>
+						</p:inputTextarea>
+
+					</h:panelGrid>
+
+				</p:panel>
+				<br></br>
+
+				<div align="center">
+
+					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+						actionListener="#{historiqueLettreBean.ajoutLettrePriseEnCharge()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+
+					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+						actionListener="#{historiqueLettreBean.refresh()}"
+						oncomplete="PF('lettrepriseencharge').hide();"></p:commandButton>
+
+				</div>
+
+			</p:dialog>
+
+
+		</h:form>
+		<style>
+.ui-menuitem-text {
+	float: none !important;
+	white-space: nowrap;
+	display: list-item;
+	margin-right: 2em;
+}
+
+.ui-menu {
+	width: auto;
+}
+</style>
+	</ui:define>
+</ui:composition>
+</html>

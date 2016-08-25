@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.ConsultationDetail" table="consultationDetail">
+		<id name="idConsultationDetail" type="java.lang.Integer">
+			<column name="idconsultationDetail" />
+			<generator class="increment" />
+		</id>
+		<property name="dateConsultation" type="java.sql.Date">
+			<column name="dateConsultation"  />
+		</property>
+
+		<property name="ddr" type="string">
+			<column name="ddr" length="45" />
+		</property>
+
+		<property name="ddg" type="string">
+			<column name="ddg" length="45" />
+		</property>
+
+		<property name="termePrevu" type="string">
+			<column name="termePrevu" length="45" />
+		</property>
+
+		<property name="termeActuel" type="string">
+			<column name="termeActuel" length="45" />
+		</property>
+
+		<property name="honoraire" type="double">
+			<column name="honoraire" default="0" />
+		</property>
+
+		<property name="toxo" type="string">
+			<column name="toxo" length="45" />
+		</property>
+
+		<property name="tpha" type="string">
+			<column name="tpha" length="45" />
+		</property>
+
+		<property name="rubeole" type="string">
+			<column name="rubeole" length="45" />
+		</property>
+
+		<property name="poids" type="string">
+			<column name="poids" length="45" />
+		</property>
+
+		<property name="tas" type="string">
+			<column name="tas" length="45" />
+		</property>
+
+		<property name="tad" type="string">
+			<column name="tad" length="45" />
+		</property>
+
+		<property name="hu" type="string">
+			<column name="hu" length="45" />
+		</property>
+
+		<property name="sInf" type="string">
+			<column name="sInf" length="45" />
+		</property>
+
+		<property name="leuorhee" type="string">
+			<column name="leuorhee" length="45" />
+		</property>
+
+		<property name="col" type="string">
+			<column name="col" length="45" />
+		</property>
+
+		<property name="motifCons" type="string">
+			<column name="motifCons" length="45" />
+		</property>
+
+		<property name="symptome" type="string">
+			<column name="symptome" sql-type="longtext" />
+		</property>
+
+		<property name="examen" type="string">
+			<column name="examen" sql-type="longtext" />
+		</property>
+
+		<property name="diagnostique" type="string">
+			<column name="diagnostique" sql-type="longtext" />
+		</property>
+
+		<property name="seins" type="string">
+			<column name="seins" length="255" />
+		</property>
+
+		<property name="tv" type="string">
+			<column name="tv" length="255" />
+		</property>
+
+		<property name="speculum" type="string">
+			<column name="speculum" length="255" />
+		</property>
+
+		<property name="dateFrotti" type="string">
+			<column name="dateFrotti" length="45" />
+		</property>
+
+		<property name="resultatFrotti" type="string">
+			<column name="resultatFrotti" sql-type="longtext" />
+		</property>
+
+		<property name="radio" type="string">
+			<column name="radio" length="7" />
+		</property>
+
+		<property name="analyse" type="string">
+			<column name="analyse" length="7" />
+		</property>
+
+		<property name="indications" type="string">
+			<column name="indications" length="255" />
+		</property>
+
+		<property name="contours" type="string">
+			<column name="contours" length="45" />
+		</property>
+
+		<property name="echostructure" type="string">
+			<column name="echostructure" length="45" />
+		</property>
+
+		<property name="ligne" type="string">
+			<column name="ligne" sql-type="longtext"/>
+		</property>
+
+		<property name="annexes" type="string">
+			<column name="annexes" length="255" />
+		</property>
+
+		<property name="conclusion" type="string">
+			<column name="conclusion" sql-type="longtext" />
+		</property>
+
+		<property name="longueur" type="int">
+			<column name="longueur" />
+		</property>
+
+		<property name="larg" type="int">
+			<column name="larg" />
+		</property>
+
+		<property name="diam" type="int">
+			<column name="diam" />
+		</property>
+
+		<property name="trim" type="int">
+			<column name="trim" />
+		</property>
+
+		<property name="bip" type="double">
+			<column name="bip" />
+		</property>
+
+		<property name="femur" type="double">
+			<column name="femur" />
+		</property>
+
+		<property name="dat" type="double">
+			<column name="dat" />
+		</property>
+
+		<property name="ca" type="double">
+			<column name="ca" />
+		</property>
+
+		<property name="lcc" type="double">
+			<column name="lcc" />
+		</property>
+
+		<property name="sac" type="double">
+			<column name="sac" />
+		</property>
+
+		<property name="echomoyen" type="string">
+			<column name="echomoyen" length="45" />
+		</property>
+
+		<property name="honorairesobs" type="double">
+			<column name="honorairesobs" />
+		</property>
+
+		<property name="morphologie" type="string">
+			<column name="morphologie" sql-type="longtext" />
+		</property>
+
+
+
+		<property name="vesicule" type="string">
+			<column name="vesicule" length="45" />
+		</property>
+
+
+
+
+		<property name="tonique" type="string">
+			<column name="tonique" length="45" />
+		</property>
+
+		<property name="trophoblaste" type="string">
+			<column name="trophoblaste" length="45" />
+		</property>
+
+		<property name="conclusionobs" type="string">
+			<column name="conclusionobs" length="255" />
+		</property>
+
+		<property name="annexesobs" type="string">
+			<column name="annexesobs" length="255" />
+		</property>
+
+		<property name="presentation" type="string">
+			<column name="presentaion" length="45" />
+		</property>
+
+
+
+		<property name="ac" type="string">
+			<column name="ac" length="45" />
+		</property>
+
+		<property name="mf" type="string">
+			<column name="mf" length="45" />
+		</property>
+
+		<property name="ef" type="string">
+			<column name="ef" length="45" />
+		</property>
+
+		<property name="placenta" type="string">
+			<column name="placenta" sql-type="longtext" />
+		</property>
+
+		<property name="liq" type="string">
+			<column name="liq" length="45" />
+		</property>
+		
+			<property name="nbAnalyse" type="int">
+			<column name="nbAnalyse"  />
+		</property>
+		
+			<property name="nbRadio" type="int">
+			<column name="nbRadio"  />
+		</property>
+		
+			<property name="nbOrd" type="int">
+			<column name="nbOrd" />
+		</property>
+
+
+
+
+		<many-to-one name="cfclient" class="com.doctor.persistance.Cfclient"
+			fetch="select">
+			<column name="idPatient" />
+		</many-to-one>
+
+		<many-to-one name="consultation" class="com.doctor.persistance.Consultation"
+			fetch="select">
+			<column name="idConsultation" />
+		</many-to-one>
+
+		<many-to-one name="uterus" class="com.doctor.persistance.Uterus"
+			fetch="select" lazy="false">
+			<column name="iduterus" />
+		</many-to-one>
+
+		<set name="ordonnances" table="ordonnance" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="idconsult" />
+			</key>
+			<one-to-many class="com.doctor.persistance.Ordonnance" />
+		</set>
+
+		<property name="consGrossType" type="boolean">
+			<column name="consGrossType" length="1" not-null="true"
+				default="false" />
+		</property>
+		<property name="ddgCorigee" type="boolean">
+			<column name="ddgCorigee" length="1" not-null="true"
+				default="false" />
+		</property>
+
+		<property name="cat" type="string">
+			<column name="cat" sql-type="longtext" />
+		</property>
+
+		<property name="notes" type="string">
+			<column name="notes" sql-type="longtext" />
+		</property>
+
+	</class>
+</hibernate-mapping>

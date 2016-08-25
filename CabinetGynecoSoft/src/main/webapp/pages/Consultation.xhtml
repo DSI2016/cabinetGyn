@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Honoraire</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/Consultations.png" width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+			<p:growl id="growl" life="3000"  />
+			<table width="100%" border="0">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{accueilBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink actionListener="#{accueilBean.goToParametrage()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+
+				</tr>
+			</table>
+			
+			<div align="center">
+			<div style="width: 50%">
+			<div align="right">
+					<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+							 update=":f2:idDialogAjout"
+							oncomplete="PF('dialogajout').show()"
+							actionListener="#{consultationBean.ajouterConsultation()}" />
+					</div>
+			
+			<p:dataTable var="cons" id="tabcons" value="#{consultationBean.consultations}" 
+						border="1" paginator="true" paginatorPosition="bottom"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10"  >
+						<p:column width="40%">
+							<f:facet name="header">
+								<h:outputLabel value="Consultation" />
+							</f:facet>
+						    #{cons.nomConsultation}
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Honoraire" />
+							</f:facet>
+						    #{cons.honoraire}
+						</p:column>
+						<p:column style="width:20%">
+							<p:commandButton 
+								actionListener="#{consultationBean.modifierCons(cons)}"
+								update=":f2:idDialogModif" oncomplete="PF('dialogmodif').show()"
+								icon="ui-icon-pencil" title="Modification" 
+								rendered="#{connectionBean.modifCons}"/>
+								
+						 <p:commandButton 
+								actionListener="#{consultationBean.supprimerCons(cons.idconsultation)}"
+								icon="ui-icon-trash" title="Suppression"
+								update=":f1,:f2,:f1:growl">
+							
+								<p:confirm header="Suppression Consultation" 
+									message="Voulez-vous vraiment supprimer cette Consultation ?"
+									icon="ui-icon-alert" />
+						  </p:commandButton>		
+						</p:column>
+					</p:dataTable>
+					
+					
+			</div>
+			</div>
+			
+		</h:form>
+		<h:form id="f2">
+						<p:dialog id="idDialogAjout" widgetVar="dialogajout" modal="true"
+							showHeader="false" closable="false" resizable="false">
+
+							<p:panel id="dialog" header="Ajouter Consultation">
+								<h:panelGrid columns="2">
+									<p:outputLabel value="Consultation: "  />
+									<p:inputText value="#{consultationBean.nomConsultation}"></p:inputText>
+									<p:outputLabel value="Honoraire: "  />
+									<p:inputText value="#{consultationBean.honoraire}"></p:inputText>
+									<h:outputText value="Activer consultation: " />
+                                    <p:selectBooleanButton id="value1" value="#{consultationBean.active}" 
+                                                    onLabel="Oui" offLabel="Non" style="width:70px" />
+									
+								</h:panelGrid>
+                                <div align="center">
+								<h:panelGrid columns="2" >
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										actionListener="#{consultationBean.validerAjout()}" 
+										update=":f1,:f2,:f1:growl"
+										oncomplete="handleLoginRequest(xhr, status, args)" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										oncomplete="PF('dialogajout').hide();" update=":f1" />
+								</h:panelGrid>
+								</div>
+							</p:panel>
+						</p:dialog>
+                        <p:dialog id="idDialogModif" widgetVar="dialogmodif" modal="true"
+							showHeader="false" closable="false" resizable="false">
+
+							<p:panel id="dialog2" header="Modifier Consultation">
+								<h:panelGrid columns="2">
+									<p:outputLabel value="Honoraire: "  />
+									<p:inputText value="#{consultationBean.honoraire}"></p:inputText>
+								</h:panelGrid>
+                                <div align="center">
+								<h:panelGrid columns="2" >
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										actionListener="#{consultationBean.validerModif()}" 
+										update=":f1,:f1:growl"
+										oncomplete="handleLoginRequest(xhr, status, args)" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										oncomplete="PF('dialogmodif').hide();" update=":f1,:f2" />
+								</h:panelGrid>
+								</div>
+							</p:panel>
+						</p:dialog>
+
+                        <p:confirmDialog global="true" showEffect="fade"
+						    hideEffect="explode">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+						<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogajout').jq.effect("shake", {
+								times : 5
+							}, 100);
+							
+						} else {
+							PF('dialogajout').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+
+					</h:form>
+		
+	</ui:define>
+</ui:composition>
+</html>

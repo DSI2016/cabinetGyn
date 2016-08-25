@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Medicament" table="medicament"
+		>
+		<id name="idMedicament" type="java.lang.Integer">
+			<column name="idmedicament" />
+			<generator class="increment" />
+		</id>
+
+		<property name="designation" type="string">
+			<column name="designation" length="255" />
+		</property>
+
+		<property name="laboratoire" type="string">
+			<column name="laboratoire" length="255" />
+		</property>
+
+		<property name="posologie" type="string">
+			<column name="posologie" sql-type="longtext" />
+		</property>
+
+		<property name="observation" type="string">
+			<column name="observation" sql-type="longtext" />
+		</property>
+
+		<property name="prix" type="float">
+			<column name="prix" />
+		</property>
+
+		<property name="posoEnfa" type="string">
+			<column name="posoEnfa" sql-type="longtext" />
+		</property>
+
+		<property name="posoNou" type="string">
+			<column name="posoNou" sql-type="longtext" />
+		</property>
+		<property name="tableau" type="string">
+			<column name="tableau" length="5" />
+		</property>
+		<many-to-one class="com.doctor.persistance.FormeMedicament"
+			fetch="join" name="formeMed">
+			<column name="idForme" />
+		</many-to-one>
+
+		<set name="medOrds" table="medord" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="idMed" />
+			</key>
+			<one-to-many class="com.doctor.persistance.MedOrd" />
+		</set>
+
+	</class>
+</hibernate-mapping>

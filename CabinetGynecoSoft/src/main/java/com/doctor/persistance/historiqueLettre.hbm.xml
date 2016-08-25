@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.historiqueLettre" table="historiquelettre"
+		>
+		<id name="idHistoriquelettre" type="java.lang.Integer">
+			<column name="idhistoriquelettre" />
+			<generator class="increment" />
+		</id>
+
+		<property name="Datelettre" type="date">
+			<column name="Datelettre" sql-type="DATETIME"/>
+		</property>
+		<property name="dateActe" type="date">
+			<column name="dateActe" sql-type="DATETIME"/>
+		</property>
+
+			<property name="autre" type="string">
+			<column name="autre" sql-type="longtext" />
+		</property> 	
+			<property name="textLettre" type="string">
+			<column name="textLettre" sql-type="longtext" />
+		</property>
+		
+		<property name="code" type="string">
+			<column name="code" length="1000" />
+		</property>
+		
+		<property name="clinique" type="string">
+			<column name="clinique" length="45" />
+		</property>
+		
+		<property name="toxo" type="string">
+			<column name="toxo" length="45" />
+		</property>
+		<property name="tpha" type="string">
+			<column name="tpha" length="45" />
+		</property>
+		<property name="description" type="string">
+   <column name="description" sql-type="longtext"/>
+</property>
+		
+		
+		<property name="ddr" type="string">
+			<column name="ddr" length="45" />
+		</property>
+		<property name="debutGross" type="string">
+			<column name="debutGross" length="45" />
+		</property>
+		<property name="termeprevue" type="string">
+			<column name="termeprevue"  length="45"/>
+		</property>
+		<property name="termeactuel" type="string">
+			<column name="termeactuel" length="45" />
+		</property>
+		<property name="rubeoole" type="string">
+			<column name="rubeoole" length="45" />
+		</property>
+		
+		<property name="frotti" type="string">
+			<column name="frotti" length="45" />
+		</property>
+		
+		<property name="gs" type="string">
+			<column name="gs" length="45" />
+		</property>
+		<property name="rh" type="string">
+			<column name="rh" length="45" />
+		</property>
+		<property name="resultatfrotti" type="string">
+			<column name="resultatfrotti" sql-type="longtext" />
+		</property>
+		<property name="diagnostic" type="string">
+			<column name="diagnostic" sql-type="longtext" />
+		</property>
+		
+		
+		
+		<property name="v1" type="string">
+			<column name="v1" length="45" />
+		</property>
+		<property name="v2" type="string">
+			<column name="v2" length="45" />
+		</property>
+		<property name="v3" type="string">
+			<column name="v3" length="45" />
+		</property>
+		<property name="v4" type="string">
+			<column name="v4" length="45" />
+		</property>
+		<property name="v5" type="string">
+			<column name="v5" length="45" />
+		</property>
+		<property name="v6" type="string">
+			<column name="v6" length="45" />
+		</property>
+		<property name="v7" type="string">
+			<column name="v7" length="45" />
+		</property>
+		<property name="v8" type="string">
+			<column name="v8" length="45" />
+		</property>
+		<property name="v9" type="string">
+			<column name="v9" length="45" />
+		</property>
+		<property name="v10" type="string">
+			<column name="v10" length="45" />
+		</property>
+		<property name="v11" type="string">
+			<column name="v11" length="45" />
+		</property>
+		<property name="v12" type="string">
+			<column name="v12" length="45" />
+		</property>
+		<property name="v13" type="string">
+			<column name="v13" length="45" />
+		</property>
+		<property name="v14" type="string">
+			<column name="v14" length="45" />
+		</property>
+		<property name="v15" type="string">
+			<column name="v15" length="45" />
+		</property>
+		<property name="v16" type="string">
+			<column name="v16" length="45" />
+		</property>
+		<property name="v17" type="string">
+			<column name="v17" length="45" />
+		</property>
+		<property name="v18" type="string">
+			<column name="v18" length="45" />
+		</property>
+		<property name="v19" type="string">
+			<column name="v19" length="45" />
+		</property>
+		<property name="v20" type="string">
+			<column name="v20" length="45" />
+		</property>
+		<property name="v21" type="string">
+			<column name="v21" length="45" />
+		</property>
+		<property name="v22" type="string">
+			<column name="v22" length="45" />
+		</property>
+		<property name="v23" type="string">
+			<column name="v23" length="45" />
+		</property>
+		<property name="v24" type="string">
+			<column name="v24" length="45" />
+		</property>
+		<property name="v25" type="string">
+			<column name="v25" length="45" />
+		</property>
+		<property name="v26" type="string">
+			<column name="v26" length="45" />
+		</property>
+		<property name="v27" type="string">
+			<column name="v27" length="45" />
+		</property>
+		<property name="v28" type="string">
+			<column name="v28" length="45" />
+		</property>
+		<property name="v29" type="string">
+			<column name="v29" length="45" />
+		</property>
+		<property name="v30" type="string">
+			<column name="v30" length="45" />
+		</property>
+		
+		
+
+		<many-to-one class="com.doctor.persistance.Cfclient"
+			fetch="select" name="cfclient">
+			<column name="idPatient" />
+		</many-to-one>
+
+		<many-to-one class="com.doctor.persistance.Lettre"
+			fetch="select" name="lettre">
+			<column name="idLettre" />
+		</many-to-one>
+
+
+	</class>
+</hibernate-mapping>

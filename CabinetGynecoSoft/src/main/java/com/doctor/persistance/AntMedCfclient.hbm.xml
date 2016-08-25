@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class  name="com.doctor.persistance.AntMedCfclient"
+		table="antmedcfclient">
+		<id name="idantmedcfclient" type="java.lang.Integer">
+			<column name="idantmedcfclient" />
+			<generator class="increment" />
+		</id>
+		<property generated="never" lazy="false" name="date" type="string">
+			<column length="45" name="date" />
+		</property>
+		<many-to-one class="com.doctor.persistance.AntecedentMed"
+			fetch="select" name="antMed">
+			<column name="idAntecedentMed" />
+		</many-to-one>
+		<many-to-one class="com.doctor.persistance.Cfclient"
+			fetch="select" name="cfclient">
+			<column name="idPatient" />
+		</many-to-one>
+
+		<property generated="never" lazy="false" name="antecedentMedical"
+			type="string">
+			<column sql-type="longtext" name="antecedentMedical" />
+		</property>
+
+	</class>
+</hibernate-mapping>

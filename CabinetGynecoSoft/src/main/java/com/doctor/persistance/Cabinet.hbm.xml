@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Cabinet" table="cabinet"
+		>
+		<id name="idcabinet" type="java.lang.Integer">
+			<column name="idcabinet" />
+			<generator class="increment" />
+		</id>
+
+		<property name="adresse" type="string">
+			<column name="adresse" length="45" />
+		</property>
+
+		<property name="docteur" type="string">
+			<column name="docteur" length="45" />
+		</property>
+<property name="ville" type="string">
+			<column name="ville" length="45" />
+		</property>
+
+		<property name="tel1" type="string">
+			<column name="tel1" length="45" />
+		</property>
+
+		<property name="tel2" type="string">
+			<column name="tel2" length="45" />
+		</property>
+
+		<property name="gsm1" type="string">
+			<column name="gsm1" length="45" />
+		</property>
+
+		<property name="gsm2" type="string">
+			<column name="gsm2" length="45" />
+		</property>
+
+		<property name="fax" type="string">
+			<column name="fax" length="45" />
+		</property>
+
+		<property name="eMail" type="string">
+			<column name="eMail" length="45" />
+		</property>
+<property name="specialite" type="string">
+			<column name="specialite" length="45" />
+		</property>
+
+	</class>
+</hibernate-mapping>

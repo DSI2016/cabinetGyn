@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Jours Fériers</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/jourfr.png" width="100%"></p:graphicImage>
+		<br />
+		<h:form id="f1">
+			<table width="100%" border="0">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{jourFrBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+								<h:commandLink actionListener="#{jourFrBean.retour()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+						<td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+			<p:growl id="growl" life="3000" showDetail="true" />
+			<p:tabView id="TV" style="font-size:12pt"
+				activeIndex="#{jourFrBean.index}">
+				<p:tab title="Jour Férier" rendered="#{connectionBean.tabFerie}">
+
+					<div align="right">
+						<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+							rendered="#{connectionBean.nouvJFerie}"
+							oncomplete="PF('dialogprof').show()" update=":idDialog">
+							<p:ajax event="click" listener="#{jourFrBean.ajout()}" />
+						</p:commandButton>
+					</div>
+					<p:dataTable var="jourFr" id="jfr" value="#{jourFrBean.jourFrs}"
+						first="#{jourFrBean.currentP}" border="1" paginator="true"
+						paginatorPosition="bottom" emptyMessage="Pas de jours fériers !"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+						<p:column style="width:25%">
+							<f:facet name="header">
+								<h:outputLabel value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:small;font-weight:bold;"
+								value="
+						#{rendezVousBean.jours.get(jourFr.date.date-1)}, #{rendezVousBean.moiss.get(jourFr.date.month).nomMois}" />
+						<h:outputText style="font-size:small;font-weight:bold;color:#045FB4"
+								value=" (#{jourFr.nbj} jour(s))" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Description de jour férier" />
+							</f:facet>
+							<h:outputText style="font-size:small;font-weight:bold;"
+								value="#{jourFr.disc}" />
+						</p:column>
+						<p:column style="width:18%">
+							<p:commandButton actionListener="#{jourFrBean.modif(jourFr)}"
+								rendered="#{connectionBean.modifJFerie}" update=":f01:dialog"
+								oncomplete="PF('dialogprof').show()" icon="ui-icon-pencil"
+								title="Modification" />
+							<p:commandButton
+								actionListener="#{jourFrBean.supprimerJourFr(jourFr.idjourFr)}"
+								rendered="#{connectionBean.suppJFerie}" icon="ui-icon-trash"
+								title="Suppression" update=":f1:TV">
+								<p:confirm header="Suppression Jour Férier"
+									message="Voulez-vous vraiment supprimer cet Docteur ?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+				<p:tab title="Jour Férier Exceptionnelle"
+					rendered="#{connectionBean.tabJFerieExp}">
+
+					<div align="right">
+
+						<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+							rendered="#{connectionBean.nouvJFerieExp}"
+							oncomplete="PF('dialog222').show()" update=":idDialog2">
+							<p:ajax event="click" listener="#{jourFrBean.ajoutSp()}" />
+						</p:commandButton>
+					</div>
+					<p:dataTable var="jourFrSp" id="jfrsp"
+						first="#{jourFrBean.currentPex}" value="#{jourFrBean.jourFrSps}"
+						border="1" paginator="true" paginatorPosition="bottom"
+						emptyMessage="Pas de jours fériers personelles !"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+						<p:column style="width:23%">
+							<f:facet name="header">
+								<h:outputLabel value="Période" />
+							</f:facet>
+							<h:outputText style="font-size:small;font-weight:bold;"
+								value="Du :
+						#{rendezVousBean.jours.get(jourFrSp.debut.date-1)}, #{rendezVousBean.moiss.get(jourFrSp.debut.month).nomMois} à #{rendezVousBean.jours.get(jourFrSp.fin.date-1)}, #{rendezVousBean.moiss.get(jourFrSp.fin.month).nomMois} " />
+							<h:outputText value="(#{jourFrSp.nbjs} jour(s))"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Description de jour férier exceptionnelle" />
+							</f:facet>
+							<h:outputText style="font-size:small;font-weight:bold;"
+								value="	#{jourFrSp.disc}" />
+						</p:column>
+						<p:column style="width:13.5%">
+							<p:commandButton oncomplete="PF('dialog222').show()"
+								icon="ui-icon-pencil" title="Modification" update=":f02:dialog2"
+								rendered="#{connectionBean.modifJFerieExp}"
+								actionListener="#{jourFrBean.modifSp(jourFrSp)}">
+							</p:commandButton>
+							<p:commandButton
+								actionListener="#{jourFrBean.supprimerJourFrSp(jourFrSp.idjourFrSp)}"
+								rendered="#{connectionBean.suppJFerieExp}" icon="ui-icon-trash"
+								title="Suppression" update=":f1">
+								<p:confirm header="Suppression Jour Férier Personalisé"
+									message="Voulez-vous vraiment supprimer ce jour férier personalisé?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+
+
+			</p:tabView>
+
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+		<div align="center">
+			<p:dialog id="idDialog" widgetVar="dialogprof" modal="true"
+				closable="false" resizable="false" showHeader="false">
+				<h:form id="f01">
+					<p:panel id="dialog" header="#{jourFrBean.action} du jour férier">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Jour : " />
+							<h:panelGrid columns="4">
+								<p:selectOneMenu id="jours" value="#{jourFrBean.jj}"
+									panelStyle="width:80px" filter="true"
+									filterMatchMode="startsWith" effect="fade">
+									<f:selectItem itemLabel="Jour" itemValue="-1" />
+									<f:selectItems value="#{rendezVousBean.jours}" var="jo"
+										itemLabel="#{jo}" itemValue="#{jo}" />
+								</p:selectOneMenu>
+								<p:selectOneMenu id="mois" value="#{jourFrBean.mm}"
+									panelStyle="width:80px" filter="true"
+									filterMatchMode="startsWith" effect="fade">
+									<f:selectItem itemLabel="Mois" itemValue="-1" />
+									<f:selectItems value="#{rendezVousBean.moiss}" var="mo"
+										itemLabel="#{mo.nomMois} " itemValue="#{mo.numberMois}" />
+								</p:selectOneMenu>
+								<p:inputText value="#{jourFrBean.nbj}" style="width:20px" />
+								jour(s)
+							</h:panelGrid>
+							<p:outputLabel value="Description : " />
+							<p:inputText value="#{jourFrBean.disc}" style="width:280px" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Valider" icon="ui-icon-check"
+								oncomplete="handleLoginRequest(xhr, status, args)"
+								actionListener="#{jourFrBean.Validation()}" update=":f1:growl" />
+							<p:commandButton value="Annuler" update=":f1"
+								oncomplete="PF('dialogprof').hide();"
+								icon="ui-icon-arrowreturnthick-1-n"
+								actionListener="#{jourFrBean.closeDiag()}" />
+						</h:panelGrid>
+					</p:panel>
+				</h:form>
+			</p:dialog>
+
+
+			<p:dialog id="idDialog2" widgetVar="dialog222" modal="true"
+				closable="false" resizable="false" showHeader="false">
+				<h:form id="f02">
+					<p:panel id="dialog2"
+						header="#{jourFrBean.actionSp} du jour férier exceptionnel">
+						<div align="left">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Description : &nbsp; " />
+								<p:inputText value="#{jourFrBean.discSp}" size="29" />
+							</h:panelGrid>
+						</div>
+						<h:panelGrid columns="4">
+
+							<p:outputLabel value="Période :  Du : " />
+							<p:calendar value="#{jourFrBean.debut}" yearRange="c-60:c+30"
+								locale="fr" navigator="true" pattern="dd/MM/yyyy" size="10">
+							</p:calendar>
+
+							<p:outputLabel value=" à : " />
+							<p:calendar value="#{jourFrBean.fin}" yearRange="c-60:c+30"
+								locale="fr" navigator="true" pattern="dd/MM/yyyy" size="10">
+							</p:calendar>
+
+						</h:panelGrid>
+
+						<br />
+
+						<h:panelGrid columns="2">
+							<p:commandButton value="Valider" icon="ui-icon-check"
+								oncomplete="handleLoginRequest2(xhr, status, args)"
+								update=":f1:growl" actionListener="#{jourFrBean.ValidationSp()}">
+							</p:commandButton>
+							<p:commandButton value="Annuler"
+								oncomplete="PF('dialog222').hide();"
+								actionListener="#{jourFrBean.closeDiag()}" update=":f1"
+								icon="ui-icon-arrowreturnthick-1-n">
+							</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+				</h:form>
+			</p:dialog>
+		</div>
+		<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogprof').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogprof').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+
+		<script type="text/javascript">
+					function handleLoginRequest2(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialog222').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialog222').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+		<script type="text/javascript">
+		PrimeFaces.locales ['fr'] = {
+		    closeText: 'Fermer',
+		    prevText: 'Précédent',
+		    nextText: 'Suivant',
+		    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+		    monthNamesShort: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+		    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		    dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+		    dayNamesMin: ['D', 'L', 'Mar', 'Mer', 'J', 'V', 'S'],
+		    weekHeader: 'Semaine',
+		    firstDay:1,
+		    isRTL: false,
+		    showMonthAfterYear: false,
+		    yearSuffix:'',
+		    timeOnlyTitle: 'Choisir l\'heure',
+		    timeText: 'Heure',
+		    hourText: 'Heures',
+		    minuteText: 'Minutes',
+		    secondText: 'Secondes',
+		    currentText: 'Aujourd\'hui',
+		    ampm: false,
+		    month: 'Mois',
+		    week: 'Semaine',
+		    day: 'Jour',
+		    allDayText: 'Toute la journé',
+		};
+	</script>
+	</ui:define>
+</ui:composition>
+</html>

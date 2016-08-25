@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.HistoriqueGross" table="historiqueGross"
+		>
+		<id name="idhistoriqueGross" type="java.lang.Integer">
+			<column name="idhistoriqueGross" />
+			<generator class="increment" />
+		</id>
+		
+		<many-to-one name="cfclient" class="com.doctor.persistance.Cfclient"
+			fetch="select">
+			<column name="idPatient" />
+		</many-to-one>
+
+
+		<many-to-one name="etatBebe" class="com.doctor.persistance.EtatBebe"
+			fetch="select">
+			<column name="idEtatBebe" />
+		</many-to-one>
+		
+		<many-to-one name="etatBebe2" class="com.doctor.persistance.EtatBebe"
+			fetch="select">
+			<column name="idEtatBebe2" />
+		</many-to-one>
+		
+		<many-to-one name="etatBebe3" class="com.doctor.persistance.EtatBebe"
+			fetch="select">
+			<column name="idEtatBebe3" />
+		</many-to-one>
+	
+		<many-to-one name="etatFinGross" class="com.doctor.persistance.EtatFinGross"
+			fetch="select">
+			<column name="idEtatFinGross" />
+		</many-to-one>
+
+
+		<property name="debutGross" type="string">
+			<column name="debutGross" />
+		</property>
+
+		<property name="finGross" type="string">
+			<column name="finGross" />
+		</property>
+		
+		<property name="idcons" type="java.lang.Integer">
+			<column name="idcons" />
+		</property>
+
+		<property name="notes" type="string">
+			<column name="notes" />
+		</property>
+
+		<property name="honoraires" type="string">
+			<column name="honoraires" />
+		</property>
+
+		<property name="terme" type="string">
+			<column name="terme" />
+		</property>
+
+		<property name="lieu" type="string">
+			<column name="lieu" />
+		</property>
+
+		<property name="prenomBebe" type="string">
+			<column name="prenomBebe" />
+		</property>
+		
+		<property name="prenomBebe2" type="string">
+			<column name="prenomBebe2" />
+		</property>
+		
+		<property name="prenomBebe3" type="string">
+			<column name="prenomBebe3" />
+		</property>
+
+		<property name="sexeBebe" type="string">
+			<column name="sexeBebe" />
+		</property>
+
+
+		<property name="sexeBebe2" type="string">
+			<column name="sexeBebe2" />
+		</property>
+
+
+		<property name="sexeBebe3" type="string">
+			<column name="sexeBebe3" />
+		</property>
+
+
+		<property name="poids" type="java.lang.Float">
+			<column name="poids" />
+		</property>
+		
+		<property name="poids2" type="java.lang.Float">
+			<column name="poids2" />
+		</property>
+		
+		<property name="poids3" type="java.lang.Float">
+			<column name="poids3" />
+		</property>
+		
+		<property name="dateFinGross" type="java.sql.Date">
+			<column name="dateFinGross" />
+		</property>
+	</class>
+</hibernate-mapping>

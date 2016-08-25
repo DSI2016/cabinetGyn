@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Fiche Patient</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/FichePatient.png" width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true" life="3000" />
+
+			<table width="100%" >
+				<tr>
+					<td width="220px" align="left">
+					 
+					 <h:commandLink
+							actionListener="#{fichePatientBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink>
+						<h:commandLink 
+						    rendered="#{!connectionBean.menuGestionPat}"
+							actionListener="#{cfclientBean.goToListePatients()}">
+							<p:graphicImage value="/imagesMenu/patient1.png" />
+						</h:commandLink>
+						<h:commandLink
+							actionListener="#{cfclientBean.goToSalleattente()}">
+							<p:graphicImage rendered="#{!connectionBean.menuSalle}"
+								value="/imagesMenu/salleAtt3.png" />
+						</h:commandLink>
+						 
+						<h:commandLink rendered="#{!connectionBean.menuGestRdv}"
+							actionListener="#{rendezVousBean.selectClientFiche()}">
+							<p:graphicImage value="/imagesMenu/calendar1.png"></p:graphicImage>
+						</h:commandLink> </td>
+
+					<td>
+					<h:panelGrid columns="6" cellspacing="5">
+
+							<p:commandButton value="Antécédents"
+								rendered="#{connectionBean.antecedent}"
+								style="width:140px;font-size:small;font-weight:bold"
+								ajax="false" actionListener="#{fichePatientBean.goToAntecedent}">
+
+							</p:commandButton>
+							<p:commandButton value="Echo Gynécologie [#{fichePatientBean.nbrConsEchoGyn}] " 
+								actionListener="#{consultationDetailBean.goToEchoGynecologique}"
+								rendered="#{connectionBean.echoGyn}" 
+								style="font-size:small;font-weight:bold">
+							</p:commandButton>
+
+							<p:commandButton value="Echo Obstétricale[#{fichePatientBean.nbrConsEchoObs}]"
+								rendered="#{connectionBean.echoObs}" 
+								style="font-size:small;font-weight:bold"
+								actionListener="#{consultationDetailBean.goToEchoObstetricale}">
+
+							</p:commandButton>
+
+							<p:commandButton value="Gynécologie[#{fichePatientBean.nbrConsGyn}]"
+								actionListener="#{consultationDetailBean.goToConsultationGyneco}"
+								rendered="#{connectionBean.gynecologie}" 
+								style="width:140px;font-size:small;font-weight:bold">
+							</p:commandButton>
+
+
+							<p:commandButton value="Obstétrique[#{fichePatientBean.nbrConsObs}]"
+								rendered="#{connectionBean.consultGross}"
+								actionListener="#{consultationDetailBean.goToConsultationGrossesse}"
+								
+								style="width:140px;font-size:small;font-weight:bold">
+							</p:commandButton>
+
+							<p:commandButton value="Infertilité" action="Sterilite"
+								rendered="#{connectionBean.sterilite}"
+								actionListener="#{sterileBean.goToStreril()}"
+								style="width:140px;font-size:small;font-weight:bold">
+								<f:setPropertyActionListener
+									value="#{fichePatientBean.idPatient}"
+									target="#{sterileBean.idPatient}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</h:panelGrid></td>
+				<td align="right">
+							<h:panelGrid columns="2">
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+
+
+			<div align="left">
+
+				<p:panel
+					style="width:99%;height:100%;font-size:13pt;font-weight:bold">
+					<div align="center">
+						<table border="0">
+							<tr>
+								<td valign="top" height="50%"><h:panelGrid
+										columns="1">
+										<h:panelGrid columns="7">
+
+											<p:commandButton value="Certificats"
+												style="font-size:small;font-weight:bold"
+												rendered="#{connectionBean.certifFiche}"
+												actionListener="#{fichePatientBean.goToCertificats()}"
+												ajax="false" />
+
+											<p:commandButton value="Lettres"
+												style="font-size:small;font-weight:bold"
+												rendered="#{connectionBean.lettreFiche}"
+												actionListener="#{fichePatientBean.goToLettre()}"
+												ajax="false" />
+
+											<p:commandButton value="Analyses"
+												actionListener="#{fichePatientBean.goToAnalyses()}"
+												style="font-size:small;font-weight:bold"
+												rendered="#{connectionBean.analyseFiche}" />
+
+											<p:commandButton value="Radios"
+												actionListener="#{fichePatientBean.goToRadios()}"
+												style="font-size:small;font-weight:bold"
+												rendered="#{connectionBean.radioFiche}" />
+
+											<p:commandButton value="Ordannances"
+												style="font-size:small;font-weight:bold"
+												rendered="#{connectionBean.ordnanceFiche}"
+												action="#{fichePatientBean.goToOrdonnances()}"
+												actionListener="#{ordonnanceBean.goToOrdonnances()}"
+												ajax="false">
+											</p:commandButton>
+
+											<p:commandButton value="Ordonnance Libre" icon="ui-icon-plus"
+												style="font-size:small;font-weight:bold"
+												rendered="#{connectionBean.ordonanceLibreFiche}"
+												actionListener="#{ordonnanceBean.goToOrdonnanceLibre()}">
+
+											</p:commandButton>
+
+										</h:panelGrid>
+									</h:panelGrid></td><td></td>
+									<td align="right"><p:graphicImage
+											value="/imagesMenu/starRouge.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredNegative1()}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredNegative2()}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredNegative3()}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredMoyen()}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredPositive1()}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredPositive2()}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredPositive3()}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="24px" height="24px" rendered="#{fichePatientBean.changerRendredExtra()}"></p:graphicImage>
+					
+									</td>
+
+							</tr>
+							<tr>
+								<td valign="top" width="50%" height="570px"><h:panelGrid
+										columns="1">
+
+										<p:panel id="patientinfo"
+											style="width:98%;height:570px;font-size:13pt;font-weight:bold"
+											header="Fiche Patiente">
+											<table>
+												<tr valign="top">
+													<td width="63%"><h:outputLabel
+															value="#{fichePatientBean.cfclient.prenom}  #{fichePatientBean.cfclient.nom}"
+															style="font-size:13pt;font-weight:bold;color:indianred" /></td>
+													<td><h:outputLabel
+															value=" Dernière visite le:#{fichePatientBean.cfclient.dernierVisite}"
+															style="font-size:11pt;font-weight:bold" /></td>
+													<td><h:outputLabel
+															value=" [#{fichePatientBean.cfclient.nbCons}]"
+															style="font-size:11pt;font-weight:bold;color:#045FB4" /></td>
+												</tr>
+											</table>
+
+											<table border="0">
+												<tr>
+													<td valign="top"><p:panel>
+
+
+															<p:graphicImage
+																value="/images/People-Patient-Female-icon4.png"></p:graphicImage>
+
+
+															<h:panelGrid columns="2" cellspacing="5">
+																<h:outputLabel value="Date De Naissance: "
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.dateNaiss}"
+																	style="font-size:small;font-weight:bold" />
+
+																<h:outputLabel value="Age: "
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.agePat} ans"
+																	style="font-size:small;font-weight:bold" />
+
+																<h:outputLabel value="GS/RH: "
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.gs} #{fichePatientBean.cfclient.rh}"
+																	style="font-size:small;font-weight:bold" />
+
+																<h:outputLabel value="N° CNAM"
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.cnss}"
+																	style="font-size:small;font-weight:bold" />
+
+																<h:outputLabel value="Profession"
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.profession} - #{fichePatientBean.cfclient.professionP}"
+																	style="font-size:small;font-weight:bold" />
+
+
+																<h:outputLabel value="Téléphones:"
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.telephone} - #{fichePatientBean.cfclient.telephone2}"
+																	style="font-size:small;font-weight:bold" />
+
+
+																<h:outputLabel value="GSM :"
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.gsm1} - #{fichePatientBean.cfclient.gsm2}"
+																	style="font-size:small;font-weight:bold" />
+
+																<h:outputLabel value="E-Mail : "
+																	style="font-size:small;font-weight:bold;color:indianred" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.eMailP}"
+																	style="font-size:small;font-weight:bold" />
+
+															</h:panelGrid>
+														</p:panel></td>
+													<td valign="top"><p:panel>
+															<p:graphicImage
+																value="/images/People-Patient-Male-icon4.png"></p:graphicImage>
+															<h:panelGrid border="0" columns="2" cellspacing="5">
+																<h:outputLabel value="Conjoint : "
+																	style="font-size:small;font-weight:bold;color:teal" />
+
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.prenomC} #{fichePatientBean.cfclient.nomC}"
+																	style="font-size:small;font-weight:bold;width:150pt" />
+
+																<h:outputLabel value="Date De Naissance : "
+																	style="font-size:small;font-weight:bold;color:teal" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.dateNaissC}"
+																	style="font-size:small;font-weight:bold;width:150pt" />
+
+																<h:outputLabel value="Profession"
+																	style="font-size:small;font-weight:bold;color:teal" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.professionC} - #{fichePatientBean.cfclient.professionC}"
+																	style="font-size:small;font-weight:bold;width:150pt" />
+
+																<h:outputLabel value="Téléphones"
+																	style="font-size:small;font-weight:bold;color:teal" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.telC}"
+																	style="font-size:small;font-weight:bold;width:150pt" />
+
+																<h:outputLabel value="GSM:"
+																	style="font-size:small;font-weight:bold;color:teal" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.gsmC}"
+																	style="font-size:small;font-weight:bold;width:150pt" />
+
+																<h:outputLabel value="E-Mail : "
+																	style="font-size:small;font-weight:bold;color:teal" />
+																<p:inputText readonly="true"
+																	value="#{fichePatientBean.cfclient.eMailC}"
+																	style="font-size:small;font-weight:bold;width:150pt" />
+
+																<h:outputLabel value="   " />
+																<h:outputLabel value="  " />
+																<h:outputLabel value="   " />
+																<h:outputLabel value="  " />
+																<h:outputLabel value="   " />
+																<h:outputLabel value="  " />
+
+															</h:panelGrid>
+															<br />
+															<br></br>
+														</p:panel></td>
+												</tr>
+											</table>
+
+											<p:panel>
+
+												<h:panelGrid columns="2">
+													<p:graphicImage value="/images/house-icon3.png"></p:graphicImage>
+													<h:panelGrid columns="2" cellspacing="10">
+
+														<h:outputText value="Adresse : "
+															style="font-size:small;font-weight:bold;width:370px;height:150px" />
+														<p:inputText readonly="true"
+															value="#{fichePatientBean.cfclient.rue} -#{fichePatientBean.cfclient.codePost} #{fichePatientBean.cfclient.village}"
+															style="font-size:small;font-weight:bold; width : 388px;" />
+
+														<h:outputText value="Marriée le : "
+															style="font-size:small;font-weight:bold" />
+														<p:inputText readonly="true"
+															value="#{fichePatientBean.cfclient.mariage}"
+															style="font-size:small;font-weight:bold">
+															<f:convertDateTime pattern="dd/MM/yyyy"
+																timeZone="Europe/Paris" />
+														</p:inputText>
+													</h:panelGrid>
+														</h:panelGrid>
+													<h:panelGrid columns="3">
+														<h:panelGrid columns="2">
+															<h:outputText value="Enfants : "
+																style="font-size:small;font-weight:bold" />
+															<p:inputText value="#{fichePatientBean.parite}"
+																id="nbrenfant"
+																readonly="#{connectionBean.nbrEnfentFiche}"
+																style="font-size:small;font-weight:bold; width : 46px;"
+																converterMessage="Veuillez vérifier le format du nombre d'enfants ">
+																<pe:keyFilter regEx="/[\d]/" />
+																<p:ajax envent="blur"
+																	listener="#{fichePatientBean.pariteChange}"></p:ajax>
+															</p:inputText>
+														</h:panelGrid>
+														<h:panelGrid columns="2">
+															<h:outputText value="Fille(s) : "
+																style="font-size:small;font-weight:bold" />
+															<p:inputText value="#{fichePatientBean.fille}"
+																id="nbrgar"
+																readonly="#{connectionBean.nbrEnfentFiche}"
+																style="font-size:small;font-weight:bold; width : 46px;">
+																<pe:keyFilter regEx="/[\d]/" />
+																<p:ajax envent="blur"
+																	listener="#{fichePatientBean.filleChange}"></p:ajax>
+															</p:inputText>
+														</h:panelGrid>
+														<h:panelGrid columns="2">
+															<h:outputText value="Garçon(s) : "
+																style="font-size:small;font-weight:bold" />
+															<p:inputText value="#{fichePatientBean.garcon}"
+																id="nbrfille"
+																readonly="#{connectionBean.nbrEnfentFiche}"
+																style="font-size:small;font-weight:bold; width : 46px;">
+															<pe:keyFilter regEx="/[\d]/" />
+																<p:ajax envent="blur"
+																	listener="#{fichePatientBean.garconChange}"></p:ajax>
+															</p:inputText>
+														</h:panelGrid>
+													</h:panelGrid>
+
+
+
+											
+
+											</p:panel>
+										</p:panel>
+									</h:panelGrid></td>
+								<td valign="top"  >
+									<div align="center">
+										<p:panel style="font-size:small;font-weight:bold;height:570px"
+											header="Hist. Consultations" >
+											<br />
+											<p:dataTable var="histo"
+												style="font-size:small;font-weight:bold;width:210px;"
+												rowKey="#{histo.idConsultationDetail}"
+												value="#{consultationDetailBean.toutConsultations}"
+												emptyMessage="Pas de Consultations !" paginator="true"
+												paginatorPosition="bottom"
+												currentPageReportTemplate="{currentPage} / {totalPages}"
+												paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+												rows="15">
+
+												<p:column headerText="Date"
+													style="font-size:small;font-weight:bold">
+													<h:outputText value="#{histo.dateConsultation}"
+														style="font-size:small;font-weight:bold;width:30%">
+														<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Paris" />
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Type Consultation"
+													style="font-size:small;font-weight:bold">
+													<p:commandLink style="font-size:small;font-weight:bold"
+														disabled="#{connectionBean.selectTableConsultation}"
+														value="#{histo.consultation.nomConsultation}"
+														actionListener="#{consultationDetailBean.selectedHisto(histo)}">
+													</p:commandLink>
+												</p:column>
+
+											</p:dataTable>
+
+										</p:panel>
+									</div>
+								</td>
+								<td valign="top">
+										
+
+
+											<p:panel style="width:290px;font-size:small;font-weight:bold"
+												header="Allergies">
+												<h:inputTextarea
+													value="#{fichePatientBean.cfclient.allergie}" id="i"
+													style="font-size:12pt;font-weight:bold;width:270px;color:red;height:140px">
+													<p:ajax event="blur" update="i"
+														listener="#{fichePatientBean.allergieChange() }" />
+												</h:inputTextarea>
+											</p:panel>
+
+										
+										<p:panel style="width:290px;font-size:small;font-weight:bold"
+											header="Notes">
+
+											<h:inputTextarea value="#{fichePatientBean.notes}"
+												style="font-size:small;font-weight:bold;width:270px;height:160px">
+												<p:ajax event="blur"
+													listener="#{fichePatientBean.majNote()}" />
+
+											</h:inputTextarea>
+
+											<h:inputTextarea value="#{fichePatientBean.notes2}"
+												style="font-size:small;font-weight:bold;width:270px;height:163px">
+												<p:ajax event="blur"
+													listener="#{fichePatientBean.majNote2()}" />
+											</h:inputTextarea>
+										</p:panel>
+									</td>
+							</tr>
+						</table>
+					</div>
+				</p:panel>
+			</div>
+			<br />
+			<br />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,1288 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Salle D'Attente</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/salleAttente.png" width="100%"></p:graphicImage>
+
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true" life="2000" />
+            <p:poll interval="10" update="f1:update" />
+			
+			<table width="100%">
+				<tr>
+					<td align="left"><h:commandLink
+							actionListener="#{accueilBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> <h:commandLink actionListener="#{salleBean.Retour()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink>&nbsp;<p:commandLink
+							actionListener="#{salleBean.goToListePatient}" ajax="false"
+							style="font-size:small;font-weight:bold"
+							disabled="#{connectionBean.menuGestionPat}">
+							<p:graphicImage value="/imagesMenu/patient1.png" />
+						</p:commandLink></td>
+
+					<td align="right" width="30%"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+
+						</h:panelGrid></td>
+
+
+				</tr>
+			</table>
+
+
+			<p:tabView id="update" activeIndex="#{salleBean.index}">
+				<p:tab title="Patients(#{salleBean.sizeTous})">
+
+					<p:dataTable var="salle" value="#{salleBean.sallesAvecJointure}"
+						emptyMessage="Pas de Patients !"
+						style="font-size:small;font-weight:bold" border="5">
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+    #{salle.ordre}
+</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+    #{salle.motif}
+</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+    #{salle.notes}
+</p:column>
+
+						<p:column>
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle)}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle)}"
+								rendered="#{connectionBean.suppressionPatientSal}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;font-weight:bold;width:35pt" />
+
+							<p:splitButton value="Permuter" ajax="true"
+								style="font-size:13pt;font-weight:bold">
+								
+								<p:menuitem value="Monter" icon="ui-icon-triangle-1-n"
+									style="font-size:10pt" update=":f1" ajax="true"
+									actionListener="#{salleBean.up(salle)}"
+									action="#{salleBean.redirectVersSalle()}" >
+									
+								</p:menuitem>
+								<p:menuitem value="Désender" icon="ui-icon-triangle-1-s"
+									style="font-size:10pt" update=":f1" ajax="true"
+									actionListener="#{salleBean.down(salle)}" 
+									action="#{salleBean.redirectVersSalle()}"/>
+
+								<p:menuitem value="permutter avec"
+									icon="ui-icon-transferthick-e-w" style="font-size:10pt"
+									update=":f1" actionListener="#{salleBean.getParameter(salle)}" 
+									oncomplete="PF('modord').show()" />
+
+								<p:menuitem value="dernier" icon="ui-icon-arrowthickstop-1-s"
+									style="font-size:10pt" update=":f1" ajax="true"
+									actionListener="#{salleBean.devenirDernier(salle)}" 
+									action="#{salleBean.redirectVersSalle()}"/>
+
+								<p:menuitem value="1er" icon="ui-icon-arrowthickstop-1-n"
+									style="font-size:10pt" update=":f1" ajax="true"
+									actionListener="#{salleBean.devenirPremier(salle)}" 
+									action="#{salleBean.redirectVersSalle()}"/>
+							</p:splitButton>
+						</p:column>
+
+
+
+					</p:dataTable>
+				</p:tab>
+
+				<p:tab
+					title=" #{salleBean.tabSalles.get(0).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(0).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(0).active}">
+
+					<p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(0).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(0))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(0))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+				<p:tab
+					title="#{salleBean.tabSalles.get(1).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(1).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(1).active}">
+					<p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(1).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(1))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(1))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+				<p:tab
+					title="#{salleBean.tabSalles.get(2).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(2).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(2).active}">
+					 <p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(2).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(2))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(2))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+
+				<p:tab
+					title="#{salleBean.tabSalles.get(3).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(3).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(3).active}">
+                   <p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(3).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(3))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(3))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+
+				<p:tab
+					title="#{salleBean.tabSalles.get(4).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(4).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(4).active}">
+                     <p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(4).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(4))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(4))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:tab>
+
+				<p:tab
+					title="#{salleBean.tabSalles.get(5).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(5).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(5).active}">
+					
+					<p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(5).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(5))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(5))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+
+				</p:tab>
+
+				<p:tab
+					title="#{salleBean.tabSalles.get(6).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(6).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(6).active}">
+					
+					<p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(6).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(6))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(6))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+
+				</p:tab>
+
+				<p:tab
+					title="#{salleBean.tabSalles.get(7).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(7).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(7).active}">
+					
+					<p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(7).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(7))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(7))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+
+				</p:tab>
+
+				<p:tab
+					title="#{salleBean.tabSalles.get(8).nomTab} (#{salleBean.taille(salleBean.tabSalles.get(8).nomTab)})"
+					rendered="#{salleBean.tabSalles.get(8).active}">
+					
+					<p:dataTable var="salle"
+						value="#{salleBean.sallesAvecJointure(salleBean.tabSalles.get(8).nomTab)}"
+						style="font-size:small;font-weight:bold" border="5"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+
+						<p:column style="width:3%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+							<h:outputText value="  #{salle.cfclient.village} " />
+
+						</p:column>
+
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:13%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+					    #{salle.notes}
+					</p:column>
+					<p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								update=":f1:idModifLigneSalle" title="Modifier"
+								oncomplete="PF('modifLigneSalle').show();"
+								actionListener="#{salleBean.modifSalle(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.modifNoteSal}" />
+
+							<p:commandButton icon="ui-icon-arrowthick-1-e"
+								title="Vers Consultation" action="FichePatient"
+								actionListener="#{salleBean.lePatientVersConsult(salle)}"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.verConsultation}" />
+
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								action="FichePatient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-closethick" title="Annuler"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(8))}"
+								oncomplete="PF('annulation').show()" update=":f1:idAnnulation"
+								style="font-size:13pt;font-weight:bold;width:35pt"
+								rendered="#{connectionBean.anulSal}" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameter(salle,salleBean.tabSalles.get(8))}"
+								oncomplete="PF('supp').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+					</p:dataTable>
+
+
+				</p:tab>
+
+                <p:tab title="Téléphones(#{salleBean.sizeTel})" rendered="#{connectionBean.tabTelSal}" >
+					<p:dataTable var="salle" value="#{salleBean.sallesAvecJointureTel}"
+						emptyMessage="Pas de Patients !" border="5"
+						style="font-size:small;font-weight:bold">
+						<p:column style="width:4%">
+							<f:facet name="header">
+								<h:outputLabel value="N°" />
+							</f:facet>
+						    #{salle.ordre}
+						</p:column>
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column style="width:20%">
+							<f:facet name="header">
+								<h:outputLabel value="Patient" />
+							</f:facet>
+						     #{salle.cfclient.prenom} #{salle.cfclient.nom}
+						</p:column>
+
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+						      #{salle.cfclient.village}
+						</p:column>
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+						    #{salle.motif}
+						</p:column>
+						<p:column style="width:18%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+						    #{salle.notes}
+						</p:column>
+
+						<p:column headerText="Réponse">
+							<h:outputText value="#{salle.reponse}" />
+						</p:column>
+
+						<p:column>
+
+							<p:commandButton icon="ui-icon-pencil" update=":f1:idModifSalle"
+								title="Réponse" oncomplete="PF('modifSalle').show();"
+								actionListener="#{salleBean.modifReponse(salle)}"
+								rendered="#{connectionBean.reponseSal}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.getParameterTel(salle)}"
+								oncomplete="PF('suppTel').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold"
+								rendered="#{connectionBean.suppressionPatientSal}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</p:tab>  
+
+				<p:tab title="Annulé(#{salleBean.sizeAnnul})" rendered="#{connectionBean.tabAnulSal}">
+					<p:dataTable var="salle" value="#{salleBean.sallesAnnule}"
+						emptyMessage="Pas de Patients !"
+						style="font-size:small;font-weight:bold" border="5">
+
+						<p:column style="width:5%">
+							<f:facet name="header">
+								<h:outputLabel value="Heure" />
+							</f:facet>
+							<h:outputText value="#{salle.heure}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Patient" style="width:20%">
+							<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+						</p:column>
+
+
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Ville" />
+							</f:facet>
+      #{salle.village}
+</p:column>
+
+						<p:column style="width:9%">
+							<f:facet name="header">
+								<h:outputLabel value="Motif" />
+							</f:facet>
+    #{salle.motif}
+</p:column>
+						<p:column style="width:18%">
+							<f:facet name="header">
+								<h:outputLabel value="Notes" />
+							</f:facet>
+    #{salle.notes}
+</p:column>
+						<p:column style="width:18%">
+							<f:facet name="header">
+								<h:outputLabel value="Cause" />
+							</f:facet>
+    #{salle.cause}
+</p:column>
+						<p:column>
+
+							<p:commandButton icon="ui-icon-trash" title="Suppression"
+								actionListener="#{salleBean.supprimeAnn(salle.idannuleSalle)}"
+								oncomplete="PF('suppAnn').show()" update=":f1"
+								style="font-size:13pt;width:35pt;font-weight:bold">
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-help" title="charger patient"
+								rendered="#{connectionBean.chargerPatientSal}"
+								actionListener="#{salleBean.lePatient(salle.cfclient.code)}"
+								style="font-size:13pt;width:35pt;font-weight:bold" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</p:tab>
+
+
+			</p:tabView>
+
+			<p:dialog widgetVar="modord" modal="true" closable="false"
+				resizable="false">
+				<p:panel id="modord" header="Changer l'ordre">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Patient : " />
+						<p:outputLabel
+							value="#{salleBean.cfclient.prenom} #{salleBean.cfclient.nom}" />
+
+						<p:outputLabel value="Permutter avec : " />
+
+
+						<p:selectOneMenu value="#{salleBean.nouveauOrdre}">
+							<f:selectItems value="#{salleBean.sallesAvecJointure}" var="sa"
+								itemLabel="#{sa.ordre}" itemValue="#{sa.ordre}" />
+
+						</p:selectOneMenu>
+						<p:commandButton value="Valider" icon="ui-icon-check"
+							actionListener="#{salleBean.changerOrdre()}"
+							action="#{salleBean.redirectVersSalle()}"
+							oncomplete="PF('modord').hide()" update=":f1" />
+						<p:commandButton value="Annuler" actionListener="#{salleBean.redirectVersSalle()}"
+							icon="ui-icon-arrowreturnthick-1-n" update=":f1" />
+					</h:panelGrid>
+				</p:panel>
+			</p:dialog>
+
+			<p:dialog widgetVar="supp" global="true" showEffect="fade"
+				closable="false" hideEffect="explode" resizable="false" modal="true"
+				header="Suppression patient de la salle">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/images/warning.jpg" />
+					<p:outputLabel
+						value="Voulez-vous vraiment supprimer ce patient de la salle d'attente ?" />
+				</h:panelGrid>
+				<p:separator />
+				<div align="center">
+					<p:commandButton value="Oui" icon="ui-icon-check"
+						actionListener="#{salleBean.supprimer()}" update=":f1" />
+					<p:commandButton value="Non" icon="ui-icon-close" update=":f1" />
+				</div>
+			</p:dialog>
+			
+			<p:dialog widgetVar="suppTel" global="true" showEffect="fade"
+				closable="false" hideEffect="explode" resizable="false" modal="true"
+				header="Suppression patient de la salle">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/images/warning.jpg" />
+					<p:outputLabel
+						value="Voulez-vous vraiment supprimer ce patient de la salle d'attente ?" />
+				</h:panelGrid>
+				<p:separator />
+				<div align="center">
+					<p:commandButton value="Oui" icon="ui-icon-check"
+						actionListener="#{salleBean.supprimerTel()}" update=":f1" />
+					<p:commandButton value="Non" icon="ui-icon-close" update=":f1" />
+				</div>
+			</p:dialog>
+
+			<p:dialog widgetVar="suppAnn" global="true" showEffect="fade"
+				closable="false" hideEffect="explode" resizable="false" modal="true"
+				header="Suppression patiente Annulée">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/images/warning.jpg" />
+					<p:outputLabel
+						value="Voulez-vous vraiment supprimer cette patiente annulée ?" />
+				</h:panelGrid>
+				<p:separator />
+				<div align="center">
+					<p:commandButton value="Oui" icon="ui-icon-check"
+						actionListener="#{salleBean.supprimeAnnul()}" update=":f1" />
+					<p:commandButton value="Non" icon="ui-icon-close" update=":f1" />
+				</div>
+			</p:dialog>
+
+			<p:dialog widgetVar="modifSalle" global="true" showEffect="fade"
+				hideEffect="explode" resizable="false" modal="true">
+				<p:panel id="idModifSalle">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Réponse: "></p:outputLabel>
+						<p:inputTextarea value="#{salleBean.reponse}"></p:inputTextarea>
+						<p:commandButton value="Valider" icon="ui-icon-check"
+							actionListener="#{salleBean.modificationSalle()}" update=":f1" />
+						<p:commandButton value="Annuler" icon="ui-icon-close" update=":f1" />
+					</h:panelGrid>
+				</p:panel>
+			</p:dialog>
+
+			<p:dialog id="idModifLigneSalle" widgetVar="modifLigneSalle"
+				resizable="false" closable="false" modal="true" showHeader="false"
+				model="true" width="400pt" height="250pt" hideEffect="explode">
+				<p:panel>
+
+					<h:panelGrid columns="2" cellspacing="5">
+						<h:outputText value="Patiente: " />
+						<h:outputText
+							value="#{salleBean.cfclient.prenom} #{salleBean.cfclient.nom} [#{salleBean.cfclient.dernierVisite}]" />
+						<h:outputText value="Heure : " />
+						<h:outputText value="#{salleBean.heure}" />
+						<h:outputText value="Consultation: " />
+						<p:selectOneMenu 
+								value="#{salleBean.motif}"
+								style="font-size:small;font-weight:bold;width:300px;"
+								filter="true" filterMatchMode="startsWith" effect="fade">
+							<f:selectItem itemLabel="--Selectioner--" itemValue=""  />
+							
+							<f:selectItems value="#{connectionBean.tabSallesActiv}" var="s"
+										itemLabel="#{s.nomTab}"
+										itemValue="#{s.nomTab}" />
+						</p:selectOneMenu>
+						
+
+						<h:outputText value="Notes : " />
+						<p:inputTextarea value="#{salleBean.notes}" style=" width:325px" />
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+				<div align="center">
+					<p:commandButton value="Valider" update=":f1,:f1:growl"
+						actionListener="#{salleBean.modifierLigneSalle()}"></p:commandButton>
+					&nbsp;&nbsp;
+					<p:commandButton value="Annuler"
+						actionListener="#{salleBean.annuleModif()}"
+						oncomplete="PF('modifLigneSalle').hide();"></p:commandButton>
+				</div>
+
+			</p:dialog>
+
+			<p:dialog id="idAnnulation" widgetVar="annulation" resizable="false"
+				closable="false" modal="true" showHeader="false" model="true"
+				width="400pt" height="250pt" hideEffect="explode">
+				<p:panel header="Annulation la présence dans la salle">
+
+					<h:panelGrid columns="2" cellspacing="5">
+						<h:outputText value="Patiente: " />
+						<h:outputText
+							value="#{salleBean.cfclient.prenom} #{salleBean.cfclient.nom}" />
+						<h:outputText value="Heure : " />
+						<h:outputText value="#{salleBean.heure}" />
+						<h:outputText value="Motif: " />
+						<h:outputText value="#{salleBean.motif}" />
+
+
+						<h:outputText value="Notes : " />
+						<h:outputText value="#{salleBean.notes}" />
+
+						<h:outputText value="Cause : " />
+						<p:inputTextarea value="#{salleBean.cause}" style=" width:325px" />
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+				<div align="center">
+					<p:commandButton value="Valider" update=":f1,:f1:growl"
+						actionListener="#{salleBean.annulerLigneSalle()}"></p:commandButton>
+					&nbsp;&nbsp;
+					<p:commandButton value="Annuler"
+						actionListener="#{salleBean.annuleAnnulation()}"
+						oncomplete="PF('annulation').hide();"></p:commandButton>
+				</div>
+
+			</p:dialog>
+
+
+
+
+		</h:form>
+		<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('annulation').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('annulation').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+				
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">
+Historique Radios</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/histoRadios.png" width="100%"></p:graphicImage>
+		<div align="left">
+			<h:form id="f1">
+				<p:growl id="growl" showDetail="true" life="3000" />
+				<table border="0" width="100%">
+					<tr>
+						<td width="90%"><h:commandLink
+								actionListener="#{analyseDemandeeBean.goToAcceuil()}">
+								<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+							</h:commandLink> <h:commandLink actionListener="#{radioBean.retourliste()}">
+								<p:graphicImage value="/images/retour.png"></p:graphicImage>
+							</h:commandLink></td>
+						<td><h:commandLink rendered="#{radioBean.desibledImpr}"
+								actionListener="#{radioBean.viewHistoriqueRadio}"
+								target="_blanc">
+								<p:graphicImage value="/imagesMenu/imprimente10.png">
+								</p:graphicImage>
+							</h:commandLink></td>
+						<td align="right"><h:panelGrid columns="3">
+
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+
+								<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+									<p:graphicImage value="/images/dec.png" width="25px" />
+								</h:commandLink>
+
+							</h:panelGrid></td>
+					</tr>
+				</table>
+				<p:panel style="height:450px">
+					<div align="center">
+						<h:outputText
+							value="Patiente : #{radioBean.cfclient.prenom} #{radioBean.cfclient.nom} "
+							style="font-size:15pt;font-weight:bold" />
+					</div>
+
+					<p:dataTable id="patiente" var="rad"
+						style="font-size:small;font-weight:bold"
+						value="#{radioBean.radiosParPatient}"
+						emptyMessage="Pas de radios !" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10" selectionMode="single" rowKey="#{rad.idradio}"
+						selection="#{radioBean.selectedRAdio}">
+						<p:ajax event="rowSelect" listener="#{radioBean.onRowSelectRadio}"
+							update=":f1:patiente,:f1"></p:ajax>
+
+
+						<p:column headerText="Date" width="5%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{rad.dateRadios}"
+								style="font-size:small;font-weight:bold">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Paris" />
+							</h:outputText>
+						</p:column>
+
+
+						<p:column headerText="Renseignements Clinique" width="25%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{rad.renseignementClinique}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Examens Complementaires"
+							style="font-size:small;font-weight:bold" width="10%">
+							<h:outputText value="#{rad.examenComplementaire}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+						<p:column headerText="Resultats" width="10%"
+							style="font-size:small;font-weight:bold">
+							<h:outputText value="#{rad.resultat}"
+								style="font-size:small;font-weight:bold" />
+						</p:column>
+
+
+						<p:column style="text-align: center" width="10%">
+
+							<p:commandButton icon="ui-icon-pencil" title="Modification Radio"
+								rendered="#{connectionBean.modifRadio}"
+								style="font-size:small;font-weight:bold"
+								actionListener="#{radioBean.modifRadio(rad.idradio)}"
+								oncomplete="PF('modifRadios').show();" update=":f1:ma" />
+
+							<p:commandButton icon="ui-icon-search" title="Détail Radio"
+								rendered="#{connectionBean.detRad}"
+								style="font-size:small;font-weight:bold"
+								actionListener="#{radioBean.modifRadio(rad.idradio)}"
+								oncomplete="PF('modifRadiosdetail').show();"
+								update=":f1:madetail" />
+
+							<p:commandButton update=":f1"
+								rendered="#{connectionBean.supRadio}" icon="ui-icon-trash"
+								title="Suppression Radio"
+								style="font-size:small;font-weight:bold"
+								actionListener="#{radioBean.SupprimerRadio(rad.idradio)}">
+								<p:confirm header="Suppression radio"
+									message="Voulez-vous vraiment supprimer cette Radio ?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<p:confirmDialog global="true" showEffect="fade"
+					hideEffect="explode">
+					<p:commandButton value="Oui" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Non" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+
+
+				<p:dialog id="ma" widgetVar="modifRadios" resizable="false"
+					closable="false" model="true" width="720pt" showHeader="false">
+					<p:outputPanel>
+
+						<div align="center">
+							<p:panel style="width:920px;font-size:13pt;font-weight:bold">
+
+								<table style="width: 100%; heigth: 2cm">
+									<tr>
+										<td align="center"><p:graphicImage
+												value="/images/radiopanel1.png"></p:graphicImage></td>
+									</tr>
+								</table>
+								<br></br>
+								<table border="0" align="center" width="100%">
+								<tr>
+									<td><h:outputText value="Date:"
+											style="font-size:12pt;font-weight:bold" /> <p:calendar
+											id="button" value="#{radioBean.dateRadios}"
+											disabled="#{radioBean.consultation}" showOn="button"
+											size="7" pattern="dd/MM/yyyy" /></td>
+									<td align="right"><h:panelGrid columns="3">
+											<h:outputText value="Radio pour : "
+												style="font-size:13pt;font-weight:bold" />
+											<h:panelGrid columns="2">
+												<h:selectOneRadio id="consolee" layout="grid" columns="2"
+													style="font-size:13pt;font-weight:bold"
+													disabled="#{radioBean.consultation}"
+													value="#{radioBean.proprietaire}">
+													<p:ajax event="change" listener="#{radioBean.changeProp}"
+														update="nomP"></p:ajax>
+													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+													<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+												</h:selectOneRadio>
+											</h:panelGrid>
+											<h:inputText id="nomP" value="#{radioBean.nomProprietaire}"
+												disabled="#{radioBean.consultation}" size="35"></h:inputText>
+
+										</h:panelGrid></td>
+								</tr>
+							</table>
+
+<div align="center">
+								<h:panelGrid columns="2">
+									<h:panelGrid columns="1">
+										<h:panelGrid columns="2">
+											<h:panelGrid columns="2">
+												<h:outputText value="Examens Complémentaires:"
+													style="font-size:12pt;font-weight:bold" />
+
+												<p:selectOneMenu value="#{radioBean.exam}"
+													style="width:20px" panelStyle="width:180px" filter="true"
+													filterMatchMode="startsWith" effect="fade">
+													<p:ajax listener="#{radioBean.onRadioChange}"
+														event="change" update=":f1:exam,:f1" />
+
+													<f:selectItem itemLabel="--- Examens ---" itemValue="" />
+													<f:selectItems value="#{radioBean.examenComplementaires}"
+														var="k" itemLabel="#{k.libExamenComplementaire}"
+														itemValue="#{k.libExamenComplementaire}" />
+												</p:selectOneMenu>
+											</h:panelGrid>
+
+											<h:inputTextarea id="exam"
+												value="#{radioBean.examenComplementaire}"
+												style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+												<p:ajax listener="#{radioBean.ontextexamenChange}"
+													event="blur" />
+											</h:inputTextarea>
+
+											<h:outputText value="Renseignements cliniques :"
+												style="font-size:12pt;font-weight:bold" />
+
+											<h:inputTextarea value="#{radioBean.renseignementClinique}"
+												style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+												<p:ajax event="blur"
+													listener="#{radioBean.onchangeRenseignementClinique()}">
+												</p:ajax>
+											</h:inputTextarea>
+
+										</h:panelGrid>
+									</h:panelGrid>
+
+									<h:panelGrid columns="2">
+										<h:outputText value="Résultat:"
+											style="font-size:12pt;font-weight:bold" />
+
+										<h:inputTextarea value="#{radioBean.resultat}"
+											style="font-size:12pt;font-weight:bold;height:200px;width:260px">
+											<p:ajax event="blur"
+												listener="#{radioBean.onchangeresultat()}">
+											</p:ajax>
+										</h:inputTextarea>
+
+									</h:panelGrid>
+								</h:panelGrid>
+								</div>
+								<div align="center">
+									<h:panelGrid columns="2">
+										<p:commandButton value="Valider"
+											actionListener="#{radioBean.validerHisto()}"
+											style="font-size:small;font-weight:bold"
+											oncomplete="PF('modifRadios').hide();" update=":f1,:f1:growl">
+										</p:commandButton>
+
+										<p:commandButton value="Annuler"
+											oncomplete="PF('modifRadios').hide();" update=":f1"
+											style="font-size:small;font-weight:bold"></p:commandButton>
+									</h:panelGrid>
+								</div>
+							</p:panel>
+						</div>
+					</p:outputPanel>
+				</p:dialog>
+				<p:dialog id="madetail" widgetVar="modifRadiosdetail"
+					resizable="false" closable="false" model="true" width="740pt"
+					showHeader="false">
+					<p:outputPanel>
+
+						<div align="center">
+							<p:panel style="width:950px;font-size:13pt;font-weight:bold">
+
+								<table style="width: 100%; heigth: 2cm">
+									<tr>
+										<td align="center"><p:graphicImage
+												value="/images/radiopanel1.png"></p:graphicImage></td>
+									</tr>
+								</table>
+								<br></br>
+								<table>
+									<tr>
+											<td><h:outputText value="Date:"
+											style="font-size:12pt;font-weight:bold" /> <p:calendar
+											id="butt" value="#{radioBean.dateRadios}"
+											disabled="false" showOn="button"
+											size="7" pattern="dd/MM/yyyy" /></td>
+									<td align="right"><h:panelGrid columns="3">
+											<h:outputText value="Radio pour : "
+												style="font-size:13pt;font-weight:bold" />
+											<h:panelGrid columns="2">
+												<h:selectOneRadio id="cons" layout="grid" columns="2"
+													style="font-size:13pt;font-weight:bold"
+													disabled="false"
+													value="#{radioBean.proprietaire}">
+													<p:ajax event="change" listener="#{radioBean.changeProp}"
+														update="nomPat"></p:ajax>
+													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+													<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+												</h:selectOneRadio>
+											</h:panelGrid>
+											<h:inputText id="nomPat" value="#{radioBean.nomProprietaire}"
+												readonly="true" size="35"></h:inputText>
+
+										</h:panelGrid></td>
+									</tr>
+								</table>
+
+
+								<h:panelGrid columns="2">
+									<h:panelGrid columns="1">
+										<h:panelGrid columns="2">
+											<h:panelGrid columns="2">
+												<h:outputText value="Examens Complémentaires:"
+													style="font-size:12pt;font-weight:bold" />
+
+												<p:selectOneMenu value="#{radioBean.exam}" disabled="true"
+													style="width:20px" panelStyle="width:180px" filter="true"
+													filterMatchMode="startsWith" effect="fade">
+													<p:ajax listener="#{radioBean.onRadioChange}"
+														event="change" update=":f1" />
+
+													<f:selectItem itemLabel="--- Examens ---" itemValue="" />
+													<f:selectItems value="#{radioBean.examenComplementaires}"
+														var="k" itemLabel="#{k.libExamenComplementaire}"
+														itemValue="#{k.libExamenComplementaire}" />
+												</p:selectOneMenu>
+											</h:panelGrid>
+
+											<h:inputTextarea readonly="true"
+												value="#{radioBean.examenComplementaire}"
+												style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+												<p:ajax listener="#{radioBean.ontextexamenChange}"
+													event="blur" />
+											</h:inputTextarea>
+
+											<h:outputText value="Renseignements cliniques :"
+												style="font-size:12pt;font-weight:bold" />
+
+											<h:inputTextarea value="#{radioBean.renseignementClinique}"
+												readonly="true"
+												style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+												<p:ajax event="blur"
+													listener="#{radioBean.onchangeRenseignementClinique()}">
+												</p:ajax>
+											</h:inputTextarea>
+
+										</h:panelGrid>
+									</h:panelGrid>
+
+									<h:panelGrid columns="2">
+										<h:outputText value="Résultat:"
+											style="font-size:12pt;font-weight:bold" />
+
+										<h:inputTextarea value="#{radioBean.resultat}" readonly="true"
+											style="font-size:12pt;font-weight:bold;height:200px;width:260px">
+											<p:ajax event="blur"
+												listener="#{radioBean.onchangeresultat()}">
+											</p:ajax>
+										</h:inputTextarea>
+
+									</h:panelGrid>
+								</h:panelGrid>
+								<div align="center">
+									<h:panelGrid columns="2">
+
+
+										<p:commandButton value="ok"
+											oncomplete="PF('modifRadiosdetail').hide();" update=":f1"
+											style="font-size:small;font-weight:bold"></p:commandButton>
+									</h:panelGrid>
+								</div>
+							</p:panel>
+
+						</div>
+
+
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

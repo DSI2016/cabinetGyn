@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Liste Patients</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/patientArchive.png" width="100%"></p:graphicImage>
+
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true"
+				sticky="#{cfclientBean.blocage}" life="#{cfclientBean.tempsface}" />
+			<table width="100%" border="0">
+				<tr>
+					<td width="30%"><h:commandLink
+							actionListener="#{cfclientBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink><h:commandLink
+							actionListener="#{cfclientBean.goToListePatients()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink>
+						
+						  </td>
+					<td align="left"><h:panelGrid columns="5">
+							<h:outputText value="Recherche: "
+								style="font-size:small;font-weight:bold" />
+							<p:inputText value="#{cfclientBean.valeurRechercheArchive}" id="valid" 
+								style="font-size:small;font-weight:bold;width:300px">
+								<p:ajax event="change"
+									listener="#{cfclientBean.onchagevaleurRechercheArchive()}"></p:ajax>
+
+							</p:inputText>
+							<p:selectOneMenu id="recherche" filterMatchMode="startsWith"
+								value="#{cfclientBean.attribut}" filter="true" effect="fade"
+								style="font-size:small;font-weight:bold">
+								<f:selectItems value="#{cfclientBean.listesRecherches}" var="jo"
+									itemLabel="#{jo.toString()}" itemValue="#{jo}" />
+
+							</p:selectOneMenu>
+							<p:commandButton icon="ui-icon-search" title="Recherche Patient"
+								actionListener="#{cfclientBean.recherchePatientArchive()}" />
+							<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+								actionListener="#{cfclientBean.annulerRechercheArchive()}" update=":f1:patiente,:f1:valid,:f1" />
+
+						</h:panelGrid></td>
+					<td align="right"><h:panelGrid columns="3">
+
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+
+								<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+									<p:graphicImage value="/images/dec.png" width="25px" />
+								</h:commandLink>
+							</h:panelGrid></td>
+
+				</tr>
+				<tr><td width="38%"></td>
+					<td><table><tr><td><h:outputText value="Ordonner par:  "
+							style="font-size:small;font-weight:bold" /></td><td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
+							value="#{cfclientBean.attributTriArchive}" filter="true" effect="fade"
+							style="font-size:small;font-weight:bold">
+							<f:selectItem itemLabel="--Colonne--" itemValue="" />
+													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+													<f:selectItem itemLabel="Nom" itemValue="Nom" />
+													<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
+													<f:selectItem itemLabel="Nbr Consultation" itemValue="Nbr Consultation" />
+													<f:selectItem itemLabel="Dernier Consultation" itemValue="Iréguliers" />
+							
+<!-- 							<f:selectItems value="#{cfclientBean.listestris}" var="tr" -->
+<!-- 								itemLabel="#{tr.toString()}" itemValue="#{tr}" /> -->
+							<p:ajax envent="change" listener="#{cfclientBean.triePatientArchive()}" update=":f1:patiente,:f1"></p:ajax> 
+						</p:selectOneMenu></td><td><p:commandButton icon="ui-icon-triangle-1-n"
+							title="Croissante" actionListener="#{cfclientBean.croissanteArchive()}"
+							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+					</td><td><p:commandButton icon="ui-icon-triangle-1-s"
+							title="Décroissante"
+							actionListener="#{cfclientBean.decroissanteArchive()}"
+							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+					</td></tr></table>
+					
+					
+					</td>
+					</tr>
+			</table>
+			
+
+			<p:dataTable id="patiente" var="Patient" widgetVar="tabPatient"
+				style="font-size:small;font-weight:bold"
+				value="#{cfclientBean.patientArchives}" emptyMessage="Pas de Patients !"
+				paginator="true" paginatorPosition="bottom"
+				paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+				rows="16">
+
+
+				
+				<p:column headerText="Patiente" width="15%"
+					style="font-size:small;font-weight:bold">
+					<h:outputText value="#{Patient.prenom} #{Patient.nom}"
+						style="font-size:small;font-weight:bold" />
+				</p:column>
+
+				<p:column headerText="Age" style="font-size:small;font-weight:bold"
+					width="3.5%">
+					<h:outputText value="#{cfclientBean.calculAgeEnAns(Patient.dateNaiss)} ans"
+						style="font-size:small;font-weight:bold" />
+				</p:column>
+
+				<p:column headerText="Consultation" width="11%"
+					style="font-size:small;font-weight:bold">
+
+					<h:outputText
+						value="[#{Patient.nbCons}]&nbsp;&nbsp;"
+						style="font-size:small;font-weight:bold;color:#045FB4" />
+					<h:outputText value="#{Patient.dernierVisite}"
+						style="font-size:small;font-weight:bold" />
+					<h:outputText
+						value="&nbsp;&nbsp;#{cfclientBean.typeConslt(Patient.code)}"
+						style="font-size:small;font-weight:bold;color:#045FB4" />
+
+				</p:column>
+
+
+				<p:column headerText="Contact" width="5%"
+					style="font-size:small;font-weight:bold">
+					<h:outputText
+						value="#{Patient.gsm1}  #{Patient.gsm2}  #{Patient.telephone}  #{Patient.telephone2}"
+						style="font-size:small;font-weight:bold" />
+				</p:column>
+
+				<p:column headerText="Conjoint" width="12%"
+					style="font-size:small;font-weight:bold">
+					<h:outputText value="#{Patient.prenomC} #{Patient.nomC}"
+						style="font-size:small;font-weight:bold" />
+				</p:column>
+				<p:column headerText="Contact Conjoint" width="5%"
+					style="font-size:small;font-weight:bold">
+					<h:outputText value="#{Patient.gsmC}"
+						style="font-size:small;font-weight:bold" />
+				</p:column>
+
+				<p:column style="text-align: center" width="18%">
+					
+
+					<p:commandButton update=":f1:formulaire:patientinfo"
+						rendered="#{connectionBean.detailPat}"
+						actionListener="#{cfclientBean.info(Patient)}"
+						title="Détails Patient" icon="ui-icon-search"
+						style="font-size:small;width:33pt;font-weight:bold" />
+						
+						<p:commandButton icon="ui-icon-arrowreturnthick-1-w" title="Restaurer Patient"
+						style="font-size:small;width:33pt;font-weight:bold"
+						actionListener="#{cfclientBean.getPatCode(Patient.code)}"
+						oncomplete="PF('archivDlg').show();" >
+						</p:commandButton>
+						
+						
+					
+					<p:commandButton update=":f1"
+						rendered="#{connectionBean.suppressionPat}"
+						actionListener="#{cfclientBean.Supprimer(Patient.code)}"
+						icon="ui-icon-trash" title="Suppression patient"
+						style="font-size:small;width:33pt;font-weight:bold">
+						
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+		
+			<br />
+			<div align="center">
+				<h:form id="formulaire">
+				
+				<p:dialog id="idSuppression" widgetVar="suppression" modal="true"
+						resizable="false" closable="false" showHeader="false"
+						width="600px">
+
+
+						<p:panel
+							header="Suppression #{cfclientBean.patient.prefix}#{cfclientBean.patient.prenom} #{cfclientBean.patient.nom}">
+							<div align="left">
+								<h:outputText style="font-weight:bold" value="Historique :"
+									rendered="#{cfclientBean.afficheHisto}" />
+							</div>
+							<h:panelGrid columns="2">
+								<h:outputText value="#{cfclientBean.nbOrdonnance}  "
+									rendered="#{cfclientBean.afficheOrdonnance}" />
+								<h:outputText value="Ordonnace(s)."
+									rendered="#{cfclientBean.afficheOrdonnance}" />
+
+								<h:outputText value="   #{cfclientBean.nbAnalyse}"
+									rendered="#{cfclientBean.afficheAnalyse}" />
+								<h:outputText value="Analyse(s)."
+									rendered="#{cfclientBean.afficheAnalyse}" />
+
+								<h:outputText value="   #{cfclientBean.nbRadios}"
+									rendered="#{cfclientBean.afficheRadios}" />
+								<h:outputText value="Radio(s)."
+									rendered="#{cfclientBean.afficheRadios}" />
+
+								<h:outputText value="   #{cfclientBean.nbCertif}"
+									rendered="#{cfclientBean.afficheCertif}" />
+								<h:outputText value="Certificat(s)."
+									rendered="#{cfclientBean.afficheCertif}" />
+
+								<h:outputText value="   #{cfclientBean.nbLettre}"
+									rendered="#{cfclientBean.afficheLettre}" />
+								<h:outputText value="Lettre(s)."
+									rendered="#{cfclientBean.afficheLettre}" />
+
+								<h:outputText value="   #{cfclientBean.nbConsultation}"
+									rendered="#{cfclientBean.afficheConsultation}" />
+								<h:outputText value="Consultation(s)."
+									rendered="#{cfclientBean.afficheConsultation}" />
+
+								<h:outputText value="   #{cfclientBean.nbSterilite}"
+									rendered="#{cfclientBean.afficheSterilite}" />
+								<h:outputText value="Infertulité(s)."
+									rendered="#{cfclientBean.afficheSterilite}" />
+
+								<h:outputText value="   #{cfclientBean.nbContraception}"
+									rendered="#{cfclientBean.afficheContraception}" />
+								<h:outputText value="Historique(s) de contraception."
+									rendered="#{cfclientBean.afficheContraception}" />
+
+								<h:outputText value="   #{cfclientBean.nbAntecedentMed}"
+									rendered="#{cfclientBean.afficheAntecedentMed}" />
+								<h:outputText value="Antécédent(s) médicaux."
+									rendered="#{cfclientBean.afficheAntecedentMed}" />
+
+								<h:outputText value="   #{cfclientBean.nbAntecedentFam}"
+									rendered="#{cfclientBean.afficheAntecedentFam}" />
+								<h:outputText value="Antécédent(s) familiaux."
+									rendered="#{cfclientBean.afficheAntecedentFam}" />
+
+								<h:outputText value="   #{cfclientBean.nbAntecedentChir}"
+									rendered="#{cfclientBean.afficheAntecedentChir}" />
+								<h:outputText value="Antécédent(s) chirigucaux."
+									rendered="#{cfclientBean.afficheAntecedentChir}" />
+
+								<h:outputText value="   #{cfclientBean.nbGross}"
+									rendered="#{cfclientBean.afficheGross}" />
+								<h:outputText value="Historique(s) grossesse."
+									rendered="#{cfclientBean.afficheGross}" />
+
+								<h:outputText value="   #{cfclientBean.nbRDV}"
+									rendered="#{cfclientBean.afficheRDV}" />
+								<h:outputText value="Rendez-vous."
+									rendered="#{cfclientBean.afficheRDV}" />
+
+							</h:panelGrid>
+							<br/>
+							<div align="left">
+								<h:outputText
+									value="Cette patiente est présente dans la salle d'attente."
+									rendered="#{cfclientBean.afficheSalle}" />
+							</div>
+							<hr />
+							<div align="center">
+								<table>
+									<tr>
+										<td align="left"><p:graphicImage
+												value="/images/warning.jpg" /></td>
+										<td>
+											<table>
+												<tr>
+													<td align="center"><h:outputText style="color:red"
+															value="La suppresion va entrainer la perte des historiques!!" /></td>
+												</tr>
+												<tr>
+													<td align="center"><h:outputText
+															value="Voulez-vous la supprimer comme même?" /></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</p:panel>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Supprimer"
+								actionListener="#{cfclientBean.supprimPatientCascad()}"></p:commandButton>
+							<p:commandButton value="Annuler"
+								oncomplete="PF('suppression').hide();"></p:commandButton>
+						</h:panelGrid>
+					</p:dialog>
+					
+					<p:dialog widgetVar="dialogInfo" resizable="false" closable="false"
+						header="Fiche Patiente">
+						<p:outputPanel id="patientinfo"
+							style="height: 400px; width: 800px;">
+
+							<p:tabView id="tab2" orientation="left" style="font-size:12pt"
+							 activeIndex="#{cfclientBean.indexInfo}">
+
+								<p:tab title="Informations Générales">
+									<h:panelGrid columns="2" cellspacing="15">
+										<h:outputLabel value="Patiente: "
+											style="font-size:small;font-weight:bold" />
+										<p:inputText
+											value="#{cfclientBean.prefix} #{cfclientBean.prenom} #{cfclientBean.nom}"
+											readonly="true"
+											style="font-size:small;font-weight:bold;width:400px;" />
+
+										<h:outputLabel value="Date De Naissance: "
+											style="font-size:small;font-weight:bold" />
+										 <h:panelGrid columns="3" >
+										<p:inputText readonly="true" value="#{cfclientBean.dateNaiss}"
+											style="font-size:small;font-weight:bold;width:200px" />
+											
+										<h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Age : "
+											style="font-size:small;font-weight:bold" />
+											
+										<p:inputText readonly="true"  value="#{cfclientBean.age} ans"
+											style="font-size:small;font-weight:bold;width:107px" />	
+										</h:panelGrid>
+
+										<h:outputLabel value="Profession : "
+											style="font-size:small;font-weight:bold" />
+										<p:inputTextarea readonly="true"
+											value="#{cfclientBean.profession} #{cfclientBean.professionP}"
+											style="font-size:small;font-weight:bold;width :400px; " />
+
+
+										<h:outputLabel value="N°CNAM:"
+											style="font-size:small;font-weight:bold" />
+										<p:inputText readonly="true" value="#{cfclientBean.cnss}"
+											style="font-size:small;font-weight:bold;width:400px" />
+
+										<h:outputLabel value="Autre assurance:"
+											style="font-size:small;font-weight:bold" />
+										<h:panelGrid columns="2">
+
+											<p:inputText readonly="true"
+												style="font-size:small;font-weight:bold;width:190px;"
+												value="#{cfclientBean.assurance1}" />
+											<p:inputText readonly="true"
+												value="#{cfclientBean.assurance2}"
+												style="font-size:small;font-weight:bold;width:190px;" />
+
+										</h:panelGrid>
+									</h:panelGrid>
+								</p:tab>
+
+								<p:tab title="Coordonnées">
+									<div align="left">
+										<h:panelGrid columns="2" cellspacing="5">
+											<h:outputLabel value="Adresse:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputTextarea readonly="true"
+												style="font-size:small;font-weight:bold;width:400px"
+												value="#{cfclientBean.rue} - #{cfclientBean.codePost} #{cfclientBean.village} #{cfclientBean.vil} - #{cfclientBean.pays}" />
+										</h:panelGrid>
+										<h:panelGrid columns="1" cellspacing="3">
+											<p:fieldset legend="Téléphones"
+												style="font-size:small;font-weight:bold">
+												<h:panelGrid columns="4">
+													<h:outputLabel value="Tel 1:"
+														style="font-size:small;font-weight:bold" />
+													<p:inputText readonly="true"
+														style="font-size:small;font-weight:bold;width:180px"
+														value="#{cfclientBean.telephone}" />
+													<h:outputLabel value="Tel 2:"
+														style="font-size:small;font-weight:bold" />
+													<p:inputText readonly="true"
+														value="#{cfclientBean.telephone2}"
+														style="font-size:small;font-weight:bold;width:180px" />
+												</h:panelGrid>
+											</p:fieldset>
+											<p:fieldset legend="Gsm"
+												style="font-size:small;font-weight:bold">
+												<h:panelGrid columns="4"
+													style="font-size:small;font-weight:bold">
+													<h:outputLabel value="Gsm 1:"
+														style="font-size:small;font-weight:bold" />
+													<p:inputText readonly="true" value="#{cfclientBean.gsm1}"
+														style="font-size:small;font-weight:bold;width:180px" />
+
+													<h:outputLabel value="Gsm 2:"
+														style="font-size:small;font-weight:bold" />
+													<p:inputText readonly="true" value="#{cfclientBean.gsm2}"
+														style="font-size:small;font-weight:bold;width:180px" />
+												</h:panelGrid>
+											</p:fieldset>
+										</h:panelGrid>
+										<h:panelGrid columns="2">
+											<h:outputLabel value="E-Mail : "
+												style="font-size:small;font-weight:bold;width:400px" />
+											<p:inputText readonly="true" value="#{cfclientBean.eMailP}"
+												style="font-size:small;font-weight:bold;width:400px" />
+										</h:panelGrid>
+									</div>
+								</p:tab>
+
+
+
+								<p:tab title="Informations de Conjoint(e)">
+									<div align="left">
+										<h:panelGrid columns="2" cellspacing="15">
+
+											<h:outputLabel value="Conjoint :"
+												style="font-size:small;font-weight:bold;width:400px" />
+											<p:inputText readonly="true"
+												value="#{cfclientBean.prenomC} #{cfclientBean.nomC}"
+												style="font-size:small;font-weight:bold;width:400px" />
+
+											<h:outputLabel value="Date De Naissance:"
+												style="font-size:small;font-weight:bold" />
+
+											<p:inputText readonly="true"
+												value="#{cfclientBean.dateNaissC}"
+												style="font-size:small;font-weight:bold;width:400px" />
+
+											<h:outputLabel value="Profession : "
+												style="font-size:small;font-weight:bold;width:400px" />
+											<p:inputText readonly="true"
+												style="font-size:small;font-weight:bold;width:400px"
+												value="#{cfclientBean.profc} #{cfclientBean.professionC}" />
+
+											<h:outputLabel value="Tel:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.telC}"
+												style="font-size:small;font-weight:bold;width:400px" />
+
+
+											<h:outputLabel value="GSM:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.gsmC}"
+												style="font-size:small;font-weight:bold;width:400px" />
+
+											<h:outputLabel value="E-Mail : "
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.eMailC}"
+												style="font-size:small;font-weight:bold;width:400px" />
+
+										</h:panelGrid>
+									</div>
+								</p:tab>
+
+
+								<p:tab title="Autres Informations">
+									<div align="left">
+										<h:panelGrid columns="4" cellspacing="10">
+											<h:outputLabel value="Taille:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.taille}"
+												style="font-size:small;font-weight:bold;width:100px" />
+
+
+											<h:outputLabel value="Poids:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.poids}"
+												style="font-size:small;font-weight:bold;width:100px" />
+
+
+											<h:outputLabel value="GS:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.gs}"
+												style="font-size:small;font-weight:bold;width:100px" />
+
+
+											<h:outputLabel value="RH:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.rh}"
+												size="5"
+												style="font-size:small;font-weight:bold;width:100px" />
+										</h:panelGrid>
+
+										<h:panelGrid cellspacing="5" columns="2">
+											<h:outputLabel value="Allergies:"
+												style="font-size:small;font-weight:bold;width:400px" />
+											<p:inputTextarea readonly="true"
+												value="#{cfclientBean.allergie}" size="10"
+												style="font-size:small;font-weight:bold;heigth:400px;width:400px" />
+										</h:panelGrid>
+
+										<h:panelGrid cellspacing="5" columns="2">
+											<h:outputLabel value="Adressé(e) par Dr."
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.docLib}"
+												size="10"
+												style="font-size:small;font-weight:bold;width:400px" />
+
+											<p:outputLabel value="Clinique"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText readonly="true" value="#{cfclientBean.libClin}"
+												size="10"
+												style="font-size:small;font-weight:bold;width:400px" />
+											<h:outputLabel value="AGHBS:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText value="#{cfclientBean.aghbs}"
+												style="width:400px" />
+											<h:outputLabel value="Glycemie:"
+												style="font-size:small;font-weight:bold" />
+											<p:inputText value="#{cfclientBean.glycemie}"
+												style="width:400px" />
+										</h:panelGrid>
+									</div>
+								</p:tab>
+							</p:tabView>
+
+							<table>
+
+								<tr>
+
+									<td width="700"></td>
+									<td width="600"><p:commandButton value="OK"
+											oncomplete="PF('dialogInfo').hide();"></p:commandButton></td>
+
+									<td align="left"><p:inputText
+											value="#{cfclientBean.categorie}" style="width : 80px;"></p:inputText></td>
+								</tr>
+							</table>
+
+						</p:outputPanel>
+					</p:dialog>
+
+					
+				</h:form>
+
+				<p:confirmDialog global="true" showEffect="fade"
+					hideEffect="explode">
+					<p:commandButton value="Oui" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Non" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</div>
+		
+		   <p:dialog id="idArchiv" widgetVar="archivDlg" resizable="false"
+				closable="false" modal="true"   header="Restaurer ?"
+				width="400pt" height="100pt" hideEffect="explode">
+				<p:panel >
+				   <h:outputText value="Voulez-vous vraiment restaurer cette patiente ?" ></h:outputText>
+				   <br/>
+				   <hr></hr>
+				   <div align="center">
+				   <h:panelGrid columns="2">
+				     <p:commandButton value="Oui" actionListener="#{cfclientBean.AnulArchivage()}"
+				    oncomplete="PF('archivDlg').hide();" ></p:commandButton>
+				     <p:commandButton value="Non" oncomplete="PF('archivDlg').hide();"></p:commandButton>
+				   </h:panelGrid>
+				   </div>
+				</p:panel>
+				</p:dialog>
+		
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
+</html>

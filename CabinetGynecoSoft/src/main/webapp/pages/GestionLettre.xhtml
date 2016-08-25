@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+
+	<ui:define name="title">
+	
+		Modéles Lettres
+	</ui:define>
+
+	<ui:define name="body">
+
+	<p:graphicImage value="/imagesTitre/listemodeleslettres.png" width="100%"></p:graphicImage>
+	<br />
+
+	<h:form id="f1">
+		<table width="100%" border="0">
+			<tr>
+				<td width="90%"><div align="left">
+						<h:panelGrid columns="2">
+							<h:commandLink actionListener="#{accueilBean.goToAccueil()}">
+								<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+							</h:commandLink>
+							<h:commandLink actionListener="#{lettreBean.gotoRapport()}">
+								<p:graphicImage value="/images/retour.png"></p:graphicImage>
+							</h:commandLink>
+						</h:panelGrid>
+					</div></td>
+					<td>
+		<div align="right">
+
+			<h:commandLink actionListener="#{lettreBean.viewCertificat}"
+				target="_blanc">
+				<p:graphicImage value="/imagesMenu/imprimente10.png">
+				</p:graphicImage>
+
+			</h:commandLink>
+		</div></td>
+		<td align="right"><h:panelGrid columns="3">
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="25px" />
+							</h:commandLink>
+						</h:panelGrid></td>
+
+			</tr>
+		</table>
+<p:growl id="growl" life="3000" showDetail="true" />
+<p:panel>
+		
+			<table>
+				<tr>
+					<td valign="top"><p:dataTable id="eventsDT" rows="6"
+							value="#{lettreBean.lettres}" paginator="true"
+							paginatorPosition="bottom"
+							currentPageReportTemplate="{currentPage} / {totalPages}"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							var="lettre" selectionMode="single"
+							selection="#{lettreBean.selectedLettre}"
+							rowKey="#{lettre.idlettre}">
+							<p:ajax event="rowSelect"
+								listener="#{lettreBean.onRowSelectlettre}"
+								update=":f1:growl,:f1,:f1:f4:carDetail" />
+
+
+<p:column headerText="Liste lettres" style="font-weight:bold"
+					>
+					<h:outputText value=" #{lettre.nomLettre}"
+						style="font-weight:bold" />
+				</p:column>
+
+							
+
+
+
+						</p:dataTable></td>
+
+					<td valign="top"><h:form id="f4">
+							<p:panel id="carDetail" header="#{lettreBean.action} Modéle lettre"
+								style="width:800px;height:430px">
+								<h:panelGrid columns="3">
+									<p:outputLabel value="Lettre" style="font-weight:bold" />
+									<p:inputText value="#{lettreBean.nomLettre}" style="width:690px" id="pro" />
+									<p:outputLabel>
+										<h:message for="pro"
+											style="FONT-SIZE: small; 
+							FONT-STYLE: italic; color: red;" />
+									</p:outputLabel>
+									<p:outputLabel value="Text" style="font-weight:bold" ></p:outputLabel>
+									<p:editor value="#{lettreBean.textLettre}"
+										controls="underline strikethrough size color highlight bullets numbering image cut copy paste pastetext print"
+										style="width:700px;height:300px">
+									</p:editor>
+									<p:outputPanel />
+								</h:panelGrid>
+
+
+
+								<div align="center">
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										actionListener="#{lettreBean.validation()}"
+										update=":f1:f4:carDetail,:f1:growl,:f1" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										actionListener="#{lettreBean.closeDiag()}" update=":f1" />
+								</div>
+							</p:panel>
+						</h:form></td>
+
+				</tr>
+			</table>
+		
+
+
+</p:panel>
+
+
+
+
+		<br />
+		<br />
+	</h:form>
+	
+</ui:define>
+</ui:composition>
+</html>

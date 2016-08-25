@@ -1,0 +1,1228 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/templateGyneco.xhtml">
+	<ui:define name="title">
+	Antécédents
+</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/antecedents.png" width="100%"></p:graphicImage>
+		<br />
+		<p:growl id="growl" life="8000" showDetail="true" />
+		<h:form id="f1">
+
+			<table width="100%">
+				<tr>
+					<td><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{utilisateurBean.gotoAcceuil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+								<h:commandLink actionListener="#{antecedentBean.gotoFiche()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+					<td align="right" width="30%"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+
+						</h:panelGrid></td>
+				</tr>
+			</table>
+
+			<div align="center">
+				<h:outputText value="Patiente : "
+					style="font-weight:bold;font-size:14pt" />
+				<h:outputText
+					value="#{antecedentBean.cfclient.prenom} #{antecedentBean.cfclient.nom}"
+					style="font-weight:bold;font-size:14pt" />
+
+
+				<p:tabView id="tab2" style="font-size:12pt"
+					activeIndex="#{antecedentBean.index}">
+					<p:tab title="Antécédents"
+						rendered="#{connectionBean.tabAntecedent}">
+						<p:panel style="width:1250px;height:300px">
+							<table border="0" width="100%" cellspacing="5">
+
+								<tr>
+									<td valign="top" width="30%"><h:panelGrid columns="3">
+											<p:outputLabel for="ant" value="Médicaux: "
+												style="font-size:small;font-weight:bold" />
+
+											<p:selectOneMenu id="ant"
+												disabled="#{connectionBean.selectAntecedent}"
+												value="#{antecedentBean.idantecedentMed}"
+												style="width:180px" panelStyle="width:180px" filter="true"
+												filterMatchMode="startsWith" >
+												
+												<p:ajax oncomplete="PF('diagAjoutAntMed').show()"
+													listener="#{antecedentBean.ajoutAnt}" update=":fant:p4" />
+
+												<f:selectItem itemLabel="-- ant. Med --" itemValue="" />
+												<f:selectItems value="#{antecedentBean.antecedentMeds}"
+													var="a" itemLabel="#{a.antMedical}"
+													itemValue="#{a.idantecedentMed}" />
+											</p:selectOneMenu>
+											<p:commandButton icon="ui-icon-plusthick" title="ajouter"
+												rendered="#{connectionBean.ajoutGestAntMed}"
+												oncomplete="PF('dialogAnt').show();"
+												update=":fgrossese2:idDialogAnt"
+												style="font-weight:bold;font-size:small">
+												<p:ajax listener="#{antecedentBean.ajouterAntecedentMed()}"></p:ajax>
+											</p:commandButton>
+
+										</h:panelGrid> <p:dataTable id="la" var="histo"
+											style="font-size:small;font-weight:bold"
+											value="#{antecedentBean.antecedentms}"
+											emptyMessage="Pas d'antécédents !">
+
+											<p:column headerText="Antécédent"
+												style="font-size:small;font-weight:bold">
+
+												<h:outputText value="#{histo.antecedentMedical}"
+													style="font-size:small;font-weight:bold;width :100%;" />
+
+											</p:column>
+											<p:column headerText="Date"
+												style="font-size:small;font-weight:bold; width : 30px;">
+
+												<h:outputText value="#{histo.date}"
+													style="font-size:small;font-weight:bold; width : 100%;" />
+											</p:column>
+											<p:column width="25%">
+												<p:commandButton rendered="#{connectionBean.modifAnt}"
+												    icon="ui-icon-pencil" title="Modifier"
+													oncomplete="PF('diagAntMed').show();"
+													style="font-size:10pt;font-weight:bold">
+													<p:ajax event="click"
+														listener="#{antecedentBean.modifAntMed(histo)}"
+														update=":f3:p3"></p:ajax>
+												</p:commandButton>
+
+												<p:commandButton  rendered="#{connectionBean.suppAnt}"
+												    icon="ui-icon-trash" title="Suprimer"
+													style="font-size:10pt;font-weight:bold">
+													<p:ajax event="click"
+														listener="#{antecedentBean.supprimeAntMed(histo.idantmedcfclient)}"
+														update=":f1" />
+													<p:confirm header="Supprimer ?"
+														message="Voulez-vous vraiment supprimer cette ligne ?"
+														icon="ui-icon-alert" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable></td>
+									<td valign="top" width="30%"><h:panelGrid columns="3">
+
+											<p:outputLabel value="Chirurgicaux "
+												style="font-size:small;font-weight:bold" />
+
+											<p:selectOneMenu id="antc"
+												disabled="#{connectionBean.selectAntecedent}"
+												value="#{antecedentBean.idantecedentChir}"
+												style="width:180px" panelStyle="width:180px" filter="true"
+												filterMatchMode="startsWith">
+												<p:ajax oncomplete="PF('diagAjoutAntMed').show()"
+													listener="#{antecedentBean.ajoutAnt}" update=":fant:p4" />
+												<f:selectItem itemLabel="ant. Chir" itemValue="" />
+												<f:selectItems value="#{antecedentBean.antecedentChirs}"
+													var="a" itemLabel="#{a.antChirugical}"
+													itemValue="#{a.idantecedentChir}" />
+											</p:selectOneMenu>
+											<p:commandButton icon="ui-icon-plusthick" title="ajouter"
+												rendered="#{connectionBean.ajoutGestChirg}"
+												actionListener="#{antecedentBean.ajouterAntecedentChir()}"
+												oncomplete="PF('dialogAnt').show();"
+												update=":fgrossese2:idDialogAnt"
+												style="font-weight:bold;font-size:small" />
+
+										</h:panelGrid> <p:dataTable id="ll" var="histo" widgetVar="cellmed"
+											style="font-size:small;font-weight:bold"
+											value="#{antecedentBean.antecedentcs}"
+											emptyMessage="Pas d'antécédents !">
+
+											<p:column headerText="Antécédent"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{histo.antecedentChirugical}"
+													style="font-size:small;font-weight:bold; width : 100%;" />
+											</p:column>
+
+											<p:column headerText="Date"
+												style="font-size:small;font-weight:bold; width : 30px;">
+
+												<h:outputText value="#{histo.date}"
+													style="font-size:small;font-weight:bold; width : 100%;">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+
+											</p:column>
+											<p:column width="25%">
+												<p:commandButton rendered="#{connectionBean.modifAnt}"
+												icon="ui-icon-pencil" title="Modifier"
+													oncomplete="PF('diagAntMed').show();"
+													style="font-size:10pt;font-weight:bold">
+													<p:ajax event="click"
+														listener="#{antecedentBean.modifAntChir(histo)}"
+														update=":f3:p3"></p:ajax>
+												</p:commandButton>
+
+												<p:commandButton  rendered="#{connectionBean.suppAnt}"
+												    icon="ui-icon-trash" title="Suprimer"
+													style="font-size:10pt;font-weight:bold">
+													<p:ajax event="click"
+														listener="#{antecedentBean.supprimeAntChir(histo.idantchircfclient)}"
+														update=":f1" />
+													<p:confirm header="Supprimer ?"
+														message="Voulez-vous vraiment supprimer cette ligne ?"
+														icon="ui-icon-alert" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable></td>
+									<td valign="top" width="30%"><h:panelGrid columns="3">
+											<p:outputLabel value="Familiaux "
+												style="font-size:small;font-weight:bold" />
+
+											<p:selectOneMenu
+												disabled="#{connectionBean.selectAntecedent}"
+												value="#{antecedentBean.idantecedentFam}"
+												style="width:180px" panelStyle="width:180px" filter="true"
+												filterMatchMode="startsWith">
+												<p:ajax oncomplete="PF('diagAjoutAntMed').show()"
+													listener="#{antecedentBean.ajoutAnt}" update=":fant:p4" />
+												<f:selectItem itemLabel="-- ant. Fam --" itemValue="" />
+												<f:selectItems value="#{antecedentBean.antecedentFams}"
+													var="a" itemLabel="#{a.antFamilial}"
+													itemValue="#{a.idantecedentFam}" />
+											</p:selectOneMenu>
+											<p:commandButton icon="ui-icon-plusthick" title="ajouter"
+												rendered="#{connectionBean.ajoutGestFam}"
+												actionListener="#{antecedentBean.ajouterAntecedentFam()}"
+												oncomplete="PF('dialogAnt').show();"
+												update=":fgrossese2:idDialogAnt"
+												style="font-weight:bold;font-size:small" />
+
+										</h:panelGrid> <p:dataTable id="lll" var="histo"
+											style="font-size:small;font-weight:bold"
+											value="#{antecedentBean.antecedentfs}"
+											emptyMessage="Pas d'antécédents !">
+
+											<p:column headerText="Antécédent"
+												style="font-size:small;font-weight:bold">
+
+												<h:outputText value="#{histo.antecedentFamilial}"
+													style="font-size:small;font-weight:bold; width : 100%;" />
+											</p:column>
+
+											<p:column headerText="Date"
+												style="font-size:small;font-weight:bold; width : 30px;">
+												<h:outputText value="#{histo.date}"
+													style="font-size:small;font-weight:bold; width : 100%;" />
+											</p:column>
+
+											<p:column>
+												<p:commandButton  rendered="#{connectionBean.modifAnt}"
+												    icon="ui-icon-pencil" title="Modifier"
+													oncomplete="PF('diagAntMed').show();"
+													style="font-size:10pt;font-weight:bold">
+													<p:ajax event="click"
+														listener="#{antecedentBean.modifAntFam(histo)}"
+														update=":f3:p3"></p:ajax>
+												</p:commandButton>
+												<p:commandButton rendered="#{connectionBean.suppAnt}"
+												    icon="ui-icon-trash" title="Suprimer"
+													style="font-size:10pt;font-weight:bold">
+													<p:ajax event="click"
+														listener="#{antecedentBean.supprimeAntFam(histo.idantfamcfclient)}"
+														update="lll" />
+													<p:confirm header="Supprimer ?"
+														message="Voulez-vous vraiment supprimer cette ligne ?"
+														icon="ui-icon-alert" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable></td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+					<p:tab title="Gynéco-obstéricaux"
+						rendered="#{connectionBean.tabGynObs}">
+
+						<p:panel style="width:1250px;height:300px">
+							<h:panelGrid columns="2" cellspacing="15">
+								<p:panel style="width:500px;height:250px">
+									<h:panelGrid columns="2" cellspacing="5">
+
+										<h:outputText value="Age des 1ers Règles: "
+											style="font-weight:bold;font-size:small">
+										</h:outputText>
+										<h:panelGrid columns="2">
+											<h:inputText readonly="#{connectionBean.modifGynObs}"
+											    value="#{antecedentBean.dpr}"
+												style="font-weight:bold;font-size:small" size="5" id="dpr">
+												<p:ajax event="blur"
+													listener="#{antecedentBean.ageRegleChange}"></p:ajax>
+											</h:inputText>ans
+											 <pe:keyFilter for="dpr" mask="num" />
+										</h:panelGrid>
+
+										<h:outputText value="Cyle: "
+											style="font-weight:bold;font-size:small" />
+										<h:panelGrid columns="4">
+											<h:inputText readonly="#{connectionBean.modifGynObs}"
+											    style="font-weight:bold;font-size:small"
+												size="10" value="#{antecedentBean.cycle}">
+												<p:ajax event="blur"
+													listener="#{antecedentBean.cycleChange}"></p:ajax>
+
+											</h:inputText>
+
+											<h:selectOneMenu  disabled="#{connectionBean.modifGynObs}"
+											    style="font-weight:bold;font-size:small"
+												value="#{antecedentBean.cycleType}">
+												<p:ajax event="change"
+													listener="#{antecedentBean.cycleTypeChange}"></p:ajax>
+												<f:selectItem itemLabel="--Sélectionner--" itemValue=""
+													style="font-size:small;font-weight:bold" />
+												<f:selectItem itemLabel="Régulier" itemValue="Régulier"
+													style="font-size:small;font-weight:bold" />
+												<f:selectItem itemLabel="Irrégulier" itemValue="Irrégulier"
+													style="font-size:small;font-weight:bold" />
+											</h:selectOneMenu>
+											<h:outputText value="" />
+											<h:panelGrid columns="2" cellspacing="5">
+												<p:selectBooleanCheckbox disabled="#{connectionBean.modifGynObs}" 
+												    value="#{antecedentBean.spanio}"
+													style="font-size:small;font-weight:bold">
+													<p:ajax envent="change"
+														listener="#{antecedentBean.spanioChange}"></p:ajax>
+												</p:selectBooleanCheckbox>
+												<h:outputText value="Spanio "
+													style="font-size:small;font-weight:bold" />
+											</h:panelGrid>
+
+										</h:panelGrid>
+
+										<h:outputText value="Règles: "
+											style="font-weight:bold;font-size:small" />
+										<h:panelGrid columns="2">
+											<h:inputText readonly="#{connectionBean.modifGynObs}"
+											    value="#{antecedentBean.regles}"
+												style="font-weight:bold;font-size:small" size="10">
+												<p:ajax event="change"
+													listener="#{antecedentBean.reglesChange}"></p:ajax>
+											</h:inputText>
+											<h:selectOneMenu disabled="#{connectionBean.modifGynObs}"
+											    style="font-weight:bold;font-size:small"
+												value="#{antecedentBean.regleType}">
+												<p:ajax event="change"
+													listener="#{antecedentBean.regleTypeChange}"></p:ajax>
+												<f:selectItem itemLabel="--Sélectionner--" itemValue=""
+													style="font-size:small;font-weight:bold" />
+												<f:selectItem itemLabel="Normales" itemValue="Normales"
+													style="font-size:small;font-weight:bold" />
+
+												<f:selectItem itemLabel="Faibles" itemValue="Faibles"
+													style="font-size:small;font-weight:bold" />
+
+												<f:selectItem itemLabel="Abondantes" itemValue="Abondantes"
+													style="font-size:small;font-weight:bold" />
+											</h:selectOneMenu>
+										</h:panelGrid>
+
+										<h:outputText value="Dysménorrhée"
+											style="font-weight:bold;font-size:small" />
+										<h:inputText  readonly="#{connectionBean.modifGynObs}"
+										    value="#{antecedentBean.dysmenorhe}"
+											style="font-weight:bold;font-size:small" size="10">
+											<p:ajax event="blur"
+												listener="#{antecedentBean.dysmenorheChange}"></p:ajax>
+										</h:inputText>
+
+										<h:outputText value="Mastodynie"
+											style="font-weight:bold;font-size:small" />
+
+										<h:inputText readonly="#{connectionBean.modifGynObs}"
+										    value="#{antecedentBean.mastodynie}"
+											style="font-weight:bold;font-size:small" size="10">
+											<p:ajax event="blur"
+												listener="#{antecedentBean.mastodynieChange}"></p:ajax>
+										</h:inputText>
+										<h:outputText value="Age Ménopause"
+											style="font-weight:bold;font-size:small" />
+
+										<h:panelGrid columns="2">
+											<h:inputText readonly="#{connectionBean.modifGynObs}"
+											    value="#{antecedentBean.menopose}"
+												style="font-weight:bold;font-size:small" size="5"
+												id="menopose">
+												<p:ajax event="blur"
+													listener="#{antecedentBean.menoposeChange}"></p:ajax>
+											</h:inputText> ans
+                                          <pe:keyFilter for="menopose" mask="num" />
+										</h:panelGrid>
+									</h:panelGrid>
+								</p:panel>
+
+								<p:panel style="width:500px;height:250px">
+									<h:panelGrid columns="3" cellspacing="5">
+										<h:outputText value="Date mariage"
+											style="font-weight:bold;font-size:small" />
+
+										<p:calendar disabled="#{connectionBean.modifGynObs}" 
+										    id="im" value="#{antecedentBean.mariage}"
+											style="font-weight:bold;font-size:small;width:50px"
+											yearRange="c-60:c+30" locale="fr" navigator="true"
+											pattern="dd/MM/yyyy">
+
+											<p:ajax event="blur"
+												listener="#{antecedentBean.mariageChange}" />
+										</p:calendar>
+
+										<p:outputLabel></p:outputLabel>
+										<h:outputText value="Consanguinité: "
+											style="font-weight:bold;font-size:small" />
+
+										<h:selectOneMenu disabled="#{connectionBean.modifGynObs}"
+										    style="font-weight:bold;font-size:small"
+											value="#{antecedentBean.consang}">
+											<p:ajax event="change"
+												listener="#{antecedentBean.consangChange}"></p:ajax>
+											<f:selectItem itemLabel="--Sélectionner--" itemValue=""
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="1er Degré" itemValue="1er Degré"
+												style="font-size:small;font-weight:bold" />
+
+											<f:selectItem itemLabel="2ème Degré" itemValue="2me Degré"
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Lointaine" itemValue="Lointaine"
+												style="font-size:small;font-weight:bold" />
+											<f:selectItem itemLabel="Aucune" itemValue="Aucun"
+												style="font-size:small;font-weight:bold" />
+										</h:selectOneMenu>
+										<p:outputLabel></p:outputLabel>
+										<h:outputText value="Gestité:"
+											style="font-weight:bold;font-size:small" />
+										<h:inputText readonly="#{connectionBean.modifGynObs}"
+										    value="#{antecedentBean.gestite}" id="gestitite"
+											style="font-weight:bold;font-size:small" size="3">
+											<p:ajax envent="blur"
+												listener="#{antecedentBean.gestiteChange}" />
+										</h:inputText>
+										<pe:keyFilter for="gestitite" mask="num" />
+										<h:outputText value="Parité:"
+											style="font-weight:bold;font-size:small" />
+										<h:inputText readonly="#{connectionBean.modifGynObs}" 
+										    value="#{antecedentBean.partie}" id="parite"
+											style="font-weight:bold;font-size:small" size="3">
+											<p:ajax envent="blur"
+												listener="#{antecedentBean.partieChange}" />
+										</h:inputText>
+										<pe:keyFilter for="parite" mask="num" />
+										<h:outputText value="Garçon(s) vivant(s):"
+											style="font-weight:bold;font-size:small" />
+										<h:inputText readonly="#{connectionBean.modifGynObs}" 
+										    style="font-weight:bold;font-size:small"
+											value="#{antecedentBean.nbrGarcon}" size="3" id="nbrgarcon">
+											<p:ajax envent="blur"
+												listener="#{antecedentBean.nbrGarconChange}" />
+										</h:inputText>
+										<pe:keyFilter for="nbrgarcon" mask="num" />
+
+										<h:outputText value="Fille(s) vivante(s):"
+											style="font-weight:bold;font-size:small" />
+										<h:inputText readonly="#{connectionBean.modifGynObs}" 
+										    style="font-weight:bold;font-size:small"
+											value="#{antecedentBean.nbrFille}" size="3" id="nbrfille">
+											<p:ajax envent="blur"
+												listener="#{antecedentBean.nbrFilleChange}" />
+										</h:inputText>
+										<pe:keyFilter for="nbrfille" mask="num" />
+										<h:outputText value="Césarienne(s):"
+											style="font-weight:bold;font-size:small" />
+										<h:inputText readonly="#{connectionBean.modifGynObs}"
+										    style="font-weight:bold;font-size:small" size="3"
+											value="#{antecedentBean.cesar}" id="nbrcesar">
+											<p:ajax envent="blur"
+												listener="#{antecedentBean.cesarChange}" />
+										</h:inputText>
+										<pe:keyFilter for="nbrcesar" mask="num" />
+									</h:panelGrid>
+								</p:panel>
+							</h:panelGrid>
+						</p:panel>
+
+					</p:tab>
+
+
+					<p:tab title="Historique Grossesses"
+						rendered="#{connectionBean.tabHistGross}">
+						<p:panel style="width:1250px">
+							<p:dataTable id="patiente" var="Historique"
+								style="font-size:small;font-weight:bold"
+								value="#{antecedentBean.listHistoriqueGross}"
+								emptyMessage="Pas des accouchements !">
+
+								<p:column headerText="Date"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{Historique.dateFinGross}"
+										style="font-size:small;font-weight:bold">
+										<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="Europe/Paris" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Etat de fin"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{Historique.etatFinGross.etatFinG}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Terme"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{Historique.terme}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Lieu"
+									style="font-size:small;font-weight:bold;width:200px">
+									<h:outputText value="#{Historique.lieu}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Bébé"
+									style="font-size:small;font-weight:bold;width:200px">
+									<h:outputText value="#{Historique.prenomBebe}"
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.prenomBebe2}"
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.prenomBebe3}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+								<p:column headerText="Sexe"
+									style="font-size:small;font-weight:bold;width:100px">
+
+									<h:outputText value="#{Historique.sexeBebe}"
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.sexeBebe2}"
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.sexeBebe3}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Poids"
+									style="font-size:small;font-weight:bold;width:30px">
+									<h:outputText value="#{Historique.poids}">
+									</h:outputText>
+									<br></br>
+									<h:outputText value="#{Historique.poids2}"
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.poids3}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Etat"
+									style="font-size:small;font-weight:bold;width:100px">
+
+									<h:outputText value="#{Historique.etatBebe.etatBebe} "
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.etatBebe2.etatBebe} "
+										style="font-size:small;font-weight:bold" />
+									<br></br>
+									<h:outputText value="#{Historique.etatBebe3.etatBebe} "
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+
+								<p:column>
+									<p:commandButton icon="ui-icon-pencil"
+										rendered="#{connectionBean.modifHisGross}"
+										title="Modification Historique De Grossesses"
+										style="font-size:small;font-weight:bold"
+										oncomplete="PF('diag2').show();">
+										<p:ajax event="click" update=":idDialogGross,:fgrossese:cons"
+											listener="#{antecedentBean.modifierGross(Historique)}" />
+									</p:commandButton>
+
+									<p:commandButton icon="ui-icon-trash" title="Suppression"
+										rendered="#{connectionBean.supHisGross}"
+										style="font-size:small;font-weight:bold">
+										<p:ajax event="click"
+											listener="#{antecedentBean.supprimerGross(Historique)}"
+											update=":growl,:f1"></p:ajax>
+										<p:confirm header="Supprimer ?"
+											message="Voulez-vous vraiment supprimer cette ligne ?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+
+					<p:tab title="Historique Contracéption"
+						rendered="#{connectionBean.tabContraception}">
+						<p:panel style="width:1250px">
+							<p:dataTable id="pati" var="contraception"
+								style="font-size:small;font-weight:bold"
+								value="#{antecedentBean.contraceptions}"
+								emptyMessage="Pas des moyens utilisés !">
+
+								<p:column headerText="Début"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{contraception.dateDebut}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Moyen"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{contraception.moyen}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+								<p:column headerText="Remarque"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{contraception.remarque}"
+										style="font-size:small;font-weight:bold" />
+								</p:column>
+
+
+								<p:column>
+
+									<p:commandButton icon="ui-icon-pencil"
+										rendered="#{connectionBean.modifContraception}"
+										oncomplete="PF('diag3').show();" title="Modification Patient"
+										style="font-size:small;font-weight:bold">
+										<p:ajax event="click"
+											listener="#{antecedentBean.modifierContraception(contraception)}"
+											update=":idDialogCont"></p:ajax>
+									</p:commandButton>
+									<p:commandButton icon="ui-icon-trash"
+										rendered="#{connectionBean.supContraception}"
+										title="Suppression contraception"
+										style="font-size:small;font-weight:bold">
+										<p:ajax event="click"
+											listener="#{antecedentBean.supprimerContraception(contraception.idcontraception)}"
+											update=":growl,:f1"></p:ajax>
+										<p:confirm header="Supprimer ?"
+											message="Voulez-vous vraiment supprimer cette ligne ?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+
+				</p:tabView>
+				<p:commandButton value="Nouvelle Grossese"
+					oncomplete="PF('diag2').show();" style="font-size:small"
+					rendered="#{connectionBean.nouvGross}">
+					<p:ajax event="click"
+						listener="#{antecedentBean.ajouternouvGross()}"
+						update=":idDialogGross"></p:ajax>
+				</p:commandButton>
+
+				<p:commandButton value="Nouvelle Contraception"
+					rendered="#{connectionBean.nouvContraception}"
+					update=":idDialogCont" oncomplete="PF('diag3').show();"
+					style="font-size:small">
+					<p:ajax event="click"
+						listener="#{antecedentBean.ajouternouvContraception()}"></p:ajax>
+				</p:commandButton>
+
+				<br /> <br /> <br />
+
+
+				<p:confirmDialog global="true" hideEffect="explode">
+					<div align="center">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</div>
+				</p:confirmDialog>
+
+			</div>
+
+		</h:form>
+
+
+		<p:dialog id="idDialogGross" closable="false" widgetVar="diag2"
+			resizable="false" modal="true">
+
+			<h:form id="fgrossese">
+				<div align="center">
+					<p:panel style="heigth:800px" id="p"
+						header="#{antecedentBean.action1} Grossesse">
+						<h:panelGrid columns="2">
+							<h:outputText for="fingros" value="Date Fin Grossesse: " />
+
+							<p:inputText value="#{antecedentBean.dateFinGrossString}"
+								style="font-size:small;font-weight:bold;width:270px" />
+
+							<h:outputText value="Etat Fin Grossesse: " />
+							<h:panelGrid columns="2">
+								<p:selectOneMenu value="#{antecedentBean.etatFinGross}"
+									id="listE" style="font-size:small;font-weight:bold;width:240px"
+									panelStyle="width:180px">
+									<p:ajax event="change"
+										listener="#{antecedentBean.changeEtatGross}"></p:ajax>
+									<f:selectItem itemLabel="--Séléctionner--" itemValue="" />
+									<f:selectItems value="#{antecedentBean.etatFinGrosss}" var="a"
+										itemLabel="#{a.etatFinG}" itemValue="#{a.etatFinG}" />
+								</p:selectOneMenu>
+								<p:commandButton icon="ui-icon-plusthick" title="ajouter"
+									oncomplete="PF('diagAjoutEFG').show();PF('diag2').hide();"
+									update=":fEtat"
+									rendered="#{!connectionBean.gestionEtatFinGross}"
+									style="font-weight:bold;font-size:small" />
+							</h:panelGrid>
+
+							<h:outputText value="Terme: " />
+							<h:inputText value="#{antecedentBean.terme}"
+								style="font-size:small;font-weight:bold;width:270px">
+								<p:ajax event="blur" listener="#{antecedentBean.changeTerme}" />
+							</h:inputText>
+
+							<h:outputText value="Lieu: " />
+							<h:inputText value="#{antecedentBean.lieu}"
+								style="font-size:small;font-weight:bold;width:270px">
+								<p:ajax event="blur" listener="#{antecedentBean.changeLieu}" />
+							</h:inputText>
+							<h:outputText value="Notes: " />
+							<h:inputTextarea value="#{antecedentBean.notes}"
+								style="font-size:small;font-weight:bold;width:270px;height:50px">
+
+							</h:inputTextarea>
+
+							<h:outputText value="Nombre de bébé: " />
+							<p:selectOneRadio id="cons" layout="grid" columns="4"
+								value="#{antecedentBean.nbBebe}">
+								<p:ajax event="change"
+									listener="#{antecedentBean.nbrBebeChange}" update="fgrossese"></p:ajax>
+								<f:selectItem itemLabel="0" itemValue="0" />
+								<f:selectItem itemLabel="1" itemValue="1" />
+								<f:selectItem itemLabel="2" itemValue="2" />
+								<f:selectItem itemLabel="3" itemValue="3" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+							<p:panel rendered="#{antecedentBean.unBebe}">
+								<h:panelGrid columns="2">
+									<h:outputText value="Prénom Bébé: " />
+									<h:inputText value="#{antecedentBean.prenomBebe}"
+										style="font-weight:bold;font-size:small;width:150px">
+										<p:ajax event="blur" listener="#{antecedentBean.changePrenom}"></p:ajax>
+									</h:inputText>
+
+									<h:outputText value="sexe Bébé: " />
+									<h:panelGrid columns="2">
+										<p:selectOneRadio id="consolee" layout="grid" columns="1"
+											value="#{antecedentBean.sexeBebe}">
+											<p:ajax event="change"
+												listener="#{antecedentBean.changeSexeBebe}"></p:ajax>
+											<f:selectItem itemLabel="Masculin" itemValue="Masculin" />
+											<f:selectItem itemLabel="Féminin" itemValue="Féminin" />
+										</p:selectOneRadio>
+										<h:panelGrid columns="1">
+											<p:graphicImage url="/images/symboleM.jpg" />
+											<p:graphicImage url="/images/symboleF.jpg" />
+										</h:panelGrid>
+									</h:panelGrid>
+
+									<h:outputText value="Etat Bébé: " />
+									<h:panelGrid columns="2">
+										<p:selectOneMenu value="#{antecedentBean.etatBebe}"
+											style="font-weight:bold;font-size:small;width:160px"
+											panelStyle="width:180px">
+											<p:ajax event="change"
+												listener="#{antecedentBean.changeEtatBebe}"></p:ajax>
+											<f:selectItem style="font-weight:bold;font-size:small"
+												itemLabel="--Sélectionner--" itemValue="" />
+											<f:selectItems value="#{antecedentBean.etatBebes}" var="a"
+												style="font-weight:bold;font-size:small"
+												itemLabel="#{a.etatBebe}" itemValue="#{a.etatBebe}" />
+										</p:selectOneMenu>
+										<!-- 									<p:commandButton icon="ui-icon-plusthick" title="ajouter" -->
+										<!-- 										rendered="#{!connectionBean.gestionBb}" update=":formPlusEtat" -->
+										<!-- 										oncomplete="PF('plusEtatBebe').show();PF('diag2').hide();" -->
+										<!-- 										style="font-weight:bold;font-size:small" /> -->
+									</h:panelGrid>
+									<h:outputText value="Poids Bébé: " />
+									<h:panelGrid columns="2">
+										<h:inputText value="#{antecedentBean.poids}"
+											style="font-weight:bold;font-size:small;width:40px">
+											<p:ajax event="blur" listener="#{antecedentBean.changePoids}"></p:ajax>
+										</h:inputText>Kg
+						</h:panelGrid>
+								</h:panelGrid>
+							</p:panel>
+							<p:panel rendered="#{antecedentBean.deuxBebe}">
+								<h:panelGrid columns="2">
+									<h:outputText value="Prénom Bébé: " />
+									<h:inputText value="#{antecedentBean.prenomBebe2}"
+										style="font-weight:bold;font-size:small;width:150px">
+										<p:ajax event="blur"
+											listener="#{antecedentBean.changePrenom2}"></p:ajax>
+									</h:inputText>
+
+									<h:outputText value="sexe Bébé: " />
+									<h:panelGrid columns="2">
+										<p:selectOneRadio id="co" layout="grid" columns="1"
+											value="#{antecedentBean.sexeBebe2}">
+											<p:ajax event="change"
+												listener="#{antecedentBean.changeSexeBebe2}"></p:ajax>
+											<f:selectItem itemLabel="Masculin" itemValue="Masculin" />
+											<f:selectItem itemLabel="Féminin" itemValue="Féminin" />
+										</p:selectOneRadio>
+										<h:panelGrid columns="1">
+											<p:graphicImage url="/images/symboleM.jpg" />
+											<p:graphicImage url="/images/symboleF.jpg" />
+										</h:panelGrid>
+									</h:panelGrid>
+
+
+									<h:outputText value="Etat Bébé: " />
+									<h:panelGrid columns="2">
+										<p:selectOneMenu value="#{antecedentBean.etatBebe2}"
+											style="font-weight:bold;font-size:small;width:160px"
+											panelStyle="width:180px">
+											<p:ajax event="change"
+												listener="#{antecedentBean.changeEtatBebe2}"></p:ajax>
+											<f:selectItem style="font-weight:bold;font-size:small"
+												itemLabel="--Sélectionner--" itemValue="" />
+											<f:selectItems value="#{antecedentBean.etatBebes}" var="a"
+												style="font-weight:bold;font-size:small"
+												itemLabel="#{a.etatBebe}" itemValue="#{a.etatBebe}" />
+										</p:selectOneMenu>
+										<!-- 									<p:commandButton icon="ui-icon-plusthick" title="ajouter" -->
+										<!-- 										rendered="#{!connectionBean.gestionBb}" update=":formPlusEtat" -->
+										<!-- 										oncomplete="PF('plusEtatBebe').show();PF('diag2').hide();" -->
+										<!-- 										style="font-weight:bold;font-size:small" /> -->
+									</h:panelGrid>
+									<h:outputText value="Poids Bébé: " />
+									<h:panelGrid columns="2">
+										<h:inputText value="#{antecedentBean.poids2}"
+											style="font-weight:bold;font-size:small;width:40px">
+											<p:ajax event="blur"
+												listener="#{antecedentBean.changePoids2}"></p:ajax>
+										</h:inputText>Kg
+						</h:panelGrid>
+								</h:panelGrid>
+							</p:panel>
+							<p:panel rendered="#{antecedentBean.troisBebe}">
+								<h:panelGrid columns="2">
+									<h:outputText value="Prénom Bébé: " />
+									<h:inputText value="#{antecedentBean.prenomBebe3}"
+										style="font-weight:bold;font-size:small;width:150px">
+										<p:ajax event="blur"
+											listener="#{antecedentBean.changePrenom3}"></p:ajax>
+									</h:inputText>
+
+									<h:outputText value="sexe Bébé: " />
+									<h:panelGrid columns="2">
+										<p:selectOneRadio id="c" layout="grid" columns="1"
+											value="#{antecedentBean.sexeBebe3}">
+											<p:ajax event="change"
+												listener="#{antecedentBean.changeSexeBebe3}"></p:ajax>
+											<f:selectItem itemLabel="Masculin" itemValue="Masculin" />
+											<f:selectItem itemLabel="Féminin" itemValue="Féminin" />
+										</p:selectOneRadio>
+										<h:panelGrid columns="1">
+											<p:graphicImage url="/images/symboleM.jpg" />
+											<p:graphicImage url="/images/symboleF.jpg" />
+										</h:panelGrid>
+									</h:panelGrid>
+
+
+									<h:outputText value="Etat Bébé: " />
+									<h:panelGrid columns="2">
+										<p:selectOneMenu value="#{antecedentBean.etatBebe3}"
+											style="font-weight:bold;font-size:small;width:160px"
+											panelStyle="width:180px">
+											<p:ajax event="change"
+												listener="#{antecedentBean.changeEtatBebe3}"></p:ajax>
+											<f:selectItem style="font-weight:bold;font-size:small"
+												itemLabel="--Séléctionner--" itemValue="" />
+											<f:selectItems value="#{antecedentBean.etatBebes}" var="a"
+												itemLabel="#{a.etatBebe}" itemValue="#{a.etatBebe}" />
+										</p:selectOneMenu>
+										<!-- 									<p:commandButton icon="ui-icon-plusthick" title="ajouter" -->
+										<!-- 										rendered="#{!connectionBean.gestionBb}" update=":formPlusEtat" -->
+										<!-- 										oncomplete="PF('plusEtatBebe').show();PF('diag2').hide();" -->
+										<!-- 										style="font-weight:bold;font-size:small" /> -->
+									</h:panelGrid>
+									<h:outputText value="Poids Bébé: " />
+									<h:panelGrid columns="2">
+										<h:inputText value="#{antecedentBean.poids3}"
+											style="font-weight:bold;font-size:small;width:40px">
+											<p:ajax event="blur"
+												listener="#{antecedentBean.changePoids3}"></p:ajax>
+										</h:inputText>Kg
+						</h:panelGrid>
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+
+							<p:commandButton value="Valider"
+								oncomplete="handleLoginRequestGross(xhr, status, args)">
+								<p:ajax event="click" listener="#{antecedentBean.validerBebe()}"
+									update=":growl"></p:ajax>
+							</p:commandButton>
+							<p:commandButton value="Annuler"
+								actionListener="#{antecedentBean.annulation()}"
+								oncomplete="PF('diag2').hide();" update=":f1,fgrossese"></p:commandButton>
+						</h:panelGrid>
+
+					</p:panel>
+
+				</div>
+
+			</h:form>
+
+		</p:dialog>
+
+		<!-- modification ant -->
+		<p:dialog widgetVar="diagAntMed">
+
+			<h:form id="f3">
+				<p:panel id="p3">
+					<h:panelGrid columns="2">
+						<h:outputText value="Antécédent : " />
+						<h:inputTextarea value="#{antecedentBean.am}"
+							style="font-size:small;font-weight:bold;width : 290px;">
+							<p:ajax event="blur" listener="#{antecedentBean.amChange()}"></p:ajax>
+						</h:inputTextarea>
+						<h:outputText value="Date" />
+						<h:inputText value="#{antecedentBean.dateAm}" />
+					</h:panelGrid>
+					<br></br>
+					<div align="center">
+						<p:commandButton
+							actionListener="#{antecedentBean.validerAntMed()}"
+							value="Valider" />
+						<p:commandButton oncomplete="PF('diagAntMed').hide();"
+							value="Annuler" />
+					</div>
+
+				</p:panel>
+			</h:form>
+
+		</p:dialog>
+		<!-- ajout ant -->
+		<p:dialog widgetVar="diagAjoutAntMed">
+
+			<h:form id="fant">
+				<p:panel id="p4">
+					<h:panelGrid columns="2">
+						<h:outputText value="Antécédent : " />
+						<h:inputTextarea value="#{antecedentBean.am}"
+							style="font-size:small;font-weight:bold;width : 290px;">
+							<p:ajax event="blur" listener="#{antecedentBean.amChange()}"></p:ajax>
+						</h:inputTextarea>
+						<h:outputText value="Date" />
+						<h:inputText value="#{antecedentBean.dateAm}">
+							<p:ajax event="blur" listener="#{antecedentBean.dateAmChange()}" />
+						</h:inputText>
+					</h:panelGrid>
+					<br></br>
+					<div align="center">
+						<p:commandButton value="Valider">
+							<p:ajax listener="#{antecedentBean.ajouterAntMed()}"></p:ajax>
+						</p:commandButton>
+						<p:commandButton oncomplete="PF('diagAjoutAntMed').hide();"
+							value="Annuler" />
+					</div>
+
+
+				</p:panel>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog id="idDialogCont" modal="true" closable="false"
+			showHeader="false" widgetVar="diag3" resizable="false">
+			<h:form id="formc">
+				<p:panel header="#{antecedentBean.action1} Contracéption">
+					<h:panelGrid columns="2">
+
+						<h:outputText value="Date Début : " />
+						<p:inputText value="#{antecedentBean.dateDebut}" />
+						<h:outputText value="Moyen: " />
+						<h:panelGrid columns="2">
+
+							<p:selectOneMenu value="#{antecedentBean.moyen}" id="x"
+								style="font-size:small;font-weight:bold;width : 290px;">
+								<f:selectItem itemLabel=" -- Moyen --" itemValue="" />
+								<f:selectItems value="#{antecedentBean.moyens}" var="a"
+									itemLabel="#{a.libMoyenContraception}"
+									itemValue="#{a.libMoyenContraception}" />
+							</p:selectOneMenu>
+							<p:commandButton icon="ui-icon-plusthick" title="ajouter"
+								rendered="not #{connectionBean.gestionMoyCtrcep}"
+								actionListener="#{antecedentBean.initContra()}"
+								update=":fgrossese2:fc:idDiagContra"
+								style="font-weight:bold;font-size:small"
+								oncomplete="PF('diagContra').show();" />
+
+						</h:panelGrid>
+
+						<h:outputText value="Remarque: " />
+						<h:inputTextarea value="#{antecedentBean.remarque}"
+							style="font-size:small;font-weight:bold;height : 90px; width : 320px;" />
+
+					</h:panelGrid>
+
+
+				</p:panel>
+				<div align="center">
+					<p:commandButton value="Valider"
+						actionListener="#{antecedentBean.validerContraception}"
+						oncomplete="handleLoginRequest(xhr, status, args)" update=":growl"></p:commandButton>
+
+					<p:commandButton value="Annuler"
+						actionListener="#{antecedentBean.initialisation()}"
+						oncomplete="PF('diag3').hide();"></p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="diagAjoutEFG" closable="false" resizable="false"
+			modal="true">
+			<h:form id="fEtat">
+				<p:panel id="pp">
+					<h:panelGrid columns="2">
+						<h:outputText value="Etat fin grossesse : " />
+						<h:inputText value="#{antecedentBean.etatFG}">
+							<p:ajax event="blur" listener="#{antecedentBean.etatFGChange()}"></p:ajax>
+						</h:inputText>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel
+							value="Augmenter le nombre des enfants avec cet état?" />
+						<p:selectOneRadio id="conso" layout="grid" columns="1"
+							value="#{antecedentBean.increment}">
+							<f:selectItem itemLabel="Oui" itemValue="true" />
+							<f:selectItem itemLabel="Non" itemValue="false" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Valider"
+							oncomplete="handleLoginRequestEG(xhr, status, args)">
+							<p:ajax listener="#{antecedentBean.ajouterEFG()}"
+								update=":idDialogGross,:growl"></p:ajax>
+						</p:commandButton>
+						<p:commandButton
+							actionListener="#{antecedentBean.annulationEFG()}"
+							value="Annuler" />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+
+		<p:dialog widgetVar="plusEtatBebe" closable="false" resizable="false">
+			<h:form id="formPlusEtat">
+				<p:panel id="dial">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Etat Bébé" />
+						<p:inputText value="#{antecedentBean.etBebe}" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:outputLabel
+							value="Augmenter le nombre des enfants avec cet état ?" />
+						<p:selectOneRadio layout="grid" columns="1"
+							value="#{antecedentBean.incre}">
+							<f:selectItem itemLabel="Oui" itemValue="true" />
+							<f:selectItem itemLabel="Non" itemValue="false" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:commandButton value="Valider" icon="ui-icon-check"
+							actionListener="#{antecedentBean.ajoutPlusEtatBebe()}"
+							update=":idDialogGross"
+							oncomplete="handleLoginRequestEB(xhr, status, args)()" />
+
+						<p:commandButton value="Annuler"
+							icon="ui-icon-arrowreturnthick-1-n" />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+
+		<h:form id="fgrossese2">
+			<p:dialog id="idDialogAnt" widgetVar="dialogAnt" modal="true"
+				resizable="false" closable="false" showHeader="false">
+				<p:panel
+					header="#{antecedentBean.actionAnt} antécédent #{antecedentBean.typeAnt} ">
+					<h:panelGrid columns="2">
+						<h:outputText value="Antécédent : "
+							style="font-size:14;font-weight:bold;" />
+						<p:inputText size="20" value="#{antecedentBean.nomAntecedent}"
+							style="font-size:small;font-weight:bold; width : 350px;"></p:inputText>
+					</h:panelGrid>
+					<br></br>
+					<div align="center">
+
+						<p:commandButton value="Valider"
+							actionListener="#{antecedentBean.ajouterAntecedent}"
+							oncomplete="handleLoginRequestAnt(xhr, status, args)"
+							update=":growl" icon="ui-icon-check"
+							style="font-size:10pt;font-weight:bold">
+
+						</p:commandButton>
+						<p:commandButton value="Annuler"
+							style="font-size:10pt;font-weight:bold"
+							oncomplete="PF('dialogAnt').hide();"
+							icon="ui-icon-arrowreturnthick-1-n">
+						</p:commandButton>
+					</div>
+				</p:panel>
+			</p:dialog>
+
+
+
+			<h:form id="fc">
+				<p:dialog id="idDiagContra" widgetVar="diagContra" modal="false"
+					closable="false" resizable="false" showHeader="false">
+
+					<p:panel id="dialog1" header="Ajout d'un moyen de contraception">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Moyen : " />
+							<h:inputText value="#{antecedentBean.moyen}">
+							</h:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Valider" icon="ui-icon-check"
+								oncomplete="handleLoginRequestContra(xhr, status, args)"
+								actionListener="#{antecedentBean.ajoutMoyen()}"
+								update=":growl,:fgrossese2:">
+							</p:commandButton>
+							<p:commandButton value="Annuler"
+								icon="ui-icon-arrowreturnthick-1-n"
+								oncomplete="PF('diagContra').hide();" />
+						</h:panelGrid>
+					</p:panel>
+
+				</p:dialog>
+			</h:form>
+
+		</h:form>
+
+		<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('diag3').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('diag3').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+
+
+		<script type="text/javascript">
+					function handleLoginRequestEG(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							
+							PF('diagAjoutEFG').jq.effect("shake", {
+								times : 5
+							}, 100);
+							} else {
+							PF('diagAjoutEFG').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+
+
+		<script type="text/javascript">
+					function handleLoginRequestGross(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('diag2').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('diag2').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+		<script type="text/javascript">
+					function handleLoginRequestAnt(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogAnt').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogAnt').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+		<script type="text/javascript">
+					function handleLoginRequestContra(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('diagContra').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('diagContra').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+		<script type="text/javascript">
+		PrimeFaces.locales ['fr'] = {
+		    closeText: 'Fermer',
+		    prevText: 'Précédent',
+		    nextText: 'Suivant',
+		    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+		    monthNamesShort: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+		    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+		    dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+		    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+		    weekHeader: 'Semaine',
+		    firstDay:1,
+		    isRTL: false,
+		    showMonthAfterYear: false,
+		    yearSuffix:'',
+		    timeOnlyTitle: 'Choisir l\'heure',
+		    timeText: 'Heure',
+		    hourText: 'Heures',
+		    minuteText: 'Minutes',
+		    secondText: 'Secondes',
+		    currentText: 'Aujourd\'hui',
+		    ampm: false,
+		    month: 'Mois',
+		    week: 'Semaine',
+		    day: 'Jour',
+		    allDayText: 'Toute la journé',
+		};
+	</script>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.doctor.persistance.RendezVous" table="rendezvous" >
+        <id name="idrendezVous" type="java.lang.Integer">
+            <column name="idrendezVous" />
+              <generator class="increment" />
+        </id>
+      
+        <property name="date" type="java.util.Date">
+            <column name="date" not-null="true" sql-type="DATETIME"/>
+        </property>
+        
+        <property name="note" type="string">
+            <column name="note" sql-type="mediumtext" not-null="true" default=" "/>
+        </property>
+        
+         <property name="etat" type="int">
+            <column name="etat" default="0"/>
+        </property>
+        
+        <many-to-one class="com.doctor.persistance.Cfclient"
+			fetch="select" name="codeclient">
+			<column name="codeclient" />
+		</many-to-one>
+        
+    </class>
+</hibernate-mapping>

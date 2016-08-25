@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.EtatFinGross" table="etatfingross"
+		>
+		<id name="idEtatFinGross" type="java.lang.Integer">
+			<column name="idEtatFinGross" />
+			<generator class="increment" />
+		</id>
+
+		<property name="etatFinG" type="string">
+			<column name="etatFinG" length="45" not-null="true" />
+		</property>
+
+		<property name="incrementation" type="boolean">
+			<column name="incrementation" length="1" not-null="true"
+				default="false" />
+		</property>
+
+	</class>
+</hibernate-mapping>

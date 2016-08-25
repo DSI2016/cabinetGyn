@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templatee.xhtml">
+	<ui:define name="body">
+		<div style="width: 60%" align="center">
+		<h:outputText value="#{antecedentBean.titrecontraception}" style="font-weight:bold;font-size:14pt"/>
+			<p:panel>
+				<h:form id="form">
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					
+					<h:panelGrid columns="2">
+						<h:outputText value="Date Début : " />
+						<h:inputText value="#{antecedentBean.dateDebut}" />
+
+						<h:outputText value="Moyen: " />
+						
+						<p:selectOneMenu value="#{antecedentBean.moyen}" style="width:180px"
+							panelStyle="width:180px" effect="fade">
+
+							<f:selectItems value="#{antecedentBean.moyens}" var="a"
+								itemLabel="#{a.libMoyenContraception}" itemValue="#{a.libMoyenContraception}" />
+						</p:selectOneMenu>
+
+
+						<h:outputText value="Remarque: " />
+						<h:inputTextarea value="#{antecedentBean.remarque}" />
+						
+						<p:commandButton value="Valider" update=":form:growl" 
+							actionListener="#{antecedentBean.validerContraception}"
+							></p:commandButton>
+						<p:commandButton value="Annuler" action="Antecedent"></p:commandButton>
+					</h:panelGrid>
+				</h:form>
+			</p:panel>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

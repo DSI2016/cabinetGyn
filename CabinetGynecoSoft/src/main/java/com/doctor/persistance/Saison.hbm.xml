@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.doctor.persistance.Saison" table="saison" >
+        <id name="idSaison" type="java.lang.Integer">
+            <column name="idsaison" />
+              <generator class="increment" />
+        </id>
+      
+        <property name="nom" type="string">
+            <column name="nom" not-null="true"/>
+        </property>
+        
+          <property name="debut" type="java.util.Date">
+            <column name="debut" />
+        </property>
+        
+          <property name="fin" type="java.util.Date">
+            <column name="fin" />
+        </property>
+        
+        
+        <many-to-one class="com.doctor.persistance.Jour" fetch="select" name="lun">
+   			<column name="lun" not-null="true" />
+  		</many-to-one>
+  		
+  		<many-to-one class="com.doctor.persistance.Jour" fetch="select" name="mar">
+   			<column name="mar" not-null="true"/>
+  		</many-to-one>       
+  		
+  		<many-to-one class="com.doctor.persistance.Jour" fetch="select" name="mer">
+   			<column name="mer" not-null="true"/>
+  		</many-to-one> 
+  		
+  		<many-to-one class="com.doctor.persistance.Jour" fetch="select" name="jeu">
+   			<column name="jeu" not-null="true"/>
+  		</many-to-one>
+  		
+  		<many-to-one class="com.doctor.persistance.Jour" fetch="select" name="ven">
+   			<column name="ven" not-null="true"/>
+  		</many-to-one>
+  		
+  		<many-to-one class="com.doctor.persistance.Jour" fetch="select" name="sam">
+   			<column name="sam" not-null="true"/>
+  		</many-to-one>
+  		
+  		<many-to-one class="com.doctor.persistance.Jour" fetch="select" name="dim">
+   			<column name="dim" not-null="true"/>
+  		</many-to-one>
+  		
+  		<property  name="select" type="java.lang.Integer">
+			<column not-null="true" length="1" name="selected"/>
+		</property>
+  		
+  		
+    </class>
+</hibernate-mapping>

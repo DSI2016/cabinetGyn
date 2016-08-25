@@ -1,0 +1,57 @@
+body { background-color: #ECF0FD;
+background-image: url("imagesMenu/g1.jpg") no-repeat;
+ }
+ .Bimage{
+     background-image:url(imagesMenu/1g.jpg);
+ }
+
+h1 { font-family: 'Tangerine', serif; }
+
+
+a:hover { color: red; }
+th.title   { background-color: #ef8429;
+             font-size: 28px;
+             font-family: Arial, Helvetica, sans-serif;
+}
+tr { font-size: 18px;
+     font-family: Arial, Helvetica, sans-serif;
+}
+th { background-color: #ef8429; }
+caption { color: #440000;
+          font-weight: bold;
+          font-size: 20px;
+          font-family: Arial, Helvetica, sans-serif;
+}
+legend { font-weight: bold;
+         color: black;
+         background-color: #eeeeee;
+         border: 1px solid #999999;
+         padding: 3px 2px;
+}
+h2 { color: #440000;
+	 font-weight: bold;
+	 font-size: 18px;
+	 font-family: Arial, Helvetica, sans-serif;
+}
+.ui-submenu.police1{
+	font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.footer {
+    position: fixed;
+    bottom: 0px;
+    left :0px;
+    right :0px;
+	background-color: #e0e0e0;
+	height: 25px;
+}
+font[size="2pt"]{
+	color: black;
+}
+
+
+
+
+
+
+

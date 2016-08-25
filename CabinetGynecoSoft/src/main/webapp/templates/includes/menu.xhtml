@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div align="left">
+
+		<h:form>
+
+			<p:growl id="messages" />
+
+			<p:panelMenu style="FONT-SIZE: small;">
+				<p:submenu label="Gestion Utilisateurs">
+					<p:menuitem value="Ajout utilisateur"
+						action="../pages/ajouterUtilisateur.xhtml" />
+					<p:menuitem value="Liste utilisateur"
+						action="../pages/listeUtilisateur.xhtml" />
+				</p:submenu>
+
+
+				<p:submenu label="Configuration Système">
+					<p:submenu label="Gestion des Ports">
+						<p:menuitem value="Ajout port" action="../pages/ajoutPort.xhtml" />
+						<p:menuitem value="Liste des ports"
+							action="../pages/listePort.xhtml" />
+					</p:submenu>
+					
+					<p:menuitem value="Gestion des seuils" action="../pages/GestionSeuil.xhtml"/>
+						
+				</p:submenu>
+				
+				<p:submenu label="Configuration plages d'adresses">
+				<p:menuitem value="Configuration plages d'adresses"
+						action="../pages/decouvertAutomatique.xhtml" />
+						
+		     </p:submenu>
+			</p:panelMenu>
+		</h:form>
+	</div>
+</ui:composition>

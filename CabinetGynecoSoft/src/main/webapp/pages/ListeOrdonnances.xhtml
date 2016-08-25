@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">
+Historique Ordonnances</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/histoOrdon.png" width="100%"></p:graphicImage>
+		<div align="left">
+			<h:form id="f3">
+				<p:growl id="growl" showDetail="true" life="3000" />
+				<table border="0" width="100%">
+					<tr>
+						<td width="90%"><h:commandLink
+								actionListener="#{analyseDemandeeBean.goToAcceuil()}">
+								<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+							</h:commandLink> <h:commandLink actionListener="#{ordonnanceBean.goToRead()}">
+								<p:graphicImage value="/images/retour.png"></p:graphicImage>
+							</h:commandLink></td>
+						<td><h:commandLink actionListener="#{ordonnanceBean.viewOrd}"
+								id="idimp" target="_blanc" rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledImp}"
+							>
+								<p:graphicImage value="/imagesMenu/imprimente10.png" 	>
+								</p:graphicImage>
+
+							</h:commandLink></td>
+						<td align="right"><h:panelGrid columns="3">
+
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+
+								<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+									<p:graphicImage value="/images/dec.png" width="25px" />
+								</h:commandLink>
+							</h:panelGrid></td>
+					</tr>
+				</table>
+
+			</h:form>
+			<h:form id="f1">
+				<p:panel>
+
+					<table width="100%" border="0">
+						<tr>
+							<td><div align="left">
+									<h:outputText
+										value="Patiente : #{ordonnanceBean.cfclient.prenom} #{ordonnanceBean.cfclient.nom} "
+										style="font-size:17pt;font-weight:bold" />
+								</div></td>
+							<td>
+								<div align="right">
+									<p:commandButton value="Ordonnace Libre" icon="ui-icon-plus"
+										rendered="#{connectionBean.ordonanceLibreFiche}"
+										actionListener="#{ordonnanceBean.goToOrdonnanceLibreHistorique()}"
+										style="font-size:small;font-weight:bold">
+									</p:commandButton>
+								</div>
+							</td>
+						</tr>
+					</table>
+
+					<p:fieldset legend="Recherche"
+						style="font-size:small;font-weight:bold" toggleable="true"
+						toggleSpeed="500" collapsed="true"
+						rendered="#{connectionBean.rechercheOrd}">
+
+						<div align="center">
+							<table width="80%" border="0">
+								<tr>
+									<td width="20%"><h:panelGrid columns="2">
+											<h:outputText value="Date: Du  "
+												style="font-size:small;font-weight:bold"></h:outputText>
+											<p:calendar id="dep" value="#{ordonnanceBean.dateDebut}"
+												pattern="dd/MM/yyyy" size="8"></p:calendar>
+										</h:panelGrid></td>
+									<td width="20%"><h:panelGrid columns="2">
+											<h:outputText value="   à   "
+												style="font-size:small;font-weight:bold"></h:outputText>
+											<p:calendar value="#{ordonnanceBean.dateFin}"
+												pattern="dd/MM/yyyy" size="10"></p:calendar>
+										</h:panelGrid></td>
+									<td width="30%"><h:panelGrid columns="2">
+											<h:outputText value="Médicament"
+												style="font-size:small;font-weight:bold"></h:outputText>
+											<p:selectOneMenu value="#{ordonnanceBean.idMedicament}"
+												style="width:180px;font-size:small;font-weight:bold">
+
+												<f:selectItem itemLabel="  --- Médicament ---  "
+													itemValue="" />
+												<f:selectItems value="#{ordonnanceBean.medicaments}" var="a"
+													itemLabel="#{a.designation}	* #{a.formeMed.forme}"
+													itemValue="#{a.idMedicament}" />
+											</p:selectOneMenu>
+										</h:panelGrid></td>
+									<td><h:panelGrid columns="2">
+											<p:commandButton icon="ui-icon-search" update=":f1"></p:commandButton>
+											<p:commandButton icon="ui-icon-refresh"
+												actionListener="#{ordonnanceBean.annulerRecherche}"
+												update=":f1"></p:commandButton>
+										</h:panelGrid></td>
+
+
+								</tr>
+							</table>
+						</div>
+					</p:fieldset>
+
+
+					<table>
+						<tr>
+							<td valign="top"><p:dataTable var="ord"
+									style="font-size:small;font-weight:bold;width:500px"
+									selectionMode="single"
+									selection="#{ordonnanceBean.selectedOrd}"
+									rowKey="#{ord.idOrdonnance}"
+									value="#{ordonnanceBean.ordonnances}"
+									emptyMessage="Pas d'ordonnances !" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {CurrentPageReport}  {NextPageLink} {LastPageLink}"
+									currentPageReportTemplate="{currentPage} / {totalPages}"
+									rows="10">
+									<p:ajax event="rowSelect"
+										listener="#{ordonnanceBean.onRowSelect}" update=":f3,:f1:list,:f1" />
+
+									<p:column headerText="Date" width="10%"
+										style="font-size:small;font-weight:bold">
+										<h:outputText value="#{ord.dateOrd}"
+											style="font-size:small;font-weight:bold">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Paris" />
+										</h:outputText>
+									</p:column>
+
+
+									<p:column headerText="Notes" width="25%"
+										style="font-size:small;font-weight:bold">
+										<h:outputText value="#{ord.notes}"
+											style="font-size:small;font-weight:bold" />
+									</p:column>
+
+									<p:column headerText="Type" width="10%"
+										style="font-size:small;font-weight:bold">
+										<h:outputText value="#{ord.type}"
+											style="font-size:small;font-weight:bold" />
+									</p:column>
+
+									<p:column style="text-align: center" width="10%">
+
+										<p:commandButton icon="ui-icon-pencil"
+											rendered="#{connectionBean.modifOrdnce}"
+											title="Modification Ordonnance"
+											style="font-size:small;font-weight:bold"
+											actionListener="#{ordonnanceBean.recuperationOrdonnance(ord)}" />
+
+										<p:commandButton icon="ui-icon-trash"
+											title="Suppression Ordonnance"
+											actionListener="#{ordonnanceBean.supprimerOrdonnance(ord.idOrdonnance)}"
+											rendered="#{connectionBean.supphistoOrd}"
+											style="font-size:small;font-weight:bold" update=":f1">
+											<p:confirm header="Suppression Ordonnance"
+												message="Voulez-vous vraiment supprimer cet Ordonnance ?"
+												icon="ui-icon-alert" />
+
+										</p:commandButton>
+
+
+									</p:column>
+								</p:dataTable> <p:confirmDialog global="true" showEffect="fade"
+									hideEffect="explode">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog></td>
+							<td valign="top"><p:dataTable
+									value="#{ordonnanceBean.medOrds}" var="m" id="list"
+									emptyMessage="Pas des medicaments dans cette ordonnance !">
+									<p:column headerText="Medicament"
+										style="font-size:small;font-weight:bold">
+										<h:outputText value="#{m.medicament.designation}"
+											style="font-size:small;font-weight:bold;width:600px" />
+									</p:column>
+									<p:column headerText="Posologie"
+										style="font-size:small;font-weight:bold">
+										<h:outputText value="#{m.posologie}"
+											style="font-size:small;font-weight:bold;width:30%" />
+									</p:column>
+
+									<p:column headerText="Durée/Qté"
+										style="font-size:small;font-weight:bold">
+										<h:outputText value="#{m.qte}  #{m.unite}"
+											style="font-size:small;font-weight:bold;width:30%" />
+									</p:column>
+								</p:dataTable></td>
+						</tr>
+					</table>
+
+				</p:panel>
+			</h:form>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

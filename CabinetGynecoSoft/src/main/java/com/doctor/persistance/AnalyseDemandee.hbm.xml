@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.AnalyseDemandee" table="analysedemandee"
+		>
+		<id name="idanalyseDemandee" type="java.lang.Integer">
+			<column name="idanalysedemandee" />
+			<generator class="increment" />
+		</id>
+		
+		<property name="analyses" type="string">
+			<column name="analyses" sql-type="longtext"/>
+		</property>
+		
+		<property name="dateAnalyse" type="java.sql.Date">
+			<column name="dateAnalyse" />
+		</property>
+		
+		<property name="toxo" type="string">
+			<column name="toxo" length="45" />
+		</property>
+		
+		<property name="tpha" type="string">
+			<column name="tpha" length="45" />
+		</property>
+		
+		<property name="rubeole" type="string">
+			<column name="rubeole" length="45" />
+		</property>
+		
+		<property name="agHbs" type="string">
+			<column name="agHbs" sql-type="longtext" />
+		</property>
+		
+		<property name="glycemie" type="string">
+			<column name="glycemie" sql-type="longtext" />
+		</property>
+		
+		<property name="frottis" type="string">
+			<column name="frottis" sql-type="longtext" />
+		</property>
+		
+		<property name="proprietaire" type="string">
+			<column name="proprietaire" length="255" />
+		</property>
+		
+		<property name="possesseur" type="string">
+			<column name="possesseur" length="45" />
+		</property>
+		
+		 <many-to-one name="consultationDetail" class="com.doctor.persistance.ConsultationDetail" fetch="select">
+            <column name="idconsultationDetail"  />
+        </many-to-one>
+        
+         <many-to-one name="patiente" class="com.doctor.persistance.Cfclient" fetch="select">
+            <column name="idPatient"  />
+        </many-to-one>
+
+	</class>
+	</hibernate-mapping>

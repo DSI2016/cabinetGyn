@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/xhtml/facelets"
+	xmlns:h="http://java.sun.com/xhtml/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+
+		<p:tabMenu icon="ui-icon ui-icon-refresh" activeIndex="#{param.i}"
+			style="font-size: small;font-family : Cooper Black">
+			<p:menuitem value="Accueil" url="../pages/PageAccueil.xhtml?i=0">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+			<p:menuitem value="Salle D'Attente"
+				rendered="#{headerBean.menuSalle}"
+				url="../pages/GestionSalleAttente.xhtml?i=1">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+			<p:menuitem value="Gestion Patients"
+				rendered="#{headerBean.menuGestionPat}"
+				url="../pages/GestionPatient.xhtml?i=2">
+				<f:param name="i" value="2" />
+			</p:menuitem>
+			
+			<p:menuitem value="Paramétrage"
+					url="../pages/Parametrage.xhtml?i=3"
+					rendred="#{headerBean.menuGestParametre}">
+			</p:menuitem>
+			<p:submenu label="Paramétrage"
+				rendered="#{headerBean.menuGestParametre}">
+				<f:param name="i" value="3" />
+				<p:menuitem value="Gestion Des docteurs"
+					url="../pages/GestionDocteur.xhtml?i=3"
+					rendred="#{headerBean.gestionDoct}">
+					<f:param name="i" value="3" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gestion Des professions"
+					url="../pages/GestionProfession.xhtml?i=3"
+					rendred="#{headerBean.gestionProf}">
+					<f:param name="i" value="3" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gestion Des Villes"
+					url="../pages/GestionVille.xhtml?i=3"
+					rendred="#{headerBean.gestionVille}">
+					<f:param name="i" value="3" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Gestion Des Cliniques"
+					url="../pages/GestionClinique.xhtml?i=3"
+					rendred="#{headerBean.gestionClinique}">
+					<f:param name="i" value="3" />
+				</p:menuitem>
+
+			</p:submenu>
+			<p:submenu label="Rapports" rendered="#{headerBean.menuGestRapport}">
+				<p:menuitem value="Certeficats"
+					rendered="#{headerBean.rapportCertif}">
+					<f:param name="i" value="4" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Ordonnances libres"
+					rendered="#{headerBean.rapportOrdnce}">
+					<f:param name="i" value="4" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Lettres" rendered="#{headerBean.rapportLettre}">
+					<f:param name="i" value="4" />
+				</p:menuitem>
+			</p:submenu>
+			<p:menuitem value="Gestion Utilisateur"
+				rendered="#{headerBean.menuGestUtilisateur}"
+				url="../pages/GestionUtilisateur.xhtml?i=5">
+				<f:param name="i" value="5" />
+			</p:menuitem>
+			<p:menuitem value="Configuration"
+				rendered="#{headerBean.menuConfiguration}">
+				<f:param name="i" value="6" />
+			</p:menuitem>
+
+
+		</p:tabMenu>
+	</h:form>
+</ui:composition>

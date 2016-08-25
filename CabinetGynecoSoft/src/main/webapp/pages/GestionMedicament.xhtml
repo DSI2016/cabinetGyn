@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Médicaments</ui:define>
+	<ui:define name="body">
+		<div align="center">
+			<p:graphicImage value="/imagesTitre/listeMedicaments.png"
+				width="100%"></p:graphicImage>
+		</div>
+
+		<h:form id="f1">
+
+			<table width="100%">
+				<tr>
+					<td width="35%">
+
+						<div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{accueilBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink actionListener="#{accueilBean.goToParametrage()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+
+							</h:panelGrid>
+						</div>
+					</td>
+					<p:growl id="growl" life="3000"
+						sticky="#{medicamentBean.permenent}" />
+
+					<td>
+						<div align="left">
+							<h:panelGrid columns="6">
+								<h:outputText value="Recherche: " style="font-weight:bold" />
+
+								<p:inputText value="#{medicamentBean.valeurRecherche}"
+									style="font-size:small;font-weight:bold" />
+
+								<p:selectOneMenu id="recherche" filterMatchMode="startsWith"
+									value="#{medicamentBean.attribut}" filter="true" effect="fade"
+									style="font-size:small;font-weight:bold">
+									<p:ajax event="change" update=":f1"
+										listener="#{medicamentBean.onAttributChange}" />
+
+									<f:selectItem itemLabel="--Séléctionner--" itemValue="" />
+									<f:selectItems value="#{medicamentBean.listesRecherches}"
+										var="jo" itemLabel="#{jo.toString()}" itemValue="#{jo}" />
+
+								</p:selectOneMenu>
+
+
+								<p:selectOneMenu id="rech" filterMatchMode="startsWith"
+									disabled="#{medicamentBean.formeActive}"
+									value="#{medicamentBean.valForme}" filter="true" effect="fade"
+									style="font-size:small;font-weight:bold">
+									<p:ajax listener="#{medicamentBean.onFormeChange}"
+										event="change" update=":f1" />
+									<f:selectItem itemLabel="--forme--" itemValue="" />
+									<f:selectItems value="#{medicamentBean.listesFormes}" var="jo"
+										itemLabel="#{jo.forme}" itemValue="#{jo.forme}" />
+
+								</p:selectOneMenu>
+								<p:commandButton icon="ui-icon-search"
+									actionListener="#{medicamentBean.init()}"
+									title="Recherche Médicament" update=":f1" />
+								<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+									actionListener="#{medicamentBean.annulerRecherche}"
+									update=":f1" />
+
+							</h:panelGrid>
+
+						</div>
+					</td>
+				
+				<td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+
+
+			<div align="center">
+				<div align="center" style="width: 80%">
+					<div align="right">
+
+						<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+							rendered="#{connectionBean.ajouterMed}" update=":f1:f2:dialog"
+							oncomplete="PF('dialogmedicament').show()"
+							actionListener="#{medicamentBean.ajouterMedicament()}" />
+					</div>
+
+					<p:dataTable var="medicament" id="tabprof"
+						first="#{medicamentBean.currentP}"
+						value="#{medicamentBean.medicamentsAvecJointure}" border="1"
+						paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+						<p:column width="5%">
+							<f:facet name="header">
+								<h:outputLabel value="Code" />
+							</f:facet>
+    #{medicament.idMedicament}
+</p:column>
+						<p:column width="15%">
+							<f:facet name="header">
+								<h:outputLabel value="Médicament" />
+							</f:facet>
+							<h:outputText value="#{medicament.designation}" escape="false" />
+						</p:column>
+						<p:column width="15%">
+							<f:facet name="header">
+								<h:outputLabel value="Forme" />
+							</f:facet>
+							<h:outputText value="#{medicament.formeMed.forme}" escape="false" />
+						</p:column>
+						<p:column width="20%">
+							<f:facet name="header">
+								<h:outputLabel value="Posologie" />
+							</f:facet>
+    #{medicament.posologie}
+</p:column>
+						<p:column width="7%">
+							<f:facet name="header">
+								<h:outputLabel value="Prix" />
+							</f:facet>
+							<p:outputLabel value="#{medicament.prix}">
+							<f:convertNumber minFractionDigits="3" />
+							</p:outputLabel>
+
+						</p:column>
+
+						<p:column width="15%">
+							<f:facet name="header">
+								<h:outputLabel value="Laboratoire" />
+							</f:facet>
+    #{medicament.laboratoire}
+</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Tableau" />
+							</f:facet>
+    #{medicament.tableau}
+</p:column>
+
+						<p:column style="width:15%">
+							<p:commandButton
+								actionListener="#{medicamentBean.modifierMedicament(medicament)}"
+								rendered="#{connectionBean.modifierMed}" update=":f1:f2:dialog"
+								oncomplete="PF('dialogmedicament').show()" icon="ui-icon-pencil"
+								title="Modification" />
+
+
+							<p:commandButton rendered="#{connectionBean.supprimMed}"
+								actionListener="#{medicamentBean.supprimer(medicament.idMedicament)}"
+								icon="ui-icon-trash" title="Suppression Médicament" update=":f1">
+								<p:confirm header="Suppression Medicament"
+									message="Voulez-vous vraiment supprimer cet Médicament ?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+					<h:form id="f2">
+						<p:dialog widgetVar="dialogmedicament" modal="true"
+							showHeader="false" closable="false" resizable="false">
+							<p:panel id="dialog"
+								header="#{medicamentBean.action} du médicament">
+								<h:panelGrid columns="2">
+									<p:outputLabel value="Médicament : " />
+									<p:inputText value="#{medicamentBean.designation}" id="pro"
+										size="30" />
+									<h:outputLabel value="Forme : " />
+									<h:panelGrid columns="2" cellspacing="5">
+										<p:selectOneMenu id="formeid"
+											value="#{medicamentBean.idForme}" panelStyle="width:180px"
+											filter="true" filterMatchMode="startsWith" effect="fade"
+											placeholder="Forme">
+											<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+											<f:selectItems value="#{medicamentBean.formesMedicament}"
+												var="pro" itemLabel="#{pro.forme}"
+												itemValue="#{pro.idFormeMedicament}" />
+										</p:selectOneMenu>
+										<p:commandButton icon="ui-icon-plusthick"
+											update=":f1:f2:f4:dialog1"
+											actionListener="#{medicamentBean.initForme}"
+											oncomplete="PF('dialogforme').show()" />
+									</h:panelGrid>
+
+									<p:outputLabel value="Posologie : " />
+									<p:inputText value="#{medicamentBean.posologie}" size="30" />
+
+									<p:outputLabel value="Prix : " />
+									<p:inputText value="#{medicamentBean.prixString}" size="5">
+									</p:inputText>
+
+
+									<p:outputLabel value="Laboratoire : " />
+									<p:inputText value="#{medicamentBean.laboratoire}" size="18" />
+
+									<p:outputLabel value="Tableau : " />
+									<p:inputText value="#{medicamentBean.tableau}" size="5" />
+									<p:outputLabel value="Observation : " />
+									<p:inputTextarea value="#{medicamentBean.observation}" />
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										actionListener="#{medicamentBean.validation()}"
+										oncomplete="handleLoginRequest(xhr, status, args)"
+										update=":f1:growl" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										actionListener="#{medicamentBean.closeDiag()}" update=":f1" />
+								</h:panelGrid>
+							</p:panel>
+						</p:dialog>
+
+						<h:form id="f4">
+							<p:dialog widgetVar="dialogforme" modal="false" closable="false"
+								resizable="false" showHeader="false">
+
+								<p:panel id="dialog1" header="Ajout d'une forme">
+									<h:panelGrid columns="2">
+										<p:outputLabel value="Forme : " />
+										<p:inputText value="#{medicamentBean.forme}" id="pro" />
+									</h:panelGrid>
+									<h:panelGrid columns="2">
+										<p:commandButton value="Valider" icon="ui-icon-check"
+											actionListener="#{medicamentBean.ajoutForme()}"
+											oncomplete="handleLoginRequest2(xhr, status, args)"
+											update=":f1:f2:dialog ,:f1:growl" />
+										<p:commandButton value="Annuler"
+											icon="ui-icon-arrowreturnthick-1-n"
+											oncomplete="PF('dialogforme').hide()" update=":f1:f2" />
+									</h:panelGrid>
+								</p:panel>
+							</p:dialog>
+						</h:form>
+					</h:form>
+
+
+				</div>
+
+
+			</div>
+			<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogmedicament').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogmedicament').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+			<script type="text/javascript">
+					function handleLoginRequest2(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogforme').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogforme').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

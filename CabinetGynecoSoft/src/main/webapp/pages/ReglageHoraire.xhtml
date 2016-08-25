@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">
+Gestion Des Horaire</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/reglagehoraire.png" width="100%"></p:graphicImage>
+		<br />
+		<h:form>
+			<table width="100%">
+				<tr>
+					<td width="15%" align="left" valign="top"><h:outputLink
+							value="Accueil">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:outputLink> 
+						
+						<h:commandLink actionListener="#{horaireBean.enArriere()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink></td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form id="f1">
+			<p:growl id="growl" life="3000" showDetail="true" sticky="true" />
+			<div align="center">
+
+				<p:panel
+					style="font-size:small;font-weight:bold;width:90%;height:450px">
+					<table width="95%" border="0">
+						<tr>
+							<td align="center" valign="top" width="35%"><p:panel
+									header="Périodes Saisons"
+									style="font-size:small;font-weight:bold;width:98%">
+									<p:panelGrid columns="3">
+										<h:outputText value="Hiver: "
+											style="font-size:12pt;font-weight:bold;color:#013ADF" />
+										<h:outputText value="#{horaireBean.hiver}"
+											style="font-size:small;font-weight:bold" />
+										<p:commandButton title="Modification" icon="ui-icon-pencil"
+											oncomplete="PF('dialogSaison').show();"
+											disabled="#{connectionBean.modifPrdSaison}"
+											style="font-size:small;font-weight:bold">
+											<p:ajax listener="#{horaireBean.modiferSaison(1)}"
+												update=":f3"></p:ajax>
+										</p:commandButton>
+
+										<h:outputText value="Eté: "
+											style="font-size:12pt;font-weight:bold;color:#013ADF" />
+										<h:outputText value="#{horaireBean.eteDuree}"
+											style="font-size:small;font-weight:bold" />
+										<p:commandButton title="Modification" icon="ui-icon-pencil"
+											oncomplete="PF('dialogSaison').show();"
+											disabled="#{connectionBean.modifPrdSaison}"
+											style="font-size:small;font-weight:bold">
+											<p:ajax listener="#{horaireBean.modiferSaison(2)}"
+												update=":f3"></p:ajax>
+										</p:commandButton>
+										<h:outputText value="Ramdhan: "
+											style="font-size:12pt;font-weight:bold;color:#013ADF" />
+										<h:outputText value="#{horaireBean.ramadhan}"
+											style="font-size:small;font-weight:bold" />
+										<p:commandButton title="Modification" icon="ui-icon-pencil"
+											oncomplete="PF('dialogSaison').show();"
+											disabled="#{connectionBean.modifPrdSaison}"
+											style="font-size:small;font-weight:bold">
+											<p:ajax listener="#{horaireBean.modiferSaison(3)}"
+												update=":f3"></p:ajax>
+										</p:commandButton>
+									</p:panelGrid>
+								</p:panel></td>
+							<td valign="top" align="center" width="65%"><p:panel
+									style="width:90%">
+									<div align="center">
+										<div align="right">
+											<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+												oncomplete="PF('ajoutModif').show()"
+												style="font-size:small;font-weight:bold"
+												actionListener="#{horaireBean.ajouterHoraire()}"
+												update=":f1:f2:dialog"
+												rendered="#{connectionBean.ajouterHeurTrav}" />
+										</div>
+
+										<p:dataTable var="horaire" id="tabhor"
+											value="#{horaireBean.horaires}" border="1" paginator="true"
+											paginatorPosition="bottom"
+											paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+											rows="10">
+											<p:column style="width:10%">
+												<f:facet name="header">
+													<h:outputLabel value="Code"
+														style="font-size:small;font-weight:bold" />
+												</f:facet>
+												<h:outputText value="#{horaire.idHoraire}" escape="false"
+													style="font-size:small;font-weight:bold" />
+											</p:column>
+											<p:column style="width:25%">
+												<f:facet name="header">
+													<h:outputLabel value="Heure de début"
+														style="font-size:small;font-weight:bold" />
+												</f:facet>
+												<h:outputText value="#{horaireBean.Time(horaire.debut)}"
+													style="font-size:small;font-weight:bold" escape="false" />
+											</p:column>
+											<p:column style="width:25%">
+												<f:facet name="header">
+													<h:outputLabel value="Heure de fin"
+														style="font-size:small;font-weight:bold" />
+												</f:facet>
+												<h:outputText value="#{horaireBean.Time(horaire.fin)}"
+													escape="false" style="font-size:small;font-weight:bold" />
+											</p:column>
+											<p:column style="width:20%">
+												<p:commandButton title="Modification" icon="ui-icon-pencil"
+													oncomplete="PF('ajoutModif').show()"
+													actionListener="#{horaireBean.modifierHoraire(horaire)}"
+													update=":f1:f2:dialog"
+													rendered="#{connectionBean.modifierHeurTrav}" />
+												<p:commandButton title="Suppression " icon="ui-icon-trash"
+													actionListener="#{horaireBean.Supprimer(horaire.idHoraire)}"
+													rendered="#{connectionBean.supprimHeurTrav}" update=":f1">
+													<p:confirm header="Suppression Docteur"
+														icon="ui-icon-alert"
+														message="Voulez-vous vraiment supprimer cet horaire ?" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</div>
+									<p:confirmDialog global="true" showEffect="clip"
+										hideEffect="puff">
+										<p:commandButton value="Oui" type="button"
+											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+										<p:commandButton value="Non" type="button"
+											styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									</p:confirmDialog>
+								</p:panel></td>
+						</tr>
+					</table>
+
+					<h:form id="f2">
+						<p:dialog widgetVar="ajoutModif" modal="true" closable="false"
+							resizable="false">
+							<p:panel id="dialog" header="#{horaireBean.action} Horaire">
+								<h:panelGrid columns="2" cellspacing="20">
+									<h:panelGrid columns="2">
+										<p:outputLabel for="debut" value="Heure Début :" />
+										<p:calendar locale="fr" id="debut"
+											value="#{horaireBean.debut}" pattern="HH:mm" timeOnly="true"
+											stepMinute="15" size="3" />
+									</h:panelGrid>
+									<h:panelGrid columns="2">
+										<p:outputLabel for="fin" value="Heure Fin : " />
+										<p:calendar language="fr" locale="fr" id="fin"
+											value="#{horaireBean.fin}" pattern="HH:mm" timeOnly="true"
+											stepMinute="15" size="3" />
+									</h:panelGrid>
+								</h:panelGrid>
+								<p:separator />
+								<p:commandButton value="Valider" icon="ui-icon-check"
+									actionListener="#{horaireBean.validation()}" update=":f1" />
+								<p:commandButton value="Annuler"
+									icon="ui-icon-arrowreturnthick-1-n"
+									actionListener="#{horaireBean.init()}" update=":f1" />
+							</p:panel>
+						</p:dialog>
+					</h:form>
+				</p:panel>
+			</div>
+
+		</h:form>
+		<h:form id="f3">
+			<p:dialog widgetVar="dialogSaison" modal="true" showHeader="false"
+				closable="false" resizable="false">
+				<p:panel>
+					<h:panelGrid columns="2">
+						<h:outputText value="Debut: " />
+						<h:inputText value="#{horaireBean.debutSaison}" />
+
+						<h:outputText value="Fin: " />
+						<h:inputText value="#{horaireBean.finSaison}" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Valider" icon="ui-icon-check"
+							oncomplete="PF('dialogSaison').hide();"
+							actionListener="#{horaireBean.validerSaison}" update=":f1" />
+						<p:commandButton value="Annuler"
+							oncomplete="PF('dialogSaison').hide();"
+							icon="ui-icon-arrowreturnthick-1-n" />
+					</h:panelGrid>
+
+				</p:panel>
+			</p:dialog>
+		</h:form>
+
+		<script type="text/javascript">  
+		PrimeFaces.locales ['fr'] = { 
+				   timeOnlyTitle: 'Choisir l\'heure',
+				    timeText: 'Heure', 
+				    hourText: 'Heures', 
+				    minuteText: 'Minutes'
+				     };
+</script>
+
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+
+
+</html>

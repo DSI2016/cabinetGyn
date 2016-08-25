@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Contraception" table="contraception"
+		>
+		<id name="idcontraception" type="java.lang.Integer">
+			<column name="idcontraception" />
+			<generator class="increment" />
+		</id>
+		<many-to-one name="cfclient" class="com.doctor.persistance.Cfclient"
+			fetch="select">
+			<column name="idPatient" />
+		</many-to-one>
+
+
+		<property name="dateDebut" type="string">
+			<column name="dateDebut" />
+		</property>
+
+		<property name="moyen" type="string">
+			<column name="moyen" length="255"/>
+		</property>
+		
+		<property name="remarque" type="string">
+			<column name="remarque" sql-type="longtext"/>
+		</property>
+		
+		<property name="dateFin" type="string">
+			<column name="dateFin" />
+		</property>
+		
+		
+	</class>
+</hibernate-mapping>

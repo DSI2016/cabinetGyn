@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Ordonnance" table="ordonnance">
+		<id name="idOrdonnance" type="java.lang.Integer">
+			<column name="idordonnance" />
+			<generator class="increment" />
+		</id>
+
+
+		<property name="notes" type="string">
+			<column name="notes" sql-type="longtext" />
+		</property>
+
+		<property name="dateOrd" type="java.util.Date">
+			<column name="dateOrd" sql-type="DATE" />
+		</property>
+
+		<property name="type" type="string">
+			<column name="type" length="45" />
+		</property>
+
+		<property name="proprietaire" type="string">
+			<column name="proprietaire" length="255" />
+		</property>
+
+		<property name="possesseur" type="string">
+			<column name="possesseur" length="45" />
+		</property>
+
+
+		<many-to-one class="com.doctor.persistance.ConsultationDetail"
+			fetch="select" name="consult">
+			<column name="idconsult" />
+		</many-to-one>
+
+		<set name="medOrds" table="medord" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="idOrd" />
+			</key>
+			<one-to-many class="com.doctor.persistance.MedOrd" />
+		</set>
+		<many-to-one class="com.doctor.persistance.Cfclient"
+			fetch="select" name="patient">
+			<column name="idPatient" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

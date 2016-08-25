@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.AntecedentFam" table="antecedentfam"
+		>
+		<id name="idantecedentFam" type="java.lang.Integer">
+			<column name="idantecedentFam" />
+			<generator class="increment" />
+		</id>
+		<property name="antFamilial" type="string">
+			<column name="antFamilial" length="255" />
+		</property>
+
+	</class>
+	</hibernate-mapping>

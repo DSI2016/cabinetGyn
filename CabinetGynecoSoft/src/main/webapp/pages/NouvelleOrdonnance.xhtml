@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Ordonnance</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/ordonnance.png" width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true"
+				sticky="#{ordonnanceBean.blocage}"
+				life="#{ordonnanceBean.tempsface}" />
+
+			<table border="0">
+				<tr>
+					<td><h:commandLink
+							actionListener="#{ordonnanceBean.gotoAcceuil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink></td>
+					<td width="100"><p:commandLink
+							actionListener="#{ordonnanceBean.retour()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</p:commandLink></td>
+					<td><p:outputLabel value="Modéles"
+							rendered="#{connectionBean.selectModeleord}"></p:outputLabel></td>
+					<td><p:selectOneMenu id="idMod"
+							rendered="#{connectionBean.selectModeleord}"
+							value="#{ordonnanceBean.idModeleOrd}" style="width:400px;"
+							filter="true" filterMatchMode="startsWith" effect="fade"
+							placeholder="Modele">
+							<p:ajax event="change" update=":f1"
+								listener="#{ordonnanceBean.modeleSelectionChanged}" />
+							<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+							<f:selectItems value="#{ordonnanceBean.modeleOrdonnances}"
+								var="pro" itemLabel="#{pro.nomModele}"
+								itemValue="#{pro.idModeleOrdonnance}" />
+						</p:selectOneMenu></td>
+					<td></td>
+					<td><p:commandButton title="Appliquer le Modéle"
+							icon="ui-icon-check" disabled="#{ordonnanceBean.app}"
+							rendered="#{connectionBean.selectModeleord}"
+							actionListener="#{ordonnanceBean.appliquerModeleOrd()}"
+							update=":f1:list">
+						</p:commandButton></td>
+					<td><p:commandButton title="Ajouter Comme Modéle"
+							icon="ui-icon-plusthick"
+							rendered="#{connectionBean.ajoutModeleord}"
+							disabled="#{ordonnanceBean.nvMod}">
+							<p:ajax listener="#{ordonnanceBean.ajoutModel()}"></p:ajax>
+						</p:commandButton></td>
+
+					<td><p:commandButton icon="ui-icon-trash"
+							title="Suppression Modéle" disabled="#{ordonnanceBean.app}"
+							rendered="#{connectionBean.suppModeleOrd}"
+							actionListener="#{ordonnanceBean.supprimerModeleOrdonnance(ordonnanceBean.idModeleOrd)}"
+							update=":f1">
+
+							<p:confirm header="Suppression Modéle Ordonnance"
+								message="Voulez-vous vraiment supprimer cet Modéle ?"
+								icon="ui-icon-alert" />
+						</p:commandButton></td>
+
+					<td width="400px" align="right"></td>
+				</tr>
+			</table>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+			<div align="left">
+				<p:panel style="height:100%">
+
+					<table width="100%" border="0">
+						<tr>
+							<td width="300px"><p:outputLabel for="button" value="Date:  " />
+								<p:calendar id="button"
+									disabled="#{ordonnanceBean.consultation}" converterMessage="Veuillez vérifier la date que vous avez saisi"
+									value="#{ordonnanceBean.dateOrd}" showOn="button" size="7" onblur="#{ordonnanceBean.dateChange()}" 
+									pattern="dd/MM/yyyy">
+									<p:ajax event="blur"  update="button,:f1:growl"></p:ajax>
+								</p:calendar></td>
+
+							<td><h:panelGrid columns="3">
+									<h:outputText value="Ordonnace pour : "
+										style="font-size:13pt;font-weight:bold" />
+									<h:panelGrid columns="2">
+										<h:selectOneRadio id="consolee" layout="grid" columns="2"
+											readonly="#{ordonnanceBean.consultation}"
+											disabled="#{ordonnanceBean.consultation}"
+											style="font-size:13pt;font-weight:bold"
+											value="#{ordonnanceBean.proprietaire}">
+											<p:ajax event="change"
+												listener="#{ordonnanceBean.changeProp}" update="nomP"></p:ajax>
+											<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+											<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+										</h:selectOneRadio>
+									</h:panelGrid>
+									<h:inputText id="nomP"
+										readonly="#{ordonnanceBean.consultation}"
+										value="#{ordonnanceBean.nomProprietaire}" size="45"></h:inputText>
+
+								</h:panelGrid></td>
+							<td align="right"><p:commandButton value="Nouveau"
+									icon="ui-icon-plus" style="font-size:small;font-weight:bold"
+									actionListener="#{ordonnanceBean.nouvelOrd()}" update=":f1"></p:commandButton>
+							</td>
+						</tr>
+					</table>
+					<table border="0">
+						<tr>
+							<td valign="top" width="45%">
+								<table>
+									<tr>
+										<td><p:panel rendered="#{!connectionBean.consultDetOrd}"
+												style="height:100%">
+												<h:panelGrid columns="2">
+													<h:outputText value="Médicament: " />
+													<h:panelGrid columns="2">
+														<p:selectOneMenu value="#{ordonnanceBean.idMedicament}"
+															id="medselect" style="width:280px" effect="fade"
+															filter="true" filterMatchMode="startsWith"
+															panelStyle="width:400px"
+															disabled="#{ordonnanceBean.consultation}">
+															<p:ajax listener="#{ordonnanceBean.onMedicamentChange}"
+																event="change" update=":f1:p,:f1:ok" />
+															<f:selectItem
+																itemLabel="             --- Médicament ---             "
+																itemValue="" />
+															<f:selectItems value="#{ordonnanceBean.medicaments}"
+																var="a"
+																itemLabel="#{a.designation}	* #{a.formeMed.forme}"
+																itemValue="#{a.idMedicament}" />
+														</p:selectOneMenu>
+														<p:commandButton icon="ui-icon-plusthick">
+															<p:ajax listener="#{ordonnanceBean.initMed()}"></p:ajax>
+														</p:commandButton>
+													</h:panelGrid>
+													<h:outputText value="Posologie: " />
+													<h:inputTextarea value="#{ordonnanceBean.posologie}"
+														readonly="#{ordonnanceBean.consultation}"
+														disabled="#{ordonnanceBean.consultation}"
+														style="width:320px" id="p" />
+													<h:outputText value="Durée/Qté: " />
+													<h:panelGrid columns="2">
+
+														<p:spinner value="#{ordonnanceBean.qte}" size="1"
+															id="duree" min="1"
+															disabled="#{ordonnanceBean.consultation}" />
+														<p:selectOneRadio id="c" layout="grid" columns="4"
+															value="#{ordonnanceBean.unite}"
+															disabled="#{ordonnanceBean.consultation}">
+															<f:selectItem itemLabel="Jours" itemValue="Jours" />
+															<f:selectItem itemLabel="Mois" itemValue="Mois" />
+															<f:selectItem itemLabel="Boites" itemValue="Boites" />
+															<f:selectItem itemLabel="Flac." itemValue="Flac." />
+														</p:selectOneRadio>
+													</h:panelGrid>
+												</h:panelGrid>
+												<br />
+												<div align="center">
+													<p:commandButton value="Ajouter" update=":f1" id="ok"
+														disabled="#{ordonnanceBean.consultation}"
+														actionListener="#{ordonnanceBean.ajouterMed}" />
+												</div>
+											</p:panel></td>
+									</tr>
+									<tr>
+										<td><br /> <p:panel>
+												<div align="right">
+													<h:commandLink actionListener="#{ordonnanceBean.viewOrd}"
+														id="idimp" target="_blanc"
+														rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledimpOrdHistorique}">
+														<p:graphicImage value="/imagesMenu/imprimente10.png">
+														</p:graphicImage>
+
+													</h:commandLink>
+												</div>
+												<p:dataTable value="#{ordonnanceBean.histoOrdCons}"
+													var="ord" selectionMode="single"
+													selection="#{ordonnanceBean.selectedOrd}"
+													rowKey="#{ord.idOrdonnance}"
+													emptyMessage="Pas d'ordonnances !">
+													<p:ajax event="rowSelect"
+														listener="#{ordonnanceBean.onRowSelect}" update=":f1" />
+													<p:column headerText="Date" width="10%"
+														style="font-size:small;font-weight:bold">
+														<h:outputText value="#{ord.dateOrd}"
+															style="font-size:small;font-weight:bold">
+															<f:convertDateTime pattern="dd/MM/yyyy"
+																timeZone="Europe/Paris" />
+														</h:outputText>
+													</p:column>
+
+
+													<p:column headerText="Notes" width="25%"
+														style="font-size:small;font-weight:bold">
+														<h:outputText value="#{ord.notes}"
+															readonly="#{ordonnanceBean.consultation}"
+															style="font-size:small;font-weight:bold" />
+													</p:column>
+
+													<p:column headerText="Type" width="10%"
+														style="font-size:small;font-weight:bold">
+														<h:outputText value="#{ord.type}"
+															style="font-size:small;font-weight:bold" />
+													</p:column>
+
+													<p:column style="text-align: center" width="10%">
+
+														<p:commandButton icon="ui-icon-pencil"
+															rendered="#{connectionBean.modifOrdnce}"
+															title="Modification Ordonnance"
+															style="font-size:small;font-weight:bold"
+															actionListener="#{ordonnanceBean.modifOrd(ord)}"
+															update=":f1" />
+
+														<p:commandButton icon="ui-icon-trash"
+															title="Suppression Ordonnance"
+															actionListener="#{ordonnanceBean.suppressionOrdonnance(ord.idOrdonnance)}"
+															rendered="#{connectionBean.supphistoOrd}"
+															style="font-size:small;font-weight:bold" update=":f1">
+															<p:confirm header="Suppression Ordonnance"
+																message="Voulez-vous vraiment supprimer cet Ordonnance ?"
+																icon="ui-icon-alert" />
+
+														</p:commandButton>
+
+
+													</p:column>
+												</p:dataTable>
+											</p:panel></td>
+									</tr>
+								</table>
+							</td>
+							<td valign="top"><p:panel id="list" style="height:100%">
+									<h:panelGrid columns="1">
+										<p:dataTable value="#{ordonnanceBean.medOrds}" var="m"
+											id="dataord"
+											emptyMessage="Pas des medicaments dans cette ordonnance !">
+
+											<p:column headerText="Medicament"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{m.medicament.designation}"
+													style="font-size:small;font-weight:bold;width:50%" />
+											</p:column>
+											<p:column headerText="Forme" width="18%"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{m.medicament.formeMed.forme}"
+													style="font-size:small;font-weight:bold;width:30px" />
+											</p:column>
+
+											<p:column headerText="Posologie"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{m.posologie}"
+													style="font-size:small;font-weight:bold;width:20%" />
+											</p:column>
+
+											<p:column headerText="Durée/Qté" width="13%"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{m.qte}  #{m.unite}"
+													style="font-size:small;font-weight:bold;width:10%" />
+											</p:column>
+											<p:column width="10%">
+												<p:commandButton
+													actionListener="#{ordonnanceBean.supprimer(m)}"
+													disabled="#{ordonnanceBean.consultation}"
+													icon="ui-icon-trash" title="Suppression Médicament"
+													update=":f1,:f1:growl,:f1:dataord"
+													rendered="#{!connectionBean.consultDetOrd}">
+													<p:confirm header="Suppression médicament"
+														message="Voulez-vous vraiment supprimer cet médicament ?"
+														icon="ui-icon-alert" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+										<p:confirmDialog global="true" showEffect="fade"
+											hideEffect="explode">
+											<p:commandButton value="Oui" type="button"
+												styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+											<p:commandButton value="Non" type="button"
+												styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+										</p:confirmDialog>
+
+										<h:outputText value="Notes: " />
+										<h:inputTextarea value="#{ordonnanceBean.notes}" id="note"
+											readonly="#{ordonnanceBean.consultation}" style="width:100%">
+											<p:ajax event="blur"
+												listener="#{ordonnanceBean.notesChange()}" update="note"></p:ajax>
+										</h:inputTextarea>
+									</h:panelGrid>
+									<br></br>
+									<div align="center">
+										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+											actionListener="#{ordonnanceBean.validerOrd}" value="Valider"
+											onclick="target='_blank'; return true;"
+											disabled="#{ordonnanceBean.consultation}" immediate="true"
+											ajax="false" rendered="#{!connectionBean.consultDetOrd}">
+										</p:commandButton>
+
+										<p:commandButton value="Annuler"
+											actionListener="#{ordonnanceBean.annulation()}" update=":f1"
+											rendered="#{!connectionBean.consultDetOrd}"></p:commandButton>
+									</div>
+								</p:panel></td>
+						</tr>
+
+					</table>
+
+				</p:panel>
+				<br />
+			</div>
+
+			<h:form id="fmed">
+				<p:dialog widgetVar="dialogmedicament" modal="true"
+					showHeader="false" closable="false" resizable="false">
+					<p:panel id="dialog" header="Ajout du médicament">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Médicament : " />
+							<p:inputText value="#{ordonnanceBean.designation}" id="pro"
+								size="30" />
+							<h:outputLabel value="Forme : " />
+							<h:panelGrid columns="2" cellspacing="5">
+								<p:selectOneMenu id="formeid" value="#{ordonnanceBean.idForme}"
+									panelStyle="width:180px" filter="true"
+									filterMatchMode="startsWith" effect="fade" placeholder="Forme">
+									<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+									<f:selectItems value="#{ordonnanceBean.formesMedicament}"
+										var="pro" itemLabel="#{pro.forme}"
+										itemValue="#{pro.idFormeMedicament}" />
+								</p:selectOneMenu>
+								<p:commandButton icon="ui-icon-plusthick"
+									update=":f1:fmed:f4:dialog1"
+									actionListener="#{ordonnanceBean.initForme}"
+									oncomplete="PF('dialogforme').show()" />
+							</h:panelGrid>
+
+							<p:outputLabel value="Posologie : " />
+							<p:inputText value="#{ordonnanceBean.posologieMed}" size="30" />
+
+							<p:outputLabel value="Prix : " />
+							<p:inputText value="#{ordonnanceBean.prixString}" size="5">
+
+							</p:inputText>
+
+
+							<p:outputLabel value="Laboratoire : " />
+							<p:inputText value="#{ordonnanceBean.laboratoire}" size="18" />
+
+							<p:outputLabel value="Tableau : " />
+							<p:inputText value="#{ordonnanceBean.tableau}" size="5" />
+							<p:outputLabel value="Observation : " />
+							<p:inputTextarea value="#{ordonnanceBean.observation}" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Valider" icon="ui-icon-check"
+								actionListener="#{ordonnanceBean.validationMed()}"
+								oncomplete="handleLoginRequest(xhr, status, args)"
+								update=":f1:growl" />
+							<p:commandButton value="Annuler"
+								icon="ui-icon-arrowreturnthick-1-n"
+								actionListener="#{ordonnanceBean.closeDiagMed()}" update=":f1" />
+						</h:panelGrid>
+					</p:panel>
+				</p:dialog>
+
+				<h:form id="f4">
+					<p:dialog widgetVar="dialogforme" modal="false" closable="false"
+						resizable="false" showHeader="false">
+
+						<p:panel id="dialog1" header="Ajout d'une forme">
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Forme : " />
+								<p:inputText value="#{ordonnanceBean.forme}" id="pro" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:commandButton value="Valider" icon="ui-icon-check"
+									actionListener="#{ordonnanceBean.ajoutForme()}"
+									oncomplete="handleLoginRequest2(xhr, status, args)"
+									update=":f1:fmed:dialog ,:f1:growl" />
+								<p:commandButton value="Annuler"
+									icon="ui-icon-arrowreturnthick-1-n"
+									oncomplete="PF('dialogforme').hide()" update=":f1:fmed" />
+							</h:panelGrid>
+						</p:panel>
+					</p:dialog>
+				</h:form>
+			</h:form>
+
+
+
+
+			<p:dialog widgetVar="ajoutModel" closable="false" modal="true"
+				resizable="false ">
+				<h:form id="f2">
+					<p:panel id="p1">
+						<h:panelGrid columns="2">
+							<h:outputText value="Nom Modèle: " />
+							<p:inputText value="#{ordonnanceBean.nomModeleOrd}"></p:inputText>
+							<p:commandButton value="Valider" icon="ui-icon-plusthick">
+								<p:ajax listener="#{ordonnanceBean.ajouterModeleOrdonnance()}"
+									update=":f1,:f1:growl"></p:ajax>
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+								oncomplete="PF('ajoutModel').hide();" value="Annuler"
+								update=":f1" />
+
+
+						</h:panelGrid>
+					</p:panel>
+				</h:form>
+			</p:dialog>
+
+			<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogmedicament').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogmedicament').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+			<script type="text/javascript">
+					function handleLoginRequest2(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogforme').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogforme').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+			<style>
+.ui-selectonemenu-filter-container {
+	width: 380px !important;
+}
+</style>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

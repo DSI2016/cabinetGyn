@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<p:notificationBar position="bottom" effect="slide"
+		style="height:300px" widgetVar="bar">
+		<h:form id="form">
+			<table width="98%" >
+				<tr>
+					<td valign="top" width="95%"><p:panel style="width: 98%;">
+
+
+							<p:fieldset id="container" legend="GynécoSoft Chat">
+								<p:poll interval="10" update="public,users" />
+								<h:panelGroup>
+									<table  width="99%">
+										<tr>
+											<td valign="top" width="20%"><p:dataList id="users"
+													var="user" value="#{chatBean.users}" styleClass="usersList"
+													emptyMessage="Pas d'utilisateurs connectés">
+													<f:facet name="header">
+                        Utilisateurs
+                    </f:facet>
+													
+                    #{user}
+                </p:dataList></td>
+											<td valign="top" width="50%"><p:dataList id="public"
+													paginator="true" rows="5" paginatorAlwaysVisible="false"
+													paginatorPosition="bottom" var="m"
+													emptyMessage="Il n'y a pas encore d'historique"
+													value="#{chatBean.listeMessages}">
+													<f:facet name="header">
+                      Historique de discusion
+                    </f:facet>
+                    #{m}
+                </p:dataList></td>
+											<td valign="top" width="30%"><p:panel header="Message"
+													style="width:100%">
+													<h:panelGroup>
+														<p:inputTextarea style="width:98%" id="msg"
+															value="#{chatBean.globalMessage}"
+															styleClass="messageInput"></p:inputTextarea>
+
+														<p:spacer width="5" />
+														<p:commandButton value="Send"
+															actionListener="#{chatBean.sendGlobal}"
+															update="public,msg" />
+													</h:panelGroup>
+												</p:panel></td>
+										</tr>
+									</table>
+
+								</h:panelGroup>
+
+							</p:fieldset>
+
+						</p:panel></td>
+					<td valign="top"><div align="right">
+							<p:commandButton onclick="PF('bar').hide()" type="button"
+								icon="ui-icon-closethick" />
+						</div></td>
+				</tr>
+			</table>
+		</h:form>
+	</p:notificationBar>
+	<div class="footer" align="right">
+		<h:form id="mm">
+			<h:panelGroup id="tb" layout="block">
+
+				<p:commandLink onclick="PF('bar').show()">
+					<h:graphicImage value="/images/Chaticon.png" />
+				</p:commandLink>
+			</h:panelGroup>
+		</h:form>
+	</div>
+
+	<style type="text/css">
+.footer {
+	background-color: transparent;
+	height: 70px;
+	position: fixed;
+	bottom: 0;
+	left: 93%;
+}
+</style>
+</ui:composition>

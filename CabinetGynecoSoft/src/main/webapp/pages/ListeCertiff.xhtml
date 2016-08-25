@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+
+	<ui:define name="title">
+		Historique certificats
+	</ui:define>
+
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/ListeCertificats.png" width="100%"></p:graphicImage>
+		<br />
+		<h:form id="f1">
+			<p:growl id="growl" showDetail="true" life="3000"
+				sticky="#{historiqueCertifBean.blocage}" />
+			<table width="100%">
+				<tr>
+					<td><h:commandLink
+							actionListener="#{historiqueCertifBean.goToAccueil()}">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink>
+					<h:commandLink
+							actionListener="#{historiqueCertifBean.goToFichePatient()}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink></td>
+						<td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+
+			<p:panel id="pnll">
+				<table>
+					<tr>
+						<td width="460"><p:splitButton value="Certificats"
+								disabled="#{connectionBean.nouvCertif}"
+								icon="ui-icon-folder-open">
+								<p:menuitem value="Certificat de présence"
+									icon="ui-icon-document" styleClass="ui-menuitem-text"
+									oncomplete="PF('certPres').show();"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									update=":idDialogPre">
+									<f:setPropertyActionListener value="Certificat de présence"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+								<p:menuitem value="Certificat de mariage"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									icon="ui-icon-document" oncomplete="PF('certMar').show();"
+									update=":idDialogMariage">
+									<f:setPropertyActionListener value="Certificat de mariage"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+								<p:menuitem value="Certificat de présence d'accompagnement"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									icon="ui-icon-document"
+									oncomplete="PF('certPresAcomm').show();"
+									update=":idDialogPreacommp">
+									<f:setPropertyActionListener
+										value="Certificat de présence d'accompagnement"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+
+								<p:menuitem value="Certificat de coups et blessures"
+									icon="ui-icon-document"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									oncomplete="PF('certcoups').show();" update=":idDialogCoups">
+									<f:setPropertyActionListener
+										value="Certificat de coups et blessures"
+										target="#{historiqueCertifBean.motifCertificat}" />
+
+								</p:menuitem>
+
+								<p:menuitem value="Certificat de repos"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									icon="ui-icon-document" oncomplete="PF('certRepos').show();"
+									update=":idDialogRepos">
+									<f:setPropertyActionListener value="Certificat de repos"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+								<p:menuitem value="Certificat de repos de l'accompagnant"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									icon="ui-icon-document"
+									oncomplete="PF('certReposAccompagnant').show();"
+									update=":idDialogReposAcc">
+									<f:setPropertyActionListener
+										value="Certificat de repos de l'accompagnant"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+								<p:menuitem value="Certificat de guérison"
+									icon="ui-icon-document"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									oncomplete="PF('certguerison').show();"
+									update=":idDialogGuerison">
+									<f:setPropertyActionListener value="Certificat de guérison"
+										target="#{historiqueCertifBean.motifCertificat}" />
+
+								</p:menuitem>
+
+								<p:menuitem value="Certificat d'aptitude"
+									icon="ui-icon-document"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									oncomplete="PF('certaptitude').show();"
+									update=":idDialogAptitude">
+									<f:setPropertyActionListener value="Certificat d'aptitude"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+								<p:menuitem value="Certificat d'inaptitude"
+									icon="ui-icon-document"
+									actionListener="#{historiqueCertifBean.intialiserDateCertif()}"
+									oncomplete="PF('certinaptitude').show();"
+									update=":idDialogInaptitude">
+									<f:setPropertyActionListener value="Certificat d'inaptitude"
+										target="#{historiqueCertifBean.motifCertificat}" />
+								</p:menuitem>
+							</p:splitButton></td>
+						<td><h:commandLink
+								actionListener="#{historiqueCertifBean.viewHistoriqueselect}"
+								rendered="#{connectionBean.imprCertif}" target="_blanc">
+								<p:graphicImage value="/imagesMenu/imprimente10.png">
+								</p:graphicImage>
+							</h:commandLink></td>
+					</tr>
+				</table>
+				<table width="100%" id="tbl">
+					<tr id="tr">
+						<td valign="top" align="left" width="40%"><p:dataTable
+								var="histo" style="font-size:small;font-weight:bold;"
+								rowKey="#{histo.idHistoriqueCertif}"
+								value="#{historiqueCertifBean.historiqueCertifs}"
+								emptyMessage="Pas des Certificats !" paginator="true"
+								paginatorPosition="bottom"
+								currentPageReportTemplate="{currentPage} / {totalPages}"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rows="8" selectionMode="single"
+								selection="#{historiqueCertifBean.selectedCertif}">
+								<p:ajax event="rowSelect"
+									listener="#{historiqueCertifBean.onRowSelectcertif}"
+									update=":f1:carDetail"></p:ajax>
+
+
+								<p:column headerText="Date"
+									style="font-size:small;font-weight:bold">
+									<h:outputText value="#{histo.dateCertif}"
+										style="font-size:small;font-weight:bold;width:30%">
+										<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="Europe/Paris" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Certificat"
+									style="font-size:small;font-weight:bold;width:280px">
+									<h:outputText value="#{histo.certificat.nomCertificat}"
+										style="font-size:small;font-weight:bold;width:30%" />
+								</p:column>
+								<p:column>
+									<p:commandButton icon="ui-icon-pencil" title="Modification"
+										actionListener="#{historiqueCertifBean.modifierCertif(histo)}"
+										style="font-size:small;font-weight:bold"
+										rendered="#{connectionBean.modifCertif}" />
+
+									<p:commandButton
+										actionListener="#{historiqueCertifBean.supprimerCertif(histo.idHistoriqueCertif)}"
+										rendered="#{connectionBean.suppCertif}" icon="ui-icon-trash"
+										title="Suppression Certificat" update=":f1"
+										style="font-size:small;font-weight:bold">
+										<p:confirm header="Suppression Certificat"
+											message="Voulez-vous vraiment supprimer cette Certificat ?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+								</p:column>
+
+
+							</p:dataTable> <p:confirmDialog global="true" showEffect="fade"
+								hideEffect="explode">
+								<p:commandButton value="Oui" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Non" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog></td>
+
+						<td id="td" valign="top" align="center" width="60%"><p:panel
+								id="carDetail" header="Certificat"
+								style="width:750px;height:350px">
+								<h:panelGrid columns="3">
+									<p:outputLabel value="Certificat" />
+									<p:inputText value="#{historiqueCertifBean.motifCertificat}"
+										id="pro" style="width:622px" readonly="true" />
+									<p:outputLabel>
+										<h:message for="pro"
+											style="FONT-SIZE: small; 
+							FONT-STYLE: italic; color: red;" />
+									</p:outputLabel>
+									<p:outputLabel value="Text"></p:outputLabel>
+									<p:scrollPanel mode="native" style="width:630px;height:250px">
+										<h:outputText value="#{historiqueCertifBean.remarque}"
+											escape="false" disabled="true">
+										</h:outputText>
+									</p:scrollPanel>
+								</h:panelGrid>
+
+							</p:panel></td>
+					</tr>
+				</table>
+			</p:panel>
+		</h:form>
+		<p:dialog id="idDialogPre" widgetVar="certPres" modal="true"
+			showHeader="false" resizable="false">
+			<h:form id="i1">
+				<p:panel id="p1" header="Certificat de présence">
+
+					<table>
+						<tr>
+							<td width="500px"><h:outputText value="Patiente:" /> <h:outputLabel
+									value="#{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+
+							</td>
+							<td><h:outputText value="Le : " /> <p:inputMask
+									mask="99/99/9999" id="cal"
+									value="#{historiqueCertifBean.dateCertif}" size="8">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.verifierDate()}"
+										update="cal,:f1:growl">
+									</p:ajax>
+								</p:inputMask></td>
+						</tr>
+					</table>
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifPresence()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer"
+						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
+						oncomplete="PF('certPres').hide();"></p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogPreacommp" widgetVar="certPresAcomm"
+			modal="true" showHeader="false" resizable="false">
+			<h:form id="ipress">
+				<p:panel id="p2" header="Certificat de présence d'accompagnement">
+<h:panelGrid columns="2">
+					<h:outputText value="Patiente:" />
+					<h:outputLabel
+						value="#{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+
+					<h:outputText value="Le : " />
+
+					<p:inputMask mask="99/99/9999" id="cal2"
+						value="#{historiqueCertifBean.dateCertif}" size="8">
+						<p:ajax event="blur"
+							listener="#{historiqueCertifBean.verifierDate()}"
+							update="cal2,:f1:growl">
+						</p:ajax>
+					</p:inputMask>
+					<h:outputText value="Accompagnement" />
+					
+					
+					
+					<h:inputText value="#{historiqueCertifBean.accompagnant}" style="width:200px">
+						<p:ajax event="blur"
+							listener="#{historiqueCertifBean.accompagnantChange()}">
+						</p:ajax>
+					</h:inputText>
+
+
+</h:panelGrid>
+
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifPresenceAcompgnement()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer"
+						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
+						oncomplete="PF('certPresAcomm').hide();"></p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogMariage" widgetVar="certMar" modal="true"
+			closable="false" showHeader="false" resizable="false">
+			<h:form id="i2">
+				<p:panel id="p2" header="Certificat de mariage">
+					<table>
+						<tr>
+							<td width="500"><h:outputLabel
+									value="Patiente: #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+							</td>
+							<td><p:spacer width="6"></p:spacer> <h:outputText
+									value="Date  : " /> <p:inputMask mask="99/99/9999" id="cal2"
+									value="#{historiqueCertifBean.dateCertif}" size="8">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.verifierDate()}"
+										update="cal2,:f1:growl">
+									</p:ajax>
+								</p:inputMask></td>
+						</tr>
+					</table>
+					<br></br>
+
+					<table>
+						<tr>
+							<td width="250"><h:panelGrid columns="2">
+
+									<h:outputText value="CIN : " />
+									<p:inputMask mask="99999999"
+										value="#{historiqueCertifBean.cin}" size="10" id="cin">
+
+
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.cinChange()}"
+											update=":f1:growl,cin">
+										</p:ajax>
+									</p:inputMask>
+									<h:outputText value="Livré le  : " />
+									<p:inputMask mask="99/99/9999" id="livrel"
+										value="#{historiqueCertifBean.livreele}" size="10">
+
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.verifierDateLivrele()}"
+											update="livrel,:f1:growl">
+										</p:ajax>
+									</p:inputMask>
+									<h:outputText value="à: " />
+									<p:inputText value="#{historiqueCertifBean.a}" size="10">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.aChange()}">
+										</p:ajax>
+									</p:inputText>
+								</h:panelGrid></td>
+
+							<td><h:outputText value="Remarques" /></td>
+							<td><p:inputTextarea
+									value="#{historiqueCertifBean.remarques}"
+									style="font-weight:bold;font-size:small;height : 90px; width : 350px;">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.remarqueChange()}">
+									</p:ajax>
+
+								</p:inputTextarea></td>
+						</tr>
+					</table>
+					<br></br>
+				</p:panel>
+
+				<br></br>
+				<div align="center">
+
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifMariage()}"
+						onclick="target='_blank'; return true;" value="Valider"
+						immediate="true">
+					</p:commandButton>
+					<p:commandButton value="Fermer"
+						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
+						oncomplete="PF('certMar').hide();"></p:commandButton>
+
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogRepos" widgetVar="certRepos" modal="true"
+			showHeader="false" resizable="false">
+			<h:form id="i3">
+				<p:panel id="p3" header="Certificat de repos">
+					<table>
+						<tr>
+							<td width="500px"><h:outputLabel
+									value="Patiente : #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}">
+								</h:outputLabel></td>
+							<td><h:outputText value="Le : " /></td>
+							<td><p:inputMask mask="99/99/9999" id="cal3"
+									value="#{historiqueCertifBean.dateCertif}" size="8">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.verifierDate()}"
+										update="cal3 ,:f1:growl">
+									</p:ajax>
+								</p:inputMask></td>
+						</tr>
+					</table>
+					<h:panelGrid columns="2">
+						<h:outputText value="Durée du repos : " />
+						<p:spinner value="#{historiqueCertifBean.dureedereposString}"
+							id="sss" size="1">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.dureedereposVerif()}"
+								update="sss,:f1:growl">
+							</p:ajax>
+						</p:spinner>
+						<h:outputText value="a dater du : " />
+						<p:inputMask mask="99/99/9999"
+							value="#{historiqueCertifBean.adaterdu}" size="8" id="adat">
+							<p:ajax event="blur" update=":f1:growl,:f1,adat"
+								listener="#{historiqueCertifBean.verifierDateAdatee()}">
+							</p:ajax>
+						</p:inputMask>
+					</h:panelGrid>
+					<table>
+						<tr>
+							<td width="130px"><p:outputLabel value="Type :" /></td>
+							<td><p:selectOneMenu id="type1"
+									value="#{historiqueCertifBean.type}"
+									style="font-weight:bold;font-size:small;width : 200px;"
+									filter="true" filterMatchMode="startsWith" effect="fade">
+									<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+									<f:selectItems value="#{certificatBean.types}" var="no"
+										itemLabel="#{no}" itemValue="#{no}" />
+									<p:ajax event="change"
+										listener="#{historiqueCertifBean.typeChange()}" update="type4">
+									</p:ajax>
+								</p:selectOneMenu></td>
+							<td><p:inputText value="#{historiqueCertifBean.type1}"
+									id="type4"></p:inputText></td>
+						</tr>
+					</table>
+
+
+
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifRepos}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer" update=":f1"
+						actionListener="#{historiqueCertifBean.refresh()}"
+						oncomplete="PF('certRepos').hide();"></p:commandButton>
+
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogReposAcc" widgetVar="certReposAccompagnant"
+			modal="true" showHeader="false" resizable="false">
+			<h:form id="i4">
+				<p:panel id="p5" header="Certificat de repos de l'accompagnant">
+					<table>
+						<tr>
+							<td width="500"><h:outputLabel
+									value="Patiente : #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}">
+								</h:outputLabel></td>
+							<td><p:outputLabel value="Le: " /> <p:inputMask
+									mask="99/99/9999" value="#{historiqueCertifBean.dateCertif}"
+									id="ledate" size="8">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.verifierDate()}"
+										update=":f1:growl,ledate">
+									</p:ajax>
+								</p:inputMask></td>
+						</tr>
+					</table>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Accompagnant : " />
+						<p:inputText value="#{historiqueCertifBean.accompagnant}"
+							style="font-weight:bold;font-size:small;width : 220px;">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.accompagnantChange()}">
+							</p:ajax>
+						</p:inputText>
+					</h:panelGrid>
+					<table>
+						<tr>
+							<td width="130px"><p:outputLabel value="Type :" /></td>
+							<td><p:selectOneMenu id="type1"
+									value="#{historiqueCertifBean.type}"
+									style="font-weight:bold;font-size:small;width : 200px;"
+									filter="true" filterMatchMode="startsWith" effect="fade">
+									<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+									<f:selectItems value="#{certificatBean.types}" var="no"
+										itemLabel="#{no}" itemValue="#{no}" />
+									<p:ajax event="change"
+										listener="#{historiqueCertifBean.typeChange()}" update="type4">
+									</p:ajax>
+								</p:selectOneMenu></td>
+							<td><p:inputText value="#{historiqueCertifBean.type1}"
+									id="type4"></p:inputText></td>
+						</tr>
+					</table>
+					<h:panelGrid columns="2">
+
+						<p:outputLabel value="a dater du : " />
+						<p:inputMask mask="99/99/9999"
+							value="#{historiqueCertifBean.adaterdu}" size="8" id="adater">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.verifierDateAdatee()}"
+								update=":f1:growl,adater">
+							</p:ajax>
+
+						</p:inputMask>
+						<p:outputLabel value="Durée du repos : " />
+						<p:spinner value="#{historiqueCertifBean.dureedereposString}"
+							size="1" id="duree">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.dureedereposVerif()}"
+								update=":f1:growl,duree">
+							</p:ajax>
+						</p:spinner>
+
+
+					</h:panelGrid>
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifReposAccomp()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer" update=":f1"
+						actionListener="#{historiqueCertifBean.refresh()}"
+						oncomplete="PF('certReposAccompagnant').hide();"></p:commandButton>
+
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogGuerison" widgetVar="certguerison" modal="true"
+			showHeader="false" resizable="false">
+			<h:form id="i5">
+				<p:panel id="p6" header="Certificat de guérison">
+					<table>
+						<tr>
+							<td width="700px"><h:outputLabel
+									value="Patiente #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+							</td>
+						</tr>
+
+					</table>
+					<br></br>
+					<table>
+						<tr>
+							<td width="50%"><h:panelGrid columns="2" cellpadding="10">
+									<h:outputText value="Le:     " />
+									<p:inputMask mask="99/99/9999"
+										value="#{historiqueCertifBean.dateCertif}" size="8" id="dd">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.verifierDate()}"
+											update="dd,:f1:growl">
+										</p:ajax>
+									</p:inputMask>
+								</h:panelGrid></td>
+							<td><h:panelGrid columns="2" cellpadding="10">
+									<h:outputText value="Date reprise : " />
+									<p:inputMask mask="99/99/9999" id="calx"
+										value="#{historiqueCertifBean.datereprise}" size="8">
+										<p:ajax event="blur" update="calx,:f1:growl"
+											listener="#{historiqueCertifBean.verifierDatedatereprise()}">
+										</p:ajax>
+									</p:inputMask>
+								</h:panelGrid></td>
+						</tr>
+					</table>
+
+
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifGuerision()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer" update=":f1"
+						actionListener="#{historiqueCertifBean.refresh()}"
+						oncomplete="PF('certguerison').hide();"></p:commandButton>
+				</div>
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogCoups" widgetVar="certcoups" modal="true"
+			showHeader="false" resizable="false">
+			<h:form id="i6">
+				<p:panel id="p7" header="Certificat de coups et blessures">
+					<table>
+						<tr>
+							<td><h:outputLabel
+									value=" Patiente: #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+							</td>
+						</tr>
+						<tr>
+							<td><p:outputLabel value="   "></p:outputLabel></td>
+						</tr>
+						<tr>
+							<td><p:outputLabel value="   "></p:outputLabel></td>
+						</tr>
+						<tr>
+							<td><p:outputLabel value="   "></p:outputLabel></td>
+						</tr>
+						<tr>
+							<td width="373px"><h:outputText value="Le : " /> <p:inputMask
+									mask="99/99/9999" value="#{historiqueCertifBean.dateCertif}"
+									size="6" id="ee">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.verifierDate()}"
+										update="ee,:f1:growl">
+									</p:ajax>
+								</p:inputMask></td>
+							<td><h:outputText value="Heure : " /> <p:spinner
+									value="#{historiqueCertifBean.heuresys}" size="1" min="0"
+									max="23">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.heuresysChange()}">
+									</p:ajax>
+								</p:spinner> h</td>
+
+							<td><p:spinner value="#{historiqueCertifBean.minutesys}"
+									size="1" min="00" max="59">
+									<p:ajax event="blur"
+										listener="#{historiqueCertifBean.minutesyschange()}">
+									</p:ajax>
+								</p:spinner>min</td>
+						</tr>
+					</table>
+					<br></br>
+					<p:panel>
+						<table>
+							<tr>
+								<td><h:outputText value="Date de l'agression le : " /></td>
+								<td width="170"><p:inputMask mask="99/99/9999"
+										value="#{historiqueCertifBean.datedelagression}" size="6"
+										id="dategeris">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.verifierdatedelagression()}"
+											update=":f1:growl,dategeris">
+										</p:ajax>
+									</p:inputMask></td>
+								<td><h:outputText value="Heure : " /> <p:spinner
+										value="#{historiqueCertifBean.heurelagr}" size="1" min="0"
+										max="23">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.heurelagrChange()}">
+										</p:ajax>
+									</p:spinner> h</td>
+								<td><p:spinner value="#{historiqueCertifBean.minutelagr}"
+										size="1" min="0" max="59">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.minutelagrChange()}">
+										</p:ajax>
+									</p:spinner> min</td>
+							</tr>
+						</table>
+					</p:panel>
+					<br></br>
+
+					<p:panel>
+						<table>
+							<tr>
+								<td><h:outputText value="à dater du : " /></td>
+								<td width="280"><p:inputMask mask="99/99/9999"
+										value="#{historiqueCertifBean.adaterdu}" size="6" id="gg">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.verifierDateAdatee()}"
+											update="gg,:f1:growl">
+										</p:ajax>
+									</p:inputMask></td>
+								<td><h:outputText value="Durée du repos : " /> <p:spinner
+										value="#{historiqueCertifBean.dureedereposString}" id="aa"
+										size="1">
+										<p:ajax event="blur"
+											listener="#{historiqueCertifBean.dureedereposVerif()}"
+											update="aa,:f1:growl">
+										</p:ajax>
+									</p:spinner> jour(s)</td>
+
+							</tr>
+						</table>
+						<br></br>
+
+					</p:panel>
+					<br></br>
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Lésions" />
+						<p:inputTextarea value="#{historiqueCertifBean.lesions}"
+							style="font-size:small;font-weight:bold;height:100px; width : 600px;">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.lesionsChange()}">
+							</p:ajax>
+						</p:inputTextarea>
+					</h:panelGrid>
+					<br></br>
+
+					<div align="center">
+						<p:commandButton update=":f1:growl"
+							actionListener="#{historiqueCertifBean.ajoutCertifCoups()}"
+							value="Valider" onclick="target='_blank'; return true;"
+							immediate="true">
+						</p:commandButton>
+						<p:commandButton value="Fermer" update=":f1"
+							actionListener="#{historiqueCertifBean.refresh()}"
+							oncomplete="PF('certcoups').hide();"></p:commandButton>
+
+					</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogAptitude" widgetVar="certaptitude" modal="true"
+			showHeader="true" resizable="false" header="Certificat d'aptitude">
+			<h:form id="i8">
+				<p:panel id="p8">
+					<table>
+						<tr>
+							<td><h:outputLabel
+									value="  Patiente : #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+							</td>
+						</tr>
+					</table>
+					<h:panelGrid columns="2">
+						<h:outputText value="Le " />
+						<p:inputMask mask="99/99/9999"
+							value="#{historiqueCertifBean.dateCertif}" size="6" id="fg">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.verifierDate()}"
+								update="fg,:f1:growl">
+							</p:ajax>
+						</p:inputMask>
+						<h:outputLabel value="Remarques : " />
+						<p:inputTextarea value="#{historiqueCertifBean.remarques}"
+							style="font-size:small;font-weight:bold;height:70px; width : 400px;">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.remarquesChange()}">
+							</p:ajax>
+						</p:inputTextarea>
+					</h:panelGrid>
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifAptitude()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer" update=":f1"
+						actionListener="#{historiqueCertifBean.refresh()}"
+						oncomplete="PF('certaptitude').hide();"></p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogInaptitude" widgetVar="certinaptitude"
+			modal="true" showHeader="false" resizable="false">
+			<h:form id="i9">
+				<p:panel id="p9" header="Certificat d'inaptitude">
+					<table>
+						<tr>
+							<td><h:outputLabel
+									value="Patiente #{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
+							</td>
+						</tr>
+					</table>
+
+					<br></br>
+					<h:panelGrid columns="2">
+						<h:outputText value="Le : " />
+						<p:inputMask mask="99/99/9999"
+							value="#{historiqueCertifBean.dateCertif}" size="6" id="oi">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.verifierDate()}"
+								update="oi,:f1:growl">
+							</p:ajax>
+						</p:inputMask>
+
+
+
+
+						<p:outputLabel value="inapte à" />
+						<p:inputText value="#{historiqueCertifBean.inapte}">
+							<p:ajax event="blur"
+								listener="#{historiqueCertifBean.inapteChange()}">
+							</p:ajax>
+						</p:inputText>
+					</h:panelGrid>
+
+				</p:panel>
+				<br></br>
+				<div align="center">
+					<p:commandButton update=":f1:growl"
+						actionListener="#{historiqueCertifBean.ajoutCertifInaptitude()}"
+						value="Valider" onclick="target='_blank'; return true;"
+						immediate="true" ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Fermer" update=":f1"
+						actionListener="#{historiqueCertifBean.refresh()}"
+						oncomplete="PF('certinaptitude').hide();"></p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<style>
+.ui-menuitem-text {
+	float: none !important;
+	white-space: nowrap;
+	display: list-item;
+	margin-right: 2em;
+}
+
+.ui-menu {
+	width: auto;
+}
+</style>
+	</ui:define>
+</ui:composition>
+</html>

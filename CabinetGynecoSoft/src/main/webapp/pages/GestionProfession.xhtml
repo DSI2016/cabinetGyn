@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Professions</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/listeProfessions.png"  width="100%"></p:graphicImage>
+		<br />
+
+		<h:form id="f1">
+			<table width="100%" border="0">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{accueilBean.goToAccueil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+
+								<h:commandLink actionListener="#{accueilBean.goToParametrage()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</h:commandLink>
+							</h:panelGrid>
+						</div></td>
+
+
+					<td><p:growl id="growl" life="3000" />
+
+
+						<div align="left">
+							<h:panelGrid columns="4">
+								<h:outputText value="Recherche: " style="font-weight:bold" />
+								<p:inputText value="#{professionBean.valeurRecherche}" />
+
+								<p:commandButton icon="ui-icon-search" actionListener="#{professionBean.init()}"
+									title="Recherche Clinique" update=":f1" />
+								<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+									actionListener="#{professionBean.annulerRecherche}"
+									update=":f1" />
+
+							</h:panelGrid>
+						</div></td>
+				   <td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				
+				</tr>
+			</table>
+			<div align="center">
+				<div style="width: 50%">
+					<div align="right">
+						<p:commandButton value="Nouveau" icon="ui-icon-plusthick"
+							rendered="#{connectionBean.ajoutProfession}"
+							update=":f1:f2:idDialog" oncomplete="PF('dialogprof').show()"
+							actionListener="#{professionBean.ajouterProfession()}" />
+					</div>
+
+					<p:dataTable var="profession" id="tabprof" first="#{professionBean.currentP}"
+						value="#{professionBean.professions}" border="1" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rows="10">
+						<p:column style="width:10%">
+							<f:facet name="header">
+								<h:outputLabel value="Code" />
+							</f:facet>
+    #{profession.idprofession}
+</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="Profession" />
+							</f:facet>
+    #{profession.libprofession}
+</p:column>
+						<p:column style="width:20%">
+							<p:commandButton rendered="#{connectionBean.modifProfession}"
+								actionListener="#{professionBean.modifierProfession(profession)}"
+								update=":f1:f2:dialog" oncomplete="PF('dialogprof').show()"
+								icon="ui-icon-pencil" title="Modification" />
+							<p:commandButton rendered="#{connectionBean.supprimerProfession}"
+								actionListener="#{professionBean.Supprimer(profession.idprofession)}"
+								icon="ui-icon-trash" title="Suppression Profession"
+								update=":f1:tabprof, :f1:growl">
+								<p:confirm header="Suppression Profession"
+									message="Voulez-vous vraiment supprimer cette Profession ?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+					<h:form id="f2">
+						<p:dialog id="idDialog" widgetVar="dialogprof" modal="true"
+							closable="false" resizable="false" showHeader="false">
+
+							<p:panel id="dialog"
+								header="#{professionBean.action} de profession">
+								<h:panelGrid columns="2">
+									<p:outputLabel value="Profession" />
+									<p:inputText value="#{professionBean.libprofession}" id="pro" />
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:commandButton value="Valider" icon="ui-icon-check"
+										actionListener="#{professionBean.validation()}"
+										update=":f1:growl"
+										oncomplete="handleLoginRequest(xhr, status, args)" />
+									<p:commandButton value="Annuler"
+										icon="ui-icon-arrowreturnthick-1-n"
+										actionListener="#{professionBean.closeDiag()}" update=":f1" />
+								</h:panelGrid>
+							</p:panel>
+						</p:dialog>
+
+
+						<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogprof').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogprof').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+
+					</h:form>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

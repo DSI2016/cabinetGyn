@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Consultation Générale</ui:define>
+	<ui:define name="body">
+
+		<p:graphicImage value="/imagesTitre/default.png"  width="100%"></p:graphicImage>
+		<br />
+		<h:form id="f">
+
+			<table border="0" width="97%">
+				<tr>
+					<td><h:commandLink action="Accueil">
+							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+						</h:commandLink> <h:commandLink
+							actionListener="#{consultationDetailBean.retourListePatient}">
+							<p:graphicImage value="/images/retour.png"></p:graphicImage>
+						</h:commandLink></td>
+
+
+					<td><table border="0">
+							<tr valign="top">
+								<td width="50%"><h:outputLabel
+										value="Patient(e) : #{fichePatientBean.cfclient.prenom}  #{fichePatientBean.cfclient.nom}"
+										style="font-size:14pt;font-weight:bold;" /></td>
+								<td align="right"><h:outputLabel
+										value=" Dernière visite le:#{fichePatientBean.cfclient.dernierVisite}"
+										style="font-size:14pt;font-weight:bold" /> <h:outputLabel
+										value=" [#{fichePatientBean.nbrConslt(fichePatientBean.cfclient.code)}]"
+										style="font-size:14pt;font-weight:bold;color:#045FB4" /></td>
+							</tr>
+						</table></td>
+					<td><div align="right">
+							<h:panelGrid columns="3">
+
+								<p:commandLink action="NouvelleOrdonnance"
+									actionListener="#{consultationDetailBean.demandeOrdonnance}">
+									<f:setPropertyActionListener target="#{ordonnanceBean.action}"
+										value="ajouter"></f:setPropertyActionListener>
+									<f:setPropertyActionListener
+										target="#{ordonnanceBean.idPatient}"
+										value="#{consultationDetailBean.idPatient}"></f:setPropertyActionListener>
+									<p:graphicImage value="/images/ordonnance.png"
+										rendered="#{connectionBean.consulGrosstOrd}"></p:graphicImage>
+
+								</p:commandLink>
+
+								<p:commandLink action="Radio"
+									actionListener="#{consultationDetailBean.demandeRadio}">
+									<p:graphicImage value="/images/radio.png"
+										rendered="#{connectionBean.consultGrossRadio}">
+									</p:graphicImage>
+								</p:commandLink>
+
+								<p:commandLink action="AnalyseDemande"
+									actionListener="#{consultationDetailBean.demandeAnalyse}"
+									rendered="#{connectionBean.consultGrossAnal}">
+									<p:graphicImage value="/images/analyse.png"></p:graphicImage>
+								</p:commandLink>
+							</h:panelGrid>
+						</div></td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form id="f1">
+			<p:tabView id="t1"
+				style="width:98%;height:565px;font-size:small;font-weight:bold;">
+				<p:tab title="Fiche Patient(e)">
+					<table border="0" width="50%">
+						<tr>
+							<td valign="top"><p:panel>
+
+									<h:panelGrid columns="2" cellspacing="5">
+
+										<h:outputLabel value="Date De Naissance: "
+											style="font-size:small;font-weight:bold;" />
+
+										<h:panelGrid columns="3">
+											<h:inputText readonly="true"
+												value="#{fichePatientBean.cfclient.dateNaiss}"
+												style="width:80px;font-size:small;font-weight:bold" />-
+								<h:inputText readonly="true" value="#{fichePatientBean.age} ans"
+												style="width:60px;font-size:small;font-weight:bold" />
+										</h:panelGrid>
+
+										<h:outputLabel value="Profession"
+											style="font-size:small;font-weight:bold;" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.profession} - #{fichePatientBean.cfclient.professionP}"
+											style="font-size:small;font-weight:bold" />
+
+
+										<h:outputLabel value="Téléphones:"
+											style="font-size:small;font-weight:bold;" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.telephone} - #{fichePatientBean.cfclient.telephone2}"
+											style="font-size:small;font-weight:bold" />
+
+										<h:outputLabel value="GSM :"
+											style="font-size:small;font-weight:bold;" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.gsm1} - #{fichePatientBean.cfclient.gsm2}"
+											style="font-size:small;font-weight:bold" />
+
+										<h:outputLabel value="E-Mail : "
+											style="font-size:small;font-weight:bold;" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.eMailP}"
+											style="font-size:small;font-weight:bold" />
+										<h:outputText value="Adresse : "
+											style="font-size:small;font-weight:bold;width:370px;height:150px" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.rue} -#{fichePatientBean.cfclient.codePost} #{fichePatientBean.cfclient.village}"
+											style="font-size:small;font-weight:bold; width : 388px;" />
+
+										<h:outputText value="Etat Civil : "
+											style="font-size:small;font-weight:bold" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.mariage}"
+											style="font-size:small;font-weight:bold" />
+
+										<h:outputText value="NbrEnfants : "
+											style="font-size:small;font-weight:bold" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.partie}"
+											style="font-size:small;font-weight:bold; width : 46px;" />
+										<h:outputLabel value="GS: "
+											style="font-size:small;font-weight:bold;" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.gs}"
+											style="font-size:small;font-weight:bold" />
+
+										<h:outputLabel value="N° CNAM"
+											style="font-size:small;font-weight:bold;" />
+										<h:inputText readonly="true"
+											value="#{fichePatientBean.cfclient.cnss}"
+											style="font-size:small;font-weight:bold" />
+										<h:outputLabel value="Allergie"
+											style="font-size:small;font-weight:bold;" />
+										<h:inputTextarea value="#{fichePatientBean.cfclient.allergie}"
+											style="font-size:15pt;font-weight:bold;color:red" />
+										<h:outputLabel value="Notes"
+											style="font-size:small;font-weight:bold;" />
+										<h:inputTextarea value="#{fichePatientBean.cfclient.notes}"
+											style="font-size:15pt;font-weight:bold;" />
+									</h:panelGrid>
+								</p:panel></td>
+						</tr>
+					</table>
+
+				</p:tab>
+				<p:tab title="Consultation"
+					style="font-size:small;font-weight:bold;">
+					<table border="1" width="98%">
+						<tr>
+							<td valign="top"><p:panel style="height:440px;width:99%">
+									<div align="right">
+										<p:commandButton value="Nouvelle Consultation"
+											actionListener="#{consultationDetailBean.ajoutConGenerale}"
+											style="font-size:small;font-weight:bold;" update=":f1:t1:p1"></p:commandButton>
+									</div>
+									<p:dataTable var="histo"
+										style="font-size:small;font-weight:bold;width:300px;"
+										rowKey="#{histo.idConsultationDetail}"
+										value="#{consultationDetailBean.toutConsultations}"
+										emptyMessage="Pas de Consultations !" paginator="true"
+										paginatorPosition="bottom"
+										currentPageReportTemplate="{currentPage} / {totalPages}"
+										paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										rows="10" selectionMode="single"
+										selection="#{consultationDetailBean.selectedCons}">
+										<p:ajax event="rowSelect"
+											listener="#{consultationDetailBean.onRowSelect}"
+											update=":f1:t1:p1,:f1:t1:p2" />
+										<p:column headerText="Date"
+											style="font-size:small;font-weight:bold" width="27%">
+											<h:outputText value="#{histo.dateConsultation}"
+												style="font-size:small;font-weight:bold;width:15%" />
+										</p:column>
+										<p:column headerText="Conclusion"
+											style="font-size:small;font-weight:bold">
+											#{histo.conclusion}
+									</p:column>
+									</p:dataTable>
+								</p:panel></td>
+							<td valign="top">
+
+
+								<table border="1" width="100%">
+									<tr>
+										<td valign="top"><p:panel id="p1" style="height:440px">
+												<h:panelGrid columns="3">
+													<p:outputLabel value="Symp. Fonc.: "
+														style="font-size:small;font-weight:bold" />
+
+													<p:selectOneMenu id="sy"
+														disabled="#{consultationDetailBean.lireReadOnly()}"
+														value="#{consultationDetailBean.libsymptome}"
+														style="width:20px" panelStyle="width:180px" filter="true"
+														filterMatchMode="startsWith" effect="fade">
+
+														<p:ajax listener="#{consultationDetailBean.onSymChange}"
+															event="change" update="ss" />
+														<f:selectItem itemLabel="---Symptomes---" itemValue="" />
+														<f:selectItems value="#{consultationDetailBean.symptomes}"
+															var="a" itemLabel="#{a.symptome}"
+															itemValue="#{a.symptome}" />
+													</p:selectOneMenu>
+
+													<h:inputTextarea id="ss"
+														value="#{consultationDetailBean.symptome}"
+														style="font-size:small;font-weight:bold;height:80px;width:70%"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+														<p:ajax event="blur"
+															listener="#{consultationDetailBean.majSymp()}" />
+													</h:inputTextarea>
+
+													<p:outputLabel value="Examen Clin.:"
+														style="font-size:small;font-weight:bold" />
+
+													<p:selectOneMenu id="ex"
+														disabled="#{consultationDetailBean.lireReadOnly()}"
+														value="#{consultationDetailBean.libexamen}"
+														style="width:20px" panelStyle="width:180px" filter="true"
+														filterMatchMode="startsWith" effect="fade">
+														<p:ajax listener="#{consultationDetailBean.onExamChange}"
+															event="change" update="e" />
+														<f:selectItem itemLabel="---Examens---" itemValue="" />
+														<f:selectItems value="#{consultationDetailBean.examens}"
+															var="a" itemLabel="#{a.examen}" itemValue="#{a.examen}" />
+													</p:selectOneMenu>
+
+													<h:inputTextarea value="#{consultationDetailBean.examen}"
+														id="e"
+														style="font-size:small;font-weight:bold;height:80px;width:70%"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+														<p:ajax event="blur"
+															listener="#{consultationDetailBean.majExam()}" />
+													</h:inputTextarea>
+
+													<p:outputLabel value="C.A.T.:"
+														style="font-size:small;font-weight:bold" />
+													<p:outputLabel />
+													<h:inputTextarea value="#{consultationDetailBean.cat}"
+														id="ca"
+														style="font-size:small;font-weight:bold;height:80px;width:70%"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+
+													</h:inputTextarea>
+
+													<p:outputLabel value="Diagnostique: "
+														style="font-size:small;font-weight:bold" />
+													<p:selectOneMenu id="diag"
+														disabled="#{consultationDetailBean.lireReadOnly()}"
+														value="#{consultationDetailBean.libdiagnostique}"
+														style="width:20px" panelStyle="width:180px" filter="true"
+														filterMatchMode="startsWith" effect="fade">
+														<p:ajax listener="#{consultationDetailBean.onDiagChange}"
+															event="change" update="d" />
+
+														<f:selectItem itemLabel="---Diagnostiques---" itemValue="" />
+														<f:selectItems
+															value="#{consultationDetailBean.diagnostiques}" var="a"
+															itemLabel="#{a.diagnostique}"
+															itemValue="#{a.diagnostique}" />
+													</p:selectOneMenu>
+
+													<h:inputTextarea id="d"
+														value="#{consultationDetailBean.diagnostique}"
+														style="font-size:small;font-weight:bold;height:60px;width:70%"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+														<p:ajax event="blur"
+															listener="#{consultationDetailBean.majDiag()}" />
+													</h:inputTextarea>
+
+													<p:outputLabel value="Notes: "
+														style="font-size:small;font-weight:bold" />
+													<p:outputLabel />
+													<h:inputTextarea value="#{consultationDetailBean.notes}"
+														style="font-size:small;font-weight:bold;height:60px;width:70%"
+														disabled="#{consultationDetailBean.lireReadOnly()}" />
+												</h:panelGrid>
+											</p:panel></td>
+										<td><p:panel id="p2" style="height:440px">
+												<h:panelGrid columns="2">
+													<p:outputLabel value="Poids : "
+														style="font-size:small;font-weight:bold" />
+
+													<h:inputText value="#{consultationDetailBean.poids}"
+														style="font-size:small;font-weight:bold;"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+													</h:inputText>
+
+													<p:outputLabel value="TAS:"
+														style="font-size:small;font-weight:bold" />
+
+
+
+													<h:inputText value="#{consultationDetailBean.tas}"
+														style="font-size:small;font-weight:bold;"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+
+													</h:inputText>
+
+													<p:outputLabel value="TAD:"
+														style="font-size:small;font-weight:bold" />
+
+
+
+													<h:inputText value="#{consultationDetailBean.tad}"
+														style="font-size:small;font-weight:bold;"
+														disabled="#{consultationDetailBean.lireReadOnly()}">
+
+													</h:inputText>
+
+												</h:panelGrid>
+											</p:panel></td>
+									</tr>
+								</table>
+								<div align="center">
+									<p:commandButton value="Valider"
+										actionListener="#{consultationDetailBean.validationConsGenerale}"
+										update=":f1"></p:commandButton>
+									<p:commandButton value="Annuler"
+										actionListener="#{consultationDetailBean.initialisation()}"
+										update=":f1"></p:commandButton>
+								</div>
+							</td>
+						</tr>
+					</table>
+
+
+				</p:tab>
+			</p:tabView>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

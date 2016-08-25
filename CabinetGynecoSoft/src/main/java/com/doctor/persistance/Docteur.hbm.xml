@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+
+<hibernate-mapping>
+    <class name="com.doctor.persistance.Docteur" table="doctor" >
+      
+        <id name="iddoctor" type="java.lang.Integer">
+            <column name="iddoctor" />
+            <generator class="increment" />
+        </id>
+       
+        <property name="libdoctor" type="string">
+            <column name="libdoctor" length="255"  />
+        </property>
+       
+        <set name="cfclients" table="cfclient" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="iddoctor"  />
+            </key>
+            <one-to-many class="com.doctor.persistance.Cfclient" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Accueil</title>
+<link href="templates/log10.png" rel="shortcut icon" />
+	<link rel="stylesheet" type="text/css" href="../css/styles.css"></link>
+</h:head>
+<h:body
+	style="background-image: url(images/a1.png);no-repeat;background-size:cover;">
+
+
+	<h:form>
+		<div align="center">
+			<table width="100%" border="0">
+				<tr>
+				<td width="5%"></td>
+					<td width="100%" align="right">
+						<div align="center">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<p:graphicImage value="/images/symbol.png">&nbsp;&nbsp;&nbsp;</p:graphicImage>
+							<h:outputText styleClass="sty" value=" GynécoSoft " />
+							<h:outputText styleClass="sty" value="Dr. " />
+							<h:outputText styleClass="sty" value=" #{cabinetBean.docteur}" />
+							&nbsp;&nbsp;&nbsp;
+							<p:graphicImage value="/images/symbol.png"></p:graphicImage>
+						</div>
+					</td>
+					<td align="right">
+					<h:panelGrid columns="3">
+					<h:outputText value="#{connectionBean.utilisateur}"
+						style="font-size:19px;font-weight:bold;font-style: oblique; color: #126BE1;
+						                font-family: Lucida Calligraphy" />
+					<p:spacer width="10px"></p:spacer>
+					<h:commandLink
+							actionListener="#{connectionBean.deconnecter()}">
+							<p:graphicImage value="/images/dec.png" />
+						</h:commandLink>
+						
+						</h:panelGrid>
+						</td>
+				</tr>
+			</table>
+
+			<br /> <br />
+			<div align="center">
+				<table border="0">
+				
+					<tr>
+						<td valign="top" width="60%">
+							<table  border="0">
+								<tr>
+									<td><h:commandLink  
+											actionListener="#{accueilBean.goToSalleAttente()}"
+											disabled="#{connectionBean.menuSalle}">
+											<p:graphicImage value="/imagesMenu/salleAtt.png" ></p:graphicImage>
+										</h:commandLink></td>
+									<td><h:commandLink 
+									    disabled="#{connectionBean.menuSalle}"
+										actionListener="#{accueilBean.goToSalleAttente()}"
+										styleClass="menu" >
+										Salle d'attente
+									</h:commandLink></td>
+									
+								</tr>
+							</table> <br />
+							<table  border="0">
+								<tr>
+									<td style="width: 50px;"></td>
+									<td><h:commandLink 
+									        actionListener="#{accueilBean.goToPatient()}"
+											disabled="#{connectionBean.menuGestionPat}">
+											<p:graphicImage value="/imagesMenu/patient.png" />
+										</h:commandLink></td>
+									<td><h:commandLink   
+									        actionListener="#{accueilBean.goToPatient()}"
+											disabled="#{connectionBean.menuGestionPat}" styleClass="menu">
+										Patients
+									</h:commandLink></td>
+								</tr>
+							</table> <br />
+							<table  border="0">
+								<tr>
+									<td style="width: 82px;"></td>
+
+									<td><p:commandLink ajax="false" 
+									        actionListener="#{accueilBean.goToRecap()}"
+										    disabled="#{connectionBean.menuGestStat}">
+											<p:graphicImage value="/imagesMenu/statistique7.png" width="100px" height="100px" />
+
+										</p:commandLink></td>
+									<td><p:commandLink ajax="false" 
+									        actionListener="#{accueilBean.goToRecap()}"
+											disabled="#{connectionBean.menuGestStat}"
+											styleClass="menu">
+										Statistique
+									</p:commandLink></td>
+								</tr>
+							</table>
+						</td>
+						<td></td>
+						<td valign="top" width="30%">
+							<table  border="0">
+								
+								
+								
+								
+								<tr>
+
+									<td style="width:90px;"></td>
+								<td align="right"><p:commandLink ajax="false"
+											actionListener="#{accueilBean.GoToRendezVous()}"
+											disabled="#{connectionBean.menuGestRdv}" styleClass="menu">
+										Rendez-vous
+									</p:commandLink></td>
+									<td><p:commandLink ajax="false"
+											actionListener="#{accueilBean.GoToRendezVous()}"
+											disabled="#{connectionBean.menuGestRdv}">
+											<p:graphicImage value="/imagesMenu/calendar.png" />
+										</p:commandLink></td>
+								</tr>
+							</table> <br />
+							<table>
+								<tr>
+									<td style="width:10px;"></td>
+
+									<td align="right"><p:commandLink ajax="false"
+									        actionListener="#{accueilBean.goToUtilisateur()}"
+											disabled="#{connectionBean.menuGestUtilisateur}"
+											styleClass="menu">
+										Utilisateurs
+									</p:commandLink></td>
+									<td><p:commandLink ajax="false"
+									        actionListener="#{accueilBean.goToUtilisateur()}"
+											disabled="#{connectionBean.menuGestUtilisateur}">
+											<p:graphicImage value="/images/ut3.png" width="130"
+												height="100" />
+										</p:commandLink></td>
+
+								</tr>
+
+							</table> <br />
+							<table>
+								<tr>
+
+									<td align="right"><p:commandLink ajax="false"
+									        actionListener="#{accueilBean.goToParametrage()}"
+											disabled="#{connectionBean.menuGestParametre}" styleClass="menu">
+											Paramétrage
+										</p:commandLink></td>
+										
+									<td>
+									<p:commandLink ajax="false"
+									       actionListener="#{accueilBean.goToParametrage()}"
+											disabled="#{connectionBean.menuGestParametre}">
+											<p:graphicImage value="/images/param.png" width="130px"
+												height="120px" />
+										</p:commandLink>
+
+									</td>
+
+								</tr>
+
+							</table>
+
+						</td>
+
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</h:form>
+	<p:notificationBar position="bottom" effect="slide"
+		style="height:300px" widgetVar="bar">
+		<table width="98%" border="0">
+			<tr>
+				<td valign="top" width="95%"><p:panel style="width: 98%;">
+						<h:form id="form">
+
+							<p:fieldset id="container" legend="GynécoSoft Chat">
+								<p:poll interval="10" update="public,users" />
+								<h:panelGroup>
+									<table border="0" width="99%">
+										<tr>
+											<td valign="top" width="20%"><p:dataList id="users"
+													var="user" value="#{chatBean.users}" styleClass="usersList"
+													emptyMessage="Pas d'utilisateurs connectés">
+													<f:facet name="header">
+                        Utilisateurs
+                    </f:facet>
+													
+                    #{user}
+                </p:dataList></td>
+											<td valign="top" width="50%"><p:dataList id="public"
+													paginator="true" rows="5" paginatorAlwaysVisible="false"
+													paginatorPosition="bottom" var="m"
+													emptyMessage="Il n'y a pas encore d'historique"
+													value="#{chatBean.listeMessages}">
+													<f:facet name="header">
+                      Historique de discusion
+                    </f:facet>
+                    #{m}
+                </p:dataList></td>
+											<td valign="top" width="30%"><p:panel header="Message"
+													style="width:100%">
+													<h:panelGroup>
+														<p:inputTextarea style="width:98%" id="msg"
+															value="#{chatBean.globalMessage}"
+															styleClass="messageInput"></p:inputTextarea>
+
+														<p:spacer width="5" />
+														<p:commandButton value="Send"
+															actionListener="#{chatBean.sendGlobal}"
+															update="public,msg" />
+													</h:panelGroup>
+												</p:panel></td>
+										</tr>
+									</table>
+
+								</h:panelGroup>
+
+							</p:fieldset>
+						</h:form>
+
+					</p:panel></td>
+				<td valign="top"><div align="right">
+						<p:commandButton onclick="PF('bar').hide()" type="button"
+							icon="ui-icon-closethick" />
+					</div></td>
+			</tr>
+		</table>
+
+	</p:notificationBar>
+	<div class="footer" align="right">
+
+		<h:panelGroup id="tb" layout="block">
+
+			<p:commandLink onclick="PF('bar').show()">
+				<h:graphicImage value="/images/Chaticon.png" />
+			</p:commandLink>
+		</h:panelGroup>
+	</div>
+
+	<style type="text/css">
+.footer {
+	background-color: transparent;
+	width: 100%;
+	height: 70px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+</style>
+	<style type="text/css">
+a:-webkit-any-link {
+	font-weight: blod;
+	font-size: 14pt;
+	color: #f1f4fe";
+	text-decoration: none;
+}
+</style>
+	<style type="text/css">
+.sty {
+	font-style: italic;
+	font-size: 35pt;
+	font-weight: 900;
+	color: #7ECEDA;
+	font-family: Lucida Calligraphy;
+	text-shadow: 1px 1px 2px black, 0 0 #000000, 0 0 0.2em blue;
+}
+</style>
+	<style type="text/css">
+.menu {
+	font-style: oblique;
+	font-weight: blod;
+	font-size: 14pt;
+	font-weight: 700;
+	color: #f1f4fe;
+	font-family: Lucida Calligraphy;
+	text-decoration: none;
+}
+</style>
+</h:body>
+</html>

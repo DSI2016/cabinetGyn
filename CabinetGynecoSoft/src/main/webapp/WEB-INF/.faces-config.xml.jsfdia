@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#pages2#connection.xhtml"
+  PATH="/pages2/connection.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages2#connection.xhtml:0" NAME="item"
+   PATH="/pages2/connection.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="accepted:#{connectionBean.connecter()}:#pages#Accueil.xhtml"
+    NAME="output" PATH="/pages/Accueil.xhtml"
+    TARGET="rules:#pages#Accueil.xhtml"
+    TITLE="#{connectionBean.connecter()}:accepted" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#Accueil.xhtml"
+  PATH="/pages/Accueil.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#GestionPatient.xhtml"
+  PATH="/pages/GestionPatient.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#GestionPatient.xhtml:0" NAME="item"
+   PATH="/pages/GestionPatient.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="anteced:#{cfclientBean.versAntecedent(code)}:#pages#Antecedent.xhtml"
+    NAME="output" PATH="/pages/Antecedent.xhtml"
+    TARGET="rules:#pages#Antecedent.xhtml"
+    TITLE="#{cfclientBean.versAntecedent(code)}:anteced" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#pages#GestionPatient.xhtml:1" NAME="item1"
+   PATH="/pages/GestionPatient.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="versSalle:#{cfclientBean.versSalleAttente()}:#pages#GestionSalleAttente.xhtml"
+    NAME="output" PATH="/pages/GestionSalleAttente.xhtml"
+    TARGET="rules:#pages#GestionSalleAttente.xhtml"
+    TITLE="#{cfclientBean.versSalleAttente()}:versSalle" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#FichePatient.xhtml"
+  PATH="/pages/FichePatient.xhtml" SHAPE="32,385,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:0" NAME="item"
+   PATH="/pages/FichePatient.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consGross:#{fichePatientBean.nouvelleConsult()}:#pages#NouvelleConsultation.xhtml"
+    NAME="output" PATH="/pages/NouvelleConsultation.xhtml"
+    TARGET="rules:#pages#NouvelleConsultation.xhtml"
+    TITLE="#{fichePatientBean.nouvelleConsult()}:consGross" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:1" NAME="item1"
+   PATH="/pages/FichePatient.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="Obst:#{consultationDetailBean.selectedHisto(ConsultationDetail)}:#pages#ConsultationGrossesse.xhtml"
+    NAME="output" PATH="/pages/ConsultationGrossesse.xhtml"
+    TARGET="rules:#pages#ConsultationGrossesse.xhtml"
+    TITLE="#{consultationDetailBean.selectedHisto(ConsultationDetail)}:Obst" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:2" NAME="item2"
+   PATH="/pages/FichePatient.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="Gyneco:#{consultationDetailBean.selectedHisto(c)}:#pages#ConsultationGyneco.xhtml"
+    NAME="output" PATH="/pages/ConsultationGyneco.xhtml"
+    TARGET="rules:#pages#ConsultationGyneco.xhtml"
+    TITLE="#{consultationDetailBean.selectedHisto(c)}:Gyneco" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#GestionSalleAttente.xhtml"
+  PATH="/pages/GestionSalleAttente.xhtml" SHAPE="256,289,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#NouvelleConsultation.xhtml"
+  PATH="/pages/NouvelleConsultation.xhtml" SHAPE="272,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#Antecedent.xhtml"
+  PATH="/pages/Antecedent.xhtml" SHAPE="256,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#ConsultationGyneco.xhtml"
+  PATH="/pages/ConsultationGyneco.xhtml" SHAPE="272,689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#ConsultationGrossesse.xhtml"
+  PATH="/pages/ConsultationGrossesse.xhtml" SHAPE="272,577,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

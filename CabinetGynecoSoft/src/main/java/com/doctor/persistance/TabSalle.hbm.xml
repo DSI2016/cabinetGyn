@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 ao?t 2014 11:50:48 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.doctor.persistance.TabSalle" table="tabsalle">
+		<id name="idTabSalle" type="java.lang.Integer">
+			<column name="idTabSalle" />
+			<generator class="increment" />
+		</id>
+		<property name="nomTab" type="string">
+			<column name="nomTab" length="45" />
+		</property>
+
+		<property name="index" type="int">
+			<column name="index" />
+		</property>
+
+
+		<property name="active" type="boolean">
+			<column name="active" />
+		</property>
+		<property name="ordreDifferent" type="boolean">
+			<column name="ordreDifferent" />
+		</property>
+	</class>
+</hibernate-mapping>

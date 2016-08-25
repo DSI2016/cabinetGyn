@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.ModeleOrdonnance" table="modeleordonnance"
+		>
+		<id name="idModeleOrdonnance" type="java.lang.Integer">
+			<column name="idModeleOrdonnance" />
+			<generator class="increment" />
+		</id>
+
+
+		<property name="nomModele" type="string">
+			<column name="nomModele" length="255" />
+		</property>
+
+
+		<set name="medOrds" table="medord" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="idModeleOrd" />
+			</key>
+			<one-to-many class="com.doctor.persistance.MedOrd" />
+		</set>
+
+	</class>
+</hibernate-mapping>

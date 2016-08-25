@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Certificat" table="certificat"
+		>
+		<id name="idcertificat" type="java.lang.Integer">
+			<column name="idcertificat" />
+			<generator class="increment" />
+		</id>
+
+		<property name="nomCertificat" type="string">
+			<column name="nomCertificat" length="45" />
+		</property>
+		<property name="remarque" type="string">
+   <column name="remarque" sql-type="longtext"/>
+</property>
+		
+		<property name="remarques" type="string">
+			<column name="remarques" sql-type="longtext" />
+		</property>
+		<property name="dateCertif" type="date">
+			<column name="dateCertif"  />
+		</property>
+		<property name="datereprise" type="date">
+			<column name="datereprise"  />
+		</property>
+		<property name="dureederepos" type="int">
+			<column name="dureederepos"  />
+		</property>
+		<property name="adaterdu" type="date">
+			<column name="adaterdu"  />
+		</property>
+		<property name="type" type="string">
+			<column name="type" length="45" />
+		</property>
+		<property name="accompagnant" type="string">
+			<column name="accompagnant" sql-type="longtext" />
+		</property>
+		<property name="lesions" type="string">
+			<column name="lesions" sql-type="longtext" />
+		</property>
+		<property name="datedelagression" type="date">
+			<column name="datedelagression"  />
+		</property>
+		<property name="heurelagr" type="int">
+			<column name="heurelagr"  />
+		</property>
+		<property name="minutelagr" type="int">
+			<column name="minutelagr"  />
+		</property>
+		<property name="heuresys" type="int">
+			<column name="heuresys"  />
+		</property>
+		<property name="minutesys" type="int">
+			<column name="minutesys"  />
+		</property>
+		<property name="inapte" type="string">
+			<column name="inapte" sql-type="longtext" />
+		</property>
+		<property name="cin" type="string">
+			<column name="cin" length="45" />
+		</property>
+		<property name="livreele" type="date">
+			<column name="livreele"  />
+		</property>
+		<property name="a" type="string">
+			<column name="a" sql-type="longtext" />
+		</property>
+		<property name="v1" type="string">
+			<column name="v1" length="45" />
+		</property>
+		<property name="v2" type="string">
+			<column name="v2" length="45" />
+		</property>
+		<property name="v3" type="string">
+			<column name="v3" length="45" />
+		</property>
+		<property name="v4" type="string">
+			<column name="v4" length="45" />
+		</property>
+		<property name="v5" type="string">
+			<column name="v5" length="45" />
+		</property>
+		<property name="v6" type="string">
+			<column name="v6" length="45" />
+		</property>
+		<property name="v7" type="string">
+			<column name="v7" length="45" />
+		</property>
+		<property name="v8" type="string">
+			<column name="v8" length="45" />
+		</property>
+		<property name="v9" type="string">
+			<column name="v9" length="45" />
+		</property>
+		<property name="v10" type="string">
+			<column name="v10" length="45" />
+		</property>
+		<property name="v11" type="string">
+			<column name="v11" length="45" />
+		</property>
+		<property name="v12" type="string">
+			<column name="v12" length="45" />
+		</property>
+		<property name="v13" type="string">
+			<column name="v13" length="45" />
+		</property>
+		<property name="v14" type="string">
+			<column name="v14" length="45" />
+		</property>
+		<property name="v15" type="string">
+			<column name="v15" length="45" />
+		</property>
+		<property name="v16" type="string">
+			<column name="v16" length="45" />
+		</property>
+		<property name="v17" type="string">
+			<column name="v17" length="45" />
+		</property>
+		<property name="v18" type="string">
+			<column name="v18" length="45" />
+		</property>
+		<property name="v19" type="string">
+			<column name="v19" length="45" />
+		</property>
+		<property name="v20" type="string">
+			<column name="v20" length="45" />
+		</property>
+		<property name="v21" type="string">
+			<column name="v21" length="45" />
+		</property>
+		<property name="v22" type="string">
+			<column name="v22" length="45" />
+		</property>
+		<property name="v23" type="string">
+			<column name="v23" length="45" />
+		</property>
+		<property name="v24" type="string">
+			<column name="v24" length="45" />
+		</property>
+		<property name="v25" type="string">
+			<column name="v25" length="45" />
+		</property>
+		<property name="v26" type="string">
+			<column name="v26" length="45" />
+		</property>
+		<property name="v27" type="string">
+			<column name="v27" length="45" />
+		</property>
+		<property name="v28" type="string">
+			<column name="v28" length="45" />
+		</property>
+		<property name="v29" type="string">
+			<column name="v29" length="45" />
+		</property>
+		<property name="v30" type="string">
+			<column name="v30" length="45" />
+		</property>
+		<property name="v31" type="string">
+			<column name="v31" length="45" />
+		</property>
+		
+		<many-to-one class="com.doctor.persistance.Cfclient"
+			fetch="select" name="cfclient">
+			<column name="idPatient" />
+		</many-to-one>
+		
+		<set fetch="select" inverse="true" lazy="true" name="historiqueCertifs" 
+			table="historiquecertif">
+			<key>
+				<column name="idCertif" />
+			</key>
+			<one-to-many class="com.doctor.persistance.HistoriqueCertif" />
+		</set>
+		
+
+	</class>
+</hibernate-mapping>

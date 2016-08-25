@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gestionmodelecertificat" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="55fd57e8-2114-4f49-8d3c-ce0f904fbcca">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="69"/>
+	<parameter name="idlettre" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     historiquelettre.`idhistoriquelettre` AS historiquelettre_idhistoriquelettre,
+     historiquelettre.`Datelettre` AS historiquelettre_Datelettre,
+     historiquelettre.`dateActe` AS historiquelettre_dateActe,
+     historiquelettre.`code` AS historiquelettre_code,
+     historiquelettre.`clinique` AS historiquelettre_clinique,
+     historiquelettre.`description` AS historiquelettre_description,
+     historiquelettre.`ddr` AS historiquelettre_ddr,
+     historiquelettre.`debutGross` AS historiquelettre_debutGross,
+     historiquelettre.`termeprevue` AS historiquelettre_termeprevue,
+     historiquelettre.`termeactuel` AS historiquelettre_termeactuel,
+     historiquelettre.`rubeoole` AS historiquelettre_rubeoole,
+     historiquelettre.`frotti` AS historiquelettre_frotti,
+     historiquelettre.`gs` AS historiquelettre_gs,
+     historiquelettre.`rh` AS historiquelettre_rh,
+     historiquelettre.`resultatfrotti` AS historiquelettre_resultatfrotti,
+     historiquelettre.`diagnostic` AS historiquelettre_diagnostic,
+     historiquelettre.`idPatient` AS historiquelettre_idPatient,
+     historiquelettre.`v1` AS historiquelettre_v1,
+     historiquelettre.`v2` AS historiquelettre_v2,
+     historiquelettre.`v3` AS historiquelettre_v3,
+     historiquelettre.`v4` AS historiquelettre_v4,
+     historiquelettre.`v5` AS historiquelettre_v5,
+     historiquelettre.`v6` AS historiquelettre_v6,
+     historiquelettre.`v7` AS historiquelettre_v7,
+     historiquelettre.`v8` AS historiquelettre_v8,
+     historiquelettre.`v9` AS historiquelettre_v9,
+     historiquelettre.`v10` AS historiquelettre_v10,
+     historiquelettre.`v11` AS historiquelettre_v11,
+     historiquelettre.`v12` AS historiquelettre_v12,
+     historiquelettre.`v13` AS historiquelettre_v13,
+     historiquelettre.`v14` AS historiquelettre_v14,
+     historiquelettre.`v15` AS historiquelettre_v15,
+     historiquelettre.`v16` AS historiquelettre_v16,
+     historiquelettre.`v17` AS historiquelettre_v17,
+     historiquelettre.`v18` AS historiquelettre_v18,
+     historiquelettre.`v19` AS historiquelettre_v19,
+     historiquelettre.`v20` AS historiquelettre_v20,
+     historiquelettre.`v21` AS historiquelettre_v21,
+     historiquelettre.`v22` AS historiquelettre_v22,
+     historiquelettre.`v23` AS historiquelettre_v23,
+     historiquelettre.`v24` AS historiquelettre_v24,
+     historiquelettre.`v25` AS historiquelettre_v25,
+     historiquelettre.`v26` AS historiquelettre_v26,
+     historiquelettre.`v27` AS historiquelettre_v27,
+     historiquelettre.`v28` AS historiquelettre_v28,
+     historiquelettre.`v29` AS historiquelettre_v29,
+     historiquelettre.`v30` AS historiquelettre_v30,
+     historiquelettre.`idLettre` AS historiquelettre_idLettre,
+     historiquelettre.`textLettre` AS historiquelettre_textLettre,
+     historiquelettre.`autre` AS historiquelettre_autre,
+     historiquelettre.`toxo` AS historiquelettre_toxo,
+     historiquelettre.`tpha` AS historiquelettre_tpha,
+     lettre.`idlettre` AS lettre_idlettre,
+     lettre.`Datelettre` AS lettre_Datelettre,
+     lettre.`dateActe` AS lettre_dateActe,
+     lettre.`code` AS lettre_code,
+     lettre.`clinique` AS lettre_clinique,
+     lettre.`description` AS lettre_description,
+     lettre.`ddr` AS lettre_ddr,
+     lettre.`debutGross` AS lettre_debutGross,
+     lettre.`termeprevue` AS lettre_termeprevue,
+     lettre.`termeactuel` AS lettre_termeactuel,
+     lettre.`rubeoole` AS lettre_rubeoole,
+     lettre.`frotti` AS lettre_frotti,
+     lettre.`gs` AS lettre_gs,
+     lettre.`rh` AS lettre_rh,
+     lettre.`resultatfrotti` AS lettre_resultatfrotti,
+     lettre.`diagnostic` AS lettre_diagnostic,
+     lettre.`v1` AS lettre_v1,
+     lettre.`v2` AS lettre_v2,
+     lettre.`v3` AS lettre_v3,
+     lettre.`v4` AS lettre_v4,
+     lettre.`v5` AS lettre_v5,
+     lettre.`v6` AS lettre_v6,
+     lettre.`v7` AS lettre_v7,
+     lettre.`v8` AS lettre_v8,
+     lettre.`v9` AS lettre_v9,
+     lettre.`v10` AS lettre_v10,
+     lettre.`v11` AS lettre_v11,
+     lettre.`v12` AS lettre_v12,
+     lettre.`v13` AS lettre_v13,
+     lettre.`v14` AS lettre_v14,
+     lettre.`v15` AS lettre_v15,
+     lettre.`v16` AS lettre_v16,
+     lettre.`v17` AS lettre_v17,
+     lettre.`v18` AS lettre_v18,
+     lettre.`v19` AS lettre_v19,
+     lettre.`v20` AS lettre_v20,
+     lettre.`v21` AS lettre_v21,
+     lettre.`v22` AS lettre_v22,
+     lettre.`v23` AS lettre_v23,
+     lettre.`v24` AS lettre_v24,
+     lettre.`v25` AS lettre_v25,
+     lettre.`v26` AS lettre_v26,
+     lettre.`v27` AS lettre_v27,
+     lettre.`v28` AS lettre_v28,
+     lettre.`v29` AS lettre_v29,
+     lettre.`v30` AS lettre_v30,
+     lettre.`nomLettre` AS lettre_nomLettre,
+     lettre.`textLettre` AS lettre_textLettre,
+     lettre.`autre` AS lettre_autre,
+     lettre.`toxo` AS lettre_toxo,
+     lettre.`tpha` AS lettre_tpha,
+     cabinet.`idcabinet` AS cabinet_idcabinet,
+     cabinet.`adresse` AS cabinet_adresse,
+     cabinet.`docteur` AS cabinet_docteur,
+     cabinet.`tel1` AS cabinet_tel1,
+     cabinet.`tel2` AS cabinet_tel2,
+     cabinet.`fax` AS cabinet_fax,
+     cabinet.`gsm1` AS cabinet_gsm1,
+     cabinet.`gsm2` AS cabinet_gsm2,
+     cabinet.`eMail` AS cabinet_eMail,
+     cabinet.`specialite` AS cabinet_specialite,
+     cabinet.`ville` AS cabinet_ville
+FROM
+     `lettre` lettre INNER JOIN `historiquelettre` historiquelettre ON lettre.`idlettre` = historiquelettre.`idLettre`,
+     `cabinet` cabinet
+
+where  historiquelettre.`idhistoriquelettre`=$P{idlettre}]]>
+	</queryString>
+	<field name="historiquelettre_idhistoriquelettre" class="java.lang.Integer"/>
+	<field name="historiquelettre_Datelettre" class="java.sql.Date"/>
+	<field name="historiquelettre_dateActe" class="java.sql.Date"/>
+	<field name="historiquelettre_code" class="java.lang.String"/>
+	<field name="historiquelettre_clinique" class="java.lang.String"/>
+	<field name="historiquelettre_description" class="java.lang.String"/>
+	<field name="historiquelettre_ddr" class="java.lang.String"/>
+	<field name="historiquelettre_debutGross" class="java.lang.String"/>
+	<field name="historiquelettre_termeprevue" class="java.lang.String"/>
+	<field name="historiquelettre_termeactuel" class="java.lang.String"/>
+	<field name="historiquelettre_rubeoole" class="java.lang.String"/>
+	<field name="historiquelettre_frotti" class="java.lang.String"/>
+	<field name="historiquelettre_gs" class="java.lang.String"/>
+	<field name="historiquelettre_rh" class="java.lang.String"/>
+	<field name="historiquelettre_resultatfrotti" class="java.lang.String"/>
+	<field name="historiquelettre_diagnostic" class="java.lang.String"/>
+	<field name="historiquelettre_idPatient" class="java.lang.Long"/>
+	<field name="historiquelettre_v1" class="java.lang.String"/>
+	<field name="historiquelettre_v2" class="java.lang.String"/>
+	<field name="historiquelettre_v3" class="java.lang.String"/>
+	<field name="historiquelettre_v4" class="java.lang.String"/>
+	<field name="historiquelettre_v5" class="java.lang.String"/>
+	<field name="historiquelettre_v6" class="java.lang.String"/>
+	<field name="historiquelettre_v7" class="java.lang.String"/>
+	<field name="historiquelettre_v8" class="java.lang.String"/>
+	<field name="historiquelettre_v9" class="java.lang.String"/>
+	<field name="historiquelettre_v10" class="java.lang.String"/>
+	<field name="historiquelettre_v11" class="java.lang.String"/>
+	<field name="historiquelettre_v12" class="java.lang.String"/>
+	<field name="historiquelettre_v13" class="java.lang.String"/>
+	<field name="historiquelettre_v14" class="java.lang.String"/>
+	<field name="historiquelettre_v15" class="java.lang.String"/>
+	<field name="historiquelettre_v16" class="java.lang.String"/>
+	<field name="historiquelettre_v17" class="java.lang.String"/>
+	<field name="historiquelettre_v18" class="java.lang.String"/>
+	<field name="historiquelettre_v19" class="java.lang.String"/>
+	<field name="historiquelettre_v20" class="java.lang.String"/>
+	<field name="historiquelettre_v21" class="java.lang.String"/>
+	<field name="historiquelettre_v22" class="java.lang.String"/>
+	<field name="historiquelettre_v23" class="java.lang.String"/>
+	<field name="historiquelettre_v24" class="java.lang.String"/>
+	<field name="historiquelettre_v25" class="java.lang.String"/>
+	<field name="historiquelettre_v26" class="java.lang.String"/>
+	<field name="historiquelettre_v27" class="java.lang.String"/>
+	<field name="historiquelettre_v28" class="java.lang.String"/>
+	<field name="historiquelettre_v29" class="java.lang.String"/>
+	<field name="historiquelettre_v30" class="java.lang.String"/>
+	<field name="historiquelettre_idLettre" class="java.lang.Integer"/>
+	<field name="historiquelettre_textLettre" class="java.lang.String"/>
+	<field name="historiquelettre_autre" class="java.lang.String"/>
+	<field name="historiquelettre_toxo" class="java.lang.String"/>
+	<field name="historiquelettre_tpha" class="java.lang.String"/>
+	<field name="lettre_idlettre" class="java.lang.Integer"/>
+	<field name="lettre_Datelettre" class="java.sql.Date"/>
+	<field name="lettre_dateActe" class="java.sql.Date"/>
+	<field name="lettre_code" class="java.lang.String"/>
+	<field name="lettre_clinique" class="java.lang.String"/>
+	<field name="lettre_description" class="java.lang.String"/>
+	<field name="lettre_ddr" class="java.lang.String"/>
+	<field name="lettre_debutGross" class="java.lang.String"/>
+	<field name="lettre_termeprevue" class="java.lang.String"/>
+	<field name="lettre_termeactuel" class="java.lang.String"/>
+	<field name="lettre_rubeoole" class="java.lang.String"/>
+	<field name="lettre_frotti" class="java.lang.String"/>
+	<field name="lettre_gs" class="java.lang.String"/>
+	<field name="lettre_rh" class="java.lang.String"/>
+	<field name="lettre_resultatfrotti" class="java.lang.String"/>
+	<field name="lettre_diagnostic" class="java.lang.String"/>
+	<field name="lettre_v1" class="java.lang.String"/>
+	<field name="lettre_v2" class="java.lang.String"/>
+	<field name="lettre_v3" class="java.lang.String"/>
+	<field name="lettre_v4" class="java.lang.String"/>
+	<field name="lettre_v5" class="java.lang.String"/>
+	<field name="lettre_v6" class="java.lang.String"/>
+	<field name="lettre_v7" class="java.lang.String"/>
+	<field name="lettre_v8" class="java.lang.String"/>
+	<field name="lettre_v9" class="java.lang.String"/>
+	<field name="lettre_v10" class="java.lang.String"/>
+	<field name="lettre_v11" class="java.lang.String"/>
+	<field name="lettre_v12" class="java.lang.String"/>
+	<field name="lettre_v13" class="java.lang.String"/>
+	<field name="lettre_v14" class="java.lang.String"/>
+	<field name="lettre_v15" class="java.lang.String"/>
+	<field name="lettre_v16" class="java.lang.String"/>
+	<field name="lettre_v17" class="java.lang.String"/>
+	<field name="lettre_v18" class="java.lang.String"/>
+	<field name="lettre_v19" class="java.lang.String"/>
+	<field name="lettre_v20" class="java.lang.String"/>
+	<field name="lettre_v21" class="java.lang.String"/>
+	<field name="lettre_v22" class="java.lang.String"/>
+	<field name="lettre_v23" class="java.lang.String"/>
+	<field name="lettre_v24" class="java.lang.String"/>
+	<field name="lettre_v25" class="java.lang.String"/>
+	<field name="lettre_v26" class="java.lang.String"/>
+	<field name="lettre_v27" class="java.lang.String"/>
+	<field name="lettre_v28" class="java.lang.String"/>
+	<field name="lettre_v29" class="java.lang.String"/>
+	<field name="lettre_v30" class="java.lang.String"/>
+	<field name="lettre_nomLettre" class="java.lang.String"/>
+	<field name="lettre_textLettre" class="java.lang.String"/>
+	<field name="lettre_autre" class="java.lang.String"/>
+	<field name="lettre_toxo" class="java.lang.String"/>
+	<field name="lettre_tpha" class="java.lang.String"/>
+	<field name="cabinet_idcabinet" class="java.lang.Integer"/>
+	<field name="cabinet_adresse" class="java.lang.String"/>
+	<field name="cabinet_docteur" class="java.lang.String"/>
+	<field name="cabinet_tel1" class="java.lang.String"/>
+	<field name="cabinet_tel2" class="java.lang.String"/>
+	<field name="cabinet_fax" class="java.lang.String"/>
+	<field name="cabinet_gsm1" class="java.lang.String"/>
+	<field name="cabinet_gsm2" class="java.lang.String"/>
+	<field name="cabinet_eMail" class="java.lang.String"/>
+	<field name="cabinet_specialite" class="java.lang.String"/>
+	<field name="cabinet_ville" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="201" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cc73dd1a-4a31-4610-ba3a-a10bd5293b5d" x="223" y="135" width="180" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lettre_nomLettre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="89dbd819-f952-49fb-b959-09bd5f5ca5c4" x="301" y="84" width="70" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historiquelettre_Datelettre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="290" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e9ef0eac-7977-4b9e-ac45-dc9a3d813e8c" x="332" y="247" width="48" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Docteur]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="258c1372-c9a1-4c12-bc53-fa41c8ca6e6e" x="380" y="247" width="128" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cabinet_docteur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="632f75a9-4a1e-4e69-b10e-9f6cc8c72d49" x="80" y="0" width="426" height="248"/>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historiquelettre_textLettre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="28d25d0b-38bf-478a-ac10-2e10359bf7ec" x="364" y="267" width="78" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cabinet_specialite}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

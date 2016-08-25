@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../templates/templateGyneco.xhtml">
+	<ui:define name="title">Rapports</ui:define>
+	<ui:define name="body">
+		<p:graphicImage value="/imagesTitre/rapport.png"  width="100%"></p:graphicImage>
+		<h:form id="f1">
+			<table width="100%" border="0">
+				<tr>
+					<td width="35%"><div align="left">
+							<h:panelGrid columns="2">
+								<h:commandLink actionListener="#{certificatBean.gotoAcceuil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink>
+								
+							</h:panelGrid>
+						</div></td>
+                     <td align="right" width="30%">
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="80%" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+				</tr>
+			</table>
+
+			<p:growl id="growl" life="3000" />
+			<div align="center">
+				<br />
+				<br />
+				<br />
+				<p:panel style="width: 90%">
+					<br />
+					<table width="80%">
+						<tr>
+							<td align="center" width="25%"><h:outputLink
+									value="Modélle-Certificat"
+									disabled="#{connectionBean.rapportCertif}">
+									<p:graphicImage value="/images/certif.png" width="100px" height="120px" />
+								</h:outputLink></td>
+
+							<td align="center" width="25%"><h:outputLink
+									value="Modélle-Lettre"
+									disabled="#{connectionBean.rapportLettre}">
+									<p:graphicImage value="/imagesMenu/enveloppe.png" width="140px"  height="140px"/>
+								</h:outputLink></td>
+
+						</tr>
+
+						<tr>
+							<td align="center"><h:outputLink
+									value="Modélle-Certificat"
+										disabled="#{connectionBean.rapportCertif}"  styleClass="menu">
+										Certificats
+								</h:outputLink></td>
+							<td align="center"><h:outputLink value="Modélle-Lettre"
+									 styleClass="menu"
+										disabled="#{connectionBean.rapportLettre}" >
+										Lettres
+								</h:outputLink></td>
+														</tr>
+
+					</table>
+					<br />
+					<br />
+
+				</p:panel>
+
+			</div>
+		</h:form>
+
+		<style type="text/css">
+a:-webkit-any-link {
+	font-weight: blod;
+	font-size: 14pt;
+	color: #1EA4D5";
+	text-decoration: none;
+}
+</style>
+<style type="text/css">
+.menu {
+	font-style: oblique;
+	font-weight: blod;
+	font-size: 14pt;
+	font-weight: 700;
+	color: #f1f4fe;
+	font-family: Lucida Calligraphy;
+	text-decoration: none;
+}
+</style>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Symptome" table="symptome"
+		>
+		<id name="idsymptome" type="java.lang.Integer">
+			<column name="idsymptome" />
+			<generator class="increment" />
+		</id>
+		
+
+		<property name="symptome" type="string">
+			<column name="symptome" sql-type="mediumtext"/>
+		</property>
+
+	</class>
+</hibernate-mapping>

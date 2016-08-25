@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/2.0.12"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/2.0.12
+   http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-2.0.12.xsd">
+
+
+	<url-mapping id="Accueil">
+		<pattern value="/Accueil" />
+		<view-id value="/pages/Accueil.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="Patients">
+		<pattern value="/Patients" />
+		<view-id value="/pages/GestionPatient.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="GestionUtilisateur">
+		<pattern value="/Utilisateurs" />
+		<view-id value="/pages/GestionUtilisateur.xhtml" />
+	</url-mapping>
+	
+	
+
+	<url-mapping id="Lettres">
+		<pattern value="/Lettres" />
+		<view-id value="/pages/ListeLettre.xhtml" />
+	</url-mapping>
+	<url-mapping id="HistoriqueAnalyses">
+		<pattern value="/HistoriqueAnalyses" />
+		<view-id value="/pages/ListeAnalyses.xhtml" />
+	</url-mapping>
+	<url-mapping id="HistoriqueRadios">
+		<pattern value="/HistoriqueRadios" />
+		<view-id value="/pages/ListeRadios.xhtml" />
+	</url-mapping>
+	<url-mapping id="NouvelleOrdonnance">
+		<pattern value="/NouvelleOrdonnance" />
+		<view-id value="/pages/NouvelleOrdonnance.xhtml" />
+	</url-mapping>
+	<url-mapping id="HistoriqueOrdonnances">
+		<pattern value="/HistoriqueOrdonnances" />
+		<view-id value="/pages/ListeOrdonnances.xhtml" />
+	</url-mapping>
+
+
+
+	<url-mapping id="Certificats">
+		<pattern value="/Certificats" />
+		<view-id value="/pages/ListeCertiff.xhtml" />
+	</url-mapping>
+	<url-mapping id="Parametrage">
+		<pattern value="/Parametrage" />
+		<view-id value="/pages/Parametrage.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="Rendez-Vous">
+		<pattern value="/Rendez-Vous" />
+		<view-id value="/pages/GestionRendezVous2.xhtml" />
+	</url-mapping>
+
+	<url-mapping id=" ModifierUtilisateur">
+		<pattern value="/ModifierUtilisateur" />
+		<view-id value="/pages/ModifierUtilisateur.xhtml" />
+	</url-mapping>
+	<url-mapping id="AjoutUtilisateur">
+		<pattern value="/AjoutUtilisateur" />
+		<view-id value="/pages/AjouterUtilisateur.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="Authentification">
+		<pattern value="/Authentification" />
+		<view-id value="/pages2/connection.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="Consultation-Gynecologue">
+		<pattern value="/Consultation-Gynecologique" />
+		<view-id value="/pages/ConsultationGyneco.xhtml" />
+	</url-mapping>
+	<url-mapping id="DemandeAnalyse">
+		<pattern value="/DemandeAnalyse" />
+		<view-id value="/pages/AnalyseDemande.xhtml" />
+	</url-mapping>
+	<url-mapping id="Session">
+		<pattern value="/Session" />
+		<view-id value="/pages/ListeSession.xhtml" />
+	</url-mapping>
+	<url-mapping id="DemandeRadio">
+		<pattern value="/DemandeRadio" />
+		<view-id value="/pages/Radio.xhtml" />
+	</url-mapping>
+	<url-mapping id="Consultation_Obstetrique">
+		<pattern value="/Consultation_Obstetrique" />
+		<view-id value="/pages/ConsultationGrossesse.xhtml" />
+	</url-mapping>
+	<url-mapping id="FichePatiente">
+		<pattern value="/FichePatiente" />
+		<view-id value="/pages/FichePatient.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="Antecedent">
+		<pattern value="/Antecedent" />
+		<view-id value="/pages/Antecedent.xhtml" />
+	</url-mapping>
+	<url-mapping id="Echographie-Gynecologique">
+		<pattern value="/Echographie-Gynecologique" />
+		<view-id value="/pages/EchoGynecologique.xhtml" />
+	</url-mapping>
+	<url-mapping id="Echographie_Obstetricale">
+		<pattern value="/Echographie_Obstetricale" />
+		<view-id value="/pages/EchoObstetricale.xhtml" />
+	</url-mapping>
+	<url-mapping id="Modelle-Rapport">
+		<pattern value="/Modelle-Rapport" />
+		<view-id value="/pages/Rapport.xhtml" />
+	</url-mapping>
+	<url-mapping id="Modélle-Lettre">
+		<pattern value="/Modélle-Lettre" />
+		<view-id value="/pages/GestionLettre.xhtml" />
+
+	</url-mapping>
+	<url-mapping id="Modélle-Certificat">
+		<pattern value="/Modélle-Certificat" />
+		<view-id value="/pages/GestionCertificat.xhtml" />
+	</url-mapping>
+
+	
+
+	<url-mapping id="Infertilité">
+		<pattern value="/Infertilité" />
+		<view-id value="/pages/Sterilite.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionMedicament">
+		<pattern value="/GestionMedicament" />
+		<view-id value="/pages/GestionMedicament.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionVille">
+		<pattern value="/GestionVille" />
+		<view-id value="/pages/GestionVille.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionClinique">
+		<pattern value="/GestionClinique" />
+		<view-id value="/pages/GestionClinique.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionProfession">
+		<pattern value="/GestionProfession" />
+		<view-id value="/pages/GestionProfession.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="GestionEtatFinGrossesses">
+		<pattern value="/GestionEtatFinGrossesses" />
+		<view-id value="/pages/GestionEtatFinGross.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionEtatBebe">
+		<pattern value="/GestionEtatBebe" />
+		<view-id value="/pages/GestionEtatBebe.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionAnalyse">
+		<pattern value="/GestionAnalyse" />
+		<view-id value="/pages/GestionAnalyse.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionDocteur">
+		<pattern value="/GestionDocteur" />
+		<view-id value="/pages/GestionDocteur.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="GestionUterus">
+		<pattern value="/GestionUterus" />
+		<view-id value="/pages/GestionUterus.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionMoyenContraception">
+		<pattern value="/GestionMoyenContraception" />
+		<view-id value="/pages/GestionMoyenContraception.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="GestionExamenClinique">
+		<pattern value="/GestionExamenClinique" />
+		<view-id value="/pages/GestionExamen.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionDiagnostique">
+		<pattern value="/GestionDiagnostique" />
+		<view-id value="/pages/GestionDiagnostique.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionSymptome">
+		<pattern value="/GestionSymptome" />
+		<view-id value="/pages/GestionSymptom.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionExamenComplementaire">
+		<pattern value="/GestionExamenComplementaire" />
+		<view-id value="/pages/GestionExamenComplementaire.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionFormMedicament">
+		<pattern value="/GestionFormMedicament" />
+		<view-id value="/pages/GestionFormMedicament.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionHoraireTravail">
+		<pattern value="/GestionHoraireTravail" />
+		<view-id value="/pages/GestionHoraire.xhtml" />
+	</url-mapping>
+	<url-mapping id="GestionCabinet">
+		<pattern value="/GestionCabinet" />
+		<view-id value="/pages/GestionCabinet.xhtml" />
+	</url-mapping>
+
+
+	<url-mapping id="GestionJoursFériés">
+		<pattern value="/GestionJoursFeries" />
+		<view-id value="/pages/GestionJourFr.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="ReglageSaison">
+		<pattern value="/ReglageSaison" />
+		<view-id value="/pages/ReglageHoraire.xhtml" />
+	</url-mapping>
+	
+	
+	<url-mapping id="GestionAntecedents">
+		<pattern value="/GestionAntecedents" />
+		<view-id value="/pages/GestionAntecedents.xhtml" />
+	</url-mapping>
+
+<url-mapping id="Salle">
+		<pattern value="/Salle" />
+		<view-id value="/pages/GestionSalleAttente.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="SalleAttente">
+		<pattern value="/GestionSalle" />
+		<view-id value="/pages/GestionSalle2.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="recap">
+		<pattern value="/Recap" />
+		<view-id value="/pages/Recap.xhtml"/>
+	</url-mapping>
+	
+	
+	<url-mapping id="PatArchive">
+		<pattern value="/PatientArchive" />
+		<view-id value="/pages/GestionArchivePatient.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="Consultation">
+		<pattern value="/Consultations" />
+		<view-id value="/pages/Consultation.xhtml" />
+	</url-mapping>
+	
+
+</pretty-config>

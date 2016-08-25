@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lettre" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7361d6c7-40b5-4cb7-ba50-0177d857678c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="116"/>
+	<parameter name="idlettre" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     historiquelettre.`idhistoriquelettre` AS historiquelettre_idhistoriquelettre,
+     historiquelettre.`Datelettre` AS historiquelettre_Datelettre,
+     historiquelettre.`dateActe` AS historiquelettre_dateActe,
+     historiquelettre.`code` AS historiquelettre_code,
+     historiquelettre.`clinique` AS historiquelettre_clinique,
+     historiquelettre.`description` AS historiquelettre_description,
+     historiquelettre.`ddr` AS historiquelettre_ddr,
+     historiquelettre.`debutGross` AS historiquelettre_debutGross,
+     historiquelettre.`termeprevue` AS historiquelettre_termeprevue,
+     historiquelettre.`termeactuel` AS historiquelettre_termeactuel,
+     historiquelettre.`rubeoole` AS historiquelettre_rubeoole,
+     historiquelettre.`frotti` AS historiquelettre_frotti,
+     historiquelettre.`gs` AS historiquelettre_gs,
+     historiquelettre.`rh` AS historiquelettre_rh,
+     historiquelettre.`resultatfrotti` AS historiquelettre_resultatfrotti,
+     historiquelettre.`diagnostic` AS historiquelettre_diagnostic,
+     historiquelettre.`idPatient` AS historiquelettre_idPatient,
+     historiquelettre.`v1` AS historiquelettre_v1,
+     historiquelettre.`v2` AS historiquelettre_v2,
+     historiquelettre.`v3` AS historiquelettre_v3,
+     historiquelettre.`v4` AS historiquelettre_v4,
+     historiquelettre.`v5` AS historiquelettre_v5,
+     historiquelettre.`v6` AS historiquelettre_v6,
+     historiquelettre.`v7` AS historiquelettre_v7,
+     historiquelettre.`v8` AS historiquelettre_v8,
+     historiquelettre.`v9` AS historiquelettre_v9,
+     historiquelettre.`v10` AS historiquelettre_v10,
+     historiquelettre.`v11` AS historiquelettre_v11,
+     historiquelettre.`v12` AS historiquelettre_v12,
+     historiquelettre.`v13` AS historiquelettre_v13,
+     historiquelettre.`v14` AS historiquelettre_v14,
+     historiquelettre.`v15` AS historiquelettre_v15,
+     historiquelettre.`v16` AS historiquelettre_v16,
+     historiquelettre.`v17` AS historiquelettre_v17,
+     historiquelettre.`v18` AS historiquelettre_v18,
+     historiquelettre.`v19` AS historiquelettre_v19,
+     historiquelettre.`v20` AS historiquelettre_v20,
+     historiquelettre.`v21` AS historiquelettre_v21,
+     historiquelettre.`v22` AS historiquelettre_v22,
+     historiquelettre.`v23` AS historiquelettre_v23,
+     historiquelettre.`v24` AS historiquelettre_v24,
+     historiquelettre.`v25` AS historiquelettre_v25,
+     historiquelettre.`v26` AS historiquelettre_v26,
+     historiquelettre.`v27` AS historiquelettre_v27,
+     historiquelettre.`v28` AS historiquelettre_v28,
+     historiquelettre.`v29` AS historiquelettre_v29,
+     historiquelettre.`v30` AS historiquelettre_v30,
+     historiquelettre.`idLettre` AS historiquelettre_idLettre,
+     historiquelettre.`textLettre` AS historiquelettre_textLettre,
+     historiquelettre.`autre` AS historiquelettre_autre,
+     historiquelettre.`toxo` AS historiquelettre_toxo,
+     historiquelettre.`tpha` AS historiquelettre_tpha,
+     cabinet.`idcabinet` AS cabinet_idcabinet,
+     cabinet.`adresse` AS cabinet_adresse,
+     cabinet.`docteur` AS cabinet_docteur,
+     cabinet.`tel1` AS cabinet_tel1,
+     cabinet.`tel2` AS cabinet_tel2,
+     cabinet.`fax` AS cabinet_fax,
+     cabinet.`gsm1` AS cabinet_gsm1,
+     cabinet.`gsm2` AS cabinet_gsm2,
+     cabinet.`eMail` AS cabinet_eMail,
+     cabinet.`specialite` AS cabinet_specialite,
+     lettre.`idlettre` AS lettre_idlettre,
+     lettre.`Datelettre` AS lettre_Datelettre,
+     lettre.`dateActe` AS lettre_dateActe,
+     lettre.`code` AS lettre_code,
+     lettre.`clinique` AS lettre_clinique,
+     lettre.`description` AS lettre_description,
+     lettre.`ddr` AS lettre_ddr,
+     lettre.`debutGross` AS lettre_debutGross,
+     lettre.`termeprevue` AS lettre_termeprevue,
+     lettre.`termeactuel` AS lettre_termeactuel,
+     lettre.`rubeoole` AS lettre_rubeoole,
+     lettre.`frotti` AS lettre_frotti,
+     lettre.`gs` AS lettre_gs,
+     lettre.`rh` AS lettre_rh,
+     lettre.`resultatfrotti` AS lettre_resultatfrotti,
+     lettre.`diagnostic` AS lettre_diagnostic,
+     lettre.`v1` AS lettre_v1,
+     lettre.`v2` AS lettre_v2,
+     lettre.`v3` AS lettre_v3,
+     lettre.`v4` AS lettre_v4,
+     lettre.`v5` AS lettre_v5,
+     lettre.`v6` AS lettre_v6,
+     lettre.`v7` AS lettre_v7,
+     lettre.`v8` AS lettre_v8,
+     lettre.`v9` AS lettre_v9,
+     lettre.`v10` AS lettre_v10,
+     lettre.`v11` AS lettre_v11,
+     lettre.`v12` AS lettre_v12,
+     lettre.`v13` AS lettre_v13,
+     lettre.`v14` AS lettre_v14,
+     lettre.`v15` AS lettre_v15,
+     lettre.`v16` AS lettre_v16,
+     lettre.`v17` AS lettre_v17,
+     lettre.`v18` AS lettre_v18,
+     lettre.`v19` AS lettre_v19,
+     lettre.`v20` AS lettre_v20,
+     lettre.`v21` AS lettre_v21,
+     lettre.`v22` AS lettre_v22,
+     lettre.`v23` AS lettre_v23,
+     lettre.`v24` AS lettre_v24,
+     lettre.`v25` AS lettre_v25,
+     lettre.`v26` AS lettre_v26,
+     lettre.`v27` AS lettre_v27,
+     lettre.`v28` AS lettre_v28,
+     lettre.`v29` AS lettre_v29,
+     lettre.`v30` AS lettre_v30,
+     lettre.`nomLettre` AS lettre_nomLettre,
+     lettre.`textLettre` AS lettre_textLettre,
+     lettre.`autre` AS lettre_autre,
+     lettre.`toxo` AS lettre_toxo,
+     lettre.`tpha` AS lettre_tpha,
+     cfclient.`code` AS cfclient_code,
+     cfclient.`nom` AS cfclient_nom,
+     cfclient.`prenom` AS cfclient_prenom,
+     cfclient.`Cnss` AS cfclient_Cnss,
+     cfclient.`sexe` AS cfclient_sexe,
+     cfclient.`civil` AS cfclient_civil,
+     cfclient.`date_naiss` AS cfclient_date_naiss,
+     cfclient.`rue` AS cfclient_rue,
+     cfclient.`code_post` AS cfclient_code_post,
+     cfclient.`ville` AS cfclient_ville,
+     cfclient.`pays` AS cfclient_pays,
+     cfclient.`telephone1` AS cfclient_telephone1,
+     cfclient.`professp` AS cfclient_professp,
+     cfclient.`professcp` AS cfclient_professcp,
+     cfclient.`notes` AS cfclient_notes,
+     cfclient.`typ_cons` AS cfclient_typ_cons,
+     cfclient.`nb_cons` AS cfclient_nb_cons,
+     cfclient.`date_cons` AS cfclient_date_cons,
+     cfclient.`datesaisie` AS cfclient_datesaisie,
+     cfclient.`ant11` AS cfclient_ant11,
+     cfclient.`dpr` AS cfclient_dpr,
+     cfclient.`mariage` AS cfclient_mariage,
+     cfclient.`consang` AS cfclient_consang,
+     cfclient.`duree_reg` AS cfclient_duree_reg,
+     cfclient.`regles` AS cfclient_regles,
+     cfclient.`dysmenorhe` AS cfclient_dysmenorhe,
+     cfclient.`mastodynie` AS cfclient_mastodynie,
+     cfclient.`menopose` AS cfclient_menopose,
+     cfclient.`prefix` AS cfclient_prefix,
+     cfclient.`ant3` AS cfclient_ant3,
+     cfclient.`date_fr` AS cfclient_date_fr,
+     cfclient.`result_fr` AS cfclient_result_fr,
+     cfclient.`ddr` AS cfclient_ddr,
+     cfclient.`spanio` AS cfclient_spanio,
+     cfclient.`ddg` AS cfclient_ddg,
+     cfclient.`date_moyen` AS cfclient_date_moyen,
+     cfclient.`moyen` AS cfclient_moyen,
+     cfclient.`gestite` AS cfclient_gestite,
+     cfclient.`partie` AS cfclient_partie,
+     cfclient.`gviv` AS cfclient_gviv,
+     cfclient.`fviv` AS cfclient_fviv,
+     cfclient.`cesar` AS cfclient_cesar,
+     cfclient.`iddoctor` AS cfclient_iddoctor,
+     cfclient.`idclinique` AS cfclient_idclinique,
+     cfclient.`nomC` AS cfclient_nomC,
+     cfclient.`prenomC` AS cfclient_prenomC,
+     cfclient.`telephone2` AS cfclient_telephone2,
+     cfclient.`telC` AS cfclient_telC,
+     cfclient.`gsmC` AS cfclient_gsmC,
+     cfclient.`gsm1` AS cfclient_gsm1,
+     cfclient.`gsm2` AS cfclient_gsm2,
+     cfclient.`eMailP` AS cfclient_eMailP,
+     cfclient.`eMailC` AS cfclient_eMailC,
+     cfclient.`taille` AS cfclient_taille,
+     cfclient.`poids` AS cfclient_poids,
+     cfclient.`gs` AS cfclient_gs,
+     cfclient.`rh` AS cfclient_rh,
+     cfclient.`telephone` AS cfclient_telephone,
+     cfclient.`dateNaissC` AS cfclient_dateNaissC,
+     cfclient.`village` AS cfclient_village,
+     cfclient.`professionP` AS cfclient_professionP,
+     cfclient.`professionC` AS cfclient_professionC,
+     cfclient.`allergie` AS cfclient_allergie,
+     cfclient.`dernierVisite` AS cfclient_dernierVisite,
+     cfclient.`assurance1` AS cfclient_assurance1,
+     cfclient.`assurance2` AS cfclient_assurance2,
+     cfclient.`remarque` AS cfclient_remarque,
+     cfclient.`tPrevu` AS cfclient_tPrevu,
+     cfclient.`tActuel` AS cfclient_tActuel,
+     cfclient.`toxo` AS cfclient_toxo,
+     cfclient.`tpha` AS cfclient_tpha,
+     cfclient.`rubeole` AS cfclient_rubeole,
+     cfclient.`nbrGarcon` AS cfclient_nbrGarcon,
+     cfclient.`nbrFille` AS cfclient_nbrFille,
+     cfclient.`notes2` AS cfclient_notes2,
+     cfclient.`dateFrotti` AS cfclient_dateFrotti,
+     cfclient.`resultatFrotti` AS cfclient_resultatFrotti,
+     cfclient.`cycleType` AS cfclient_cycleType,
+     cfclient.`cycle` AS cfclient_cycle,
+     cfclient.`regleType` AS cfclient_regleType
+FROM
+     `lettre` lettre INNER JOIN `historiquelettre` historiquelettre ON lettre.`idlettre` = historiquelettre.`idLettre`,
+     `cabinet` cabinet,
+     `cfclient` cfclient
+where  historiquelettre.`idhistoriquelettre`=$P{idlettre}]]>
+	</queryString>
+	<field name="historiquelettre_idhistoriquelettre" class="java.lang.Integer"/>
+	<field name="historiquelettre_Datelettre" class="java.sql.Date"/>
+	<field name="historiquelettre_dateActe" class="java.sql.Date"/>
+	<field name="historiquelettre_code" class="java.lang.String"/>
+	<field name="historiquelettre_clinique" class="java.lang.String"/>
+	<field name="historiquelettre_description" class="java.lang.String"/>
+	<field name="historiquelettre_ddr" class="java.lang.String"/>
+	<field name="historiquelettre_debutGross" class="java.lang.String"/>
+	<field name="historiquelettre_termeprevue" class="java.lang.String"/>
+	<field name="historiquelettre_termeactuel" class="java.lang.String"/>
+	<field name="historiquelettre_rubeoole" class="java.lang.String"/>
+	<field name="historiquelettre_frotti" class="java.lang.String"/>
+	<field name="historiquelettre_gs" class="java.lang.String"/>
+	<field name="historiquelettre_rh" class="java.lang.String"/>
+	<field name="historiquelettre_resultatfrotti" class="java.lang.String"/>
+	<field name="historiquelettre_diagnostic" class="java.lang.String"/>
+	<field name="historiquelettre_idPatient" class="java.lang.Long"/>
+	<field name="historiquelettre_v1" class="java.lang.String"/>
+	<field name="historiquelettre_v2" class="java.lang.String"/>
+	<field name="historiquelettre_v3" class="java.lang.String"/>
+	<field name="historiquelettre_v4" class="java.lang.String"/>
+	<field name="historiquelettre_v5" class="java.lang.String"/>
+	<field name="historiquelettre_v6" class="java.lang.String"/>
+	<field name="historiquelettre_v7" class="java.lang.String"/>
+	<field name="historiquelettre_v8" class="java.lang.String"/>
+	<field name="historiquelettre_v9" class="java.lang.String"/>
+	<field name="historiquelettre_v10" class="java.lang.String"/>
+	<field name="historiquelettre_v11" class="java.lang.String"/>
+	<field name="historiquelettre_v12" class="java.lang.String"/>
+	<field name="historiquelettre_v13" class="java.lang.String"/>
+	<field name="historiquelettre_v14" class="java.lang.String"/>
+	<field name="historiquelettre_v15" class="java.lang.String"/>
+	<field name="historiquelettre_v16" class="java.lang.String"/>
+	<field name="historiquelettre_v17" class="java.lang.String"/>
+	<field name="historiquelettre_v18" class="java.lang.String"/>
+	<field name="historiquelettre_v19" class="java.lang.String"/>
+	<field name="historiquelettre_v20" class="java.lang.String"/>
+	<field name="historiquelettre_v21" class="java.lang.String"/>
+	<field name="historiquelettre_v22" class="java.lang.String"/>
+	<field name="historiquelettre_v23" class="java.lang.String"/>
+	<field name="historiquelettre_v24" class="java.lang.String"/>
+	<field name="historiquelettre_v25" class="java.lang.String"/>
+	<field name="historiquelettre_v26" class="java.lang.String"/>
+	<field name="historiquelettre_v27" class="java.lang.String"/>
+	<field name="historiquelettre_v28" class="java.lang.String"/>
+	<field name="historiquelettre_v29" class="java.lang.String"/>
+	<field name="historiquelettre_v30" class="java.lang.String"/>
+	<field name="historiquelettre_idLettre" class="java.lang.Integer"/>
+	<field name="historiquelettre_textLettre" class="java.lang.String"/>
+	<field name="historiquelettre_autre" class="java.lang.String"/>
+	<field name="historiquelettre_toxo" class="java.lang.String"/>
+	<field name="historiquelettre_tpha" class="java.lang.String"/>
+	<field name="cabinet_idcabinet" class="java.lang.Integer"/>
+	<field name="cabinet_adresse" class="java.lang.String"/>
+	<field name="cabinet_docteur" class="java.lang.String"/>
+	<field name="cabinet_tel1" class="java.lang.String"/>
+	<field name="cabinet_tel2" class="java.lang.String"/>
+	<field name="cabinet_fax" class="java.lang.String"/>
+	<field name="cabinet_gsm1" class="java.lang.String"/>
+	<field name="cabinet_gsm2" class="java.lang.String"/>
+	<field name="cabinet_eMail" class="java.lang.String"/>
+	<field name="cabinet_specialite" class="java.lang.String"/>
+	<field name="lettre_idlettre" class="java.lang.Integer"/>
+	<field name="lettre_Datelettre" class="java.sql.Date"/>
+	<field name="lettre_dateActe" class="java.sql.Date"/>
+	<field name="lettre_code" class="java.lang.String"/>
+	<field name="lettre_clinique" class="java.lang.String"/>
+	<field name="lettre_description" class="java.lang.String"/>
+	<field name="lettre_ddr" class="java.lang.String"/>
+	<field name="lettre_debutGross" class="java.lang.String"/>
+	<field name="lettre_termeprevue" class="java.lang.String"/>
+	<field name="lettre_termeactuel" class="java.lang.String"/>
+	<field name="lettre_rubeoole" class="java.lang.String"/>
+	<field name="lettre_frotti" class="java.lang.String"/>
+	<field name="lettre_gs" class="java.lang.String"/>
+	<field name="lettre_rh" class="java.lang.String"/>
+	<field name="lettre_resultatfrotti" class="java.lang.String"/>
+	<field name="lettre_diagnostic" class="java.lang.String"/>
+	<field name="lettre_v1" class="java.lang.String"/>
+	<field name="lettre_v2" class="java.lang.String"/>
+	<field name="lettre_v3" class="java.lang.String"/>
+	<field name="lettre_v4" class="java.lang.String"/>
+	<field name="lettre_v5" class="java.lang.String"/>
+	<field name="lettre_v6" class="java.lang.String"/>
+	<field name="lettre_v7" class="java.lang.String"/>
+	<field name="lettre_v8" class="java.lang.String"/>
+	<field name="lettre_v9" class="java.lang.String"/>
+	<field name="lettre_v10" class="java.lang.String"/>
+	<field name="lettre_v11" class="java.lang.String"/>
+	<field name="lettre_v12" class="java.lang.String"/>
+	<field name="lettre_v13" class="java.lang.String"/>
+	<field name="lettre_v14" class="java.lang.String"/>
+	<field name="lettre_v15" class="java.lang.String"/>
+	<field name="lettre_v16" class="java.lang.String"/>
+	<field name="lettre_v17" class="java.lang.String"/>
+	<field name="lettre_v18" class="java.lang.String"/>
+	<field name="lettre_v19" class="java.lang.String"/>
+	<field name="lettre_v20" class="java.lang.String"/>
+	<field name="lettre_v21" class="java.lang.String"/>
+	<field name="lettre_v22" class="java.lang.String"/>
+	<field name="lettre_v23" class="java.lang.String"/>
+	<field name="lettre_v24" class="java.lang.String"/>
+	<field name="lettre_v25" class="java.lang.String"/>
+	<field name="lettre_v26" class="java.lang.String"/>
+	<field name="lettre_v27" class="java.lang.String"/>
+	<field name="lettre_v28" class="java.lang.String"/>
+	<field name="lettre_v29" class="java.lang.String"/>
+	<field name="lettre_v30" class="java.lang.String"/>
+	<field name="lettre_nomLettre" class="java.lang.String"/>
+	<field name="lettre_textLettre" class="java.lang.String"/>
+	<field name="lettre_autre" class="java.lang.String"/>
+	<field name="lettre_toxo" class="java.lang.String"/>
+	<field name="lettre_tpha" class="java.lang.String"/>
+	<field name="cfclient_code" class="java.lang.Long"/>
+	<field name="cfclient_nom" class="java.lang.String"/>
+	<field name="cfclient_prenom" class="java.lang.String"/>
+	<field name="cfclient_Cnss" class="java.lang.String"/>
+	<field name="cfclient_sexe" class="java.lang.String"/>
+	<field name="cfclient_civil" class="java.lang.String"/>
+	<field name="cfclient_date_naiss" class="java.lang.String"/>
+	<field name="cfclient_rue" class="java.lang.String"/>
+	<field name="cfclient_code_post" class="java.lang.String"/>
+	<field name="cfclient_ville" class="java.lang.Integer"/>
+	<field name="cfclient_pays" class="java.lang.String"/>
+	<field name="cfclient_telephone1" class="java.lang.String"/>
+	<field name="cfclient_professp" class="java.lang.Integer"/>
+	<field name="cfclient_professcp" class="java.lang.Integer"/>
+	<field name="cfclient_notes" class="java.lang.String"/>
+	<field name="cfclient_typ_cons" class="java.lang.String"/>
+	<field name="cfclient_nb_cons" class="java.lang.String"/>
+	<field name="cfclient_date_cons" class="java.lang.String"/>
+	<field name="cfclient_datesaisie" class="java.lang.String"/>
+	<field name="cfclient_ant11" class="java.lang.String"/>
+	<field name="cfclient_dpr" class="java.lang.Long"/>
+	<field name="cfclient_mariage" class="java.sql.Timestamp"/>
+	<field name="cfclient_consang" class="java.lang.String"/>
+	<field name="cfclient_duree_reg" class="java.lang.String"/>
+	<field name="cfclient_regles" class="java.lang.String"/>
+	<field name="cfclient_dysmenorhe" class="java.lang.String"/>
+	<field name="cfclient_mastodynie" class="java.lang.String"/>
+	<field name="cfclient_menopose" class="java.lang.String"/>
+	<field name="cfclient_prefix" class="java.lang.String"/>
+	<field name="cfclient_ant3" class="java.lang.String"/>
+	<field name="cfclient_date_fr" class="java.lang.String"/>
+	<field name="cfclient_result_fr" class="java.lang.String"/>
+	<field name="cfclient_ddr" class="java.lang.String"/>
+	<field name="cfclient_spanio" class="java.lang.Boolean"/>
+	<field name="cfclient_ddg" class="java.lang.String"/>
+	<field name="cfclient_date_moyen" class="java.lang.String"/>
+	<field name="cfclient_moyen" class="java.lang.String"/>
+	<field name="cfclient_gestite" class="java.lang.Long"/>
+	<field name="cfclient_partie" class="java.lang.Long"/>
+	<field name="cfclient_gviv" class="java.lang.Long"/>
+	<field name="cfclient_fviv" class="java.lang.Long"/>
+	<field name="cfclient_cesar" class="java.lang.Long"/>
+	<field name="cfclient_iddoctor" class="java.lang.Long"/>
+	<field name="cfclient_idclinique" class="java.lang.Long"/>
+	<field name="cfclient_nomC" class="java.lang.String"/>
+	<field name="cfclient_prenomC" class="java.lang.String"/>
+	<field name="cfclient_telephone2" class="java.lang.String"/>
+	<field name="cfclient_telC" class="java.lang.String"/>
+	<field name="cfclient_gsmC" class="java.lang.String"/>
+	<field name="cfclient_gsm1" class="java.lang.String"/>
+	<field name="cfclient_gsm2" class="java.lang.String"/>
+	<field name="cfclient_eMailP" class="java.lang.String"/>
+	<field name="cfclient_eMailC" class="java.lang.String"/>
+	<field name="cfclient_taille" class="java.lang.String"/>
+	<field name="cfclient_poids" class="java.lang.String"/>
+	<field name="cfclient_gs" class="java.lang.String"/>
+	<field name="cfclient_rh" class="java.lang.String"/>
+	<field name="cfclient_telephone" class="java.lang.String"/>
+	<field name="cfclient_dateNaissC" class="java.lang.String"/>
+	<field name="cfclient_village" class="java.lang.String"/>
+	<field name="cfclient_professionP" class="java.lang.String"/>
+	<field name="cfclient_professionC" class="java.lang.String"/>
+	<field name="cfclient_allergie" class="java.lang.String"/>
+	<field name="cfclient_dernierVisite" class="java.lang.String"/>
+	<field name="cfclient_assurance1" class="java.lang.String"/>
+	<field name="cfclient_assurance2" class="java.lang.String"/>
+	<field name="cfclient_remarque" class="java.lang.String"/>
+	<field name="cfclient_tPrevu" class="java.lang.String"/>
+	<field name="cfclient_tActuel" class="java.lang.String"/>
+	<field name="cfclient_toxo" class="java.lang.String"/>
+	<field name="cfclient_tpha" class="java.lang.String"/>
+	<field name="cfclient_rubeole" class="java.lang.String"/>
+	<field name="cfclient_nbrGarcon" class="java.lang.Integer"/>
+	<field name="cfclient_nbrFille" class="java.lang.Integer"/>
+	<field name="cfclient_notes2" class="java.lang.String"/>
+	<field name="cfclient_dateFrotti" class="java.lang.String"/>
+	<field name="cfclient_resultatFrotti" class="java.lang.String"/>
+	<field name="cfclient_cycleType" class="java.lang.String"/>
+	<field name="cfclient_cycle" class="java.lang.String"/>
+	<field name="cfclient_regleType" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="261" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ca0fb8b2-56cc-4706-aa7a-d9f873a266d7" x="445" y="120" width="50" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historiquelettre_Datelettre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9032489a-4b20-4537-8893-ed70eadf9df0" x="425" y="120" width="20" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Le]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="65b43fc7-6d2b-44e0-a3bf-b048f9274d14" x="162" y="206" width="354" height="35"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lettre_nomLettre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="333" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ce17f45d-334a-4335-a352-e8c0c46d01b7" x="148" y="0" width="407" height="333"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{historiquelettre_textLettre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e9a71f4e-8798-4a6a-a41b-ac71e26e8de8" x="416" y="240" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cabinet_docteur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9eb30ee3-6904-4ca9-981d-f9a414816b1b" x="363" y="240" width="53" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Docteur]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="08d4caaa-50ec-43ca-a030-692249f7da71" x="395" y="260" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cabinet_specialite}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

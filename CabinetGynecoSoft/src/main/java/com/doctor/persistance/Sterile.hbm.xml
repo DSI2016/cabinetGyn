@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.doctor.persistance.Sterile" table="sterile">
+		<id name="idSterile" type="java.lang.Integer">
+			<column name="idSterile" />
+			<generator class="increment" />
+		</id>
+		<many-to-one name="cfclient" class="com.doctor.persistance.Cfclient"
+			fetch="select">
+			<column name="idPatient" />
+		</many-to-one>
+
+
+		<property name="sterilite" type="string">
+			<column name="sterilite" />
+		</property>
+
+		<property name="depuis" type="java.util.Date">
+			<column name="depuis" />
+		</property>
+
+		<property name="cohabitation" type="string">
+			<column name="cohabitation" />
+		</property>
+
+		<property name="habitude" type="string">
+			<column name="habitude" />
+		</property>
+
+		<property name="rapport" type="int">
+			<column name="rapport" />
+		</property>
+
+		<property name="antecedentH" type="string">
+			<column name="antecedentH" />
+		</property>
+		<property name="hormoneH" type="string">
+			<column name="hormoneH" />
+		</property>
+
+		<property name="spermH" type="string">
+			<column name="spermH" />
+		</property>
+
+		<property name="bilanH" type="string">
+			<column name="bilanH" />
+		</property>
+
+
+		<property name="traitementH" type="string">
+			<column name="traitementH" />
+		</property>
+
+		<property name="antecedent" type="string">
+			<column name="antecedent" />
+		</property>
+
+		<property name="examensH" type="string">
+			<column name="examensH" />
+		</property>
+
+		<property name="examens" type="string">
+			<column name="examens" />
+		</property>
+
+		<property name="hormone" type="string">
+			<column name="hormone" />
+		</property>
+
+		<property name="echoPelvienne" type="string">
+			<column name="echoPelvienne" />
+		</property>
+
+		<property name="hsg" type="string">
+			<column name="hsg" />
+		</property>
+
+		<property name="hysteroscopie" type="string">
+			<column name="hysteroscopie" />
+		</property>
+
+		<property name="coelioscopie" type="string">
+			<column name="coelioscopie" />
+		</property>
+
+		<property name="traitement" type="string">
+			<column name="traitement" />
+		</property>
+
+		<property name="coital" type="string">
+			<column name="coital" />
+		</property>
+
+		<property name="cycle" type="string">
+			<column name="cycle" />
+		</property>
+
+		<property name="cycleList" type="string">
+			<column name="cycleList" />
+		</property>
+
+		<property name="regles" type="string">
+			<column name="regles" />
+		</property>
+
+	</class>
+</hibernate-mapping>

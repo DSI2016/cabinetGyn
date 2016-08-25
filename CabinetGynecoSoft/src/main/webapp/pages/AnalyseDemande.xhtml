@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/templates/templateGyneco.xhtml">
+	<ui:define name="title">Demande Analyse</ui:define>
+	<ui:define name="body">
+		<h:body style="background-image: url(/imagesMenu/fond.png);">
+			<p:graphicImage value="/imagesTitre/dedAnalyse.png" width="100%"></p:graphicImage>
+			<br />
+			<div align="left">
+				<h:form id="f1">
+					<p:growl id="growl" showDetail="true" life="3000" />
+					<table>
+						<tr>
+							<td><h:commandLink
+									actionListener="#{analyseDemandeeBean.goToAcceuil()}">
+									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
+								</h:commandLink></td>
+
+							<td width="80%"><p:commandLink
+									actionListener="#{analyseDemandeeBean.retour()}">
+									<p:graphicImage value="/images/retour.png"></p:graphicImage>
+								</p:commandLink></td>
+							<td style="width: 20%" align="right"><h:commandLink
+									actionListener="#{analyseDemandeeBean.viewAnalyse}"
+									target="_blanc">
+									<p:graphicImage value="/imagesMenu/imprimente10.png">
+									</p:graphicImage>
+								</h:commandLink></td>
+						</tr>
+					</table>
+
+					<div align="center">
+						<p:panel style="width:80%">
+							<p:graphicImage value="/images/demandeanalyse.png"
+								style="width:100%;height:3cm"></p:graphicImage>
+
+							<div align="right">
+								<br />
+								<p:commandButton icon="ui-icon-plus" value="Nouveau"
+									style="font-size:small;font-weight:bold" update=":f1"
+									actionListener="#{analyseDemandeeBean.ajoutAna()}"></p:commandButton>
+
+							</div>
+							<p:panel id="p1">
+								<table border="0" align="center" width="90%">
+									<tr>
+										<td><h:outputText value="Date:"
+												style="font-size:12pt;font-weight:bold" /> <p:calendar
+												id="button" value="#{analyseDemandeeBean.dateAna}"
+												disabled="#{analyseDemandeeBean.consultation}"
+												showOn="button" size="7" pattern="dd/MM/yyyy" /></td>
+										<td align="right"><h:panelGrid columns="3">
+												<h:outputText value="Analyse pour : "
+													style="font-size:13pt;font-weight:bold" />
+												<h:panelGrid columns="2">
+													<p:selectOneRadio id="consolee" layout="grid" columns="2"
+														style="font-size:13pt;font-weight:bold"
+														disabled="#{analyseDemandeeBean.consultation}"
+														value="#{analyseDemandeeBean.proprietaire}">
+														<p:ajax event="change"
+															listener="#{analyseDemandeeBean.changeProp}"
+															update="nomP"></p:ajax>
+														<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+														<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+													</p:selectOneRadio>
+												</h:panelGrid>
+												<p:inputText id="nomP"
+													disabled="#{analyseDemandeeBean.consultation}"
+													value="#{analyseDemandeeBean.nomProprietaire}" size="33"></p:inputText>
+
+											</h:panelGrid></td>
+									</tr>
+								</table>
+
+								<p:panel style="width:90%">
+									<table border="0">
+										<tr>
+											<td><h:panelGrid columns="4">
+													<h:outputText value="Analyses demandées :"
+														style="font-size:12pt;font-weight:bold" />
+													<p:selectOneMenu
+														disabled="#{analyseDemandeeBean.consultation}"
+														value="#{analyseDemandeeBean.analyseDemandee}"
+														style="width:20px" panelStyle="width:180px" filter="true"
+														filterMatchMode="startsWith" effect="fade">
+														<p:ajax listener="#{analyseDemandeeBean.onanalyseChange}"
+															event="change" update=":f1:a" />
+
+														<f:selectItem itemLabel="--- Analyses ---" itemValue="" />
+														<f:selectItems value="#{analyseDemandeeBean.analyses}"
+															var="a" itemLabel="#{a.libAnalyse}"
+															itemValue="#{a.libAnalyse}" />
+													</p:selectOneMenu>
+													<p:spacer width="10"></p:spacer>
+
+													<h:inputTextarea id="a"
+														disabled="#{analyseDemandeeBean.consultation}"
+														readonly="#{connectionBean.consultDetAnal}"
+														value="#{analyseDemandeeBean.analyseDemandees}"
+														style="font-size:12pt;font-weight:bold;height:100px;width:460px">
+														<p:ajax
+															listener="#{analyseDemandeeBean.ontextanalyseChange}"
+															event="change" />
+
+													</h:inputTextarea>
+												</h:panelGrid></td>
+										</tr>
+										<tr>
+											<td><h:panelGrid columns="3">
+
+													<h:panelGrid columns="2">
+														<h:outputText   value="Toxo :"
+															style="font-size:12pt;font-weight:bold" />
+														<h:inputText id="to" value="#{analyseDemandeeBean.toxo}"
+															disabled="#{analyseDemandeeBean.consultation}"
+															style="font-size:12pt;font-weight:bold"
+															readonly="#{connectionBean.consultDetAnal}" >
+															<p:ajax event="blur" listener="#{analyseDemandeeBean.toxoChange}" update="to"></p:ajax>
+															</h:inputText>
+
+														<h:outputText value="TPHA :"
+															style="font-size:12pt;font-weight:bold" />
+														<h:inputText  id="tp" value="#{analyseDemandeeBean.tpha}"
+															disabled="#{analyseDemandeeBean.consultation}"
+															style="font-size:12pt;font-weight:bold"
+															readonly="#{connectionBean.consultDetAnal}">
+															<p:ajax event="blur"
+																listener="#{analyseDemandeeBean.tphaChange}"
+																update="tp"></p:ajax>
+														</h:inputText>
+
+
+														<h:outputText  value="Rubéole :"
+															style="font-size:12pt;font-weight:bold" />
+														<h:inputText id="rub" value="#{analyseDemandeeBean.rubeole}"
+															disabled="#{analyseDemandeeBean.consultation}"
+															style="font-size:12pt;font-weight:bold"
+															readonly="#{connectionBean.consultDetAnal}">
+															<p:ajax event="blur"
+																listener="#{analyseDemandeeBean.rubeoleChange}"
+																update="rub"></p:ajax>
+														</h:inputText>
+														
+														<h:outputText value="AgHbs :"
+															style="font-size:12pt;font-weight:bold" />
+														<h:inputText id="ag" value="#{analyseDemandeeBean.agHbs}"
+															disabled="#{analyseDemandeeBean.consultation}"
+															style="font-size:12pt;font-weight:bold"
+															readonly="#{connectionBean.consultDetAnal}">
+															<p:ajax event="blur"
+																listener="#{analyseDemandeeBean.aghbsChange}"
+																update="ag"></p:ajax>
+														</h:inputText>
+													</h:panelGrid>
+													<p:spacer width="10"></p:spacer>
+													<h:panelGrid columns="2">
+														<h:outputText value="Glycémie:"
+															style="font-size:12pt;font-weight:bold" />
+														<h:inputText id="gly"
+															value="#{analyseDemandeeBean.glycemie}"
+															disabled="#{analyseDemandeeBean.consultation}"
+															style="font-size:12pt;font-weight:bold;width:280px"
+															readonly="#{connectionBean.consultDetAnal}">
+															<p:ajax event="blur"
+																listener="#{analyseDemandeeBean.glycemieChange}"
+																update="gly"></p:ajax>
+														</h:inputText>
+
+
+														<h:outputText value="Frottis:"
+															style="font-size:12pt;font-weight:bold;" />
+
+														<h:inputTextarea id="frot"
+															value="#{analyseDemandeeBean.frottis}"
+															disabled="#{analyseDemandeeBean.consultation}"
+															style="font-size:12pt;font-weight:bold;height:100px;width:280px"
+															readonly="#{connectionBean.consultDetAnal}">
+															<p:ajax event="blur"
+																listener="#{analyseDemandeeBean.frottiChange}"
+																update="frot"></p:ajax>
+														</h:inputTextarea>
+													</h:panelGrid>
+												</h:panelGrid></td>
+										</tr>
+									</table>
+								</p:panel>
+
+
+								<table>
+									<tr>
+										<td width="500px"></td>
+										<td><p:commandButton value="Valider"
+												disabled="#{analyseDemandeeBean.consultation}"
+												rendered="#{!connectionBean.consultDetAnal}" update=":f1"
+												actionListener="#{analyseDemandeeBean.valider}"
+												immediate="true" ajax="false"
+												onclick="target='_blank'; return true;"
+												style="font-size:12pt;font-weight:bold">
+											</p:commandButton></td>
+										<td width="500px"><p:commandButton value="Annuler"
+												rendered="#{!connectionBean.consultDetAnal}"
+												style="font-size:12pt;font-weight:bold">
+												<p:ajax listener="#{analyseDemandeeBean.retour()}" />
+											</p:commandButton></td>
+										<td><h:commandLink
+												actionListener="#{analyseDemandeeBean.selectAnalyse}"
+												target="_blank"
+												rendered="#{analyseDemandeeBean.desibledImpr}">
+												<p:graphicImage value="/imagesMenu/imprimente10.png">
+												</p:graphicImage>
+											</h:commandLink></td>
+									</tr>
+								</table>
+							</p:panel>
+							<table style="width: 100%">
+
+								<tr>
+									<td valign="top"><p:dataTable id="data"
+											value="#{analyseDemandeeBean.histAnaCons}" var="ana"
+											selectionMode="single" emptyMessage="Pas d'analyses"
+											rowKey="#{ana.idanalyseDemandee}"
+											selection="#{analyseDemandeeBean.selectedAnalyse}">
+											<p:ajax event="rowSelect"
+												listener="#{analyseDemandeeBean.consulerAnalyse}"
+												update=":f1:p1,:f1"></p:ajax>
+											<p:column headerText="Date" width="7%"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{ana.dateAnalyse}"
+													style="font-size:small;font-weight:bold">
+													<f:convertDateTime pattern="dd/MM/yyyy"
+														timeZone="Europe/Paris" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Analyses" width="25%"
+												style="font-size:small;font-weight:bold">
+												<h:outputText value="#{ana.analyses}"
+													style="font-size:small;font-weight:bold" />
+											</p:column>
+
+											<p:column style="text-align: center" width="10%">
+
+												<p:commandButton icon="ui-icon-pencil"
+													title="Modification Analyse" update=":f1:p1"
+													actionListener="#{analyseDemandeeBean.modifierAnalyse(ana)}"
+													style="font-size:small;font-weight:bold" />
+
+												<p:commandButton update=":f1"
+													rendered="#{connectionBean.supAnalyse}"
+													icon="ui-icon-trash" title="Suppression Analyse"
+													style="font-size:small;font-weight:bold"
+													actionListener="#{analyseDemandeeBean.suppressionAnalyse(ana.idanalyseDemandee)}">
+													<p:confirm header="Suppression analyse"
+														message="Voulez-vous vraiment supprimer cette Analyse ?"
+														icon="ui-icon-alert" />
+												</p:commandButton>
+
+											</p:column>
+										</p:dataTable></td>
+								</tr>
+							</table>
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="explode">
+								<p:commandButton value="Oui" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Non" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</p:panel>
+						<br /> <br />
+					</div>
+				</h:form>
+			</div>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>
