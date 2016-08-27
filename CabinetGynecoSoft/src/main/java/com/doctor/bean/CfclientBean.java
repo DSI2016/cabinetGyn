@@ -2121,6 +2121,7 @@ public class CfclientBean implements java.io.Serializable {
 					if (idprofessionByProfesscp != null) {
 						Profession profc = new Profession();
 						profc.setIdprofession(idprofessionByProfesscp);
+						cl.setProfessionByProfesscp(profc);
 					}
 					cl.setProfessionP(professionP);
 					cl.setAssurance1(assurance1);
@@ -2185,7 +2186,7 @@ public class CfclientBean implements java.io.Serializable {
 							"Patiente ajouté avec succés"));
 					init();
 					RequestContext.getCurrentInstance().update("f1");
-					action = "";
+					action = ""; 
 				}
 			} else if (action.equals("Modification")) {
 				if ((jjC == null) || (mmC == null) || (aaaaC == null)) {
@@ -2214,6 +2215,7 @@ public class CfclientBean implements java.io.Serializable {
 				if (idprofessionByProfesscp != null) {
 					Profession profc = new Profession();
 					profc.setIdprofession(idprofessionByProfesscp);
+					cl.setProfessionByProfesscp(profc); 
 				}
 				cl.setProfessionP(professionP);
 				cl.setAssurance1(assurance1);
@@ -2325,8 +2327,12 @@ public class CfclientBean implements java.io.Serializable {
 		allergie = c.getAllergie();
 		if (professionP != null)
 			professionP = c.getProfessionP();
+		else
+			professionP=null;
 		if (professionC != null)
 			professionC = c.getProfessionC();
+		else
+			professionC =null;
 		village = c.getVillage();
 		dateNaiss = c.getDateNaiss();
 		if (dateNaiss != null) {
@@ -2359,6 +2365,8 @@ public class CfclientBean implements java.io.Serializable {
 					.getIdprofession();
 			profc = c.getProfessionByProfesscp().getLibprofession();
 		}
+		
+		
 		if (c.getProfessionByProfessp() != null) {
 			idprofessionByProfessp = c.getProfessionByProfessp()
 					.getIdprofession();
