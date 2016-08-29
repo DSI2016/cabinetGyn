@@ -3095,6 +3095,17 @@ public class AntecedentBean implements Serializable, LineListener {
 								FacesMessage.SEVERITY_INFO, "L'antécédent \" "
 										+ nomAntecedent
 										+ " \" est ajouté avec succès.", ""));
+						idantecedentMed=a.getIdantecedentMed();
+						if (idantecedentMed != null) {
+							AntMedCfclient an = new AntMedCfclient();
+							an.setCfclient(cfclient);
+							an.setAntecedentMedical(nomAntecedent);
+							AntMedCfclientService s = new AntMedCfclientService();
+							s.ajoutAntMedCfclient(an);
+							idantecedentMed = null;
+						}
+
+						
 						addValid = true;
 						initialisationDialog();
 						RequestContext.getCurrentInstance().update("f1");
@@ -3128,6 +3139,17 @@ public class AntecedentBean implements Serializable, LineListener {
 								FacesMessage.SEVERITY_INFO, "L'antécédent \" "
 										+ nomAntecedent
 										+ " \" est ajouté avec succès.", ""));
+						
+						idantecedentFam=a.getIdantecedentFam();
+						if (idantecedentFam != null) {
+							AntFamCfclient an = new AntFamCfclient();
+							an.setCfclient(cfclient);
+							an.setAntecedentFamilial(nomAntecedent);
+							AntFamCfclientService s = new AntFamCfclientService();
+							s.ajoutAntFamCfclient(an);
+							idantecedentFam = null;
+						}
+						
 						addValid = true;
 						initialisationDialog();
 						RequestContext.getCurrentInstance().update("f1");
@@ -3161,6 +3183,15 @@ public class AntecedentBean implements Serializable, LineListener {
 								FacesMessage.SEVERITY_INFO, "L'antécédent \" "
 										+ nomAntecedent
 										+ " \" est ajouté avec succès.", ""));
+						idantecedentChir=a.getIdantecedentChir();
+						if (idantecedentChir != null) {
+							AntChirCfclient an = new AntChirCfclient();
+							an.setCfclient(cfclient);
+							an.setAntecedentChirugical(nomAntecedent);
+							AntChirCfclientService s = new AntChirCfclientService();
+							s.ajoutAntChirCfclient(an);
+							idantecedentChir = null;
+						}
 						addValid = true;
 						initialisationDialog();
 						RequestContext.getCurrentInstance().update("f1");
