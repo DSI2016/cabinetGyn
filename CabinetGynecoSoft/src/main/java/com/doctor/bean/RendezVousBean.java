@@ -930,6 +930,7 @@ public class RendezVousBean implements Serializable {
 								if (hh.getDebut().after(h2.getDebut())
 										&& hh.getDebut().before(h2.getFin()))
 									horsHoraire = false;
+							dateChoisi = dateString + ":" + heure;
 							if (!horsHoraire) {
 								dureeRDV = 1;
 
@@ -939,15 +940,22 @@ public class RendezVousBean implements Serializable {
 										":formeGenerale:idAffect");
 								context.execute("PF('menu').show();");
 							} else {
-								faces.addMessage(
-										null,
-										new FacesMessage(
-												FacesMessage.SEVERITY_FATAL,
-												"Interdit !",
-												"\" "
-														+ heure
-														+ " est hors horaire de travail ! "));
-								permenent = true;
+								//afficher un dialogue qui demande s'il veux
+								//affecter un rdv hors horaire de travail
+								
+								RequestContext.getCurrentInstance().update(
+										":formeGenerale:idHorshoraire");
+								context.execute("PF('horshoraire').show();");
+
+								//								faces.addMessage(
+//										null,
+//										new FacesMessage(
+//												FacesMessage.SEVERITY_FATAL,
+//												"Interdit !",
+//												"\" "
+//														+ heure
+//														+ " est hors horaire de travail ! "));
+//								permenent = true;
 							}
 						} else {
 							faces.addMessage(null, new FacesMessage(
@@ -976,6 +984,16 @@ public class RendezVousBean implements Serializable {
 		}
 	}
 
+	public void horsHoraire(){
+		dureeRDV = 1;
+
+		RequestContext context = RequestContext.getCurrentInstance();
+		RequestContext.getCurrentInstance().update(
+				":formeGenerale:idAffect");
+		context.execute("PF('menu').show();");
+	}
+	
+	
 	@SuppressWarnings("deprecation")
 	public void affect() throws ParseException {
 		HttpSession session2 = (HttpSession) FacesContext.getCurrentInstance()

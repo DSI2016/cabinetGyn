@@ -220,7 +220,8 @@
 				showEffect="clip" hideEffect="clip">
 				<div align="center">
 					<h:panelGroup>
-						<p:dataTable var="rendezVous" id="tabrend" emptyMessage="Pas des rendez-vous!!"
+						<p:dataTable var="rendezVous" id="tabrend"
+							emptyMessage="Pas des rendez-vous!!"
 							value="#{rendezVousBean.rendezVoussParDate}" border="1"
 							paginator="true" paginatorPosition="bottom"
 							paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
@@ -259,8 +260,7 @@
 
 								<p:commandButton icon="ui-icon-help"
 									rendered="#{connectionBean.chargerPat}" title="charger patient"
-									actionListener="#{cfclientBean.versFiche(rendezVous.codeclient.code)}"
-									 />
+									actionListener="#{cfclientBean.versFiche(rendezVous.codeclient.code)}" />
 
 								<p:commandButton
 									actionListener="#{rendezVousBean.supprimerRendezVous(rendezVous.idrendezVous)}"
@@ -380,6 +380,27 @@
 
 				</p:panel>
 			</p:dialog>
+
+			<p:dialog id="idHorshoraire" widgetVar="horshoraire"
+				showHeader="true" width="550px" showEffect="fade" hideEffect="fade"
+				closable="true" draggable="false" modal="true" resizable="false"
+				closeOnEscape="true" header="Attention !!">
+				<p:panel>
+					<h:panelGrid columns="1">
+						<h:outputText
+							value="L'heure sélectionnée est hors horaire de travail !" />
+						<h:outputText value="Voulez-vous comme même affecter cette date?" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Oui"
+							actionListener="#{rendezVousBean.horsHoraire()}"
+							update=":formeGenerale,:formeGenerale:growl"></p:commandButton>
+						<p:commandButton value="Non"
+							oncomplete="PF('horshoraire').hide();"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</p:dialog>
+
 		</h:form>
 		<script type="text/javascript">
 			PrimeFaces.locales ['fr'] = {
@@ -473,49 +494,7 @@
 rendezVousBean
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .script
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 </style>
 	</ui:define>
