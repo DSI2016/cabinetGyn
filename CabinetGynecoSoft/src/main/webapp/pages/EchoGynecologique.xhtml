@@ -74,7 +74,7 @@
 
 								<td style="width: 20%" align="right"><h:commandLink
 										actionListener="#{consultationDetailBean.viewEchogyneco}"
-										target="_blanc"
+										
 										rendered="#{connectionBean.imprechogyneco and not consultationDetailBean.desibledImpr()}">
 										<p:graphicImage value="/imagesMenu/imprimente10.png">
 										</p:graphicImage>
@@ -261,7 +261,7 @@
 											rowKey="#{cons.idConsultationDetail}">
 											<p:ajax event="rowSelect"
 												listener="#{consultationDetailBean.onRowSelectEchiGyneco}"
-												update=":f1,:f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
+												update=":f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
 											<p:column headerText="Date" 
 												style="font-size:small;font-weight:bold;width:10px">
 												<h:outputText value="#{cons.dateConsultation}"
