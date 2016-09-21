@@ -56,33 +56,33 @@
 						<td valign="top" width="60%">
 							<table  border="0">
 								<tr>
-									<td><h:commandLink  
+									<td><p:commandLink  
 											actionListener="#{accueilBean.goToSalleAttente()}"
 											disabled="#{connectionBean.menuSalle}">
 											<p:graphicImage value="/imagesMenu/salleAtt.png" ></p:graphicImage>
-										</h:commandLink></td>
-									<td><h:commandLink 
+										</p:commandLink></td>
+									<td><p:commandLink 
 									    disabled="#{connectionBean.menuSalle}"
 										actionListener="#{accueilBean.goToSalleAttente()}"
 										styleClass="menu" >
 										Salle d'attente
-									</h:commandLink></td>
+									</p:commandLink></td>
 									
 								</tr>
 							</table> <br />
 							<table  border="0">
 								<tr>
 									<td style="width: 50px;"></td>
-									<td><h:commandLink 
+									<td><p:commandLink 
 									        actionListener="#{accueilBean.goToPatient()}"
 											disabled="#{connectionBean.menuGestionPat}">
 											<p:graphicImage value="/imagesMenu/patient.png" />
-										</h:commandLink></td>
-									<td><h:commandLink   
+										</p:commandLink></td>
+									<td><p:commandLink   
 									        actionListener="#{accueilBean.goToPatient()}"
 											disabled="#{connectionBean.menuGestionPat}" styleClass="menu">
 										Patients
-									</h:commandLink></td>
+									</p:commandLink></td>
 								</tr>
 							</table> <br />
 							<table  border="0">
