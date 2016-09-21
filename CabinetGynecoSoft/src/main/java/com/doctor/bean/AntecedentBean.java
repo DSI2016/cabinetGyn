@@ -2358,8 +2358,10 @@ public class AntecedentBean implements Serializable, LineListener {
 					cf.setNbrFille(cf.getNbrFille() - 1);
 				}
 			}
-
-			if (h.getEtatBebe2() != null && h.getEtatBebe2().isIncrementation()
+//System.out.println("ettbebe 1 "+h.getEtatBebe()+"2 "+h.getEtatBebe2()+"3 "+h.getEtatBebe3()+"");
+			if (h.getEtatBebe2() != null )
+			{
+				if(h.getEtatBebe2().isIncrementation()
 					&& h.getEtatFinGross().isIncrementation()) {
 
 				if (cf.getPartie() != 0) {
@@ -2374,8 +2376,10 @@ public class AntecedentBean implements Serializable, LineListener {
 					cf.setNbrFille(cf.getNbrFille() - 1);
 				}
 			}
+		}
 
-			if (h.getEtatBebe3() != null && h.getEtatBebe3().isIncrementation()
+			if (h.getEtatBebe3() != null ) 
+				{if(h.getEtatBebe3().isIncrementation()
 					&& h.getEtatFinGross().isIncrementation()) {
 
 				if (cf.getPartie() != 0) {
@@ -2387,7 +2391,8 @@ public class AntecedentBean implements Serializable, LineListener {
 				if (h.getSexeBebe3() != null
 						&& h.getSexeBebe3().equals("Féminin"))
 					cf.setNbrFille(cf.getNbrFille() - 1);
-			}
+			}}
+			if(cf.getGestite()>=1)
 			cf.setGestite(cf.getGestite() - 1);
 			sercf.modifierPatient(cf);
 		}
@@ -3095,17 +3100,6 @@ public class AntecedentBean implements Serializable, LineListener {
 								FacesMessage.SEVERITY_INFO, "L'antécédent \" "
 										+ nomAntecedent
 										+ " \" est ajouté avec succès.", ""));
-						idantecedentMed=a.getIdantecedentMed();
-						if (idantecedentMed != null) {
-							AntMedCfclient an = new AntMedCfclient();
-							an.setCfclient(cfclient);
-							an.setAntecedentMedical(nomAntecedent);
-							AntMedCfclientService s = new AntMedCfclientService();
-							s.ajoutAntMedCfclient(an);
-							idantecedentMed = null;
-						}
-
-						
 						addValid = true;
 						initialisationDialog();
 						RequestContext.getCurrentInstance().update("f1");
@@ -3139,17 +3133,6 @@ public class AntecedentBean implements Serializable, LineListener {
 								FacesMessage.SEVERITY_INFO, "L'antécédent \" "
 										+ nomAntecedent
 										+ " \" est ajouté avec succès.", ""));
-						
-						idantecedentFam=a.getIdantecedentFam();
-						if (idantecedentFam != null) {
-							AntFamCfclient an = new AntFamCfclient();
-							an.setCfclient(cfclient);
-							an.setAntecedentFamilial(nomAntecedent);
-							AntFamCfclientService s = new AntFamCfclientService();
-							s.ajoutAntFamCfclient(an);
-							idantecedentFam = null;
-						}
-						
 						addValid = true;
 						initialisationDialog();
 						RequestContext.getCurrentInstance().update("f1");
@@ -3183,15 +3166,6 @@ public class AntecedentBean implements Serializable, LineListener {
 								FacesMessage.SEVERITY_INFO, "L'antécédent \" "
 										+ nomAntecedent
 										+ " \" est ajouté avec succès.", ""));
-						idantecedentChir=a.getIdantecedentChir();
-						if (idantecedentChir != null) {
-							AntChirCfclient an = new AntChirCfclient();
-							an.setCfclient(cfclient);
-							an.setAntecedentChirugical(nomAntecedent);
-							AntChirCfclientService s = new AntChirCfclientService();
-							s.ajoutAntChirCfclient(an);
-							idantecedentChir = null;
-						}
 						addValid = true;
 						initialisationDialog();
 						RequestContext.getCurrentInstance().update("f1");

@@ -35,7 +35,7 @@
 					<td align="right">
 					<h:commandLink
 						actionListener="#{consultationDetailBean.viewEchoObsTrim2}"
-						target="_blanc"
+						
 						rendered="#{connectionBean.imprechoObs and not consultationDetailBean.desibledImpr()}">
 						<p:graphicImage value="/imagesMenu/imprimente10.png">
 						</p:graphicImage>
@@ -93,8 +93,8 @@
 										<div align="center">
 										<h:outputText
 									value="T.echo Moyen: " style="font-size:small;font-weight:bold" />
-										<h:inputText id="moyen"
-									value="#{consultationDetailBean.echomoyen}"
+										<h:inputText id="moyen" readonly="#{consultationDetailBean.lireReadOnly()}"
+									value="#{consultationDetailBean.echomoyen}" disabled="#{consultationDetailBean.lireReadOnly()}"
 									style="width:50%;font-size:small;font-weight:bold" />
 										
 										</div>
@@ -150,7 +150,7 @@
 
 									<p:commandButton icon="ui-icon-trash"
 										rendered="#{connectionBean.suppechoObs}"
-										action="#{consultationDetailBean.supprimerConsultationEchoGyneco(cons)}"
+										action="#{consultationDetailBean.supprimerConsultationEchoObs(cons)}"
 										title="Suppression Consultation" update=":f1">
 										<p:confirm header="Suppression Consultation"
 											message="Voulez-vous vraiment supprimer cette Consultation ?"
@@ -226,21 +226,25 @@
 													<h:panelGrid columns="2">
 														<h:outputText value="Bip         :  "
 															style="font-size:small;font-weight:bold" />
+															<h:panelGrid columns="1">
 														<p:spinner value="#{consultationDetailBean.bip}"
 															readonly="#{consultationDetailBean.lireReadOnly()}"
 															disabled="#{consultationDetailBean.lireReadOnly()}"
 															stepFactor="0.01" min="0" max="100" size="1">
 
 														</p:spinner>
+														</h:panelGrid>
 
 														<h:outputText value="Lcc         :  "
 															style="font-size:small;font-weight:bold" />
+															<h:panelGrid columns="1">
 														<p:spinner value="#{consultationDetailBean.lcc}"
 															readonly="#{consultationDetailBean.lireReadOnly()}"
 															disabled="#{consultationDetailBean.lireReadOnly()}"
 															stepFactor="0.01" min="0" max="100" size="1">
 
 														</p:spinner>
+														</h:panelGrid>
 
 
 

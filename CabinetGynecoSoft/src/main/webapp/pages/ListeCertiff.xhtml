@@ -423,7 +423,7 @@
 							<td width="130px"><p:outputLabel value="Type :" /></td>
 							<td><p:selectOneMenu id="type1"
 									value="#{historiqueCertifBean.type}"
-									style="font-weight:bold;font-size:small;width : 200px;"
+									
 									filter="true" filterMatchMode="startsWith" effect="fade">
 									<f:selectItem itemLabel="--Selectioner--" itemValue="" />
 									<f:selectItems value="#{certificatBean.types}" var="no"
@@ -477,7 +477,7 @@
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Accompagnant : " />
 						<p:inputText value="#{historiqueCertifBean.accompagnant}"
-							style="font-weight:bold;font-size:small;width : 220px;">
+							style="width : 220px;">
 							<p:ajax event="blur"
 								listener="#{historiqueCertifBean.accompagnantChange()}">
 							</p:ajax>
@@ -488,7 +488,7 @@
 							<td width="130px"><p:outputLabel value="Type :" /></td>
 							<td><p:selectOneMenu id="type1"
 									value="#{historiqueCertifBean.type}"
-									style="font-weight:bold;font-size:small;width : 200px;"
+									style="width : 200px;"
 									filter="true" filterMatchMode="startsWith" effect="fade">
 									<f:selectItem itemLabel="--Selectioner--" itemValue="" />
 									<f:selectItems value="#{certificatBean.types}" var="no"
@@ -564,6 +564,7 @@
 										</p:ajax>
 									</p:inputMask>
 								</h:panelGrid></td>
+								<td><p:spacer  width="50"></p:spacer></td>
 							<td><h:panelGrid columns="2" cellpadding="10">
 									<h:outputText value="Date reprise : " />
 									<p:inputMask mask="99/99/9999" id="calx"

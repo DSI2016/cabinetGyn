@@ -186,8 +186,13 @@ public class ConsultationDetailHome {
 				.createAlias("CD.cfclient", "cf");
 		if (nomConsultation.equals("E. Gyneco"))
 			if (uterus != null) {
+				System.out.println("ut   "+uterus);
 				crit.createAlias("CD.uterus", "ut");
 			}
+		if (uterus == null) {
+			System.out.println("ut   "+uterus);
+			
+		}
 
 		crit.add(Restrictions.eq("cons.nomConsultation", nomConsultation))
 				.addOrder(Property.forName("CD.idConsultationDetail").desc())

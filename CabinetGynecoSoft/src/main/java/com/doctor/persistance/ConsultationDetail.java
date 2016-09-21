@@ -442,7 +442,6 @@ public void setNbOrd(int nbOrd) {
 	}
 
 	public String getConclusion() {
-	//	System.out.println(conclusion);
 		return conclusion;
 	}
 
