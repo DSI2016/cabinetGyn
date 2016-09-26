@@ -577,11 +577,24 @@ private boolean blocage;
 	public void supprimerLettre(Integer id) {
 		historiqueLettreService ser = new historiqueLettreService();
 		ser.supprimerHistoriqueLettre(id);
+		FacesContext face = FacesContext.getCurrentInstance();
+		blocage=false;
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+				"Certificat Supprimé Avec succées"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);		
 		try {
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("Lettres");
+			context.getExternalContext().redirect("Lettres");
+
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
 		}
+//		try {
+//			FacesContext.getCurrentInstance().getExternalContext()
+//					.redirect("Lettres");
+//		} catch (Exception e) {
+//		}
 	}
 
 	public void onRowSelectlettre(SelectEvent event) {

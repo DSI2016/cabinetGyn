@@ -174,7 +174,7 @@
 			<div align="center">
 				<h:form id="formulaire">
 				
-				<p:dialog id="idSuppression" widgetVar="suppression" modal="true"
+				<p:dialog id="idSuppression" widgetVar="suppression"  modal="true"
 						resizable="false" closable="false" showHeader="false"
 						width="600px">
 
@@ -282,12 +282,34 @@
 						</p:panel>
 						<h:panelGrid columns="2">
 							<p:commandButton value="Supprimer"
-								actionListener="#{cfclientBean.supprimPatientCascad()}"></p:commandButton>
+								actionListener="#{cfclientBean.supprimPatientCascadArchi()}"></p:commandButton>
 							<p:commandButton value="Annuler"
 								oncomplete="PF('suppression').hide();"></p:commandButton>
 						</h:panelGrid>
 					</p:dialog>
 					
+				
+				<p:dialog id="idSupprimer" widgetVar="supprimer" modal="true"
+						closable="false" header="Valider Suppression Patient"
+						width="500px">
+						<p:panel>
+							<div align="left">
+								<h:panelGrid columns="2">
+									<p:graphicImage value="/images/warning.jpg" />
+									<h:outputText
+										value="Voulez vous vraiment supprimer la patiente #{cfclientBean.patient.prenom} #{cfclientBean.patient.nom}?" />
+								</h:panelGrid>
+							</div>
+						</p:panel>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Supprimer"
+								actionListener="#{cfclientBean.supprimPatienteArchi()}"
+								update=":f1:growl"></p:commandButton>
+							<p:commandButton value="Annuler"
+								oncomplete="PF('supprimer').hide();"></p:commandButton>
+						</h:panelGrid>
+					</p:dialog>
+				
 					<p:dialog widgetVar="dialogInfo" resizable="false" closable="false"
 						header="Fiche Patiente">
 						<p:outputPanel id="patientinfo"

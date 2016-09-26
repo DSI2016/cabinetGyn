@@ -47,14 +47,16 @@ public class HistoriqueCertifBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer idHistoriqueCertif;
-	private String dateCertif;
+	private String dateCertif=null;
 	private String type1;
 	private Integer idPatient;
 	private Cfclient cfclient;
+	private String remarques;
 	private Integer idCertificat;
 	private String motifCertificat;
 	private String remarque;
-	private String remarques;
+	
+	
 	private String datereprise;
 	private int dureederepos;
 	private String adaterdu;
@@ -143,20 +145,44 @@ public class HistoriqueCertifBean implements Serializable {
 	}
 
 	public String getDateCertif() {
+		
 		return dateCertif;
 	}
+	public String getRemarques() {
+		return remarques;
+	}
 
+	public void setRemarques(String remarques) {
+		
+		this.remarques = remarques;
+		System.out.println("set remarque tessssssssssssst"+remarques);
+	}
 	public void setDateCertif(String dateCertif) {
+		
 		this.dateCertif = dateCertif;
+		System.out.println("set datecertif"+dateCertif);
+	}
+	
+
+	public String getInapte() {
+		return inapte;
+	}
+
+	public void setInapte(String inapte) {
+		this.inapte = inapte;
+		System.out.println("inapte"+inapte);
 	}
 
 	public String getDatereprise() {
+		System.out.println("get date reprise"+datereprise);
 		return datereprise;
 	}
 
 	public void setDatereprise(String datereprise) {
+		
 		this.datereprise = datereprise;
-	}
+System.out.println("set date reprise"+datereprise);
+}
 
 	public String getAdaterdu() {
 		return adaterdu;
@@ -172,6 +198,7 @@ public class HistoriqueCertifBean implements Serializable {
 
 	public void setDatedelagression(String datedelagression) {
 		this.datedelagression = datedelagression;
+		System.out.println("dategrusss"+datedelagression);
 	}
 
 	public Integer getIdHistoriqueCertif() {
@@ -233,16 +260,11 @@ public class HistoriqueCertifBean implements Serializable {
 	}
 
 	public void setRemarque(String remarque) {
+		
 		this.remarque = remarque;
 	}
 
-	public String getRemarques() {
-		return remarques;
-	}
-
-	public void setRemarques(String remarques) {
-		this.remarques = remarques;
-	}
+	
 
 	public String getType() {
 		return type;
@@ -308,13 +330,7 @@ public class HistoriqueCertifBean implements Serializable {
 		this.minutesys = minutesys;
 	}
 
-	public String getInapte() {
-		return inapte;
-	}
-
-	public void setInapte(String inapte) {
-		this.inapte = inapte;
-	}
+	
 
 	public String getCin() {
 		return cin;
@@ -595,6 +611,15 @@ public class HistoriqueCertifBean implements Serializable {
 		blocage=false;
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
 				"Certificat Supprimé Avec succées"));
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);		
+		try {
+			context.getExternalContext().redirect("Certificats");
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
 	}
 
 	public void onRowSelectcertif(SelectEvent event) {
@@ -823,6 +848,7 @@ public class HistoriqueCertifBean implements Serializable {
 		else
 			cert.setCin(cin);
 		
+		
 		cert.setRemarques(remarques);
 
 		Certificat c = new CertificatService()
@@ -979,6 +1005,7 @@ public class HistoriqueCertifBean implements Serializable {
 		Certificat c = new CertificatService()
 				.rechercheCertifParMotif(motifCertificat);
 		cert.setCertificat(c);
+		cert.setDateCertif(sdf.parse(dateCertif));
 		cert.setRemarque(remarque);
 		if (c != null)
 			if (c.getRemarque() != null) {
@@ -1029,7 +1056,7 @@ public class HistoriqueCertifBean implements Serializable {
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
-		// intialecertif();
+		 intialecertif();
 	}
 
 	
@@ -1104,7 +1131,7 @@ public class HistoriqueCertifBean implements Serializable {
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
-		// intialecertif();
+	 intialecertif();
 	}
 
 	
@@ -1210,8 +1237,11 @@ public class HistoriqueCertifBean implements Serializable {
 		cert.setCfclient(cfclient);
 		try {
 			cert.setDateCertif(sdf.parse(dateCertif));
+			System.out.println("datecertif test"+cert.getDateCertif());
 
 			cert.setDatereprise(sdf.parse(datereprise));
+			System.out.println("datecereprise test"+cert.getDatereprise());
+
 		} catch (ParseException e) {
 
 			e.printStackTrace();
@@ -1240,9 +1270,11 @@ public class HistoriqueCertifBean implements Serializable {
 			}
 		}
 		if (action.equals("Modification")) {
+			System.out.println("entree modif");
 
 			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert.setIdHistoriqueCertif(idHistoriqueCertif);
+			cert=serc.rechercheHistoriqueCertif(idHistoriqueCertif);
+			
 			serc.modifierHistoriqueCertif(cert);
 			selectedCertif = cert;
 			FacesContext face = FacesContext.getCurrentInstance();
@@ -1282,18 +1314,42 @@ public class HistoriqueCertifBean implements Serializable {
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
-		try {
-			if ((dateCertif != null) && !(dateCertif.equals("")))
-				cert.setDateCertif(sdf.parse(dateCertif));
-			if ((adaterdu != null) && !(adaterdu.equals("")))
-				cert.setAdaterdu(sdf.parse(adaterdu));
-			if ((datedelagression != null) && !(datedelagression.equals("")))
-				cert.setDatedelagression(sdf.parse(datedelagression));
-		} catch (ParseException e) {
+		System.out.println("debut ajout certif"+dateCertif);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        
 
-			e.printStackTrace();
-		}
+        try {
 
+		cert.setDateCertif(formatter.parse(dateCertif));
+		System.out.println("date certiffffff"+cert.getDateCertif());
+		
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+
+    		cert.setAdaterdu(formatter.parse(adaterdu));
+    		System.out.println("date adater"+cert.getAdaterdu());
+    		
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        try {
+
+    		cert.setDatedelagression(formatter.parse(datedelagression));
+    		System.out.println("dateguersia"+cert.getDatedelagression());
+    		
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        try {
+
+    		cert.setDateCertif(formatter.parse(dateCertif));
+    		System.out.println("date certiffffff"+cert.getDateCertif());
+    		
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 		cert.setHeuresys(heuresys);
 		cert.setMinutesys(minutesys);
 
@@ -1356,10 +1412,12 @@ public class HistoriqueCertifBean implements Serializable {
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
-		// intialecertif();
+		 intialecertif();
 	}
 
 	public void ajoutCertifAptitude() throws SQLException, Exception {
+		
+		System.out.println("ajout certif aptitude");
 
 		HistoriqueCertif cert = new HistoriqueCertif();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -1368,13 +1426,16 @@ public class HistoriqueCertifBean implements Serializable {
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
+		
 		try {
 			cert.setDateCertif(sdf.parse(dateCertif));
 		} catch (ParseException e) {
 
 			e.printStackTrace();
 		}
+		System.out.println("remarque avant"+remarques);
 		cert.setRemarques(remarques);
+		System.out.println("cert.getre"+cert.getRemarques());
 		Certificat c = new CertificatService()
 				.rechercheCertifParMotif(motifCertificat);
 		cert.setCertificat(c);
@@ -1428,7 +1489,7 @@ public class HistoriqueCertifBean implements Serializable {
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
-		// intialecertif();
+		intialecertif();
 	}
 
 	public void ajoutCertifInaptitude() throws SQLException, Exception {
@@ -1500,7 +1561,7 @@ public class HistoriqueCertifBean implements Serializable {
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
-		// intialecertif();
+		intialecertif();
 	}
 
 	public void intialiserDateCertif()// pour initialiler les dates en date
@@ -1573,9 +1634,12 @@ public class HistoriqueCertifBean implements Serializable {
 		heuresys = 0;
 		minutesys = 0;
 		inapte = null;
+		type1=null;
 		cin = null;
 		livreele = null;
 		datereprise = null;
+		
+		
 	}
 
 	public void annulerModification() {
@@ -1722,7 +1786,6 @@ public class HistoriqueCertifBean implements Serializable {
 		} else {
 			ancienValeurDateCertif = dateCertif;
 		}
-
 	}
 public void verifierDateLivrele()
 {
@@ -1830,10 +1893,11 @@ public void verifierDateLivrele()
 
 	public void verifierDatedatereprise() {
 		FacesContext face = FacesContext.getCurrentInstance();
+		System.out.println("resultat test"+Module.corigerDate(datereprise));
 		if (Module.corigerDate(datereprise) != null) {
-			this.setDateCertif(Module.corigerDate(datereprise));
+			this.setDatereprise(Module.corigerDate(datereprise));
 		}
-		if (!(Module.verifierDate(datereprise).equals("")))
+		if ((Module.verifierDate(datereprise).equals("")==false))
 
 		{
 			blocage=true;
@@ -1858,9 +1922,9 @@ public void verifierDateLivrele()
 	public void verifierdatedelagression() {
 		FacesContext face = FacesContext.getCurrentInstance();
 		if (Module.corigerDate(datedelagression) != null) {
-			this.setDateCertif(Module.corigerDate(datedelagression));
+			this.setDatedelagression(Module.corigerDate(datedelagression));
 		}
-		if (!(Module.verifierDate(datedelagression).equals("")))
+		if ((Module.verifierDate(datedelagression).equals(""))==false)
 
 		{
 			blocage=true;
@@ -2035,6 +2099,9 @@ public void verifierDateLivrele()
 	public void setType1(String type1) {
 		this.type1 = type1;
 	}
+
+	
+	
 	
 
 }

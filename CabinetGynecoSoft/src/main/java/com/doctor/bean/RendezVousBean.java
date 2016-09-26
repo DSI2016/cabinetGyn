@@ -923,12 +923,20 @@ public class RendezVousBean implements Serializable {
 
 							boolean horsHoraire = true;
 							if (h1 != null)
-								if (hh.getDebut().after(h1.getDebut())
-										&& hh.getDebut().before(h1.getFin()))
+								if (hh.getDebut().equals(h1.getDebut()) || (
+										hh.getDebut().after(h1.getDebut())
+										&&
+										hh.getDebut().before(h1.getFin())
+										)
+										)
 									horsHoraire = false;
 							if (h2 != null)
-								if (hh.getDebut().after(h2.getDebut())
-										&& hh.getDebut().before(h2.getFin()))
+								if (hh.getDebut().equals(h2.getDebut()) || (
+										hh.getDebut().after(h2.getDebut())
+										&&
+										hh.getDebut().before(h2.getFin())
+										)
+										)
 									horsHoraire = false;
 							dateChoisi = dateString + ":" + heure;
 							if (!horsHoraire) {

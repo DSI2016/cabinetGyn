@@ -91,7 +91,7 @@
 													style="width:50px;font-size:small;font-weight:bold"
 													disabled="#{consultationDetailBean.lireReadOnly()}">
 													<p:ajax event="blur"
-														update=":f1:growl,:f1:idhonoraire"></p:ajax>
+														update=":f1:growl"></p:ajax>
 												</h:inputText>
 											</h:panelGrid></td>
 
@@ -204,8 +204,14 @@
 										<p:column headerText="Doc."
 													style="font-size:small;font-weight:bold">
 													<h:outputText
-														value="O(#{cons.nbOrd})Rx(#{cons.nbRadio})B(#{cons.nbAnalyse})"
-														style="font-size:small;font-weight:bold;color:#0174DF" />
+														value="O(#{cons.nbOrd})    "
+														style="font-size:small;font-weight:bold;color:#529919" />
+														<h:outputText
+														value="Rx(#{cons.nbRadio})    "
+														style="font-size:small;font-weight:bold;color:#2DBADF" />
+														<h:outputText
+														value="B(#{cons.nbAnalyse})"
+														style="font-size:small;font-weight:bold;color:#E04000" />
 												</p:column>
 
 										<p:column style="font-size:small;font-weight:bold;width:70px">

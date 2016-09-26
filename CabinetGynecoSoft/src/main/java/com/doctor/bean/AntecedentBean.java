@@ -2358,8 +2358,10 @@ public class AntecedentBean implements Serializable, LineListener {
 					cf.setNbrFille(cf.getNbrFille() - 1);
 				}
 			}
-
-			if (h.getEtatBebe2() != null && h.getEtatBebe2().isIncrementation()
+//System.out.println("ettbebe 1 "+h.getEtatBebe()+"2 "+h.getEtatBebe2()+"3 "+h.getEtatBebe3()+"");
+			if (h.getEtatBebe2() != null )
+			{
+				if(h.getEtatBebe2().isIncrementation()
 					&& h.getEtatFinGross().isIncrementation()) {
 
 				if (cf.getPartie() != 0) {
@@ -2374,8 +2376,10 @@ public class AntecedentBean implements Serializable, LineListener {
 					cf.setNbrFille(cf.getNbrFille() - 1);
 				}
 			}
+		}
 
-			if (h.getEtatBebe3() != null && h.getEtatBebe3().isIncrementation()
+			if (h.getEtatBebe3() != null ) 
+				{if(h.getEtatBebe3().isIncrementation()
 					&& h.getEtatFinGross().isIncrementation()) {
 
 				if (cf.getPartie() != 0) {
@@ -2387,7 +2391,8 @@ public class AntecedentBean implements Serializable, LineListener {
 				if (h.getSexeBebe3() != null
 						&& h.getSexeBebe3().equals("Féminin"))
 					cf.setNbrFille(cf.getNbrFille() - 1);
-			}
+			}}
+			if(cf.getGestite()>=1)
 			cf.setGestite(cf.getGestite() - 1);
 			sercf.modifierPatient(cf);
 		}
