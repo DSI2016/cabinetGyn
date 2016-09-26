@@ -32,7 +32,7 @@
 						<div align="left">
 							<h:panelGrid columns="4">
 								<h:outputText value="Recherche: "
-									style="font-size:small;font-weight:bold" />
+									style="font-weight:bold" />
 								<p:inputText value="#{diagnostiqueBean.valeurRecherche}" />
 
 								<p:commandButton icon="ui-icon-search" title="Recherche Docteur"
@@ -114,7 +114,7 @@
 							<p:panel id="dialog"
 								header="#{diagnostiqueBean.action} de diagnostique">
 								<h:panelGrid columns="2">
-									<p:outputLabel value="Diagnostique : " />
+									<p:outputLabel value="Diagnostique* : " />
 									<p:inputText value="#{diagnostiqueBean.diagnostique}" id="pro" />
 								</h:panelGrid>
 								<h:panelGrid columns="2">

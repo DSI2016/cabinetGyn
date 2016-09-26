@@ -92,6 +92,7 @@ public class MoyenContraceptionBean implements java.io.Serializable {
 	}
 
 	public void ajouterMoyenContraception() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -113,7 +114,7 @@ public class MoyenContraceptionBean implements java.io.Serializable {
 		MoyenContraceptionService ser = new MoyenContraceptionService();
 		ser.supprimerMoyenContraception(id);
 		faces.addMessage(null, new FacesMessage(
-				"Moyen de contraception est supprimé avec succès."));
+				"Moyen de contraception supprimé avec succès."));
 		FacesContext context2 = FacesContext.getCurrentInstance();
 		context2.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -124,6 +125,7 @@ public class MoyenContraceptionBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		libMoyenContraception=libMoyenContraception.replaceAll("\\s+", " ");
 		MoyenContraceptionService ser = new MoyenContraceptionService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -158,9 +160,7 @@ public class MoyenContraceptionBean implements java.io.Serializable {
 					d.setLibMoyenContraception(libMoyenContraception);
 					ser.modifierMoyenContraception(d);
 					faces.addMessage(null,
-							new FacesMessage("Le moyen \""
-									+ libMoyenContraception
-									+ "\" modifié avec succès."));
+							new FacesMessage("Le moyen modifié avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");

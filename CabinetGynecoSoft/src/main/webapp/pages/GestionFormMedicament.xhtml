@@ -109,12 +109,12 @@
 
 					<h:form id="f4">
 						<p:dialog id="idDialog" showHeader="false" widgetVar="dialogforme"
-							modal="false" closable="false" resizable="false">
+							modal="true" closable="false" resizable="false">
 
 							<p:panel id="dialog1"
 								header="#{formeMedicamentBean.action} de forme">
 								<h:panelGrid columns="2">
-									<p:outputLabel value="Forme Medicament : " />
+									<p:outputLabel value="Forme Medicament* : " />
 									<p:inputText value="#{formeMedicamentBean.forme}" id="pro" />
 								</h:panelGrid>
 								<h:panelGrid columns="2">

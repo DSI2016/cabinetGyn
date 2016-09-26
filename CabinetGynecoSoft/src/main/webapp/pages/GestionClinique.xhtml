@@ -75,14 +75,14 @@
 						<p:column width="10%">
 							<f:facet name="header">
 								<h:outputLabel value="Code"
-									style="font-size:small;font-weight:bold" />
+									 />
 							</f:facet>
     #{clinique.idclinique}
 </p:column>
 						<p:column>
 							<f:facet name="header">
 								<h:outputLabel value="Clinique"
-									style="font-size:small;font-weight:bold" />
+									 />
 							</f:facet>
     #{clinique.libclinique}
 </p:column>
@@ -91,13 +91,13 @@
 								actionListener="#{cliniqueBean.modifierClinique(clinique)}"
 								update=":f1:f2:idDialog" oncomplete="PF('dialogprof').show()"
 								icon="ui-icon-pencil" title="Modification"
-								style="font-size:small;font-weight:bold" />
+								 />
 
 							<p:commandButton rendered="#{connectionBean.supprimerClinique}"
 								actionListener="#{cliniqueBean.Supprimer(clinique.idclinique)}"
 								icon="ui-icon-trash" title="Suppression Clinique"
 								update=":f1:tabprof, :f1:growl"
-								style="font-size:small;font-weight:bold">
+								>
 								<p:confirm header="Suppression Clinique"
 									message="Voulez-vous vraiment supprimer cette Clinique ?"
 									icon="ui-icon-alert" />
@@ -119,7 +119,7 @@
 
 							<p:panel id="dialog" header="#{cliniqueBean.action} du clinique">
 								<h:panelGrid columns="2">
-									<p:outputLabel value="Clinique : " />
+									<p:outputLabel value="Clinique* : " />
 									<p:inputText value="#{cliniqueBean.libclinique}" id="pro" />
 
 								</h:panelGrid>

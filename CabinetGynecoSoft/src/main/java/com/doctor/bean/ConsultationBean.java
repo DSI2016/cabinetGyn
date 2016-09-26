@@ -98,7 +98,7 @@ public class ConsultationBean {
 	
 	
 	public void validerAjout() {
-
+		nomConsultation=nomConsultation.replaceAll("\\s+", " ");
 		FacesContext faces = FacesContext.getCurrentInstance();
 		RequestContext context = RequestContext.getCurrentInstance();
 

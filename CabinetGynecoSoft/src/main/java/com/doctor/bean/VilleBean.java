@@ -139,11 +139,11 @@ public class VilleBean implements java.io.Serializable {
 
 	public void ajouterVille() {
 		action = "Ajout";
+		initialisation();
 	}
 
 	public String closeDiag() {
-		idville = null;
-		ville = null;
+		initialisation();
 		return null;
 	}
 
@@ -172,6 +172,7 @@ public class VilleBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		ville=ville.replaceAll("\\s+", " ");
 		VilleService ser = new VilleService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -204,7 +205,7 @@ public class VilleBean implements java.io.Serializable {
 					d.setIdville(idville);
 					ser.modifierVille(d);
 					faces.addMessage(null, new FacesMessage(
-							"Ville est modifiée avec succès."));
+							"Ville modifiée avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");
@@ -233,6 +234,9 @@ public class VilleBean implements java.io.Serializable {
 				addValid = false;
 			} else // tester si cette ville existe déjà
 			{
+				
+				
+				
 				Ville d3 = ser.rechercheParVille(ville);
 				if (d3 == null) { // c-à-d n'existe pas ville avec cette //
 									// "ville"

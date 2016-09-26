@@ -127,7 +127,9 @@
 								style="font-size:13pt;font-weight:bold;width:35pt" />
 
 							<p:splitButton value="Permuter" ajax="true"
-								style="font-size:13pt;font-weight:bold">
+								style="font-size:13pt;font-weight:bold"
+								update=":f1" actionListener="#{salleBean.getParameter(salle)}" 
+								oncomplete="PF('modord').show()">
 								
 								<p:menuitem value="Monter" icon="ui-icon-triangle-1-n"
 									style="font-size:10pt" update=":f1" ajax="true"

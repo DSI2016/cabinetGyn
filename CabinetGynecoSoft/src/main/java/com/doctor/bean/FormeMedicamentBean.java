@@ -91,6 +91,7 @@ public class FormeMedicamentBean implements java.io.Serializable {
 	}
 
 	public void ajouterFormeMedicament() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -119,7 +120,7 @@ public class FormeMedicamentBean implements java.io.Serializable {
 			faces.addMessage(
 					null,
 					new FacesMessage(
-							"Suppression Forme Médicament :  Forme supprimée avec succès."));
+							"Forme supprimée avec succès."));
 		} else
 			faces.addMessage(
 					null,
@@ -138,6 +139,7 @@ public class FormeMedicamentBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		forme=forme.replaceAll("\\s+", " ");
 		FormeMedicamentService ser = new FormeMedicamentService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -167,8 +169,7 @@ public class FormeMedicamentBean implements java.io.Serializable {
 					d.setForme(forme);
 					ser.modifierFormeMedicament(d);
 					faces.addMessage(null, new FacesMessage(
-							"Forme médicament \"" + forme
-									+ "\" modifiée avec succès."));
+							"Forme médicament modifiée avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");

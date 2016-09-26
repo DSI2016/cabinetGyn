@@ -136,6 +136,7 @@ public class ProfessionBean implements java.io.Serializable {
 	}
 
 	public void ajouterProfession() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -171,6 +172,7 @@ public class ProfessionBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		libprofession=libprofession.replaceAll("\\s+", " ");
 		ProfessionService ser = new ProfessionService();
 		Profession p = new Profession(libprofession);
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -185,6 +187,7 @@ public class ProfessionBean implements java.io.Serializable {
 						FacesMessage.SEVERITY_ERROR,
 						"Veuillez donner le nom de la profession.", null));
 				addValid = false;
+				System.out.println("addValid  "+addValid);
 			} else {
 				Profession pp02 = ser.rechercheParProfession(libprofession);
 				if (pp02 != null

@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -174,7 +175,8 @@ public class RadioBean implements java.io.Serializable {
 	public void consulterRadio(SelectEvent event) {
 		action = "consulter";
 		Radio r = (Radio) event.getObject();
-		consultRadio = r;
+		
+		consultRadio = selectedRAdio;
 		desibledImpr = true;
 		examenComplementaire = r.getExamenComplementaire();
 		resultat = r.getResultat();
@@ -186,6 +188,8 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public void ajoutRad() {
+		selectedRAdio=null;
+		desibledImpr=false;
 		action = "ajout";
 		exam = null;
 		examenComplementaire = null;
@@ -381,19 +385,27 @@ public void setBlocage(boolean blocage) {
 }
 
 	public void dateChange() {
-		//System.out.println("dddd");
+		//dateRadios=(Date) event.getObject();
+		System.out.println("dddd"+dateRadios);
+		String dateString="";
 		//conertir en string 
+		if(dateRadios!= null){
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		 dateString = df.format(dateRadios);
+		System.out.println("date après conv  "+dateString);
+		}
+		
 		FacesContext faces = FacesContext.getCurrentInstance();
 		//Format format = new SimpleDateFormat("dd/MM/yyyy");
-		//String dateString = format.format(dateOrd);
-		String dateString = dateRadios+"";
+		//String dateString = format.format(dateRadios);
+		//String dateString = dateRadios+"";
 		if (Module.corigerDate(dateString) != null) {
 			dateString=Module
 					.corigerDate(dateString);
 		}
 		if (!(Module.verifierDate(dateString).equals("")))
 
-		{
+		{System.out.println("dddd"+Module.verifierDate(dateString));
 			faces.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
 							Module.verifierDate(dateString)));
@@ -558,8 +570,8 @@ public void setBlocage(boolean blocage) {
 		// setExamenComplementaire(examenComplementaire);
 	}
 
-	public void valider(ActionEvent actionEvent) throws SQLException, Exception {
-
+	public void valider() {
+     System.out.println(dateRadios);
 		Radio r = new Radio();
 		r.setDateRadios(dateRadios);
 		r.setExamenComplementaire(examenComplementaire);
@@ -603,7 +615,18 @@ public void setBlocage(boolean blocage) {
 			String nomReport = "demandeRadio";
 			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 			String age = "(" + age1 + ")";
-			Connection connection = (Connection) DriverManager.getConnection(
+			FacesContext context = FacesContext.getCurrentInstance();
+			 try {
+					
+					 context.getExternalContext().redirect("DemandeRadio");
+					} catch (Exception e) {
+					 System.out.println(e.getMessage());
+					 }
+			selectedRAdio=r;
+			consultRadio=r;
+			desibledImpr=true;
+			
+			/*Connection connection = (Connection) DriverManager.getConnection(
 					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
 			File jasper = new File(FacesContext.getCurrentInstance()
 					.getExternalContext()
@@ -622,7 +645,7 @@ public void setBlocage(boolean blocage) {
 			outStream.write(bytes, 0, bytes.length);
 			outStream.flush();
 			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			FacesContext.getCurrentInstance().responseComplete();*/
 
 			//
 			// FacesContext context = FacesContext.getCurrentInstance();
@@ -640,7 +663,7 @@ public void setBlocage(boolean blocage) {
 			String nomReport = "demandeRadio";
 			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 			String age = "(" + age1 + ")";
-			Connection connection = (Connection) DriverManager.getConnection(
+			/*Connection connection = (Connection) DriverManager.getConnection(
 					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
 			File jasper = new File(FacesContext.getCurrentInstance()
 					.getExternalContext()
@@ -659,7 +682,7 @@ public void setBlocage(boolean blocage) {
 			outStream.write(bytes, 0, bytes.length);
 			outStream.flush();
 			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			FacesContext.getCurrentInstance().responseComplete();*/
 
 		}
 
@@ -1082,7 +1105,7 @@ public void setBlocage(boolean blocage) {
 
 	public void viewRadio(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		// valider();
+		System.out.println("consultRadio=="+consultRadio);
 		if (consultRadio != null) {
 			CfclientService serclt = new CfclientService();
 			Cfclient clt = serclt.RechercheCfclient(idPatient);
@@ -1090,26 +1113,10 @@ public void setBlocage(boolean blocage) {
 			String nomReport = "demandeRadio";
 			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 			String age = "(" + age1 + ")";
-			Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idrad", consultRadio.getIdradio());
 			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			Module.imprimer(nomReport, param);
 		}
 	}
 

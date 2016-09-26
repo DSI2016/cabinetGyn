@@ -130,6 +130,7 @@ public class EtatFinGrossBean implements java.io.Serializable {
 	}
 
 	public void ajouterEtatFinGross() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -170,8 +171,8 @@ public class EtatFinGrossBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		etatFinG=etatFinG.replaceAll("\\s+", " ");
 		EtatFinGrossService ser = new EtatFinGrossService();
-
 		FacesContext faces = FacesContext.getCurrentInstance();
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean addValid = false;

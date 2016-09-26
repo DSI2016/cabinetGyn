@@ -30,7 +30,7 @@
 						<div align="left">
 							<h:panelGrid columns="4">
 								<h:outputText value="Recherche: "
-									style="font-size:small;font-weight:bold" />
+									style="font-weight:bold" />
 								<p:inputText value="#{gestionAntecedentBean.valeurRecherche}" />
 
 								<p:commandButton icon="ui-icon-search" title="Recherche Ville"
@@ -80,18 +80,16 @@
 							<h:panelGrid columns="1">
 
 								<p:dataTable id="l" var="anteced" first="#{gestionAntecedentBean.currentP1}"
-									style="font-size:small;font-weight:bold"
+									
 									value="#{gestionAntecedentBean.antecedentMeds}"
 									emptyMessage="Pas d'antécédents !" paginator="true"
 									paginatorPosition="bottom"
 									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 									rows="10">
 
-									<p:column headerText="Antécédent Médical" width="75%"
-										style="font-size:small;font-weight:bold">
+									<p:column headerText="Antécédent Médical" width="85%">
 
-										<h:outputText value="#{anteced.antMedical}"
-											style="font-size:small;font-weight:bold;" />
+										<h:outputText value="#{anteced.antMedical}"/>
 									</p:column>
 
 									<p:column>
@@ -100,12 +98,12 @@
 											actionListener="#{gestionAntecedentBean.modificationAntMed(anteced)}"
 											oncomplete="PF('dialogAntMed').show();"
 											update=":f1:idDialogAntMed"
-											style="font-size:10pt;font-weight:bold">
+											>
 										</p:commandButton>
 										<p:commandButton icon="ui-icon-trash" title="Supprimer"
 											rendered="#{connectionBean.suppGestAntMed}"
 											actionListener="#{gestionAntecedentBean.suppressionAntMed(anteced)}"
-											update=":f1" style="font-size:10pt;font-weight:bold">
+											update=":f1" >
 											<p:confirm header="Supprimer un antécédent médical ?"
 												message="Voulez-vous vraiment supprimer cet antécédent ?"
 												icon="ui-icon-alert" />
@@ -139,18 +137,16 @@
 							<h:panelGrid columns="1">
 
 								<p:dataTable id="ll" var="anteced" first="#{gestionAntecedentBean.currentP2}"
-									style="font-size:small;font-weight:bold"
+									
 									value="#{gestionAntecedentBean.antecedentChirs}"
 									emptyMessage="Pas d'antécédents !" paginator="true"
 									paginatorPosition="bottom"
 									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 									rows="10">
 
-									<p:column headerText="Antécédent Chirugical" width="75%"
-										style="font-size:small;font-weight:bold">
+									<p:column headerText="Antécédent Chirugical" width="85%">
 
-										<h:outputText value="#{anteced.antChirugical}"
-											style="font-size:small;font-weight:bold;" />
+										<h:outputText value="#{anteced.antChirugical}" />
 									</p:column>
 
 									<p:column>
@@ -159,12 +155,11 @@
 											rendered="#{connectionBean.modifGestChirg}"
 											oncomplete="PF('dialogAntMed').show();"
 											update=":f1:idDialogAntMed"
-											style="font-size:10pt;font-weight:bold">
+											>
 										</p:commandButton>
 										<p:commandButton icon="ui-icon-trash" title="Supprimer"
 											actionListener="#{gestionAntecedentBean.suppressionAntChir(anteced)}"
-											rendered="#{connectionBean.suppGestAntChirg}" update=":f1"
-											style="font-size:10pt;font-weight:bold">
+											rendered="#{connectionBean.suppGestAntChirg}" update=":f1">
 											<p:confirm header="Supprimer un antécédent chirugical?"
 												message="Voulez-vous vraiment supprimer cet antécédent ?"
 												icon="ui-icon-alert" />
@@ -198,18 +193,16 @@
 							<h:panelGrid columns="1">
 
 								<p:dataTable id="lll" var="anteced" first="#{gestionAntecedentBean.currentP3}"
-									style="font-size:small;font-weight:bold"
+									
 									value="#{gestionAntecedentBean.antecedentFams}"
 									emptyMessage="Pas d'antécédents !" paginator="true"
 									paginatorPosition="bottom"
 									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 									rows="10">
 
-									<p:column headerText="Antécédent Familial" width="75%"
-										style="font-size:small;font-weight:bold">
+									<p:column headerText="Antécédent Familial" width="85%">
 
-										<h:outputText value="#{anteced.antFamilial}"
-											style="font-size:small;font-weight:bold;" />
+										<h:outputText value="#{anteced.antFamilial}" />
 									</p:column>
 
 									<p:column>
@@ -218,12 +211,12 @@
 											rendered="#{connectionBean.modifGestFam}"
 											oncomplete="PF('dialogAntMed').show();"
 											update=":f1:idDialogAntMed"
-											style="font-size:10pt;font-weight:bold">
+											>
 										</p:commandButton>
 										<p:commandButton icon="ui-icon-trash" title="Suprimer"
 											actionListener="#{gestionAntecedentBean.suppressionAntFam(anteced)}"
 											rendered="#{connectionBean.suppGestAntFam}" update=":f1"
-											style="font-size:10pt;font-weight:bold">
+											>
 											<p:confirm header="Supprimerun antécédent familial ?"
 												message="Voulez-vous vraiment supprimer cet antécédent ?"
 												icon="ui-icon-alert" />
@@ -253,7 +246,7 @@
 					<p:panel
 						header="#{gestionAntecedentBean.actionAnt}  antécédent #{gestionAntecedentBean.typeAnt} ">
 						<h:panelGrid columns="2">
-							<h:outputText value="Antécédent : "
+							<h:outputText value="Antécédent* : "
 								style="font-size:14;font-weight:bold;" />
 							<p:inputText size="20" value="#{gestionAntecedentBean.nomAntecedent}"></p:inputText>
 						</h:panelGrid>
@@ -263,10 +256,10 @@
 								actionListener="#{gestionAntecedentBean.validerAntecedent()}"
 								oncomplete="handleLoginRequest(xhr, status, args)"
 								update=":f1:growl" icon="ui-icon-check"
-								style="font-size:10pt;font-weight:bold">
+								>
 							</p:commandButton>
 							<p:commandButton value="Annuler"
-								style="font-size:10pt;font-weight:bold"
+								
 								icon="ui-icon-arrowreturnthick-1-n" update=":f1">
 
 							</p:commandButton>

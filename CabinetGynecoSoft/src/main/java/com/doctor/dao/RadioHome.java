@@ -162,10 +162,12 @@ public class RadioHome {
 		Criteria crit = sessionFactory
 				.getCurrentSession()
 				.createCriteria(Radio.class)
+				.addOrder(Property.forName("idradio").desc())
 				.setFetchMode("consultationDetail", FetchMode.JOIN)
 				.createCriteria("consultationDetail")
 				.add(Restrictions.eq("idConsultationDetail",
-						idconsultationDetail));
+						idconsultationDetail));		
+		
 
 		return crit.list();
 	}

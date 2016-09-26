@@ -224,7 +224,7 @@
 					<p:commandButton icon="ui-icon-document" title="Archiver Patient"
 						style="font-size:small;width:33pt;font-weight:bold"
 						actionListener="#{cfclientBean.getPatCode(Patient.code)}"
-						oncomplete="PF('archivDlg').show();"
+						update=":f1:growl"
 						rendered="#{connectionBean.archiverPat}">
 					</p:commandButton>
 

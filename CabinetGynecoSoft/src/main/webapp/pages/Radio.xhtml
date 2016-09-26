@@ -45,12 +45,11 @@
 							<table border="0" align="center" width="90%">
 								<tr>
 									<td><h:outputText value="Date:"
-											style="font-size:12pt;font-weight:bold" /> <p:calendar
+											style="font-size:12pt;font-weight:bold" /> 
+										<p:calendar
 											id="button" value="#{radioBean.dateRadios}"
-											converterMessage="Veuillez vérifier la date que vous avez saisi"
-											disabled="#{radioBean.consultation}" showOn="button" size="7"
-											onblur="#{radioBean.dateChange()}" pattern="dd/MM/yyyy">
-											<p:ajax event="blur" update="button,:f1:growl"></p:ajax>
+											disabled="#{radioBean.consultation}" size="7" mask="true"
+											pattern="dd/MM/yyyy" >
 										</p:calendar></td>
 									<td align="right"><h:panelGrid columns="3">
 											<h:outputText value="Radio pour : "
@@ -143,7 +142,7 @@
 									<td><p:commandButton value="Valider"
 											actionListener="#{radioBean.valider}" update=":f1:growl,:f1"
 											immediate="true" ajax="false"
-											onclick="target='_blank'; return true;"
+											
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
 									<td width="500px"><p:commandButton value="Annuler"
@@ -152,7 +151,7 @@
 											<p:ajax listener="#{radioBean.annulation()}" />
 										</p:commandButton></td>
 									<td><h:commandLink actionListener="#{radioBean.viewRadio}"
-											target="_blanc" rendered="#{radioBean.desibledImpr}">
+											 rendered="#{radioBean.desibledImpr}">
 											<p:graphicImage value="/imagesMenu/imprimente10.png">
 											</p:graphicImage>
 										</h:commandLink></td>

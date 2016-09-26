@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import com.doctor.dao.HibernateUtil;
 import com.doctor.dao.TabSalleHome;
+import com.doctor.persistance.EtatFinGross;
 import com.doctor.persistance.TabSalle;
 
 public class TabSalleService {
@@ -15,6 +16,24 @@ public class TabSalleService {
 	public TabSalleService() {
 		dao = new TabSalleHome();
 	}
+	
+	
+    public void modifierTabSalle(TabSalle tab)
+	
+	{
+		
+		Session	session=HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx= null ; 
+		try{
+			
+			tx=session.beginTransaction();
+			dao.merge(tab);
+			tx.commit() ;
+			}catch(RuntimeException ex){ 
+				
+				if(tx!= null) tx.rollback(); ex.printStackTrace() ; 
+			}
+		}
 	
 	
 	public List<TabSalle> rechercheToutTabSalle() {
@@ -59,6 +78,20 @@ public class TabSalleService {
 
 	}
 	
+public void ajoutTabSalle(TabSalle tab)
+	
+	{
+		Session	session=HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx= null ; 
+		try{
+			tx=session.beginTransaction();
+			    dao.persist(tab);
+			tx.commit() ;
+			}catch(RuntimeException ex){ 
+				if(tx!= null) tx.rollback(); ex.printStackTrace() ; 
+				}
+		}
+	
 	public List<TabSalle> rechercheParOrdDiff(boolean odrdiff) {
 		List<TabSalle> liste = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -100,4 +133,45 @@ public class TabSalleService {
 		return ts ;
 
 	}
+	
+	
+	public TabSalle rechercheParNomTab(String nomTab) {
+		TabSalle p =  null;
+		Session	session=HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx= null ; 
+		try{
+			
+			tx=session.beginTransaction();
+			p= dao.findByNomTab(nomTab);
+			tx.commit() ;
+			}catch(RuntimeException ex){ 
+				
+				if(tx!= null) tx.rollback(); ex.printStackTrace() ; 
+			}
+		return p;
+	}
+
+	
+	public List<TabSalle> rechercheParOrd(Integer ord) {
+		List<TabSalle> liste = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+
+			tx = session.beginTransaction();
+
+			liste = dao.findbyOrd(ord);
+			tx.commit();
+
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return (liste);
+
+	}
+	
+	
 }

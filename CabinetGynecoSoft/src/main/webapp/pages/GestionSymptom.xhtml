@@ -79,7 +79,7 @@ Symptômes</ui:define>
 </p:column>
 						<p:column>
 							<f:facet name="header">
-								<h:outputLabel value="Symptome" />
+								<h:outputLabel value="Symptôme" />
 							</f:facet>
     #{symptome.symptome}
 </p:column>
@@ -92,7 +92,7 @@ Symptômes</ui:define>
 								actionListener="#{symptomeBean.Supprimer(symptome.idsymptome)}"
 								icon="ui-icon-trash" title="Suppression Symptome" update=":f1">
 								<p:confirm header="Suppression Symptome"
-									message="Voulez-vous vraiment supprimer cette Symptome ?"
+									message="Voulez-vous vraiment supprimer cet Symptôme ?"
 									icon="ui-icon-alert" />
 							</p:commandButton>
 						</p:column>
@@ -112,7 +112,7 @@ Symptômes</ui:define>
 
 							<p:panel id="dialog" header="#{symptomeBean.action} de symptôme">
 								<h:panelGrid columns="2">
-									<p:outputLabel value="Symptome : " />
+									<p:outputLabel value="Symptome* : " />
 									<p:inputText value="#{symptomeBean.symptome}" id="pro" />
 								</h:panelGrid>
 								<h:panelGrid columns="2">

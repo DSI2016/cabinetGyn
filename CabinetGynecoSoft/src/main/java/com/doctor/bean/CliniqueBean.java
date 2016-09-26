@@ -126,6 +126,7 @@ public class CliniqueBean implements java.io.Serializable {
 	}
 
 	public void ajouterClinique() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -162,6 +163,7 @@ public class CliniqueBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		libclinique=libclinique.replaceAll("\\s+", " ");
 		CliniqueService ser = new CliniqueService();
 		Clinique p = new Clinique(libclinique);
 		FacesContext faces = FacesContext.getCurrentInstance();

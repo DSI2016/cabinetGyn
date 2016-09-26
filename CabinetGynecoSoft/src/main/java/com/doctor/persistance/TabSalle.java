@@ -3,7 +3,7 @@ package com.doctor.persistance;
 public class TabSalle {
 	private Integer idTabSalle;
 	private String nomTab;
-	private int index;
+	private int ordre;
 	private boolean ordreDifferent;
 	private boolean active;
 
@@ -23,12 +23,14 @@ public class TabSalle {
 		this.nomTab = nomTab;
 	}
 
-	public int getIndex() {
-		return index;
+	
+
+	public int getOrdre() {
+		return ordre;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
 	}
 
 	public boolean isOrdreDifferent() {
@@ -54,8 +56,8 @@ public class TabSalle {
 		result = prime * result + (active ? 1231 : 1237);
 		result = prime * result
 				+ ((idTabSalle == null) ? 0 : idTabSalle.hashCode());
-		result = prime * result + index;
 		result = prime * result + ((nomTab == null) ? 0 : nomTab.hashCode());
+		result = prime * result + ordre;
 		result = prime * result + (ordreDifferent ? 1231 : 1237);
 		return result;
 	}
@@ -76,12 +78,12 @@ public class TabSalle {
 				return false;
 		} else if (!idTabSalle.equals(other.idTabSalle))
 			return false;
-		if (index != other.index)
-			return false;
 		if (nomTab == null) {
 			if (other.nomTab != null)
 				return false;
 		} else if (!nomTab.equals(other.nomTab))
+			return false;
+		if (ordre != other.ordre)
 			return false;
 		if (ordreDifferent != other.ordreDifferent)
 			return false;
@@ -91,7 +93,7 @@ public class TabSalle {
 	@Override
 	public String toString() {
 		return "TabSalle [idTabSalle=" + idTabSalle + ", nomTab=" + nomTab
-				+ ", index=" + index + ", ordreDifferent=" + ordreDifferent
+				+ ", ordre=" + ordre + ", ordreDifferent=" + ordreDifferent
 				+ ", active=" + active + "]";
 	}
 

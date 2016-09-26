@@ -122,6 +122,7 @@ public class DocteurBean implements java.io.Serializable {
 	}
 
 	public void ajouterDocteur() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -155,6 +156,7 @@ public class DocteurBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		libdoctor =libdoctor.replaceAll("\\s+", " ");
 		DocteurService ser = new DocteurService();
 		Docteur p = new Docteur(libdoctor);
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -179,8 +181,7 @@ public class DocteurBean implements java.io.Serializable {
 						// "Cette doctor existe déja."));
 					p.setIddoctor(iddoctor);
 					ser.modifierDocteur(p);
-					faces.addMessage(null, new FacesMessage("Le docteur \""
-							+ libdoctor + "\" modifié avec succès."));
+					faces.addMessage(null, new FacesMessage("Docteur modifié avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");
@@ -241,6 +242,7 @@ public class DocteurBean implements java.io.Serializable {
 	}
 
 	public void annulerRecherche() {
+		Module.rechercheDocteur="";
 		valeurRecherche = null;
 	}
 

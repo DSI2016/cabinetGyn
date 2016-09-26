@@ -12,8 +12,8 @@
 			<column name="nomTab" length="45" />
 		</property>
 
-		<property name="index" type="int">
-			<column name="index" />
+		<property name="ordre" type="int">
+			<column name="ordre" />
 		</property>
 
 

@@ -254,5 +254,10 @@
 		<view-id value="/pages/Consultation.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="ConfigSalle">
+		<pattern value="/ConfigurationSalleAtt" />
+		<view-id value="/pages/configSalleAtt.xhtml" />
+	</url-mapping>
+	
 
 </pretty-config>

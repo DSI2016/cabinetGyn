@@ -3317,7 +3317,43 @@ public class CfclientBean implements java.io.Serializable {
 	}
 
 	public void getPatCode(Integer idp) {
+		FacesContext faces = FacesContext.getCurrentInstance();
 		code = idp;
+		
+		List<RendezVous> rend = new RendezVousService().rechercheParPatient(code);
+		Salle s = new SalleService().rechercheSalleParPatient(code);
+		
+		if (rend != null && rend.size() > 0 && s != null) {
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Archivage impossible!  Patiente a un rendez-vous et présente dans la salle d'attente.", ""));
+			
+			
+			
+		}else if (s != null) {
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Archivage impossible!  Patiente présente dans la salle d'attente.", ""));
+			
+			
+		}else if (rend != null && rend.size() > 0) {
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Archivage impossible!  Patiente a un rendez-vous.", ""));
+			
+			
+		}else{
+			
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('archivDlg').show();");
+		}
+				
+				
+
+		
+		
+		
+		
 	}
 
 	public void archiver() {
