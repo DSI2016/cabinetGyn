@@ -14,8 +14,9 @@
 	<ui:define name="body">
 		<p:graphicImage value="/imagesTitre/antecedents.png" width="100%"></p:graphicImage>
 		<br />
-		<p:growl id="growl" life="8000" showDetail="true" />
+		
 		<h:form id="f1">
+		<p:growl id="growl" life="8000" showDetail="true" />
 
 			<table width="100%">
 				<tr>
@@ -538,6 +539,7 @@
 
 								<p:column headerText="Etat"
 									style="font-size:small;font-weight:bold;width:100px">
+									
 
 							</p:column>
 
@@ -557,7 +559,7 @@
 										style="font-size:small;font-weight:bold">
 										<p:ajax event="click"
 											listener="#{antecedentBean.supprimerGross(Historique)}"
-											update=":growl,:f1"></p:ajax>
+											update=":f1:growl,:f1"></p:ajax>
 										<p:confirm header="Supprimer ?"
 											message="Voulez-vous vraiment supprimer cette ligne ?"
 											icon="ui-icon-alert" />
@@ -611,7 +613,7 @@
 										style="font-size:small;font-weight:bold">
 										<p:ajax event="click"
 											listener="#{antecedentBean.supprimerContraception(contraception.idcontraception)}"
-											update=":growl,:f1"></p:ajax>
+											update=":f1:growl,:f1"></p:ajax>
 										<p:confirm header="Supprimer ?"
 											message="Voulez-vous vraiment supprimer cette ligne ?"
 											icon="ui-icon-alert" />
@@ -877,7 +879,7 @@
 							<p:commandButton value="Valider"
 								oncomplete="handleLoginRequestGross(xhr, status, args)">
 								<p:ajax event="click" listener="#{antecedentBean.validerBebe()}"
-									update=":growl"></p:ajax>
+									update=":f1:growl"></p:ajax>
 							</p:commandButton>
 							<p:commandButton value="Annuler"
 								actionListener="#{antecedentBean.annulation()}"
@@ -988,7 +990,7 @@
 				<div align="center">
 					<p:commandButton value="Valider"
 						actionListener="#{antecedentBean.validerContraception}"
-						oncomplete="handleLoginRequest(xhr, status, args)" update=":growl"></p:commandButton>
+						oncomplete="handleLoginRequest(xhr, status, args)" update=":f1:growl"></p:commandButton>
 
 					<p:commandButton value="Annuler"
 						actionListener="#{antecedentBean.initialisation()}"
@@ -1020,7 +1022,7 @@
 						<p:commandButton value="Valider"
 							oncomplete="handleLoginRequestEG(xhr, status, args)">
 							<p:ajax listener="#{antecedentBean.ajouterEFG()}"
-								update=":idDialogGross,:growl"></p:ajax>
+								update=":idDialogGross,:f1:growl"></p:ajax>
 						</p:commandButton>
 						<p:commandButton
 							actionListener="#{antecedentBean.annulationEFG()}"
@@ -1080,7 +1082,7 @@
 						<p:commandButton value="Valider"
 							actionListener="#{antecedentBean.ajouterAntecedent}"
 							oncomplete="handleLoginRequestAnt(xhr, status, args)"
-							update=":growl" icon="ui-icon-check"
+							update=":f1:growl" icon="ui-icon-check"
 							style="font-size:10pt;font-weight:bold">
 
 						</p:commandButton>
@@ -1109,7 +1111,7 @@
 							<p:commandButton value="Valider" icon="ui-icon-check"
 								oncomplete="handleLoginRequestContra(xhr, status, args)"
 								actionListener="#{antecedentBean.ajoutMoyen()}"
-								update=":growl,:fgrossese2:">
+								update=":f1:growl,:fgrossese2:">
 							</p:commandButton>
 							<p:commandButton value="Annuler"
 								icon="ui-icon-arrowreturnthick-1-n"

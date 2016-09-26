@@ -47,7 +47,7 @@ public class HistoriqueCertifBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer idHistoriqueCertif;
-	private String dateCertif=null;
+	
 	private String type1;
 	private Integer idPatient;
 	private Cfclient cfclient;
@@ -65,6 +65,7 @@ public class HistoriqueCertifBean implements Serializable {
 	private String accompagnant;
 	private String lesions;
 	private int heurelagr;
+	private String dateCertif;
 	private int minutelagr;
 	private int heuresys;
 	private int minutesys;
@@ -139,15 +140,21 @@ public class HistoriqueCertifBean implements Serializable {
 		types.add(new String("Repos CNSS"));
 		return types;
 	}
+	
+
+	public String getDateCertif() {
+		return dateCertif;
+	}
+
+	public void setDateCertif(String dateCertif) {
+		this.dateCertif = dateCertif;
+	}
 
 	public void setTypes(List<String> types) {
 		this.types = types;
 	}
 
-	public String getDateCertif() {
-		
-		return dateCertif;
-	}
+	
 	public String getRemarques() {
 		return remarques;
 	}
@@ -155,12 +162,6 @@ public class HistoriqueCertifBean implements Serializable {
 	public void setRemarques(String remarques) {
 		
 		this.remarques = remarques;
-		System.out.println("set remarque tessssssssssssst"+remarques);
-	}
-	public void setDateCertif(String dateCertif) {
-		
-		this.dateCertif = dateCertif;
-		System.out.println("set datecertif"+dateCertif);
 	}
 	
 
@@ -170,19 +171,32 @@ public class HistoriqueCertifBean implements Serializable {
 
 	public void setInapte(String inapte) {
 		this.inapte = inapte;
-		System.out.println("inapte"+inapte);
 	}
 
 	public String getDatereprise() {
-		System.out.println("get date reprise"+datereprise);
 		return datereprise;
 	}
 
 	public void setDatereprise(String datereprise) {
 		
 		this.datereprise = datereprise;
-System.out.println("set date reprise"+datereprise);
 }
+	public void verifierDate() {
+		FacesContext face = FacesContext.getCurrentInstance();
+		if (Module.corigerDate(dateCertif) != null) {
+			this.setDateCertif(Module.corigerDate(dateCertif));
+		}
+		if (!(Module.verifierDate(dateCertif).equals("")))
+
+		{ blocage=true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", Module.verifierDate(dateCertif)));
+		
+			dateCertif = ancienValeurDateCertif;
+		} else {
+			ancienValeurDateCertif = dateCertif;
+		}
+	}
 
 	public String getAdaterdu() {
 		return adaterdu;
@@ -198,7 +212,6 @@ System.out.println("set date reprise"+datereprise);
 
 	public void setDatedelagression(String datedelagression) {
 		this.datedelagression = datedelagression;
-		System.out.println("dategrusss"+datedelagression);
 	}
 
 	public Integer getIdHistoriqueCertif() {
@@ -719,11 +732,6 @@ System.out.println("set date reprise"+datereprise);
 		CabinetService serCabinet = new CabinetService();
 		cab = serCabinet.rechercheTousCabinet().get(0);
 		if (livreele != null) {
-			// par sa
-			// System.out.println("livree le 1" + livreele);
-			// Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-			// String l = formatter.format(livreele);
-			// System.out.println("livree le" + livreele);
 			rem = remplaceMot(rem, "$livreele", livreele);// remplaser $livree
 
 		} else
@@ -1237,10 +1245,8 @@ System.out.println("set date reprise"+datereprise);
 		cert.setCfclient(cfclient);
 		try {
 			cert.setDateCertif(sdf.parse(dateCertif));
-			System.out.println("datecertif test"+cert.getDateCertif());
 
 			cert.setDatereprise(sdf.parse(datereprise));
-			System.out.println("datecereprise test"+cert.getDatereprise());
 
 		} catch (ParseException e) {
 
@@ -1270,7 +1276,6 @@ System.out.println("set date reprise"+datereprise);
 			}
 		}
 		if (action.equals("Modification")) {
-			System.out.println("entree modif");
 
 			HistoriqueCertifService serc = new HistoriqueCertifService();
 			cert=serc.rechercheHistoriqueCertif(idHistoriqueCertif);
@@ -1314,14 +1319,12 @@ System.out.println("set date reprise"+datereprise);
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
-		System.out.println("debut ajout certif"+dateCertif);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         
 
         try {
 
 		cert.setDateCertif(formatter.parse(dateCertif));
-		System.out.println("date certiffffff"+cert.getDateCertif());
 		
         } catch (ParseException e) {
             e.printStackTrace();
@@ -1329,7 +1332,6 @@ System.out.println("set date reprise"+datereprise);
         try {
 
     		cert.setAdaterdu(formatter.parse(adaterdu));
-    		System.out.println("date adater"+cert.getAdaterdu());
     		
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -1337,7 +1339,6 @@ System.out.println("set date reprise"+datereprise);
         try {
 
     		cert.setDatedelagression(formatter.parse(datedelagression));
-    		System.out.println("dateguersia"+cert.getDatedelagression());
     		
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -1345,7 +1346,6 @@ System.out.println("set date reprise"+datereprise);
         try {
 
     		cert.setDateCertif(formatter.parse(dateCertif));
-    		System.out.println("date certiffffff"+cert.getDateCertif());
     		
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -1417,7 +1417,6 @@ System.out.println("set date reprise"+datereprise);
 
 	public void ajoutCertifAptitude() throws SQLException, Exception {
 		
-		System.out.println("ajout certif aptitude");
 
 		HistoriqueCertif cert = new HistoriqueCertif();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -1433,9 +1432,7 @@ System.out.println("set date reprise"+datereprise);
 
 			e.printStackTrace();
 		}
-		System.out.println("remarque avant"+remarques);
 		cert.setRemarques(remarques);
-		System.out.println("cert.getre"+cert.getRemarques());
 		Certificat c = new CertificatService()
 				.rechercheCertifParMotif(motifCertificat);
 		cert.setCertificat(c);
@@ -1565,7 +1562,6 @@ System.out.println("set date reprise"+datereprise);
 	}
 
 	public void intialiserDateCertif()// pour initialiler les dates en date
-	// systeme
 	{
 		action = "Ajout";
 		Date actuelle = new Date();
@@ -1771,22 +1767,7 @@ System.out.println("set date reprise"+datereprise);
 
 	}
 
-	public void verifierDate() {
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(dateCertif) != null) {
-			this.setDateCertif(Module.corigerDate(dateCertif));
-		}
-		if (!(Module.verifierDate(dateCertif).equals("")))
-
-		{ blocage=true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateCertif)));
-		
-			dateCertif = ancienValeurDateCertif;
-		} else {
-			ancienValeurDateCertif = dateCertif;
-		}
-	}
+	
 public void verifierDateLivrele()
 {
 	FacesContext face = FacesContext.getCurrentInstance();
@@ -1893,7 +1874,6 @@ public void verifierDateLivrele()
 
 	public void verifierDatedatereprise() {
 		FacesContext face = FacesContext.getCurrentInstance();
-		System.out.println("resultat test"+Module.corigerDate(datereprise));
 		if (Module.corigerDate(datereprise) != null) {
 			this.setDatereprise(Module.corigerDate(datereprise));
 		}

@@ -66,7 +66,13 @@ public class HistoriqueCertif implements Serializable {
 
 		return cfclient;
 	}
+	public Date getDateCertif() {
+		return dateCertif;
+	}
 
+	public void setDateCertif(Date dateCertif) {
+		this.dateCertif = dateCertif;
+	}
 	public void setCfclient(Cfclient cfclient) {
 		this.cfclient = cfclient;
 	}
@@ -87,13 +93,7 @@ public class HistoriqueCertif implements Serializable {
 		this.idHistoriqueCertif = idHistoriqueCertif;
 	}
 
-	public Date getDateCertif() {
-		return dateCertif;
-	}
-
-	public void setDateCertif(Date dateCertif) {
-		this.dateCertif = dateCertif;
-	}
+	
 
 	public String getRemarque() {
 		return remarque;

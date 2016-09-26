@@ -2297,6 +2297,8 @@ action=null;
 					clt.setPoids(poids);
 					clt.setDateCons(dateConsultation);
 					clt.setDernierVisite(dateConsultation);
+					clt.setResultatFrotti(resultatFrotti);
+					clt.setDateFrotti(dateFrotti);
 					clt.setTypCons(consultationmotif);
 					clt.setNbCons(clt.getNbCons() + 1);
 					serclt.modifierPatient(clt);
