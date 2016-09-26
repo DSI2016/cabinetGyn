@@ -30,19 +30,18 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
-
 	public String getValeurRecherche() {
-		valeurRecherche = Module.rechercheExamenComp;
+		valeurRecherche=Module.rechercheExamenComp;
 		return valeurRecherche;
 	}
 
 	public void setValeurRecherche(String valeurRecherche) {
-		Module.rechercheExamenComp = valeurRecherche;
+		Module.rechercheExamenComp=valeurRecherche;
 		this.valeurRecherche = valeurRecherche;
 	}
 
 	public void annulerRecherche() {
-		Module.rechercheExamenComp = "";
+		Module.rechercheExamenComp="";
 		valeurRecherche = null;
 	}
 
@@ -91,6 +90,7 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 	}
 
 	public void ajouterExamenComplementaire() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -111,12 +111,13 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 		ExamenComplementaireService ser = new ExamenComplementaireService();
 		ser.supprimerExamenComplementaire(id);
 		FacesContext faces = FacesContext.getCurrentInstance();
-		faces.addMessage(null, new FacesMessage("Examen supprimé avec succès."));
+		faces.addMessage(null, new FacesMessage(
+				"Examen supprimé avec succès."));
 		FacesContext context2 = FacesContext.getCurrentInstance();
-		context2.getExternalContext().getFlash().setKeepMessages(true);
+		context2.getExternalContext().getFlash()
+				.setKeepMessages(true);
 		try {
-			context2.getExternalContext().redirect(
-					"GestionExamenComplementaire");
+			context2.getExternalContext().redirect("GestionExamenComplementaire");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -124,6 +125,7 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		libExamenComplementaire=libExamenComplementaire.replaceAll("\\s+", " ");
 		ExamenComplementaireService ser = new ExamenComplementaireService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -140,10 +142,9 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 			} else // tester si cette ville existe déjà
 			{
 				ExamenComplementaire d = new ExamenComplementaire(
-						libExamenComplementaire.trim());
+						libExamenComplementaire);
 				ExamenComplementaire d2 = ser
-						.rechercheExamenComplementaireParLibelleExamenComplementaire(libExamenComplementaire
-								.trim());
+						.rechercheExamenComplementaireParLibelleExamenComplementaire(libExamenComplementaire);
 				if (d2 != null
 						&& !d2.getIdexamenComplementaire().equals(
 								idexamenComplementaire)) {
@@ -154,11 +155,9 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 					addValid = false;
 				} else {
 					d.setIdexamenComplementaire(idexamenComplementaire);
-					d.setLibExamenComplementaire(libExamenComplementaire.trim());
+					d.setLibExamenComplementaire(libExamenComplementaire);
 					ser.modifierExamenComplementaire(d);
-					faces.addMessage(null, new FacesMessage("L'examen \""
-							+ libExamenComplementaire
-							+ "\"  modifié avec succès."));
+					faces.addMessage(null, new FacesMessage("Examen modifié avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");
@@ -166,8 +165,7 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 					context2.getExternalContext().getFlash()
 							.setKeepMessages(true);
 					try {
-						context2.getExternalContext().redirect(
-								"GestionExamenComplementaire");
+						context2.getExternalContext().redirect("GestionExamenComplementaire");
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
@@ -190,12 +188,12 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 			{
 
 				ExamenComplementaire d3 = ser
-						.rechercheExamenComplementaireParLibelleExamenComplementaire(libExamenComplementaire
-								.trim());
+						.rechercheExamenComplementaireParLibelleExamenComplementaire(libExamenComplementaire);
 
-				if (d3 == null) {
+				if (d3 == null) { 
 					ExamenComplementaire d1 = new ExamenComplementaire(
-							libExamenComplementaire.trim());
+							libExamenComplementaire);
+
 					ser.ajoutExamenComplementaire(d1);
 					faces.addMessage(null, new FacesMessage("L'examen \""
 							+ libExamenComplementaire
@@ -207,8 +205,7 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 					context2.getExternalContext().getFlash()
 							.setKeepMessages(true);
 					try {
-						context2.getExternalContext().redirect(
-								"GestionExamenComplementaire");
+						context2.getExternalContext().redirect("GestionExamenComplementaire");
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
@@ -225,13 +222,13 @@ public class ExamenComplementaireBean implements java.io.Serializable {
 			}
 		}
 		context.addCallbackParam("addValid", addValid);
+		
 
 	}
-
-	public void initialisation() {
+	public void initialisation (){
 		libExamenComplementaire = null;
 		idexamenComplementaire = null;
-
+		
 	}
 
 }

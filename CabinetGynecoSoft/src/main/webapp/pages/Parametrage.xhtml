@@ -10,560 +10,684 @@
 <ui:composition template="../templates/templateGyneco.xhtml">
 	<ui:define name="title">Paramétrage</ui:define>
 	<ui:define name="body">
-	<p:graphicImage value="/imagesTitre/parametrages.png"  width="100%"></p:graphicImage>
-	<h:form id="f1">
-		<table width="100%" border="0">
+		<p:graphicImage value="/imagesTitre/parametrages.png" width="100%"></p:graphicImage>
+		<h:form id="f1">
+
+			<table width="100%" border="0">
 				<tr>
 					<td width="35%"><div align="left">
 							<h:panelGrid columns="2">
 								<h:commandLink actionListener="#{certificatBean.gotoAcceuil()}">
 									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
 								</h:commandLink>
-								
+
 							</h:panelGrid>
 						</div></td>
-                     <td align="right" width="30%">
-							<h:panelGrid columns="3">
-								
-								<h:outputText value="#{connectionBean.utilisateur}"
-									style="font-size:19px;font-weight:bold;font-style: italic" />
-							
+					<td align="right" width="30%"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
 							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
 								<p:graphicImage value="/images/dec.png" width="80%" />
 							</h:commandLink>
-							
-                        </h:panelGrid>
-					</td>
+
+						</h:panelGrid></td>
 				</tr>
 			</table>
-		<div align="center">
-			<br />
-			<p:panel style="width: 90%;height:80%">
-				<br />
-				<table width="80%" style="height: 98%" border="0">
 
-					<tr>
-						<td align="center" width="25%" style="height: 25%">
 
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToGestionMedicament()}"
-											disabled="#{connectionBean.gestionMed}">
-											<p:graphicImage value="/images/med.png" width="100px" height="100px"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink  styleClass="menu"
-											actionListener="#{accueilBean.goToGestionMedicament()}"
-											disabled="#{connectionBean.gestionMed}"
-											style="font-weight:blod;font-size:14pt;color: #1EA4D5">
-											<h:commandLink  value="Médicaments" styleClass="menu"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink ></td>
-								</tr>
-							</table>
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToGestionVille()}"
-											disabled="#{connectionBean.gestionVille}">
 
-											<p:graphicImage value="/images/ville.jpg"></p:graphicImage>
-									</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink  styleClass="menu"
-											style="font-weight:blod;font-size:14pt;color: #1EA4D5"
-											actionListener="#{accueilBean.goToGestionVille()}"
-											disabled="#{connectionBean.gestionVille}">
-											<h:outputText value="Villes"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-						</td>
+			<p:accordionPanel>
+				<p:tab title="Parametrage Medicaments">
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
 
-						<td align="center" width="25%" style="height: 25%">
-							<table width="100%" style="height: 100%">
 								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToGestionClinique()}"
-											disabled="#{connectionBean.gestionClinique}">
-											<p:graphicImage value="/images/clinique.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionClinique()}" title="Clinique"
-											disabled="#{connectionBean.gestionClinique}">
-											<h:outputText value="Cliniques"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
+									<td align="center" width="25%" style="height: 25%">
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionMedicament()}"
+														disabled="#{connectionBean.gestionMed}">
+														<p:graphicImage value="/images/med.png" width="100px"
+															height="100px"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionMedicament()}"
+														disabled="#{connectionBean.gestionMed}"
+														style="font-weight:blod;font-size:14pt;color: #1EA4D5">
+														<h:commandLink value="Médicaments" styleClass="menu"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionFormMedicament()}"
+														disabled="#{connectionBean.gestionFormMed}">
+														<p:graphicImage value="/images/medicament.png" width="120"
+															height="120"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionFormMedicament()}"
+														disabled="#{connectionBean.gestionFormMed}">
+														<h:outputText value=" Formes Médicaments"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+
 								</tr>
 							</table>
+						</p:panel>
+					</div>
+				</p:tab>
+				<p:tab title="Parametrage Consultations">
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-							<table width="100%" style="height: 100%">
 								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToGestionProfession()}"
-											disabled="#{connectionBean.gestionProf}">
-											<p:graphicImage value="/images/proffesion10.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink  styleClass="menu"
-											actionListener="#{accueilBean.goToGestionProfession()}"
-											style="font-weight:blod;font-size:14pt;color: #1EA4D5"
-											disabled="#{connectionBean.gestionProf}">
-											<h:outputText value="Professions"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToGestionEtatFinGrossesses()}"
-											disabled="#{connectionBean.gestionEtatFinGross}">
-											<p:graphicImage value="/images/141.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionEtatFinGrossesses()}"
-											disabled="#{connectionBean.gestionEtatFinGross}">
-											<h:outputText value=" Etats Fin Grossese"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-
-						</td>
-
-					</tr>
+									<td align="center" width="25%" style="height: 25%">
 
 
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionSymptome()}"
+														disabled="#{connectionBean.gestionSyn}">
+														<p:graphicImage value="/images/symptome.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionSymptome()}"
+														disabled="#{connectionBean.gestionSyn}">
+														<h:outputText value=" Symptômes"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
 
-					<tr>
-						<td align="center" width="25%" style="height: 25%">
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionEtatBebe()}"
-											disabled="#{connectionBean.gestionBb}">
-											<p:graphicImage value="/images/154.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionEtatBebe()}"
-											disabled="#{connectionBean.gestionBb}">
-											<h:outputText value="Etat Bébe"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-
-
-						</td>
-
-						<td align="center" width="25%" style="height: 25%">
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionAnalyse()}"
-											disabled="#{connectionBean.gestionAnal}">
-											<p:graphicImage value="/images/analyse1.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionAnalyse()}"
-											disabled="#{connectionBean.gestionAnal}">
-											<h:outputText value="Analyses"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-
-						</td>
-
-						<td align="center" width="25%" style="height: 25%">
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionDocteur()}"
-											disabled="#{connectionBean.gestionDoct}">
-											<p:graphicImage value="/images/doctor10.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionDocteur()}"
-											disabled="#{connectionBean.gestionDoct}">
-											<h:outputText value="Docteurs"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-
-						</td>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
 
 
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionDiagnostique()}"
+														disabled="#{connectionBean.gestionDiag}">
+														<p:graphicImage value="/images/2.jpg"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionDiagnostique()}"
+														disabled="#{connectionBean.gestionDiag}">
+														<h:outputText value=" Diagnostiques"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
 
-						<td align="center" width="25%" style="height: 25%">
 
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											
-											actionListener="#{accueilBean.goToGestionExamenClinique()}"
-											disabled="#{connectionBean.gestionExm}">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionExamenComplementaire()}"
+														disabled="#{connectionBean.gestionExmComp}">
+														<p:graphicImage value="/images/22126.png" width="140"
+															height="140"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionExamenComplementaire()}"
+														disabled="#{connectionBean.gestionExmComp}">
+														<h:outputText value=" Examens Complémentaires"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
 
-											<p:graphicImage value="/images/22125.png" width="130" height="130"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionExamenClinique()}"
-											disabled="#{connectionBean.gestionExm}">
-											<h:outputText value=" Examens Clinique"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionExamenClinique()}"
+														disabled="#{connectionBean.gestionExm}">
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
+														<p:graphicImage value="/images/22125.png" width="130"
+															height="130"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionExamenClinique()}"
+														disabled="#{connectionBean.gestionExm}">
+														<h:outputText value=" Examens Clinique"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
 
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionUterus()}"
-											disabled="#{connectionBean.gestionUterus}">
-											<p:graphicImage value="/images/uterus.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionUterus()}"
-											disabled="#{connectionBean.gestionUterus}">
-											<h:outputText value=" Uterus"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionAnalyse()}"
+														disabled="#{connectionBean.gestionAnal}">
+														<p:graphicImage value="/images/analyse1.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionAnalyse()}"
+														disabled="#{connectionBean.gestionAnal}">
+														<h:outputText value="Analyses"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToAntecedents()}"
+														disabled="#{connectionBean.gestAntecedent}">
+														<p:graphicImage value="/images/antecedent.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToAntecedents()}"
+														disabled="#{connectionBean.gestAntecedent}">
+														<h:outputText value="Antécédents"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+
 								</tr>
 							</table>
+						</p:panel>
+					</div>
 
+				</p:tab>
+				<p:tab title="Parametrage Grossesses">
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
 
-						</td>
-					</tr>
-
-
-					<tr>
-						<td align="center" width="25%" style="height: 25%">
-
-
-							<table width="100%" style="height: 100%">
 								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionMoyenContraception()}"
-											disabled="#{connectionBean.gestionMoyCtrcep}">
-											<p:graphicImage value="/images/icon-contraception1.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionMoyenContraception()}"
-											disabled="#{connectionBean.gestionMoyCtrcep}">
-											<h:outputText value=" Moyens Contracéption"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
+									<td align="center" width="25%" style="height: 25%">
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionEtatFinGrossesses()}"
+														disabled="#{connectionBean.gestionEtatFinGross}">
+														<p:graphicImage value="/images/141.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionEtatFinGrossesses()}"
+														disabled="#{connectionBean.gestionEtatFinGross}">
+														<h:outputText value=" Etats Fin Grossese"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionEtatBebe()}"
+														disabled="#{connectionBean.gestionBb}">
+														<p:graphicImage value="/images/154.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionEtatBebe()}"
+														disabled="#{connectionBean.gestionBb}">
+														<h:outputText value="Etat Bébe"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
 
 
+									</td>
+									<td align="center" width="25%" style="height: 25%">
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionUterus()}"
+														disabled="#{connectionBean.gestionUterus}">
+														<p:graphicImage value="/images/uterus.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionUterus()}"
+														disabled="#{connectionBean.gestionUterus}">
+														<h:outputText value=" Uterus"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
 
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionDiagnostique()}"
-											disabled="#{connectionBean.gestionDiag}">
-											<p:graphicImage value="/images/2.jpg"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionDiagnostique()}"
-											disabled="#{connectionBean.gestionDiag}">
-											<h:outputText value=" Diagnostiques"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-
-
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionSymptome()}"
-											disabled="#{connectionBean.gestionSyn}">
-											<p:graphicImage value="/images/symptome.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionSymptome()}"
-											disabled="#{connectionBean.gestionSyn}">
-											<h:outputText value=" Symptômes"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionExamenComplementaire()}"
-											disabled="#{connectionBean.gestionExmComp}">
-											<p:graphicImage value="/images/22126.png" width="140" height="140"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionExamenComplementaire()}"
-											disabled="#{connectionBean.gestionExmComp}">
-											<h:outputText value=" Examens Complémentaires"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionFormMedicament()}"
-											disabled="#{connectionBean.gestionFormMed}">
-											<p:graphicImage value="/images/medicament.png" width="120" height="120"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionFormMedicament()}"
-											disabled="#{connectionBean.gestionFormMed}">
-											<h:outputText value=" Formes Médicaments"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionMoyenContraception()}"
+														disabled="#{connectionBean.gestionMoyCtrcep}">
+														<p:graphicImage value="/images/icon-contraception1.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionMoyenContraception()}"
+														disabled="#{connectionBean.gestionMoyCtrcep}">
+														<h:outputText value=" Moyens Contracéption"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
 								</tr>
 							</table>
+						</p:panel>
+					</div>
+				</p:tab>
+				<p:tab title="Parametrage Rapports">
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
 
-						</td>
-
-					</tr>
-
-
-					<tr>
-						<td align="center" width="25%" style="height: 25%">
-
-							<table width="100%" style="height: 100%">
 								<tr>
-									<td width="25%" style="height: 25%" align="center"
-										valign="middle"><h:commandLink
-											actionListener="#{saisonBean.goToHoraireparamt()}"
-											disabled="#{connectionBean.gestHoraire}">
-											<p:graphicImage value="/images/horloge.png" width="90"
-												height="90"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{saisonBean.goToHoraireparamt()}"
-											disabled="#{connectionBean.gestHoraire}">
-											<h:outputText value="Horaires De Travail"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
+									<td align="center" width="25%" style="height: 25%">
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{jourFrBean.goToGestionJourFr()}"
-											disabled="#{connectionBean.gestionJourFr}">
-											<p:graphicImage value="/images/calendar.png" height="22%"
-												width="50%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionCertificat()}"
+														disabled="#{connectionBean.rapportCertif}">
+														<p:graphicImage value="/images/certif.png" width="100px"
+															height="100px"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionCertificat()}"
+														disabled="#{connectionBean.rapportCertif}"
+														style="font-weight:blod;font-size:14pt;color: #1EA4D5">
+														<h:commandLink value="Certificats" styleClass="menu"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
 
-											</p:graphicImage>
-											<f:setPropertyActionListener value="parametrage"
-												target="#{jourFrBean.destination}"></f:setPropertyActionListener>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionJoursFériés()}"
-											disabled="#{connectionBean.gestionJourFr}">
-											<h:outputText value="Jours Fériers"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionLettre()}"
+														disabled="#{connectionBean.rapportLettre}">
+														<p:graphicImage value="/imagesMenu/enveloppe.png"
+															width="120" height="120"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionLettre()}"
+														disabled="#{connectionBean.rapportLettre}">
+														<h:outputText value=" Lettres"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+
 								</tr>
 							</table>
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
+						</p:panel>
+					</div>
+				</p:tab>
+				<p:tab title="Parametrage Générale">
 
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
 
-							<table width="100%" style="height: 100%">
 								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToGestionCabinet()}"
-											disabled="#{connectionBean.gestCabinet}">
-											<p:graphicImage value="/images/Cabinet.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToGestionCabinet()}"
-											disabled="#{connectionBean.gestCabinet}">
-											<h:outputText value=" À Propos de Cabinet"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-						</td>
-						<td align="center" width="25%" style="height: 25%">
 
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionVille()}"
+														disabled="#{connectionBean.gestionVille}">
 
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink
-											actionListener="#{accueilBean.goToAntecedents()}"
-											disabled="#{connectionBean.gestAntecedent}">
-											<p:graphicImage value="/images/antecedent.png"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink styleClass="menu"
-											actionListener="#{accueilBean.goToAntecedents()}"
-											disabled="#{connectionBean.gestAntecedent}">
-											<h:outputText value="Antécédents"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
+														<p:graphicImage value="/images/ville.jpg"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														style="font-weight:blod;font-size:14pt;color: #1EA4D5"
+														actionListener="#{accueilBean.goToGestionVille()}"
+														disabled="#{connectionBean.gestionVille}">
+														<h:outputText value="Villes"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionClinique()}"
+														disabled="#{connectionBean.gestionClinique}">
+														<p:graphicImage value="/images/clinique.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionClinique()}"
+														title="Clinique"
+														disabled="#{connectionBean.gestionClinique}">
+														<h:outputText value="Cliniques"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
 
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionProfession()}"
+														disabled="#{connectionBean.gestionProf}">
+														<p:graphicImage value="/images/proffesion10.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionProfession()}"
+														style="font-weight:blod;font-size:14pt;color: #1EA4D5"
+														disabled="#{connectionBean.gestionProf}">
+														<h:outputText value="Professions"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
 
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToSession()}" 
-											disabled="#{connectionBean.gestAntecedent}">
-											<p:graphicImage value="/images/antecedent.png" rendered="false"></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom">
-									   <h:commandLink styleClass="menu"  rendered="false"
-											actionListener="#{accueilBean.goToSession()}"
-											disabled="#{connectionBean.gestAntecedent}">
-											<h:outputText value="Antécédents"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td align="center" width="25%" style="height: 25%">
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink 
-											actionListener="#{accueilBean.goToConsultation()}" 
-											disabled="#{connectionBean.gestConsultation}">
-											<p:graphicImage value="/images/antecedent.png" ></p:graphicImage>
-										</h:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom">
-									   <h:commandLink styleClass="menu" 
-											actionListener="#{accueilBean.goToConsultation()}"
-											disabled="#{connectionBean.gestConsultation}">
-											<h:outputText value="Consultations"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
-								</tr>
-								
-							</table>
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionDocteur()}"
+														disabled="#{connectionBean.gestionDoct}">
+														<p:graphicImage value="/images/doctor10.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionDocteur()}"
+														disabled="#{connectionBean.gestionDoct}">
+														<h:outputText value="Docteurs"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
 
-						</td>
-						<td align="center" width="25%" style="height: 25%">
-							<table width="100%" style="height: 100%">
-								<tr>
-									<td align="center" valign="bottom"><p:commandLink ajax="false" 
-									       actionListener="#{accueilBean.goToRapport()}"
-											disabled="#{connectionBean.menuGestRapport}">
-											<p:graphicImage value="/imagesMenu/rapport10.png" />
-
-										</p:commandLink></td>
-								</tr>
-								<tr>
-									<td align="center" valign="bottom"><h:commandLink  styleClass="menu"
-											style="font-weight:blod;font-size:14pt;color: #1EA4D5"
-											actionListener="#{accueilBean.goToRapport()}"
-											disabled="#{connectionBean.menuGestRapport}">
-											<h:outputText value="Rapports"
-												style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
-										</h:commandLink></td>
+									</td>
 								</tr>
 							</table>
-						</td>
+						</p:panel>
+					</div>
 
-						
-						
-						
-					</tr>
-					
-					
-					
-					
-					
-				</table>
 
-			</p:panel>
-			<br /> <br />
-		</div>
-	</h:form>
+				</p:tab>
+				<p:tab title="Parametrage Cabinet">
+
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
+
+								<tr>
+									<td align="center" width="25%" style="height: 25%">
+
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td width="25%" style="height: 25%" align="center"
+													valign="middle"><h:commandLink
+														actionListener="#{saisonBean.goToHoraireparamt()}"
+														disabled="#{connectionBean.gestHoraire}">
+														<p:graphicImage value="/images/horloge.png" width="90"
+															height="90"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{saisonBean.goToHoraireparamt()}"
+														disabled="#{connectionBean.gestHoraire}">
+														<h:outputText value="Horaires De Travail"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{jourFrBean.goToGestionJourFr()}"
+														disabled="#{connectionBean.gestionJourFr}">
+														<p:graphicImage value="/images/calendar.png" height="22%"
+															width="50%">
+
+														</p:graphicImage>
+														<f:setPropertyActionListener value="parametrage"
+															target="#{jourFrBean.destination}"></f:setPropertyActionListener>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionJoursFériés()}"
+														disabled="#{connectionBean.gestionJourFr}">
+														<h:outputText value="Jours Fériers"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToConsultation()}"
+														disabled="#{connectionBean.gestConsultation}">
+														<p:graphicImage value="/images/antecedent.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToConsultation()}"
+														disabled="#{connectionBean.gestConsultation}">
+														<h:outputText value="Consultations"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+
+										</table>
+
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToGestionCabinet()}"
+														disabled="#{connectionBean.gestCabinet}">
+														<p:graphicImage value="/images/Cabinet.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToGestionCabinet()}"
+														disabled="#{connectionBean.gestCabinet}">
+														<h:outputText value=" À Propos de Cabinet"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+
+								</tr>
+							</table>
+						</p:panel>
+					</div>
+				</p:tab>
+				<p:tab title="Parametrage Superadmin">
+					<div align="center">
+						<br />
+						<p:panel style="width: 90%;height:80%">
+							<br />
+							<table width="80%" style="height: 98%" border="0">
+
+								<tr>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToConfigSalle()}"
+														disabled="#{connectionBean.gestConsultation}">
+														<p:graphicImage value="/images/antecedent.png"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu"
+														actionListener="#{accueilBean.goToConfigSalle()}"
+														disabled="#{connectionBean.gestConsultation}">
+														<h:outputText value="Configuration Salle"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+
+										</table>
+									</td>
+									<td align="center" width="25%" style="height: 25%">
+										<table width="100%" style="height: 100%">
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														actionListener="#{accueilBean.goToSession()}"
+														>
+														<p:graphicImage value="/images/antecedent.png"
+															rendered="false"></p:graphicImage>
+													</h:commandLink></td>
+											</tr>
+											<tr>
+												<td align="center" valign="bottom"><h:commandLink
+														styleClass="menu" rendered="true"
+														actionListener="#{accueilBean.goToSession()}"
+														disabled="#{connectionBean.gestAntecedent}">
+														<h:outputText value="Sessions"
+															style="font-weight:blod;font-size:14pt;color: #1EA4D5" />
+													</h:commandLink></td>
+											</tr>
+										</table>
+									</td>
+
+								</tr>
+							</table>
+						</p:panel>
+					</div>
+
+				</p:tab>
+			</p:accordionPanel>
+
+
+		</h:form>
+
 		<style type="text/css">
 .menu {
-	
 	font-weight: blod;
 	font-size: 10pt;
 	font-weight: 600;
@@ -572,6 +696,6 @@
 	text-decoration: none;
 }
 </style>
-</ui:define>
+	</ui:define>
 </ui:composition>
 </html>

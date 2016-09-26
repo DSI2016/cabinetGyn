@@ -1,10 +1,27 @@
 package com.doctor.bean;
 
+import java.io.File;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JasperRunManager;
+
+import com.doctor.dao.HibernateUtil;
+import com.doctor.persistance.Cfclient;
+import com.doctor.service.CfclientService;
+import com.mysql.jdbc.Connection;
 
 public class Module {
 	// static Integer idpatient;
@@ -514,6 +531,32 @@ return (success);
 		} else
 			return "0";
 	}
+	
+	
+	static void imprimer(String nomReport,Map<String, Object> param) throws SQLException,Exception {
+
+	
+	Connection connection = (Connection) DriverManager.getConnection(
+			HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
+	File jasper = new File(FacesContext.getCurrentInstance()
+			.getExternalContext()
+			.getRealPath("/reports/" + nomReport + ".jasper"));
+   
+	
+
+	byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
+			param, connection);
+	HttpServletResponse response = (HttpServletResponse) FacesContext
+			.getCurrentInstance().getExternalContext().getResponse();
+	response.setContentType("application/pdf");
+	response.setContentLength(bytes.length);
+	ServletOutputStream outStream = response.getOutputStream();
+	outStream.write(bytes, 0, bytes.length);
+	outStream.flush();
+	outStream.close();
+	FacesContext.getCurrentInstance().responseComplete();
+
+}
 
 	static String menuSal;
 	static String menuGestPat;

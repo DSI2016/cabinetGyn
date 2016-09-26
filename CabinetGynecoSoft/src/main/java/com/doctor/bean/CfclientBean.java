@@ -1708,14 +1708,15 @@ public class CfclientBean implements java.io.Serializable {
 
 			// ouvrir le dialog de détail
 			RequestContext.getCurrentInstance().update(
-					"f1:formulaire:idSupprimer");
+					"f1:formulaire:idSuppression");
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('suppression').show();");
 
 		}
 
 	}
-
+	
+	
 	public void supprimPatiente() {
 		// la suppression avec aucun lien avec d'autres table
 		FacesContext face = FacesContext.getCurrentInstance();
@@ -1792,6 +1793,18 @@ public class CfclientBean implements java.io.Serializable {
 							.get(i).getIdHistoriquelettre());
 			}
 		}
+		
+		if(afficheGross){
+			List<HistoriqueGross> histoGross = new HistoriqueGrossService()
+			.rechercheToutHistoriqueGross(patient.getCode());
+			if (histoGross != null && histoGross.size() > 0) {
+				for (int i = 0; i < histoGross.size(); i++)
+					new HistoriqueGrossService().supprimerHistoriqueGross(histoGross
+							.get(i).getIdhistoriqueGross());
+			}
+		}
+		
+		
 		if (afficheConsultation) {
 			List<ConsultationDetail> cons = new ConsultationDetailService()
 					.rechercheToutConsultation(patient.getCode());
@@ -1899,6 +1912,208 @@ public class CfclientBean implements java.io.Serializable {
 
 	}
 
+
+	
+	public void supprimPatienteArchi() {
+		// la suppression avec aucun lien avec d'autres table
+		FacesContext face = FacesContext.getCurrentInstance();
+		new CfclientService().supprimerPatient(patient.getCode());
+		blocage = false;
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+				"Patiente supprimée avec succés"));
+
+		FacesContext context2 = FacesContext.getCurrentInstance();
+		context2.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+			context2.getExternalContext().redirect("PatientArchive");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void supprimPatientCascadArchi() {
+		
+		
+		// la suppression cascade
+		
+		if (afficheOrdonnance) {
+			List<Ordonnance> ords = new OrdonnanceService()
+					.rechercheOrdonnanceParPatient(patient.getCode());
+			if (ords != null && ords.size() > 0) {
+				for (int i = 0; i < ords.size(); i++) {// supprimer les lignes
+														// de l'ordonnance
+					List<MedOrd> l = new MedOrdService().rechercheParIdOrd(ords
+							.get(i).getIdOrdonnance());
+					for (int j = 0; j < l.size(); j++) {
+						new MedOrdService().supprimerMedOrd(l.get(j)
+								.getIdMedOrd());
+					}
+					// supprimer l'ordonnance
+					new OrdonnanceService().supprimerOrdonnance(ords.get(i)
+							.getIdOrdonnance());
+				}
+			}
+		}
+		if (afficheRadios) {
+			List<Radio> r = new RadioService().rechercheRadioParPatient(patient
+					.getCode());
+			if (r != null && r.size() > 0) {
+				for (int i = 0; i < r.size(); i++)
+					new RadioService().supprimerRadio(r.get(i).getIdradio());
+			}
+		}
+		if (afficheAnalyse) {
+			List<AnalyseDemandee> a = new AnalyseDemandeeService()
+					.rechercheAnalyseDemandeeParPatient(patient.getCode());
+			if (a != null && a.size() > 0) {
+				for (int i = 0; i < a.size(); i++)
+					new AnalyseService().supprimerAnalyse(a.get(i)
+							.getIdanalyseDemandee());
+			}
+		}
+		if (afficheCertif) {
+			List<HistoriqueCertif> c = new HistoriqueCertifService()
+					.rechercheTousHistoriqueCertifByPatient(patient.getCode());
+			if (c != null && c.size() > 0) {
+				for (int i = 0; i < c.size(); i++)
+					new HistoriqueCertifService().supprimerHistoriqueCertif(c
+							.get(i).getIdHistoriqueCertif());
+			}
+
+		}
+		if (afficheLettre) {
+			List<historiqueLettre> l = new historiqueLettreService()
+					.rechercheTousHistoriqueLettre(patient.getCode());
+			if (l != null && l.size() > 0) {
+				for (int i = 0; i < l.size(); i++)
+					new historiqueLettreService().supprimerHistoriqueLettre(l
+							.get(i).getIdHistoriquelettre());
+			}
+		}
+		
+		if(afficheGross){
+			List<HistoriqueGross> histoGross = new HistoriqueGrossService()
+			.rechercheToutHistoriqueGross(patient.getCode());
+			if (histoGross != null && histoGross.size() > 0) {
+				for (int i = 0; i < histoGross.size(); i++)
+					new HistoriqueGrossService().supprimerHistoriqueGross(histoGross
+							.get(i).getIdhistoriqueGross());
+			}
+		}
+		
+		if (afficheConsultation) {
+			List<ConsultationDetail> cons = new ConsultationDetailService()
+					.rechercheToutConsultation(patient.getCode());
+			for (int i = 0; i < cons.size(); i++)
+				new ConsultationDetailService()
+						.supprimerConsultationDetail(cons.get(i));
+		}
+		if (afficheSterilite) {
+			Sterile s = new SterileService().rechercheSterilePatient(patient
+					.getCode());
+			if (s != null)
+				new SterileService().supprimerSterile(s);
+		}
+		if (afficheRDV) {
+			List<RendezVous> r = new RendezVousService()
+					.rechercheParPatient(patient.getCode());
+			if (r != null && r.size() > 0)
+				for (int i = 0; i < r.size(); i++)
+					new RendezVousService().supprimerRendezVous(r.get(i)
+							.getIdrendezVous());
+		}
+		if (afficheAntecedentChir) {
+			List<AntChirCfclient> a = new AntChirCfclientService()
+					.rechercheAntChirParCfclient(patient.getCode());
+			if (a != null && a.size() > 0) {
+				for (int i = 0; i < a.size(); i++)
+					new AntChirCfclientService().supprimerAntChirCfclient(a
+							.get(i).getIdantchircfclient());
+			}
+
+		}
+		if (afficheAntecedentFam) {
+			List<AntFamCfclient> a = new AntFamCfclientService()
+					.rechercheAntFamParCfclient(patient.getCode());
+			if (a != null && a.size() > 0) {
+				for (int i = 0; i < a.size(); i++)
+					new AntFamCfclientService().supprimerAntFamCfclient(a
+							.get(i).getIdantfamcfclient());
+			}
+
+		}
+		if (afficheAntecedentMed) {
+			List<AntMedCfclient> a = new AntMedCfclientService()
+					.rechercheAntMedParCfclient(patient.getCode());
+			if (a != null && a.size() > 0) {
+				for (int i = 0; i < a.size(); i++)
+					new AntMedCfclientService().supprimerAntMedCfclient(a
+							.get(i).getIdantmedcfclient());
+			}
+		}
+		if (afficheSalle) {
+			Salle s = new SalleService().rechercheSalleParPatient(patient
+					.getCode());
+			if (s != null) {
+				int ordre = s.getOrdre();
+				String motif = s.getMotif();
+				new SalleService().supprimerSalle(s);
+				SalleService sl = new SalleService();
+
+				if (motif.equals("Telephone")) {
+					List<Salle> sallesAvecJointureTel = sl
+							.rechercheSalleAvecMotif("Telephone");
+					if (sallesAvecJointureTel != null
+							&& sallesAvecJointureTel.size() > 0)
+						for (int i = 0; i < sallesAvecJointureTel.size(); i++) {
+							if (sallesAvecJointureTel.get(i).getOrdre() > ordre) {
+								sallesAvecJointureTel.get(i)
+										.setOrdre(
+												sallesAvecJointureTel.get(i)
+														.getOrdre() - 1);
+								new SalleService()
+										.modifierSalle(sallesAvecJointureTel
+												.get(i));
+							}
+						}
+				} else {
+					List<Salle> sallesAvecJointure = sl
+							.rechercheAvecJointureSalle("cfclient");
+					if (sallesAvecJointure != null
+							&& sallesAvecJointure.size() > 0)
+						for (int i = 0; i < sallesAvecJointure.size(); i++) {
+							if (sallesAvecJointure.get(i).getOrdre() > ordre) {
+								sallesAvecJointure.get(i)
+										.setOrdre(
+												sallesAvecJointure.get(i)
+														.getOrdre() - 1);
+								new SalleService()
+										.modifierSalle(sallesAvecJointure
+												.get(i));
+							}
+						}
+				}
+			}
+		}
+
+		// suppression de la patiente
+		new CfclientService().supprimerPatient(patient.getCode());
+		FacesContext context2 = FacesContext.getCurrentInstance();
+		context2.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+			context2.getExternalContext().redirect("PatientArchive");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	
+	
+	
+	
+	
+	
 	public void ajout() {
 		setAction("Ajout");
 		action = "Ajout";
@@ -3317,7 +3532,43 @@ public class CfclientBean implements java.io.Serializable {
 	}
 
 	public void getPatCode(Integer idp) {
+		FacesContext faces = FacesContext.getCurrentInstance();
 		code = idp;
+		
+		List<RendezVous> rend = new RendezVousService().rechercheParPatient(code);
+		Salle s = new SalleService().rechercheSalleParPatient(code);
+		
+		if (rend != null && rend.size() > 0 && s != null) {
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Archivage impossible!  Patiente a un rendez-vous et présente dans la salle d'attente.", ""));
+			
+			
+			
+		}else if (s != null) {
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Archivage impossible!  Patiente présente dans la salle d'attente.", ""));
+			
+			
+		}else if (rend != null && rend.size() > 0) {
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Archivage impossible!  Patiente a un rendez-vous.", ""));
+			
+			
+		}else{
+			
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('archivDlg').show();");
+		}
+				
+				
+
+		
+		
+		
+		
 	}
 
 	public void archiver() {

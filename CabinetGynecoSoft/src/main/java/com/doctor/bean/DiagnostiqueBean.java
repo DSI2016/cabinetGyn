@@ -127,6 +127,7 @@ public class DiagnostiqueBean implements java.io.Serializable {
 	}
 
 	public void ajouterDiagnostique() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -156,6 +157,7 @@ public class DiagnostiqueBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		diagnostique=diagnostique.replaceAll("\\s+", " ");
 		DiagnostiqueService ser = new DiagnostiqueService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -181,8 +183,7 @@ public class DiagnostiqueBean implements java.io.Serializable {
 				} else {
 					d.setIddiagnostique(iddiagnostique);
 					ser.modifierDiagnostique(d);
-					faces.addMessage(null, new FacesMessage("Diagnostique \""
-							+ diagnostique + "\"  modifiée avec succès."));
+					faces.addMessage(null, new FacesMessage("Diagnostique modifiée avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");

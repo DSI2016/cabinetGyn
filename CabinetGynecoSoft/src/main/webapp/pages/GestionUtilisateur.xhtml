@@ -154,45 +154,40 @@
 								<table  width="80%">
 									<tr>
 										<td><h:panelGrid columns="2" cellspacing="10">
-												<h:outputLabel value="Nom* : "
+												<h:outputLabel value="Nom : "
 													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.nom}" />
-												<h:outputLabel value="Prenom* : "
+												<p:inputText value="#{utilisateurBean.nom}" readonly="true"/>
+												<h:outputLabel value="Prenom : "
 													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.prenom}" />
-												<h:outputLabel value="Login* : "
-													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.login}" />
-												<h:outputLabel value="Mot de passe* : "
-													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.motPasse}" />
-											</h:panelGrid></td>
-										<td><h:panelGrid columns="2" cellspacing="10">
+												<p:inputText value="#{utilisateurBean.prenom}" readonly="true"/>
 												<h:outputLabel value="Date de naissance : "
 													style="font-size:small;font-weight:bold" />
 												<p:calendar id="german" value="#{utilisateurBean.dateNais}"
 													yearRange="c-60:c+30" locale="fr" navigator="true"
-													pattern="dd/MM/yyyy" />
+													pattern="dd/MM/yyyy" readonly="true"/>
 												<h:outputLabel value="Civil : "
 													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.civil}" />
-												<h:outputLabel value="N° Telephone: "
-													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.tel}" />
-												<h:outputLabel value="Email : "
-													style="font-size:small;font-weight:bold" />
-												<p:inputText value="#{utilisateurBean.email}" />
+												<p:inputText value="#{utilisateurBean.civil}" readonly="true"/>
+												
+												
 											</h:panelGrid></td>
-									</tr>
-									<tr>
-										<td colspan="2"><h:panelGrid columns="3">
+										<td><h:panelGrid columns="2" cellspacing="10">
 												<h:outputLabel value="Adresse : "
 													style="font-size:small;font-weight:bold" />
-												<p:spacer width="50px"></p:spacer>
 												<p:inputText value="#{utilisateurBean.adresse}"
-													style="width:350px" />
+													style="width:400px" readonly="true"/>
+												<h:outputLabel value="N° Telephone: "
+													style="font-size:small;font-weight:bold" />
+												<p:inputText value="#{utilisateurBean.tel}" readonly="true"/>
+												<h:outputLabel value="Email : "
+													style="font-size:small;font-weight:bold" />
+												<p:inputText value="#{utilisateurBean.email}" readonly="true"/>
+												<h:outputLabel value="Login : "
+													style="font-size:small;font-weight:bold" />
+												<p:inputText value="#{utilisateurBean.login}" readonly="true"/>
 											</h:panelGrid></td>
 									</tr>
+									
 								</table>
                                 </div>
 							</p:tab>
@@ -264,25 +259,25 @@
 												<h:outputText value="Envoyer Patient vers consultation" />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.montPatSalPriv}" />
-												<h:outputText value="Monter Patient de list d'attente" />
+												<h:outputText value="Monter Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.descdrePatSalPriv}" />
-												<h:outputText value="Descendre Patient list d'attente" />
+												<h:outputText value="Descendre Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.permutPatSalPriv}" />
-												<h:outputText value="Permuter Patient de list d'attente" />
+												<h:outputText value="Permuter Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.premierPatSalPriv}" />
-												<h:outputText value="Premier Patient list d'attente" />
+												<h:outputText value="Rendre patient le premier " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.dernierSalPriv}" />
-												<h:outputText value="Dernier Patient list d'attente" />
+												<h:outputText value="Rendre patient le dernier" />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.supPatSalPriv}" />
-												<h:outputText value="Supprimer Patient list d'attente" />
+												<h:outputText value="Supprimer Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.chargPatSalPriv}" />
-												<h:outputText value="Charger Patient list d'attente" />
+												<h:outputText value="Charger Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.reponseSalPriv}" />
 												<h:outputText value="Repondre téléphone" />

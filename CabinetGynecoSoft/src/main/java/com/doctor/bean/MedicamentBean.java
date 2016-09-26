@@ -331,6 +331,13 @@ public class MedicamentBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		designation=designation.replaceAll("\\s+", " ");
+		posologie=posologie.replaceAll("\\s+", " ");
+		prixString=prixString.replaceAll("\\s+", "");
+		laboratoire=laboratoire.replaceAll("\\s+", " ");
+		tableau=tableau.replaceAll("\\s+", " ");
+		observation=observation.replaceAll("\\s+", " ");
+		
 		MedicamentService ser = new MedicamentService();
 		FormeMedicamentService s = new FormeMedicamentService();
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -459,6 +466,7 @@ public class MedicamentBean implements java.io.Serializable {
 	}
 
 	public void ajoutForme() {
+		forme=forme.replaceAll("\\s+", " ");
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean addValid = false;
 

@@ -28,7 +28,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		 */
 	private static final long serialVersionUID = 1L;
 	private int index = 0;
-	
+
 	private Integer idUtilisateur;
 	private String login;
 	private String motPasse;
@@ -80,12 +80,12 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean ajoutEtbb;
 	private boolean modifEtbb;
 	private boolean supEtbb;
-	
+
 	private boolean gestFrmMedPriv;
 	private boolean ajoutFrmMedPriv;
 	private boolean modifFrmMedPriv;
 	private boolean supFrmMedPriv;
-	
+
 	private boolean gestConsPriv;
 	private boolean modifConsPriv;
 
@@ -108,7 +108,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private String gestDoc;
 	private String gestProf;
 	private String gestVil;
-	
+
 	private String gestClin;
 	private String rappCertif;
 	private String rappOrdnce;
@@ -168,7 +168,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	private String rapportFiche;
 	private String ordnanceFiche;
 
-	
 	private boolean verConsultPriv;
 	private boolean menuSalPriv;
 	private boolean menuGesPatPriv;
@@ -184,13 +183,13 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean chargPatPriv;
 	private boolean suppPatPriv;
 	private boolean tabInfGnrAjtPatPriv;
-	
+
 	private boolean tabContctPatPriv;
 	private boolean tabInfoConjAjtPatPriv;
 	private boolean tabAtreInfAjtPatPriv;
 	private boolean gestDocPriv;
 	private boolean gestAntecedentParamPriv;
-	
+
 	private boolean paramtabAntMedPriv;
 	private boolean supAntMedPriv;
 	private boolean ajoutAntMedPriv;
@@ -199,30 +198,30 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean ajoutAntChirgPriv;
 	private boolean modifAntChirgPriv;
 	private boolean supAntChirgPriv;
-	
+
 	private boolean paramtabAntFamPriv;
 	private boolean ajoutAntFamPriv;
 	private boolean modifAntFamPriv;
 	private boolean supAntFamPriv;
-	
+
 	private boolean gestFinGrossPriv;
 	private boolean ajoutFinGrossPriv;
 	private boolean modifFinGrossPriv;
 	private boolean supFinGrossPriv;
-	
+
 	private boolean gestUtPriv;
 	private boolean ajoutUtPriv;
 	private boolean modifUtPriv;
 	private boolean supUtPriv;
-	
+
 	private boolean gestHorairePriv;
 	private boolean gestCabinetPriv;
-	
+
 	private boolean modifprdSaisPriv;
 	private boolean ajoutHorTravPriv;
 	private boolean modifHorTravPriv;
 	private boolean supHorTravPriv;
-	
+
 	private boolean gestProfPriv;
 	private boolean gestVilPriv;
 	private boolean gestCliPriv;
@@ -252,7 +251,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean ajoutClinPriv;
 	private boolean modifClinPriv;
 	private boolean supClinPriv;
-	
+
 	private boolean gestJrFerParamPriv;
 	private boolean paramtabJrFerPriv;
 	private boolean ajouJrFerStndPriv;
@@ -329,7 +328,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean modifAntPriv;
 	private boolean suppAntPriv;
 	private boolean modifGynObsPriv;
-	
+
 	private boolean tabGynecoObsPriv;
 	private boolean tabHistGrossPriv;
 	private boolean tabContracepPriv;
@@ -342,11 +341,11 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean gynRadioPriv;
 	private boolean gynAnaPriv;
 	private boolean gynOrdPriv;
-	
+
 	private boolean consultDetAnalPriv;
 	private boolean consultDetRadPriv;
 	private boolean consultDetOrdPriv;
-	
+
 	private boolean gynNouvConsultPriv;
 	private boolean gynModifConsultPriv;
 	private boolean gynSupConsultPriv;
@@ -363,54 +362,49 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean modifCertifPriv;
 	private boolean supCertifPriv;
 	private boolean impCertifPriv;
-	
-	
+
 	private boolean lettreFichePriv;
 	private boolean ajoutLtrPriv;
 	private boolean modifLtrPriv;
 	private boolean supLtrPriv;
 	private boolean impLtrPriv;
-	
+
 	private boolean analyseFichePriv;
 	private boolean modifHistoAnalPriv;
 	private boolean consultHistoAnalPriv;
-	private  boolean supHistoAnalPriv;
-	
+	private boolean supHistoAnalPriv;
+
 	private boolean rapportFichePriv;
-	
+
 	private boolean radioFichePriv;
 	private boolean modifHistoRadPriv;
 	private boolean consultHistoRadPriv;
 	private boolean supHistoRadPriv;
-	
+
 	private boolean ordonceFichePriv;
 	private boolean consultOrdLibrePriv;
 	private boolean modifHistoOrdPriv;
 	private boolean supHistoOrdPriv;
 	private boolean rechercheOrdPriv;
 	private boolean imprOrdPriv;
-	
+
 	private boolean ordonceLbreFichePriv;
 	private boolean ajoutModeleordPriv;
 	private boolean selectModeleordPriv;
 	private boolean suppModeleOrdPriv;
-	
-    
+
 	private boolean consultertHistoConsultationPriv;
-	
+
 	private boolean ttcochDecochGen;
 
 	private boolean gestSaisPriv;
-	
+
 	private boolean donnerRdvPriv;
 	private boolean archiverPatPriv;
 	private boolean consultArchivePriv;
-	
+
 	private boolean imprAnalPriv;
 	private boolean imprRadioPriv;
-	
-	
-	
 
 	private Integer idmodelUtl;
 	private String nomModelUtl;
@@ -418,10 +412,8 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean nvelMdl;
 	private List<Modelutl> modeleUtls = new ArrayList<Modelutl>();
 
-	
-	private boolean consultAnalActiv=true;
-	
-	
+	private boolean consultAnalActiv = true;
+
 	public String getNouvPatSal() {
 		return nouvPatSal;
 	}
@@ -569,8 +561,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setGestSaisPriv(boolean gestSaisPriv) {
 		this.gestSaisPriv = gestSaisPriv;
 	}
-	
-	
+
 	public boolean isModifprdSaisPriv() {
 		return modifprdSaisPriv;
 	}
@@ -621,9 +612,9 @@ public class UtilisateurBean implements java.io.Serializable {
 	}
 
 	public List<Modelutl> getModeleUtls() {
-		
-		ModelutlService mdluSer= new ModelutlService();
-		modeleUtls= mdluSer.rechercheTousModelutl();
+
+		ModelutlService mdluSer = new ModelutlService();
+		modeleUtls = mdluSer.rechercheTousModelutl();
 		return modeleUtls;
 	}
 
@@ -632,17 +623,17 @@ public class UtilisateurBean implements java.io.Serializable {
 	}
 
 	public boolean isApplique() {
-		ModelutlService mdluSer= new ModelutlService();
-		modeleUtls= mdluSer.rechercheTousModelutl();
-		
+		ModelutlService mdluSer = new ModelutlService();
+		modeleUtls = mdluSer.rechercheTousModelutl();
+
 		if (idmodelUtl != null)
 			applique = false;
 		else
 			applique = true;
-		
-		if(modeleUtls.size()==0)
+
+		if (modeleUtls.size() == 0)
 			applique = true;
-		
+
 		return applique;
 	}
 
@@ -698,12 +689,8 @@ public class UtilisateurBean implements java.io.Serializable {
 		this.suppModeleOrdPriv = suppModeleOrdPriv;
 	}
 
-	
-
-	
-
 	public boolean isConsultOrdLibrePriv() {
-		
+
 		return consultOrdLibrePriv;
 	}
 
@@ -886,7 +873,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setGestHorairePriv(boolean gestHorairePriv) {
 		this.gestHorairePriv = gestHorairePriv;
 	}
-	
 
 	public boolean isGestConsPriv() {
 		return gestConsPriv;
@@ -1135,8 +1121,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setSupUtPriv(boolean supUtPriv) {
 		this.supUtPriv = supUtPriv;
 	}
-	
-	
 
 	public boolean isGestUtPriv() {
 		return gestUtPriv;
@@ -1634,8 +1618,6 @@ public class UtilisateurBean implements java.io.Serializable {
 		this.ordonceFichePriv = ordonceFichePriv;
 	}
 
-	
-
 	public boolean isVerConsultPriv() {
 		return verConsultPriv;
 	}
@@ -1699,9 +1681,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setGynOrdPriv(boolean gynOrdPriv) {
 		this.gynOrdPriv = gynOrdPriv;
 	}
-	
-	
-	
 
 	public boolean isConsultDetAnalPriv() {
 		return consultDetAnalPriv;
@@ -1742,9 +1721,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setTtcochDecochGen(boolean ttcochDecochGen) {
 		this.ttcochDecochGen = ttcochDecochGen;
 	}
-	
-
-	
 
 	public boolean isModifAntPriv() {
 		return modifAntPriv;
@@ -2138,8 +2114,6 @@ public class UtilisateurBean implements java.io.Serializable {
 		this.tabContctPatPriv = tabContctPatPriv;
 	}
 
-	
-
 	public boolean isTabInfGnrAjtPatPriv() {
 		return tabInfGnrAjtPatPriv;
 	}
@@ -2213,8 +2187,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setMenuRappPriv(boolean menuRappPriv) {
 		this.menuRappPriv = menuRappPriv;
 	}
-	
-	
 
 	public boolean isMenuStatPriv() {
 		return menuStatPriv;
@@ -2332,7 +2304,7 @@ public class UtilisateurBean implements java.io.Serializable {
 
 		UtilisateurService ser = new UtilisateurService();
 		utilisateurs = ser.rechercheTousUtilisateur();
-		
+
 		return utilisateurs;
 	}
 
@@ -2340,20 +2312,51 @@ public class UtilisateurBean implements java.io.Serializable {
 		this.utilisateurs = utilisateurs;
 	}
 
-	public void ajouterUtilisateur() {
+	private String dn;
 
+	public String getDn() {
+		return dn;
+	}
+
+	public void setDn(String dn) {
+		this.dn = dn;
+	}
+
+	public void ajouterUtilisateur() {
 		FacesContext faces = FacesContext.getCurrentInstance();
-	//	RequestContext context = RequestContext.getCurrentInstance();
+		// RequestContext context = RequestContext.getCurrentInstance();
 		UtilisateurService utlser = new UtilisateurService();
 		List<Utilisateur> utlBylog = utlser.rechercheUtilisateurByLogin(login);
-//		List<Utilisateur> utlBymotPss = utlser
-//				.rechercheUtilisateurByMotPass(motPasse);
+		// List<Utilisateur> utlBymotPss = utlser
+		// .rechercheUtilisateurByMotPass(motPasse);
 
 		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		Boolean b = true;
 
-		//boolean addValid = false;
+		// boolean addValid = false;
 
+		if (dn != null && dn.length() > 0) {
+			try {
+				if (Module.corigerDate(dn) != null) {
+					this.setDn(Module.corigerDate(dn));
+				}
+				String verif = Module.verifierDate(dn);
+				if (verif != null && !(verif.equals(""))) {
+					String msg = verif + "";
+					System.out.println("le msg  " + msg);
+					faces.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, msg, null));
+				} else {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					Date d = sdf.parse(dn);
+					System.out.println("date=  " + d);
+				}
+			} catch (Exception e) {
+
+				System.out.println("pb date");
+			}
+
+		}
 		if (email != null && email.trim().length() > 0)
 			b = email.matches(EMAIL_REGEX);
 
@@ -2363,59 +2366,47 @@ public class UtilisateurBean implements java.io.Serializable {
 
 			faces.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Login vide",
-					"Invalid credentials"));
+					null));
 		} else if (utlBylog.size() > 0) {
 
 			faces.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Login existe déja",
-					"Invalid credentials"));
+					null));
 		}
 
-		if (motPasse == null || (motPasse.trim().length() == 0)) {// tester// si
-																	// //
-																	// motPasse
-																	// // est //
-																	// vide
-
+		if (motPasse == null || (motPasse.trim().length() == 0)) {
 			faces.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Mot de Passe vide",
-					"Invalid credentials"));
+					null));
 		}
 
-		if ((nom == null || (nom.trim().length() == 0))
-				&& (prenom == null || (prenom.trim().length() == 0))) {// tester//
-																		// si //
-																		// nom ou pren
-																		// //
-																		// est
-																		// //
-																		// vide
+		if (nom == null || (nom.trim().length() == 0)) {
 
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Nom et Prenom vide",
-					"Invalid credentials"));
+					FacesMessage.SEVERITY_ERROR, "Nom est vide",
+					null));
 		}
+		if ( prenom == null || (prenom.trim().length() == 0)) {
 
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Prenom est vide",
+					null));
+		}
+		
 		if (!b) {
 
 			faces.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Format email invalide",
-					"Invalid credentials"));
+					null));
 
 		}
 
-		
-		
 		if (faces.getMessageList().size() == 0) {
-			
+
 			UtilisateurService ser = new UtilisateurService();
 			Utilisateur u = new Utilisateur();
 
-			//addValid = true;
-
-			SimpleDateFormat formatDateJava = new SimpleDateFormat("dd/MM/yyyy");
-			if (dateNais != null)
-				date_naiss = formatDateJava.format(dateNais);
+			// addValid = true;
 
 			u.setNom(nom);
 			u.setPrenom(prenom);
@@ -2423,7 +2414,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			u.setMotPasse(motPasse);
 			u.setAdresse(adresse);
 			u.setCivil(civil);
-			u.setDate_naiss(date_naiss);
+			u.setDate_naiss(dn);
 			u.setEmail(email);
 			u.setTel(tel);
 			u.setActif(true);
@@ -2463,7 +2454,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (modifSymPriv) {
 				u.setModifAsym(true);
-				
+
 			} else {
 				u.setModifAsym(false);
 			}
@@ -2481,13 +2472,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (ajoutDiagPriv) {
 				u.setAjoutDiag(true);
-				
+
 			} else {
 				u.setAjoutDiag(false);
 			}
 			if (modifDiagPriv) {
 				u.setModifDiag(true);
-				
+
 			} else {
 				u.setModifDiag(false);
 			}
@@ -2543,50 +2534,50 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupExm(false);
 			}
-			
-			if(gestJrFerParamPriv){
+
+			if (gestJrFerParamPriv) {
 				u.setGestionJourFr(true);
-			}else{
+			} else {
 				u.setGestionJourFr(false);
 			}
-			if(paramtabJrFerPriv){
+			if (paramtabJrFerPriv) {
 				u.setTabFerie(true);
-			}else{
+			} else {
 				u.setTabFerie(false);
 			}
-			if(ajouJrFerStndPriv){
+			if (ajouJrFerStndPriv) {
 				u.setNouvJFerie(true);
-			}else{
+			} else {
 				u.setNouvJFerie(false);
 			}
-			if(modifJrFerStndPriv){
+			if (modifJrFerStndPriv) {
 				u.setModifJFerie(true);
-			}else{
+			} else {
 				u.setModifJFerie(false);
 			}
-			if(supJrFerStndPriv){
+			if (supJrFerStndPriv) {
 				u.setSuppJFerie(true);
-			}else{
+			} else {
 				u.setSuppJFerie(false);
 			}
-			if(paramtabJrFerExpPriv){
+			if (paramtabJrFerExpPriv) {
 				u.setTabJFerieExp(true);
-			}else{
+			} else {
 				u.setTabJFerieExp(false);
 			}
-			if(ajouJrFerExpPriv){
+			if (ajouJrFerExpPriv) {
 				u.setNouvJFerieExp(true);
-			}else{
+			} else {
 				u.setNouvJFerieExp(false);
 			}
-			if(modifJrFerExpPriv){
+			if (modifJrFerExpPriv) {
 				u.setModifJFerieExp(true);
-			}else{
+			} else {
 				u.setModifJFerieExp(false);
 			}
-			if(supJrFerExpPriv){
+			if (supJrFerExpPriv) {
 				u.setSuppJFerieExp(true);
-			}else{
+			} else {
 				u.setSuppJFerieExp(false);
 			}
 
@@ -2597,13 +2588,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (ajoutMedPriv) {
 				u.setAjoutMed(true);
-				
+
 			} else {
 				u.setAjoutMed(false);
 			}
 			if (modifMedPriv) {
 				u.setModifMed(true);
-				
+
 			} else {
 				u.setModifMed(false);
 			}
@@ -2621,13 +2612,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (ajoutAnalPriv) {
 				u.setAjoutAnal(true);
-				
+
 			} else {
 				u.setAjoutAnal(false);
 			}
 			if (modifAnalPriv) {
 				u.setModifAnal(true);
-				
+
 			} else {
 				u.setModifAnal(false);
 			}
@@ -2645,20 +2636,20 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (ajoutEtBbPriv) {
 				u.setAjoutEtBb(true);
-				
+
 			} else {
 				u.setAjoutEtBb(false);
 			}
 			if (modifEtBbPriv) {
 				u.setModifEtBb(true);
-				
+
 			} else {
 				u.setModifEtBb(false);
 			}
 
 			if (supEtBbPriv) {
 				u.setSupEtBb(true);
-				
+
 			} else {
 				u.setSupEtBb(false);
 			}
@@ -2688,34 +2679,33 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setImprCertif(false);
 			}
-			
-			
+
 			if (lettreFichePriv) {
 				u.setLettreFiche("1");
 			} else {
 				u.setLettreFiche("0");
 			}
-			if(ajoutLtrPriv){
+			if (ajoutLtrPriv) {
 				u.setNouvLettre(true);
-			}else{
+			} else {
 				u.setNouvLettre(false);
 			}
-			if(modifLtrPriv){
+			if (modifLtrPriv) {
 				u.setModifLettre(true);
-			}else{
+			} else {
 				u.setModifLettre(false);
 			}
-			if(supLtrPriv){
+			if (supLtrPriv) {
 				u.setSuppLettre(true);
-			}else{
+			} else {
 				u.setSuppLettre(false);
 			}
-			if(impLtrPriv){
+			if (impLtrPriv) {
 				u.setImprLettre(true);
-			}else{
+			} else {
 				u.setImprLettre(false);
 			}
-			
+
 			if (analyseFichePriv) {
 				u.setAnalyseFiche("1");
 			} else {
@@ -2731,113 +2721,108 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setDetHistoAnal(false);
 			}
-			
+
 			if (supHistoAnalPriv) {
 				u.setSupAnalyse(true);
 			} else {
 				u.setSupAnalyse(false);
 			}
-			
-			
-					
+
 			if (radioFichePriv) {
 				u.setRadioFiche("1");
 			} else {
 				u.setRadioFiche("0");
 			}
-			if(modifHistoRadPriv){
+			if (modifHistoRadPriv) {
 				u.setModifRadio(true);
-			}else{
+			} else {
 				u.setModifRadio(false);
 			}
-			if(consultHistoRadPriv){
+			if (consultHistoRadPriv) {
 				u.setDetHistoRad(true);
-			}else{
+			} else {
 				u.setDetHistoRad(false);
 			}
-			if(supHistoRadPriv){
+			if (supHistoRadPriv) {
 				u.setSupRadio(true);
-			}else{
+			} else {
 				u.setSupRadio(false);
 			}
-			
-			if(imprAnalPriv){
+
+			if (imprAnalPriv) {
 				u.setImprmAnal(true);
-			}else{
+			} else {
 				u.setImprmAnal(false);
 			}
-			
-			if(imprRadioPriv){
+
+			if (imprRadioPriv) {
 				u.setImprRadio(true);
-			}else{
+			} else {
 				u.setImprRadio(false);
 			}
 
-			
-			
 			if (rapportFichePriv) {
 				u.setRapportFiche("1");
 			} else {
 				u.setRapportFiche("0");
 			}
-			
-				
-			if(ajoutModeleordPriv){
+
+			if (ajoutModeleordPriv) {
 				u.setAjoutModeleord(true);
-			}else{
+			} else {
 				u.setAjoutModeleord(false);
 			}
-			if(selectModeleordPriv){
+			if (selectModeleordPriv) {
 				u.setSelectModeleord(true);
-			}else{
+			} else {
 				u.setSelectModeleord(false);
 			}
-			if(suppModeleOrdPriv){
+			if (suppModeleOrdPriv) {
 				u.setSuppModeleOrd(true);
-			}else{
+			} else {
 				u.setSuppModeleOrd(false);
 			}
-			
-			if(gestSaisPriv){
+
+			if (gestSaisPriv) {
 				u.setGestSais(true);
-			}else{
+			} else {
 				u.setGestSais(false);
 			}
-			
-			if(consultertHistoConsultationPriv){
+
+			if (consultertHistoConsultationPriv) {
 				u.setSelectTableConsultation(true);
-			}else{
+			} else {
 				u.setSelectTableConsultation(false);
 			}
-			
+
 			if (ordonceFichePriv) {
 				u.setOrdnanceFiche("1");
 			} else {
 				u.setOrdnanceFiche("0");
 			}
-			if(consultOrdLibrePriv){
+			if (consultOrdLibrePriv) {
 				u.setOrdonanceLibreFiche(true);
-			}else{
+			} else {
 				u.setOrdonanceLibreFiche(false);
 			}
-			if(modifHistoOrdPriv){
+			if (modifHistoOrdPriv) {
 				u.setModifOrdnce(true);
-			}else{
+			} else {
 				u.setModifOrdnce(false);
 			}
-			if(supHistoOrdPriv){
+			if (supHistoOrdPriv) {
 				u.setSupphistoOrd(true);
-			}else{
+			} else {
 				u.setSupphistoOrd(false);
 			}
-			if(rechercheOrdPriv){
+			if (rechercheOrdPriv) {
 				u.setRechercheOrd(true);
-			}else{
+			} else {
 				u.setRechercheOrd(false);
 			}
-			if(imprOrdPriv){
+			if (imprOrdPriv) {
 				u.setImprOrd(true);
-			}else{
+			} else {
 				u.setImprOrd(false);
 			}
 
@@ -2863,10 +2848,10 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setMenuParametre("0");
 			}
-			
-			if(menuRendvousPriv){
+
+			if (menuRendvousPriv) {
 				u.setMenuGestRdv("1");
-			}else{
+			} else {
 				u.setMenuGestRdv("0");
 			}
 
@@ -2875,7 +2860,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setMenuRapport("0");
 			}
-			
+
 			if (menuStatPriv) {
 				u.setMenuGestStat(true);
 			} else {
@@ -2953,7 +2938,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setGestDoc("0");
 			}
-			
+
 			if (gestAntecedentParamPriv) {
 				u.setGestAntecedent(true);
 			} else {
@@ -2964,7 +2949,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setTabMedAnt(false);
 			}
-			
+
 			if (ajoutAntMedPriv) {
 				u.setAjoutGestAntMed(true);
 			} else {
@@ -2980,7 +2965,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSuppGestAntMed(false);
 			}
-			
+
 			if (paramtabAntChirgPriv) {
 				u.setTabChirAnt(true);
 			} else {
@@ -3021,13 +3006,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSuppGestAntFam(false);
 			}
-			
+
 			if (gestHorairePriv) {
 				u.setGestHoraire(true);
 			} else {
 				u.setGestHoraire(false);
 			}
-			
+
 			if (modifprdSaisPriv) {
 				u.setModifPrtSais(true);
 			} else {
@@ -3048,11 +3033,10 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupHeurTrav(false);
 			}
-			
-			
-			if(gestCabinetPriv){
+
+			if (gestCabinetPriv) {
 				u.setGestCabinet(true);
-			}else{
+			} else {
 				u.setGestCabinet(false);
 			}
 			if (gestUtPriv) {
@@ -3075,8 +3059,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupUt(false);
 			}
-			
-			
+
 			if (gestFinGrossPriv) {
 				u.setGestEFG("1");
 			} else {
@@ -3097,7 +3080,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupEFG(false);
 			}
-			
+
 			if (gestConsPriv) {
 				u.setGestConsultation(true);
 			} else {
@@ -3108,7 +3091,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setModifCons(false);
 			}
-			
+
 			if (gestFrmMedPriv) {
 				u.setGestionFormMed(true);
 			} else {
@@ -3129,7 +3112,6 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupFM(false);
 			}
-
 
 			if (gestProfPriv) {
 				u.setGestProf("1");
@@ -3239,9 +3221,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setConsultArchiv(false);
 			}
-			
-			
-			
+
 			if (ajoutClinPriv) {
 				u.setAjoutClin("1");
 			} else {
@@ -3308,14 +3288,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setAntecedent("0");
 			}
-			
+
 			if (echoGynPriv) {
 				u.setEchoGyn("1");
 			} else {
 				u.setEchoGyn("0");
 			}
-			
-			
+
 			if (echoGynNouvConsultPriv) {
 				u.setNouvchogyneco(true);
 			} else {
@@ -3326,45 +3305,45 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setModifechogyneco(false);
 			}
-			if(echoGynsupConsultPriv){
+			if (echoGynsupConsultPriv) {
 				u.setSuppechogyneco(true);
-			}else{
+			} else {
 				u.setSuppechogyneco(false);
 			}
-			if(echoGynNouvModeltPriv){
+			if (echoGynNouvModeltPriv) {
 				u.setAjoutmodelechogyneco(true);
-			}else{
+			} else {
 				u.setAjoutmodelechogyneco(false);
 			}
-			if(echoGynSupModeltPriv){
+			if (echoGynSupModeltPriv) {
 				u.setSuppmodelechogyneco(true);
-			}else{
+			} else {
 				u.setSuppmodelechogyneco(false);
 			}
-			
-			if(echoGynApplModeltPriv){
+
+			if (echoGynApplModeltPriv) {
 				u.setAppliquemodelechogyneco(true);
-			}else{
+			} else {
 				u.setAppliquemodelechogyneco(false);
 			}
-			
-			if(echoGynApplModeltPriv){
+
+			if (echoGynApplModeltPriv) {
 				u.setAppliquemodelechogyneco(true);
-			}else{
+			} else {
 				u.setAppliquemodelechogyneco(false);
 			}
-			if(echoGynImprPriv){
+			if (echoGynImprPriv) {
 				u.setImprechogyneco(true);
-			}else{
+			} else {
 				u.setImprechogyneco(false);
 			}
-			
+
 			if (echoObstPriv) {
 				u.setEchoObs("1");
 			} else {
 				u.setEchoObs("0");
 			}
-			
+
 			if (echoObsNouvConsultPriv) {
 				u.setNouvechoObs(true);
 			} else {
@@ -3375,25 +3354,25 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setModifechoObs(false);
 			}
-			
+
 			if (echoObsSupConsultPriv) {
 				u.setSuppechoObs(true);
 			} else {
 				u.setSuppechoObs(false);
 			}
-			
+
 			if (echoObsTrim1Priv) {
 				u.setTrim1echoObs(true);
 			} else {
 				u.setTrim1echoObs(false);
 			}
-			
+
 			if (echoObsTrim2Priv) {
 				u.setTrim2echoObs(true);
 			} else {
 				u.setTrim2echoObs(false);
 			}
-			
+
 			if (echoObsTrim3Priv) {
 				u.setTrim3echoObs(true);
 			} else {
@@ -3404,8 +3383,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setImprechoObs(false);
 			}
-			
-			
+
 			if (gynecologiePriv) {
 				u.setGynecologie("1");
 			} else {
@@ -3426,29 +3404,31 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setModifSterilite(false);
 			}
-			
+
 			if (tabAntecedentPriv) {
 				u.setTabAntecedent("1");
 			} else {
 				u.setTabAntecedent("0");
 			}
-			
-			if(modifGynObsPriv){
-				u.setModifGynObs(true);;
-			}else{
+
+			if (modifGynObsPriv) {
+				u.setModifGynObs(true);
+				;
+			} else {
 				u.setModifGynObs(false);
 			}
-			if(modifAntPriv){
-				u.setModifAnt(true);;
-			}else{
+			if (modifAntPriv) {
+				u.setModifAnt(true);
+				;
+			} else {
 				u.setModifAnt(false);
 			}
-			if(suppAntPriv){
+			if (suppAntPriv) {
 				u.setSuppAnt(true);
-			}else{
+			} else {
 				u.setSuppAnt(false);
 			}
-			
+
 			if (tabGynecoObsPriv) {
 				u.setTabGynecoObs("1");
 			} else {
@@ -3510,7 +3490,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setGynOrd("0");
 			}
-			
+
 			if (consultDetAnalPriv) {
 				u.setConsultDetAnal(true);
 			} else {
@@ -3526,32 +3506,31 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setConsultDetOrd(false);
 			}
-			
-			
+
 			if (gynNouvConsultPriv) {
 				u.setNouvConsGyn("1");
 			} else {
 				u.setNouvConsGyn("0");
 			}
-			if(gynModifConsultPriv){
+			if (gynModifConsultPriv) {
 				u.setModifGyneco(true);
-				
-			}else{
+
+			} else {
 				u.setModifGyneco(false);
 			}
-			if(gynSupConsultPriv){
+			if (gynSupConsultPriv) {
 				u.setSuppGyneco(true);
-				
-			}else{
+
+			} else {
 				u.setSuppGyneco(false);
 			}
-			if(gynImprConsultPriv){
+			if (gynImprConsultPriv) {
 				u.setImprGyneco(true);
-				
-			}else{
+
+			} else {
 				u.setImprGyneco(false);
 			}
-			
+
 			if (grossOrdPriv) {
 				u.setConsultGrossOrd("1");
 			} else {
@@ -3594,60 +3573,57 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 
 			ser.ajoutUtilisateur(u);
-			
-		/*	try {
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("GestionUtilisateur.xhtml");
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}*/
+
+			/*
+			 * try { FacesContext.getCurrentInstance().getExternalContext()
+			 * .redirect("GestionUtilisateur.xhtml"); } catch (Exception e) {
+			 * System.out.println(e.getMessage()); }
+			 */
 
 			initialisation();
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO, "Utilisateur ajouté avec succès",
-					"Invalid credentials"));
+			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Utilisateur ajouté avec succès", "Invalid credentials"));
 			redirectvergestUtl();
 		}
-		
-		
 
 	}
-	
-public void redirectvergestUtl(){
-		
+
+	public void redirectvergestUtl() {
+
 		FacesContext context2 = FacesContext.getCurrentInstance();
-	    context2.getExternalContext().getFlash().setKeepMessages(true);
-	    try {
-	     context2.getExternalContext().redirect("Utilisateurs");
-	    }catch(Exception e){
+		context2.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+			context2.getExternalContext().redirect("Utilisateurs");
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 	}
-	
-	/*public void redirectverGestUtl(){
-		
-		
-		FacesContext context2 = FacesContext.getCurrentInstance();
-		
-		try {
-			System.out.println("**********************");
-		     context2.getExternalContext().redirect("GestionUtilisateur.xhtml");
-		    }catch(Exception e){
-				System.out.println(e.getMessage());
-			}
-			
-	}*/
-	
+
+	/*
+	 * public void redirectverGestUtl(){
+	 * 
+	 * 
+	 * FacesContext context2 = FacesContext.getCurrentInstance();
+	 * 
+	 * try { System.out.println("**********************");
+	 * context2.getExternalContext().redirect("GestionUtilisateur.xhtml");
+	 * }catch(Exception e){ System.out.println(e.getMessage()); }
+	 * 
+	 * }
+	 */
 
 	public void modifierUtilisateur() {
 		FacesContext face = FacesContext.getCurrentInstance();
 
 		UtilisateurService utlser = new UtilisateurService();
 		List<Utilisateur> utlBylog = utlser.rechercheUtilisateurByLogin(login);
-//		List<Utilisateur> utlBymotPss = utlser
-//				.rechercheUtilisateurByMotPass(motPasse);
+		// List<Utilisateur> utlBymotPss = utlser
+		// .rechercheUtilisateurByMotPass(motPasse);
 
+		
+		
+		
 		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		Boolean b = true;
 		if (email != null && email.trim().length() > 0)
@@ -3658,12 +3634,12 @@ public void redirectvergestUtl(){
 															// vide
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Login vide", "Invalid credentials"));
+					"Login vide", null));
 		} else if ((utlBylog.size() > 0)
-				&& (! utlBylog.get(0).getIdutilisateur().equals(idUtilisateur) ) ) {
+				&& (!utlBylog.get(0).getIdutilisateur().equals(idUtilisateur))) {
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Login existe déja", "Invalid credentials"));
+					"Login existe déja", null));
 		}
 
 		if (motPasse == null || (motPasse.trim().length() == 0)) {// tester// si
@@ -3673,22 +3649,44 @@ public void redirectvergestUtl(){
 																	// vide
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Mot de Passe vide", "Invalid credentials"));
+					"Mot de Passe vide", null));
 		}
 
-		if ((nom == null || (nom.trim().length() == 0))
-				&& (prenom == null || (prenom.trim().length() == 0))) {// tester//
-																		// si //
-																		// motPasse
-																		// //
-																		// est
-																		// //
-																		// vide
+		if (nom == null || (nom.trim().length() == 0))
+				 {
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Non et Prenom vide", "Invalid credentials"));
+					"Nom est vide", null));
 		}
 
+		if(prenom == null || (prenom.trim().length() == 0))
+		{face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"Prenom est vide", null));
+			
+		}
+		if (dn != null && dn.length() > 0) {
+			try {
+				if (Module.corigerDate(dn) != null) {
+					this.setDn(Module.corigerDate(dn));
+				}
+				String verif = Module.verifierDate(dn);
+				if (verif != null && !(verif.equals(""))) {
+					String msg = verif + "";
+					System.out.println("le msg  " + msg);
+					face.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, msg, null));
+				} else {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					Date d = sdf.parse(dn);
+					System.out.println("date=  " + d);
+				}
+			} catch (Exception e) {
+
+				System.out.println("pb date");
+			}
+
+		}
+		
 		if (!b) {
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -3697,7 +3695,6 @@ public void redirectvergestUtl(){
 		}
 
 		if (face.getMessageList().size() == 0) {
-
 
 			UtilisateurService ser = new UtilisateurService();
 			Utilisateur u = ser.rechercheUtilisateur(idUtilisateur);
@@ -3837,53 +3834,52 @@ public void redirectvergestUtl(){
 				} else {
 					u.setSupExm(false);
 				}
-				
-				if(gestJrFerParamPriv){
+
+				if (gestJrFerParamPriv) {
 					u.setGestionJourFr(true);
-				}else{
+				} else {
 					u.setGestionJourFr(false);
 				}
-				if(paramtabJrFerPriv){
+				if (paramtabJrFerPriv) {
 					u.setTabFerie(true);
-				}else{
+				} else {
 					u.setTabFerie(false);
 				}
-				if(ajouJrFerStndPriv){
+				if (ajouJrFerStndPriv) {
 					u.setNouvJFerie(true);
-				}else{
+				} else {
 					u.setNouvJFerie(false);
 				}
-				if(modifJrFerStndPriv){
+				if (modifJrFerStndPriv) {
 					u.setModifJFerie(true);
-				}else{
+				} else {
 					u.setModifJFerie(false);
 				}
-				if(supJrFerStndPriv){
+				if (supJrFerStndPriv) {
 					u.setSuppJFerie(true);
-				}else{
+				} else {
 					u.setSuppJFerie(false);
 				}
-				if(paramtabJrFerExpPriv){
+				if (paramtabJrFerExpPriv) {
 					u.setTabJFerieExp(true);
-				}else{
+				} else {
 					u.setTabJFerieExp(false);
 				}
-				if(ajouJrFerExpPriv){
+				if (ajouJrFerExpPriv) {
 					u.setNouvJFerieExp(true);
-				}else{
+				} else {
 					u.setNouvJFerieExp(false);
 				}
-				if(modifJrFerExpPriv){
+				if (modifJrFerExpPriv) {
 					u.setModifJFerieExp(true);
-				}else{
+				} else {
 					u.setModifJFerieExp(false);
 				}
-				if(supJrFerExpPriv){
+				if (supJrFerExpPriv) {
 					u.setSuppJFerieExp(true);
-				}else{
+				} else {
 					u.setSuppJFerieExp(false);
 				}
-				
 
 				if (gestMedPriv) {
 					u.setGestMed("1");
@@ -3929,7 +3925,7 @@ public void redirectvergestUtl(){
 
 				if (supAnalPriv) {
 					u.setSupAnal(true);
-					
+
 				} else {
 					u.setSupAnal(false);
 				}
@@ -3941,20 +3937,20 @@ public void redirectvergestUtl(){
 				}
 				if (ajoutEtBbPriv) {
 					u.setAjoutEtBb(true);
-					
+
 				} else {
 					u.setAjoutEtBb(false);
 				}
 				if (modifEtBbPriv) {
 					u.setModifEtBb(true);
-					
+
 				} else {
 					u.setModifEtBb(false);
 				}
 
 				if (supEtBbPriv) {
 					u.setSupEtBb(true);
-					
+
 				} else {
 					u.setSupEtBb(false);
 				}
@@ -3984,34 +3980,32 @@ public void redirectvergestUtl(){
 				} else {
 					u.setImprCertif(false);
 				}
-					
-				
+
 				if (lettreFichePriv) {
 					u.setLettreFiche("1");
 				} else {
 					u.setLettreFiche("0");
 				}
-				if(ajoutLtrPriv){
+				if (ajoutLtrPriv) {
 					u.setNouvLettre(true);
-				}else{
+				} else {
 					u.setNouvLettre(false);
 				}
-				if(modifLtrPriv){
+				if (modifLtrPriv) {
 					u.setModifLettre(true);
-				}else{
+				} else {
 					u.setModifLettre(false);
 				}
-				if(supLtrPriv){
+				if (supLtrPriv) {
 					u.setSuppLettre(true);
-				}else{
+				} else {
 					u.setSuppLettre(false);
 				}
-				if(impLtrPriv){
+				if (impLtrPriv) {
 					u.setImprLettre(true);
-				}else{
+				} else {
 					u.setImprLettre(false);
 				}
-				
 
 				if (analyseFichePriv) {
 					u.setAnalyseFiche("1");
@@ -4028,112 +4022,108 @@ public void redirectvergestUtl(){
 				} else {
 					u.setDetHistoAnal(false);
 				}
-				
+
 				if (supHistoAnalPriv) {
 					u.setSupAnalyse(true);
 				} else {
 					u.setSupAnalyse(false);
 				}
-				
-				
+
 				if (radioFichePriv) {
 					u.setRadioFiche("1");
 				} else {
 					u.setRadioFiche("0");
 				}
-				if(modifHistoRadPriv){
+				if (modifHistoRadPriv) {
 					u.setModifRadio(true);
-				}else{
+				} else {
 					u.setModifRadio(false);
 				}
-				if(consultHistoRadPriv){
+				if (consultHistoRadPriv) {
 					u.setDetHistoRad(true);
-				}else{
+				} else {
 					u.setDetHistoRad(false);
 				}
-				if(supHistoRadPriv){
+				if (supHistoRadPriv) {
 					u.setSupRadio(true);
-				}else{
+				} else {
 					u.setSupRadio(false);
 				}
-				if(imprAnalPriv){
+				if (imprAnalPriv) {
 					u.setImprmAnal(true);
-				}else{
+				} else {
 					u.setImprmAnal(false);
 				}
-				
-				if(imprRadioPriv){
+
+				if (imprRadioPriv) {
 					u.setImprRadio(true);
-				}else{
+				} else {
 					u.setImprRadio(false);
 				}
-				
-				
+
 				if (rapportFichePriv) {
 					u.setRapportFiche("1");
 				} else {
 					u.setRapportFiche("0");
 				}
-				if(ajoutModeleordPriv){
+				if (ajoutModeleordPriv) {
 					u.setAjoutModeleord(true);
-				}else{
+				} else {
 					u.setAjoutModeleord(false);
 				}
-				if(selectModeleordPriv){
+				if (selectModeleordPriv) {
 					u.setSelectModeleord(true);
-				}else{
+				} else {
 					u.setSelectModeleord(false);
 				}
-				if(suppModeleOrdPriv){
+				if (suppModeleOrdPriv) {
 					u.setSuppModeleOrd(true);
-				}else{
+				} else {
 					u.setSuppModeleOrd(false);
 				}
-				
-				if(gestSaisPriv){
+
+				if (gestSaisPriv) {
 					u.setGestSais(true);
-				}else{
+				} else {
 					u.setGestSais(false);
 				}
-				
-				if(consultertHistoConsultationPriv){
+
+				if (consultertHistoConsultationPriv) {
 					u.setSelectTableConsultation(true);
-				}else{
+				} else {
 					u.setSelectTableConsultation(false);
 				}
-				
+
 				if (ordonceFichePriv) {
 					u.setOrdnanceFiche("1");
 				} else {
 					u.setOrdnanceFiche("0");
 				}
-				if(consultOrdLibrePriv){
+				if (consultOrdLibrePriv) {
 					u.setOrdonanceLibreFiche(true);
-				}else{
+				} else {
 					u.setOrdonanceLibreFiche(false);
 				}
-				if(modifHistoOrdPriv){
+				if (modifHistoOrdPriv) {
 					u.setModifOrdnce(true);
-				}else{
+				} else {
 					u.setModifOrdnce(false);
 				}
-				if(supHistoOrdPriv){
+				if (supHistoOrdPriv) {
 					u.setSupphistoOrd(true);
-				}else{
+				} else {
 					u.setSupphistoOrd(false);
 				}
-				if(rechercheOrdPriv){
+				if (rechercheOrdPriv) {
 					u.setRechercheOrd(true);
-				}else{
+				} else {
 					u.setRechercheOrd(false);
 				}
-				if(imprOrdPriv){
+				if (imprOrdPriv) {
 					u.setImprOrd(true);
-				}else{
+				} else {
 					u.setImprOrd(false);
 				}
-				
-			
 
 				if (verConsultPriv) {
 					u.setVerConsult("1");
@@ -4157,12 +4147,12 @@ public void redirectvergestUtl(){
 				} else {
 					u.setMenuParametre("0");
 				}
-				if(menuRendvousPriv){
+				if (menuRendvousPriv) {
 					u.setMenuGestRdv("1");
-				}else{
+				} else {
 					u.setMenuGestRdv("0");
 				}
-				
+
 				if (menuStatPriv) {
 					u.setMenuGestStat(true);
 				} else {
@@ -4174,7 +4164,6 @@ public void redirectvergestUtl(){
 				} else {
 					u.setMenuRapport("0");
 				}
-				
 
 				if (menuGesUtlPriv) {
 					u.setMenuGestUtl("1");
@@ -4224,8 +4213,6 @@ public void redirectvergestUtl(){
 					u.setTabInfGenAjoutPat("0");
 				}
 
-				
-
 				if (tabContctPatPriv) {
 					u.setTabCntctAjoutPat("1");
 				} else {
@@ -4249,7 +4236,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setGestDoc("0");
 				}
-				
+
 				if (gestAntecedentParamPriv) {
 					u.setGestAntecedent(true);
 				} else {
@@ -4295,7 +4282,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setSuppGestAntChirg(false);
 				}
-				
+
 				if (paramtabAntFamPriv) {
 					u.setTabFamAnt(true);
 				} else {
@@ -4316,7 +4303,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setSuppGestAntFam(false);
 				}
-				
+
 				if (gestHorairePriv) {
 					u.setGestHoraire(true);
 				} else {
@@ -4342,14 +4329,13 @@ public void redirectvergestUtl(){
 				} else {
 					u.setSupHeurTrav(false);
 				}
-				
-				
-				if(gestCabinetPriv){
+
+				if (gestCabinetPriv) {
 					u.setGestCabinet(true);
-				}else{
+				} else {
 					u.setGestCabinet(false);
 				}
-				
+
 				if (gestUtPriv) {
 					u.setGestionUterus(true);
 				} else {
@@ -4370,7 +4356,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setSupUt(false);
 				}
-				
+
 				if (gestFinGrossPriv) {
 					u.setGestEFG("1");
 				} else {
@@ -4401,7 +4387,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setModifCons(false);
 				}
-				
+
 				if (gestFrmMedPriv) {
 					u.setGestionFormMed(true);
 				} else {
@@ -4527,7 +4513,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setConsultArchiv(false);
 				}
-				
+
 				if (ajoutClinPriv) {
 					u.setAjoutClin("1");
 				} else {
@@ -4608,34 +4594,35 @@ public void redirectvergestUtl(){
 				} else {
 					u.setModifechogyneco(false);
 				}
-				if(echoGynsupConsultPriv){
+				if (echoGynsupConsultPriv) {
 					u.setSuppechogyneco(true);
-				}else{
+				} else {
 					u.setSuppechogyneco(false);
 				}
-				if(echoGynNouvModeltPriv){
-					u.setAjoutmodelechogyneco(true);;
-				}else{
+				if (echoGynNouvModeltPriv) {
+					u.setAjoutmodelechogyneco(true);
+					;
+				} else {
 					u.setAjoutmodelechogyneco(false);
 				}
-                 
-				if(echoGynSupModeltPriv){
+
+				if (echoGynSupModeltPriv) {
 					u.setSuppmodelechogyneco(true);
-				}else{
+				} else {
 					u.setSuppmodelechogyneco(false);
 				}
-				
-				if(echoGynApplModeltPriv){
+
+				if (echoGynApplModeltPriv) {
 					u.setAppliquemodelechogyneco(true);
-				}else{
+				} else {
 					u.setAppliquemodelechogyneco(false);
 				}
-				if(echoGynImprPriv){
+				if (echoGynImprPriv) {
 					u.setImprechogyneco(true);
-				}else{
+				} else {
 					u.setImprechogyneco(false);
 				}
-				
+
 				if (echoObstPriv) {
 					u.setEchoObs("1");
 				} else {
@@ -4651,7 +4638,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setModifechoObs(false);
 				}
-				
+
 				if (echoObsSupConsultPriv) {
 					u.setSuppechoObs(true);
 				} else {
@@ -4667,7 +4654,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setTrim2echoObs(false);
 				}
-				
+
 				if (echoObsTrim3Priv) {
 					u.setTrim3echoObs(true);
 				} else {
@@ -4678,7 +4665,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setImprechoObs(false);
 				}
-				
+
 				if (gynecologiePriv) {
 					u.setGynecologie("1");
 				} else {
@@ -4704,20 +4691,22 @@ public void redirectvergestUtl(){
 				} else {
 					u.setTabAntecedent("0");
 				}
-				
-				if(modifGynObsPriv){
-					u.setModifGynObs(true);;
-				}else{
+
+				if (modifGynObsPriv) {
+					u.setModifGynObs(true);
+					;
+				} else {
 					u.setModifGynObs(false);
 				}
-				if(modifAntPriv){
-					u.setModifAnt(true);;
-				}else{
+				if (modifAntPriv) {
+					u.setModifAnt(true);
+					;
+				} else {
 					u.setModifAnt(false);
 				}
-				if(suppAntPriv){
+				if (suppAntPriv) {
 					u.setSuppAnt(true);
-				}else{
+				} else {
 					u.setSuppAnt(false);
 				}
 				if (tabGynecoObsPriv) {
@@ -4780,7 +4769,7 @@ public void redirectvergestUtl(){
 				} else {
 					u.setGynOrd("0");
 				}
-				
+
 				if (consultDetAnalPriv) {
 					u.setConsultDetAnal(true);
 				} else {
@@ -4796,29 +4785,29 @@ public void redirectvergestUtl(){
 				} else {
 					u.setConsultDetOrd(false);
 				}
-				
+
 				if (gynNouvConsultPriv) {
 					u.setNouvConsGyn("1");
 				} else {
 					u.setNouvConsGyn("0");
 				}
-				if(gynModifConsultPriv){
+				if (gynModifConsultPriv) {
 					u.setModifGyneco(true);
-					
-				}else{
+
+				} else {
 					u.setModifGyneco(false);
 				}
-				
-				if(gynSupConsultPriv){
+
+				if (gynSupConsultPriv) {
 					u.setSuppGyneco(true);
-					
-				}else{
+
+				} else {
 					u.setSuppGyneco(false);
 				}
-				if(gynImprConsultPriv){
+				if (gynImprConsultPriv) {
 					u.setImprGyneco(true);
-					
-				}else{
+
+				} else {
 					u.setImprGyneco(false);
 				}
 				if (grossOrdPriv) {
@@ -4865,22 +4854,22 @@ public void redirectvergestUtl(){
 				ser.modifierUtilisateur(u);
 
 				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_INFO, "Utilisateur modifié avec succés",""));
+						FacesMessage.SEVERITY_INFO,
+						"Utilisateur modifié avec succés", ""));
 
-                initialisation();
-				
+				initialisation();
+
 				redirectvergestUtl();
 
 			}
 		}
-		}
-	
+	}
 
 	public void modifUtilisateur(Utilisateur u) {
 		recupererDonnees(u);
-		
-		nomModelUtl=null;
-		idmodelUtl=null;
+
+		nomModelUtl = null;
+		idmodelUtl = null;
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("ModifierUtilisateur");
@@ -4892,10 +4881,10 @@ public void redirectvergestUtl(){
 
 	public void recupererDonnees(Utilisateur u) {
 
-		
-		index=0;
+		index = 0;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		date_naiss = u.getDate_naiss();
+		dn=u.getDate_naiss();
 		try {
 
 			if (date_naiss != null && !date_naiss.equals(""))
@@ -4965,7 +4954,6 @@ public void redirectvergestUtl(){
 		menuGestUtl = u.getMenuGestUtl();
 		ajoutPatient = u.getAjoutPatient();
 		verSal = u.getVerSal();
-		;
 		modPatient = u.getModPatient();
 		detPatient = u.getDetPatient();
 		chargPatient = u.getChargPatient();
@@ -5157,54 +5145,52 @@ public void redirectvergestUtl(){
 		} else {
 			supExmPriv = false;
 		}
-		
-		if(u.isGestionJourFr()){
-			gestJrFerParamPriv=true;
-		}else{
-			gestJrFerParamPriv=false;
+
+		if (u.isGestionJourFr()) {
+			gestJrFerParamPriv = true;
+		} else {
+			gestJrFerParamPriv = false;
 		}
-		if(u.isTabFerie()){
-			paramtabJrFerPriv=true;
-		}else{
-			paramtabJrFerPriv=false;
+		if (u.isTabFerie()) {
+			paramtabJrFerPriv = true;
+		} else {
+			paramtabJrFerPriv = false;
 		}
-		if(u.isNouvJFerie()){
-			ajouJrFerStndPriv=true;
-		}else{
-			ajouJrFerStndPriv=false;
+		if (u.isNouvJFerie()) {
+			ajouJrFerStndPriv = true;
+		} else {
+			ajouJrFerStndPriv = false;
 		}
-		if(u.isModifJFerie()){
-			modifJrFerStndPriv=true;
-		}else{
-			modifJrFerStndPriv=false;
+		if (u.isModifJFerie()) {
+			modifJrFerStndPriv = true;
+		} else {
+			modifJrFerStndPriv = false;
 		}
-		if(u.isSuppJFerie()){
-			supJrFerStndPriv=true;
-		}else{
-			supJrFerStndPriv=false;
+		if (u.isSuppJFerie()) {
+			supJrFerStndPriv = true;
+		} else {
+			supJrFerStndPriv = false;
 		}
-		if(u.isTabJFerieExp()){
-			paramtabJrFerExpPriv=true;
-		}else{
-			paramtabJrFerExpPriv=false;
+		if (u.isTabJFerieExp()) {
+			paramtabJrFerExpPriv = true;
+		} else {
+			paramtabJrFerExpPriv = false;
 		}
-		if(u.isNouvJFerieExp()){
-			ajouJrFerExpPriv=true;
-		}else{
-			ajouJrFerExpPriv=false;
+		if (u.isNouvJFerieExp()) {
+			ajouJrFerExpPriv = true;
+		} else {
+			ajouJrFerExpPriv = false;
 		}
-		if(u.isModifJFerieExp()){
-			modifJrFerExpPriv=true;
-		}else{
-			modifJrFerExpPriv=false;
+		if (u.isModifJFerieExp()) {
+			modifJrFerExpPriv = true;
+		} else {
+			modifJrFerExpPriv = false;
 		}
-		if(u.isSuppJFerieExp()){
-			supJrFerExpPriv=true;
-		}else{
-			supJrFerExpPriv=false;
+		if (u.isSuppJFerieExp()) {
+			supJrFerExpPriv = true;
+		} else {
+			supJrFerExpPriv = false;
 		}
-		
-		
 
 		if (gestMed.equals("1")) {
 			gestMedPriv = true;
@@ -5283,145 +5269,138 @@ public void redirectvergestUtl(){
 		} else {
 			certifFichePriv = false;
 		}
-		if(u.isNouvCertif()){
-			ajoutCertifPriv=true;
-		}else{
-			ajoutCertifPriv=false;
+		if (u.isNouvCertif()) {
+			ajoutCertifPriv = true;
+		} else {
+			ajoutCertifPriv = false;
 		}
-		if(u.isModifCertif()){
-			modifCertifPriv=true;
-		}else{
-			modifCertifPriv=false;
+		if (u.isModifCertif()) {
+			modifCertifPriv = true;
+		} else {
+			modifCertifPriv = false;
 		}
-		if(u.isSuppCertif()){
-			supCertifPriv=true;
-		}else{
-			supCertifPriv=false;
+		if (u.isSuppCertif()) {
+			supCertifPriv = true;
+		} else {
+			supCertifPriv = false;
 		}
-		if(u.isImprCertif()){
-			impCertifPriv=true;
-		}else{
-			impCertifPriv=false;
+		if (u.isImprCertif()) {
+			impCertifPriv = true;
+		} else {
+			impCertifPriv = false;
 		}
-		
 
 		if (lettreFiche.equals("1")) {
 			lettreFichePriv = true;
 		} else {
 			lettreFichePriv = false;
 		}
-		if(u.isNouvLettre()){
-			ajoutLtrPriv=true;
-		}else{
-			ajoutLtrPriv=false;
+		if (u.isNouvLettre()) {
+			ajoutLtrPriv = true;
+		} else {
+			ajoutLtrPriv = false;
 		}
-		if(u.isModifLettre()){
-			modifLtrPriv=true;
-		}else{
-			modifLtrPriv=false;
+		if (u.isModifLettre()) {
+			modifLtrPriv = true;
+		} else {
+			modifLtrPriv = false;
 		}
-		if(u.isSuppLettre()){
-			supLtrPriv=true;
-		}else{
-			supLtrPriv=false;
+		if (u.isSuppLettre()) {
+			supLtrPriv = true;
+		} else {
+			supLtrPriv = false;
 		}
-		if(u.isImprLettre()){
-			impLtrPriv=true;
-		}else{
-			impLtrPriv=false;
+		if (u.isImprLettre()) {
+			impLtrPriv = true;
+		} else {
+			impLtrPriv = false;
 		}
-		
-		
 
 		if (analyseFiche.equals("1")) {
 			analyseFichePriv = true;
 		} else {
 			analyseFichePriv = false;
 		}
-		if(u.isModifAnalyse()){
-			modifHistoAnalPriv=true;
-		}else{
-			modifHistoAnalPriv=false;
+		if (u.isModifAnalyse()) {
+			modifHistoAnalPriv = true;
+		} else {
+			modifHistoAnalPriv = false;
 		}
-		if(u.isDetHistoAnal()){
-			consultHistoAnalPriv=true;
-		}else{
-			consultHistoAnalPriv=false;
+		if (u.isDetHistoAnal()) {
+			consultHistoAnalPriv = true;
+		} else {
+			consultHistoAnalPriv = false;
 		}
-		
-		if(u.isSupAnalyse()){
-			supHistoAnalPriv=true;
-		}else{
-			supHistoAnalPriv=false;
+
+		if (u.isSupAnalyse()) {
+			supHistoAnalPriv = true;
+		} else {
+			supHistoAnalPriv = false;
 		}
-		
-		
-		
+
 		if (radioFiche.equals("1")) {
 			radioFichePriv = true;
 		} else {
 			radioFichePriv = false;
 		}
-		if(u.isModifRadio()){
-			modifHistoRadPriv=true;
-		}else{
-			modifHistoRadPriv=false;
+		if (u.isModifRadio()) {
+			modifHistoRadPriv = true;
+		} else {
+			modifHistoRadPriv = false;
 		}
-		if(u.isDetHistoRad()){
-			consultHistoRadPriv=true;
-		}else{
-			consultHistoRadPriv=false;
+		if (u.isDetHistoRad()) {
+			consultHistoRadPriv = true;
+		} else {
+			consultHistoRadPriv = false;
 		}
-		if(u.isSupRadio()){
-			supHistoRadPriv=true;
-		}else{
-			supHistoRadPriv=false;
+		if (u.isSupRadio()) {
+			supHistoRadPriv = true;
+		} else {
+			supHistoRadPriv = false;
 		}
-		if(u.isImprmAnal()){
-			imprAnalPriv=true;
-		}else{
-			imprAnalPriv=false;
+		if (u.isImprmAnal()) {
+			imprAnalPriv = true;
+		} else {
+			imprAnalPriv = false;
 		}
-		if(u.isImprRadio()){
-			imprRadioPriv=true;
-		}else{
-			imprRadioPriv=false;
+		if (u.isImprRadio()) {
+			imprRadioPriv = true;
+		} else {
+			imprRadioPriv = false;
 		}
-		
-		
-		
+
 		if (rapportFiche.equals("1")) {
 			rapportFichePriv = true;
 		} else {
 			rapportFichePriv = false;
 		}
-		
-		if(u.isAjoutModeleord()){
-			ajoutModeleordPriv=true;
-		}else{
-			ajoutModeleordPriv=false;
+
+		if (u.isAjoutModeleord()) {
+			ajoutModeleordPriv = true;
+		} else {
+			ajoutModeleordPriv = false;
 		}
-		if(u.isSelectModeleord()){
-			selectModeleordPriv=true;
-		}else{
-			selectModeleordPriv=false;
+		if (u.isSelectModeleord()) {
+			selectModeleordPriv = true;
+		} else {
+			selectModeleordPriv = false;
 		}
-		if(u.isSuppModeleOrd()){
-			suppModeleOrdPriv=true;
-		}else{
-			suppModeleOrdPriv=false;
+		if (u.isSuppModeleOrd()) {
+			suppModeleOrdPriv = true;
+		} else {
+			suppModeleOrdPriv = false;
 		}
-		
-		if(u.isGestSais()){
-			gestSaisPriv=true;
-		}else{
-			gestSaisPriv=false;
+
+		if (u.isGestSais()) {
+			gestSaisPriv = true;
+		} else {
+			gestSaisPriv = false;
 		}
-		
-		if(u.isSelectTableConsultation()){
-			consultertHistoConsultationPriv=true;
-		}else{
-			consultertHistoConsultationPriv=false;
+
+		if (u.isSelectTableConsultation()) {
+			consultertHistoConsultationPriv = true;
+		} else {
+			consultertHistoConsultationPriv = false;
 		}
 
 		if (ordnanceFiche.equals("1")) {
@@ -5429,40 +5408,37 @@ public void redirectvergestUtl(){
 		} else {
 			ordonceFichePriv = false;
 		}
-		if(u.isOrdonanceLibreFiche()){
-			consultOrdLibrePriv=true;
-		}else{
-			consultOrdLibrePriv=false;
+		if (u.isOrdonanceLibreFiche()) {
+			consultOrdLibrePriv = true;
+		} else {
+			consultOrdLibrePriv = false;
 		}
-		if(u.isModifOrdnce()){
-			modifHistoOrdPriv=true;
-		}else{
-			modifHistoOrdPriv=false;
+		if (u.isModifOrdnce()) {
+			modifHistoOrdPriv = true;
+		} else {
+			modifHistoOrdPriv = false;
 		}
-		if(u.isSupphistoOrd()){
-			supHistoOrdPriv=true;
-		}else{
-			supHistoOrdPriv=false;
+		if (u.isSupphistoOrd()) {
+			supHistoOrdPriv = true;
+		} else {
+			supHistoOrdPriv = false;
 		}
-		if(u.isRechercheOrd()){
-			rechercheOrdPriv=true;
-		}else{
-			rechercheOrdPriv=false;
+		if (u.isRechercheOrd()) {
+			rechercheOrdPriv = true;
+		} else {
+			rechercheOrdPriv = false;
 		}
-		if(u.isImprOrd()){
-			imprOrdPriv=true;
-		}else{
-			imprOrdPriv=false;
+		if (u.isImprOrd()) {
+			imprOrdPriv = true;
+		} else {
+			imprOrdPriv = false;
 		}
-		
-		
-		
+
 		if (verConsult.equals("1")) {
 			verConsultPriv = true;
 		} else {
 			verConsultPriv = false;
 		}
-		
 
 		if (menuSal.equals("1")) {
 			menuSalPriv = true;
@@ -5487,11 +5463,11 @@ public void redirectvergestUtl(){
 		} else {
 			menuParamPriv = false;
 		}
-		
-		if(u.getMenuGestRdv().equals("1")){
-			menuRendvousPriv=true;
-		}else{
-			menuRendvousPriv=false;
+
+		if (u.getMenuGestRdv().equals("1")) {
+			menuRendvousPriv = true;
+		} else {
+			menuRendvousPriv = false;
 		}
 
 		if (menuRapport.equals("1")) {
@@ -5499,7 +5475,7 @@ public void redirectvergestUtl(){
 		} else {
 			menuRappPriv = false;
 		}
-		
+
 		if (u.isMenuGestStat()) {
 			menuStatPriv = true;
 		} else {
@@ -5570,185 +5546,181 @@ public void redirectvergestUtl(){
 		} else {
 			gestDocPriv = false;
 		}
-		
-		if(u.isGestAntecedent()){
-			gestAntecedentParamPriv=true;
-		}else{
-			gestAntecedentParamPriv=false;
-		}
-		if(u.isTabMedAnt()){
-			paramtabAntMedPriv=true;
-		}else{
-			paramtabAntMedPriv=false;
-		}
-		
-		if(u.isAjoutGestAntMed()){
-			ajoutAntMedPriv=true;
-		}else{
-			ajoutAntMedPriv=false;
-		}
-		if(u.isModifGestAntMed()){
-			modifAntMedPriv=true;
-		}else{
-			modifAntMedPriv=false;
-		}
-		if(u.isSuppGestAntMed()){
-			supAntMedPriv=true;
-		}else{
-			supAntMedPriv=false;
-		}
-		if(u.isTabChirAnt()){
-			paramtabAntChirgPriv=true;
-		}else{
-			paramtabAntChirgPriv=false;
-		}
-		if(u.isAjoutGestChirg()){
-			ajoutAntChirgPriv=true;
-		}else{
-			ajoutAntChirgPriv=false;
-		}
-		if(u.isModifGestChirg()){
-			modifAntChirgPriv=true;
-		}else{
-			modifAntChirgPriv=false;
-		}
-		if(u.isSuppGestAntChirg()){
-			supAntChirgPriv=true;
-		}else{
-			supAntChirgPriv=false;
-		}
-		
-		if(u.isTabFamAnt()){
-			paramtabAntFamPriv=true;
-		}else{
-			paramtabAntFamPriv=false;
-		}
-		if(u.isAjoutGestFam()){
-			ajoutAntFamPriv=true;
-		}else{
-			ajoutAntFamPriv=false;
-		}
-		if(u.isModifGestFam()){
-			modifAntFamPriv=true;
-		}else{
-			modifAntFamPriv=false;
-		}
-		if(u.isSuppGestAntFam()){
-			supAntFamPriv=true;
-		}else{
-			supAntFamPriv=false;
-		}
-		
 
-		if(u.isGestHoraire()){
-			gestHorairePriv=true;
-		}else{
-			gestHorairePriv=false;
+		if (u.isGestAntecedent()) {
+			gestAntecedentParamPriv = true;
+		} else {
+			gestAntecedentParamPriv = false;
 		}
-		if(u.isModifPrtSais()){
-			modifprdSaisPriv=true;
-		}else{
-			modifprdSaisPriv=false;
+		if (u.isTabMedAnt()) {
+			paramtabAntMedPriv = true;
+		} else {
+			paramtabAntMedPriv = false;
 		}
-		if(u.isAjoutHeurTrav()){
-			ajoutHorTravPriv=true;
-		}else{
-			ajoutHorTravPriv=false;
+
+		if (u.isAjoutGestAntMed()) {
+			ajoutAntMedPriv = true;
+		} else {
+			ajoutAntMedPriv = false;
 		}
-		if(u.isAjoutHeurTrav()){
-			modifHorTravPriv=true;
-		}else{
-			modifHorTravPriv=false;
+		if (u.isModifGestAntMed()) {
+			modifAntMedPriv = true;
+		} else {
+			modifAntMedPriv = false;
 		}
-		if(u.isSupHeurTrav()){
-			supHorTravPriv=true;
-		}else{
-			supHorTravPriv=false;
+		if (u.isSuppGestAntMed()) {
+			supAntMedPriv = true;
+		} else {
+			supAntMedPriv = false;
 		}
-		
-		
-		if(u.isGestCabinet()){
-			gestCabinetPriv=true;
-		}else{
-			gestCabinetPriv=false;
+		if (u.isTabChirAnt()) {
+			paramtabAntChirgPriv = true;
+		} else {
+			paramtabAntChirgPriv = false;
 		}
-		
-		if(u.isGestionUterus()){
-			gestUtPriv=true;
-		}else{
-			gestUtPriv=false;
+		if (u.isAjoutGestChirg()) {
+			ajoutAntChirgPriv = true;
+		} else {
+			ajoutAntChirgPriv = false;
 		}
-        if(u.isAjoutUt()){
-        	ajoutUtPriv=true;
-        }else{
-        	ajoutUtPriv=false;
-        }
-        if(u.isModifUt()){
-        	modifUtPriv=true;
-        }else{
-        	modifUtPriv=false;
-        }
-        if(u.isSupUt()){
-        	supUtPriv=true;
-        }else{
-        	supUtPriv=false;
-        }
-        
-        if(u.getGestEFG().equals("1")){
-        	gestFinGrossPriv=true;
-        }else{
-        	gestFinGrossPriv=false;
-        }
-        if(u.isAjoutEFG()){
-        	ajoutFinGrossPriv=true;
-        }else{
-        	ajoutFinGrossPriv=false;
-        }
-        if(u.isModifEFG()){
-        	modifFinGrossPriv=true;
-        }else{
-        	modifFinGrossPriv=false;
-        }
-        if(u.isSupEFG()){
-        	supFinGrossPriv=true;
-        }else{
-        	supFinGrossPriv=false;
-        }
-        
-        if(u.isGestConsultation()){
-        	gestConsPriv=true;
-        }else{
-        	gestConsPriv=false;
-        }
-        if(u.isModifCons()){
-        	modifConsPriv=true;
-        }else{
-        	modifConsPriv=false;
-        }
-        
-        if(u.isGestionFormMed()){
-        	gestFrmMedPriv=true;
-        }else{
-        	gestFrmMedPriv=false;
-        }
-        if(u.isAjoutFM()){
-        	ajoutFrmMedPriv=true;
-        }else{
-        	ajoutFrmMedPriv=false;
-        }
-        if(u.isModifFM()){
-        	modifFrmMedPriv=true;
-        }else{
-        	modifFrmMedPriv=false;
-        }
-        if(u.isSupFM()){
-        	supFrmMedPriv=true;
-        }else{
-        	supFrmMedPriv=false;
-        }
-        
-        
-		
+		if (u.isModifGestChirg()) {
+			modifAntChirgPriv = true;
+		} else {
+			modifAntChirgPriv = false;
+		}
+		if (u.isSuppGestAntChirg()) {
+			supAntChirgPriv = true;
+		} else {
+			supAntChirgPriv = false;
+		}
+
+		if (u.isTabFamAnt()) {
+			paramtabAntFamPriv = true;
+		} else {
+			paramtabAntFamPriv = false;
+		}
+		if (u.isAjoutGestFam()) {
+			ajoutAntFamPriv = true;
+		} else {
+			ajoutAntFamPriv = false;
+		}
+		if (u.isModifGestFam()) {
+			modifAntFamPriv = true;
+		} else {
+			modifAntFamPriv = false;
+		}
+		if (u.isSuppGestAntFam()) {
+			supAntFamPriv = true;
+		} else {
+			supAntFamPriv = false;
+		}
+
+		if (u.isGestHoraire()) {
+			gestHorairePriv = true;
+		} else {
+			gestHorairePriv = false;
+		}
+		if (u.isModifPrtSais()) {
+			modifprdSaisPriv = true;
+		} else {
+			modifprdSaisPriv = false;
+		}
+		if (u.isAjoutHeurTrav()) {
+			ajoutHorTravPriv = true;
+		} else {
+			ajoutHorTravPriv = false;
+		}
+		if (u.isAjoutHeurTrav()) {
+			modifHorTravPriv = true;
+		} else {
+			modifHorTravPriv = false;
+		}
+		if (u.isSupHeurTrav()) {
+			supHorTravPriv = true;
+		} else {
+			supHorTravPriv = false;
+		}
+
+		if (u.isGestCabinet()) {
+			gestCabinetPriv = true;
+		} else {
+			gestCabinetPriv = false;
+		}
+
+		if (u.isGestionUterus()) {
+			gestUtPriv = true;
+		} else {
+			gestUtPriv = false;
+		}
+		if (u.isAjoutUt()) {
+			ajoutUtPriv = true;
+		} else {
+			ajoutUtPriv = false;
+		}
+		if (u.isModifUt()) {
+			modifUtPriv = true;
+		} else {
+			modifUtPriv = false;
+		}
+		if (u.isSupUt()) {
+			supUtPriv = true;
+		} else {
+			supUtPriv = false;
+		}
+
+		if (u.getGestEFG().equals("1")) {
+			gestFinGrossPriv = true;
+		} else {
+			gestFinGrossPriv = false;
+		}
+		if (u.isAjoutEFG()) {
+			ajoutFinGrossPriv = true;
+		} else {
+			ajoutFinGrossPriv = false;
+		}
+		if (u.isModifEFG()) {
+			modifFinGrossPriv = true;
+		} else {
+			modifFinGrossPriv = false;
+		}
+		if (u.isSupEFG()) {
+			supFinGrossPriv = true;
+		} else {
+			supFinGrossPriv = false;
+		}
+
+		if (u.isGestConsultation()) {
+			gestConsPriv = true;
+		} else {
+			gestConsPriv = false;
+		}
+		if (u.isModifCons()) {
+			modifConsPriv = true;
+		} else {
+			modifConsPriv = false;
+		}
+
+		if (u.isGestionFormMed()) {
+			gestFrmMedPriv = true;
+		} else {
+			gestFrmMedPriv = false;
+		}
+		if (u.isAjoutFM()) {
+			ajoutFrmMedPriv = true;
+		} else {
+			ajoutFrmMedPriv = false;
+		}
+		if (u.isModifFM()) {
+			modifFrmMedPriv = true;
+		} else {
+			modifFrmMedPriv = false;
+		}
+		if (u.isSupFM()) {
+			supFrmMedPriv = true;
+		} else {
+			supFrmMedPriv = false;
+		}
+
 		if (gestProf.equals("1")) {
 			gestProfPriv = true;
 		} else {
@@ -5826,34 +5798,33 @@ public void redirectvergestUtl(){
 			modifNoteSalPriv = false;
 		}
 		if (u.isReponseSal()) {
-			reponseSalPriv= true;
+			reponseSalPriv = true;
 		} else {
 			reponseSalPriv = false;
 		}
 		if (u.isTabAnulSal()) {
-			tabAnulSalPriv= true;
+			tabAnulSalPriv = true;
 		} else {
 			tabAnulSalPriv = false;
 		}
 		if (u.isAnulSal()) {
-			anulSalPriv= true;
+			anulSalPriv = true;
 		} else {
 			anulSalPriv = false;
 		}
-		
-		
+
 		if (u.isDonnerRdv()) {
-			donnerRdvPriv= true;
+			donnerRdvPriv = true;
 		} else {
 			donnerRdvPriv = false;
 		}
 		if (u.isArchiverPat()) {
-			archiverPatPriv= true;
+			archiverPatPriv = true;
 		} else {
 			archiverPatPriv = false;
 		}
 		if (u.isConsultArchiv()) {
-			consultArchivePriv= true;
+			consultArchivePriv = true;
 		} else {
 			consultArchivePriv = false;
 		}
@@ -5928,91 +5899,90 @@ public void redirectvergestUtl(){
 		} else {
 			echoGynPriv = false;
 		}
-		if(u.isNouvchogyneco()){
-			echoGynNouvConsultPriv=true;
-		}else{
-			echoGynNouvConsultPriv=false;
+		if (u.isNouvchogyneco()) {
+			echoGynNouvConsultPriv = true;
+		} else {
+			echoGynNouvConsultPriv = false;
 		}
-		
-		if(u.isModifechogyneco()){
-			echoGynModifConsultPriv=true;
-		}else{
-			echoGynModifConsultPriv=false;
+
+		if (u.isModifechogyneco()) {
+			echoGynModifConsultPriv = true;
+		} else {
+			echoGynModifConsultPriv = false;
 		}
-		
-		if(u.isSuppechogyneco()){
-			echoGynsupConsultPriv=true;
-		}else{
-			echoGynsupConsultPriv=false;
+
+		if (u.isSuppechogyneco()) {
+			echoGynsupConsultPriv = true;
+		} else {
+			echoGynsupConsultPriv = false;
 		}
-		
-		if(u.isAjoutmodelechogyneco()){
-			echoGynNouvModeltPriv=true;
-		}else{
-			echoGynNouvModeltPriv=false;
+
+		if (u.isAjoutmodelechogyneco()) {
+			echoGynNouvModeltPriv = true;
+		} else {
+			echoGynNouvModeltPriv = false;
 		}
-		
-		if(u.isSuppmodelechogyneco()){
-			echoGynSupModeltPriv=true;
-		}else{
-			echoGynSupModeltPriv=false;
+
+		if (u.isSuppmodelechogyneco()) {
+			echoGynSupModeltPriv = true;
+		} else {
+			echoGynSupModeltPriv = false;
 		}
-		
-		if(u.isAppliquemodelechogyneco()){
-			echoGynApplModeltPriv=true;
-		}else{
-			echoGynApplModeltPriv=false;
+
+		if (u.isAppliquemodelechogyneco()) {
+			echoGynApplModeltPriv = true;
+		} else {
+			echoGynApplModeltPriv = false;
 		}
-		
-		if(u.isImprechogyneco()){
-			echoGynImprPriv=true;
-		}else{
-			echoGynImprPriv=false;
+
+		if (u.isImprechogyneco()) {
+			echoGynImprPriv = true;
+		} else {
+			echoGynImprPriv = false;
 		}
-		
+
 		if (echoObs.equals("1")) {
 			echoObstPriv = true;
 		} else {
 			echoObstPriv = false;
 		}
-		if(u.isModifechoObs()){
-			echoObsModifConsultPriv=true;
-		}else{
-			echoObsModifConsultPriv=false;
+		if (u.isModifechoObs()) {
+			echoObsModifConsultPriv = true;
+		} else {
+			echoObsModifConsultPriv = false;
 		}
-		if(u.isNouvechoObs()){
-			echoObsNouvConsultPriv=true;
-		}else{
-			echoObsNouvConsultPriv=false;
+		if (u.isNouvechoObs()) {
+			echoObsNouvConsultPriv = true;
+		} else {
+			echoObsNouvConsultPriv = false;
 		}
-		if(u.isSuppechoObs()){
-			echoObsSupConsultPriv=true;
-		}else{
-			echoObsSupConsultPriv=false;
+		if (u.isSuppechoObs()) {
+			echoObsSupConsultPriv = true;
+		} else {
+			echoObsSupConsultPriv = false;
 		}
-		if(u.isTrim1echoObs()){
-			echoObsTrim1Priv=true;
-		}else{
-			echoObsTrim1Priv=false;
+		if (u.isTrim1echoObs()) {
+			echoObsTrim1Priv = true;
+		} else {
+			echoObsTrim1Priv = false;
 		}
-		if(u.isTrim2echoObs()){
-			echoObsTrim2Priv=true;
-		}else{
-			echoObsTrim2Priv=false;
+		if (u.isTrim2echoObs()) {
+			echoObsTrim2Priv = true;
+		} else {
+			echoObsTrim2Priv = false;
 		}
-		if(u.isImprechoObs()){
-			echoObsImprPriv=true;
-		}else{
-			echoObsImprPriv=false;
+		if (u.isImprechoObs()) {
+			echoObsImprPriv = true;
+		} else {
+			echoObsImprPriv = false;
 		}
-		
-		if(u.isTrim3echoObs()){
-			echoObsTrim3Priv=true;
-		}else{
-			echoObsTrim3Priv=false;
+
+		if (u.isTrim3echoObs()) {
+			echoObsTrim3Priv = true;
+		} else {
+			echoObsTrim3Priv = false;
 		}
-		
-		
+
 		if (gynecologie.equals("1")) {
 			gynecologiePriv = true;
 		} else {
@@ -6028,33 +5998,33 @@ public void redirectvergestUtl(){
 		} else {
 			sterilitePriv = false;
 		}
-		if(u.isModifSterilite()){
-			steriliteModifPriv=true;
-		}else{
-			steriliteModifPriv=false;
+		if (u.isModifSterilite()) {
+			steriliteModifPriv = true;
+		} else {
+			steriliteModifPriv = false;
 		}
 		if (tabAntecedent.equals("1")) {
 			tabAntecedentPriv = true;
 		} else {
 			tabAntecedentPriv = false;
 		}
-		
-		if(u.isModifGynObs()){
-			modifGynObsPriv=true;
-		}else{
-			modifGynObsPriv=false;
+
+		if (u.isModifGynObs()) {
+			modifGynObsPriv = true;
+		} else {
+			modifGynObsPriv = false;
 		}
-		if(u.isModifAnt()){
-			modifAntPriv=true;
-		}else{
-			modifAntPriv=false;
+		if (u.isModifAnt()) {
+			modifAntPriv = true;
+		} else {
+			modifAntPriv = false;
 		}
-		if(u.isSuppAnt()){
-			suppAntPriv=true;
-		}else{
-			suppAntPriv=false;
+		if (u.isSuppAnt()) {
+			suppAntPriv = true;
+		} else {
+			suppAntPriv = false;
 		}
-		
+
 		if (tabGynecoObs.equals("1")) {
 			tabGynecoObsPriv = true;
 		} else {
@@ -6110,7 +6080,7 @@ public void redirectvergestUtl(){
 		} else {
 			gynOrdPriv = false;
 		}
-		
+
 		if (u.isConsultDetAnal()) {
 			consultDetAnalPriv = true;
 		} else {
@@ -6126,7 +6096,7 @@ public void redirectvergestUtl(){
 		} else {
 			consultDetOrdPriv = false;
 		}
-		
+
 		if (gynRadio.equals("1")) {
 			gynRadioPriv = true;
 		} else {
@@ -6137,24 +6107,24 @@ public void redirectvergestUtl(){
 		} else {
 			gynNouvConsultPriv = false;
 		}
-		if(u.isModifGyneco()){
-			gynModifConsultPriv=true;
-		}else{
-			gynModifConsultPriv=false;
+		if (u.isModifGyneco()) {
+			gynModifConsultPriv = true;
+		} else {
+			gynModifConsultPriv = false;
 		}
-		
-		if(u.isSuppGyneco()){
-			gynSupConsultPriv=true;
-		}else{
-			gynSupConsultPriv=false;
+
+		if (u.isSuppGyneco()) {
+			gynSupConsultPriv = true;
+		} else {
+			gynSupConsultPriv = false;
 		}
-		
-		if(u.isImprGyneco()){
-			gynImprConsultPriv=true;
-		}else{
-			gynImprConsultPriv=false;
+
+		if (u.isImprGyneco()) {
+			gynImprConsultPriv = true;
+		} else {
+			gynImprConsultPriv = false;
 		}
-			
+
 		if (grossRadio.equals("1")) {
 			grossRadioPriv = true;
 		} else {
@@ -6165,27 +6135,27 @@ public void redirectvergestUtl(){
 		} else {
 			grossOrdPriv = false;
 		}
-		if(u.isSelectNouvGross()){
-			grossSelectNouvConsultPriv=true;
-		}else{
-			grossSelectNouvConsultPriv=false;
+		if (u.isSelectNouvGross()) {
+			grossSelectNouvConsultPriv = true;
+		} else {
+			grossSelectNouvConsultPriv = false;
 		}
-		if(u.isModifGross()){
-			grossModifConsultPriv=true;
-		}else{
-			grossModifConsultPriv=false;
+		if (u.isModifGross()) {
+			grossModifConsultPriv = true;
+		} else {
+			grossModifConsultPriv = false;
 		}
-		if(u.isSuppGross()){
-			grossSupvConsultPriv=true;
-		}else{
-			grossSupvConsultPriv=false;
+		if (u.isSuppGross()) {
+			grossSupvConsultPriv = true;
+		} else {
+			grossSupvConsultPriv = false;
 		}
-		if(u.isImprGross()){
-			grossImprConsultPriv=true;
-		}else{
-			grossImprConsultPriv=false;
+		if (u.isImprGross()) {
+			grossImprConsultPriv = true;
+		} else {
+			grossImprConsultPriv = false;
 		}
-        
+
 		if (grossAnal.equals("1")) {
 			grossAnaPriv = true;
 		} else {
@@ -6200,11 +6170,10 @@ public void redirectvergestUtl(){
 
 	public String Supprimer(Integer id) {
 
-		
 		FacesContext faces = FacesContext.getCurrentInstance();
 		UtilisateurService ser = new UtilisateurService();
 		ser.supprimerUtilisateur(id);
-		//RequestContext.getCurrentInstance().update("f1");
+		// RequestContext.getCurrentInstance().update("f1");
 		faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Utilisateur supprimé avec succè", "Invalid credentials"));
 
@@ -6213,9 +6182,8 @@ public void redirectvergestUtl(){
 
 	public void initialisation() {
 
-		index=0;
-		
-		
+		index = 0;
+		dn = null;
 		idUtilisateur = null;
 		login = null;
 		motPasse = null;
@@ -6227,9 +6195,9 @@ public void redirectvergestUtl(){
 		tel = null;
 		email = null;
 		civil = null;
-		
-		nomModelUtl=null;
-		idmodelUtl=null;
+
+		nomModelUtl = null;
+		idmodelUtl = null;
 
 		gestExmCompPriv = false;
 		ajoutExmCompPriv = false;
@@ -6271,23 +6239,23 @@ public void redirectvergestUtl(){
 		modifEtBbPriv = false;
 		supEtBbPriv = false;
 
-		gestJrFerParamPriv=false;
-		paramtabJrFerPriv=false;
-		ajouJrFerStndPriv=false;
-		modifJrFerStndPriv=false;
-		supJrFerStndPriv=false;
-		paramtabJrFerExpPriv=false;
-		ajouJrFerExpPriv=false;
-		modifJrFerExpPriv=false;
-		supJrFerExpPriv=false;
-		
+		gestJrFerParamPriv = false;
+		paramtabJrFerPriv = false;
+		ajouJrFerStndPriv = false;
+		modifJrFerStndPriv = false;
+		supJrFerStndPriv = false;
+		paramtabJrFerExpPriv = false;
+		ajouJrFerExpPriv = false;
+		modifJrFerExpPriv = false;
+		supJrFerExpPriv = false;
+
 		verConsultPriv = false;
-        menuSalPriv=false;
+		menuSalPriv = false;
 		menuGesPatPriv = false;
 		menuParamPriv = false;
-		menuRendvousPriv=false;
+		menuRendvousPriv = false;
 		menuRappPriv = false;
-		menuStatPriv=false;
+		menuStatPriv = false;
 		menuGesUtlPriv = false;
 		ajouPatPriv = false;
 		verSalPriv = false;
@@ -6296,48 +6264,48 @@ public void redirectvergestUtl(){
 		chargPatPriv = false;
 		suppPatPriv = false;
 		tabInfGnrAjtPatPriv = false;
-		
+
 		tabContctPatPriv = false;
 		tabInfoConjAjtPatPriv = false;
 		tabAtreInfAjtPatPriv = false;
 		gestDocPriv = false;
-		gestAntecedentParamPriv=false;
-		paramtabAntMedPriv=false;
-		ajoutAntMedPriv=false;
-		modifAntMedPriv=false;
-		supAntMedPriv=false;
-		paramtabAntChirgPriv=false;
-		ajoutAntChirgPriv=false;
-		modifAntChirgPriv=false;
-		supAntChirgPriv=false;
-		paramtabAntFamPriv=false;
-		ajoutAntFamPriv=false;
-		modifAntFamPriv=false;
-		supAntFamPriv=false;
-		gestHorairePriv=false;
-		modifprdSaisPriv=false;
-		ajoutHorTravPriv=false;
-		modifHorTravPriv=false;
-		supHorTravPriv=false;
-		
-		gestCabinetPriv=false;
-		gestUtPriv=false;
-		ajoutUtPriv=false;
-		modifUtPriv=false;
-		supUtPriv=false;
-		
-		gestFinGrossPriv=false;
-		ajoutFinGrossPriv=false;
-		modifFinGrossPriv=false;
-		supFinGrossPriv=false;
-		
-		gestConsPriv=false;
-		modifConsPriv=false;
-		
-		gestFrmMedPriv=false;
-		ajoutFrmMedPriv=false;
-		modifFrmMedPriv=false;
-		supFrmMedPriv=false;
+		gestAntecedentParamPriv = false;
+		paramtabAntMedPriv = false;
+		ajoutAntMedPriv = false;
+		modifAntMedPriv = false;
+		supAntMedPriv = false;
+		paramtabAntChirgPriv = false;
+		ajoutAntChirgPriv = false;
+		modifAntChirgPriv = false;
+		supAntChirgPriv = false;
+		paramtabAntFamPriv = false;
+		ajoutAntFamPriv = false;
+		modifAntFamPriv = false;
+		supAntFamPriv = false;
+		gestHorairePriv = false;
+		modifprdSaisPriv = false;
+		ajoutHorTravPriv = false;
+		modifHorTravPriv = false;
+		supHorTravPriv = false;
+
+		gestCabinetPriv = false;
+		gestUtPriv = false;
+		ajoutUtPriv = false;
+		modifUtPriv = false;
+		supUtPriv = false;
+
+		gestFinGrossPriv = false;
+		ajoutFinGrossPriv = false;
+		modifFinGrossPriv = false;
+		supFinGrossPriv = false;
+
+		gestConsPriv = false;
+		modifConsPriv = false;
+
+		gestFrmMedPriv = false;
+		ajoutFrmMedPriv = false;
+		modifFrmMedPriv = false;
+		supFrmMedPriv = false;
 		gestProfPriv = false;
 		gestVilPriv = false;
 		gestCliPriv = false;
@@ -6351,13 +6319,13 @@ public void redirectvergestUtl(){
 		dernierSalPriv = false;
 		supPatSalPriv = false;
 		chargPatSalPriv = false;
-		modifNoteSalPriv=false;
-		reponseSalPriv=false;
-		tabAnulSalPriv=false;
-		anulSalPriv=false;
-		donnerRdvPriv=false;
-		archiverPatPriv=false;
-		consultArchivePriv=false;
+		modifNoteSalPriv = false;
+		reponseSalPriv = false;
+		tabAnulSalPriv = false;
+		anulSalPriv = false;
+		donnerRdvPriv = false;
+		archiverPatPriv = false;
+		consultArchivePriv = false;
 		ajoutDocPriv = false;
 		modifDocPriv = false;
 		supDocPriv = false;
@@ -6372,29 +6340,29 @@ public void redirectvergestUtl(){
 		supClinPriv = false;
 		antecedentPriv = false;
 		echoGynPriv = false;
-		echoGynsupConsultPriv=false;
-		echoGynModifConsultPriv=false;
-		echoGynNouvConsultPriv=false;
-		echoGynNouvModeltPriv=false;
-		echoGynSupModeltPriv=false;
-		echoGynApplModeltPriv=false;
-		echoGynImprPriv=false;
+		echoGynsupConsultPriv = false;
+		echoGynModifConsultPriv = false;
+		echoGynNouvConsultPriv = false;
+		echoGynNouvModeltPriv = false;
+		echoGynSupModeltPriv = false;
+		echoGynApplModeltPriv = false;
+		echoGynImprPriv = false;
 		echoObstPriv = false;
-		echoObsTrim3Priv=false;
-		echoObsNouvConsultPriv=false;
-		echoObsModifConsultPriv=false;
-		echoObsSupConsultPriv=false;
-		echoObsTrim1Priv=false;
-		echoObsTrim2Priv=false;
-		echoObsImprPriv=false;
+		echoObsTrim3Priv = false;
+		echoObsNouvConsultPriv = false;
+		echoObsModifConsultPriv = false;
+		echoObsSupConsultPriv = false;
+		echoObsTrim1Priv = false;
+		echoObsTrim2Priv = false;
+		echoObsImprPriv = false;
 		gynecologiePriv = false;
 		consultGrossPriv = false;
 		sterilitePriv = false;
-		steriliteModifPriv=false;
+		steriliteModifPriv = false;
 		tabAntecedentPriv = false;
-		modifGynObsPriv=false;
-		modifAntPriv=false;
-		suppAntPriv=false;
+		modifGynObsPriv = false;
+		modifAntPriv = false;
+		suppAntPriv = false;
 		tabGynecoObsPriv = false;
 		tabHistGrossPriv = false;
 		tabContracepPriv = false;
@@ -6407,89 +6375,86 @@ public void redirectvergestUtl(){
 		gynRadioPriv = false;
 		gynAnaPriv = false;
 		gynOrdPriv = false;
-		consultDetAnalPriv=false;
-		consultDetRadPriv=false;
-		consultDetOrdPriv=false;
+		consultDetAnalPriv = false;
+		consultDetRadPriv = false;
+		consultDetOrdPriv = false;
 		gynNouvConsultPriv = false;
-		gynModifConsultPriv= false;
-		gynSupConsultPriv=false;
-		gynImprConsultPriv=false;
-		grossSelectNouvConsultPriv=false;
-		grossModifConsultPriv=false;
-		grossSupvConsultPriv=false;
-		grossImprConsultPriv=false;
+		gynModifConsultPriv = false;
+		gynSupConsultPriv = false;
+		gynImprConsultPriv = false;
+		grossSelectNouvConsultPriv = false;
+		grossModifConsultPriv = false;
+		grossSupvConsultPriv = false;
+		grossImprConsultPriv = false;
 		grossRadioPriv = false;
 		grossAnaPriv = false;
 		grossOrdPriv = false;
 		grossNouvConsultPriv = false;
 		certifFichePriv = false;
-		ajoutCertifPriv=false;
-		modifCertifPriv=false;
-		supCertifPriv=false;
-		impCertifPriv=false;
-		
-		lettreFichePriv = false;
-		ajoutLtrPriv=false;
-		modifLtrPriv=false;
-		supLtrPriv=false;
-	    impLtrPriv=false;
-		
-		analyseFichePriv = false;
-		modifHistoAnalPriv=false;
-		consultHistoAnalPriv=false;
-		supHistoAnalPriv=false;
-		
-		radioFichePriv = false;
-		modifHistoRadPriv=false;
-		consultHistoRadPriv=false;
-		supHistoRadPriv=false;
-		imprAnalPriv=false;
-		imprRadioPriv=false;
-		
-		rapportFichePriv = false;
-		
-		ordonceFichePriv = false;
-		consultOrdLibrePriv=false;
-		modifHistoOrdPriv=false;
-		supHistoOrdPriv=false;
-		rechercheOrdPriv=false;
-		imprOrdPriv=false;
-		
-		ajoutModeleordPriv=false;
-		selectModeleordPriv=false;
-		suppModeleOrdPriv=false;
-		consultertHistoConsultationPriv=false;
-		
-		gestSaisPriv=false;
-		
+		ajoutCertifPriv = false;
+		modifCertifPriv = false;
+		supCertifPriv = false;
+		impCertifPriv = false;
 
-		/*try {
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("AjouterUtilisateur.xhtml");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}*/
+		lettreFichePriv = false;
+		ajoutLtrPriv = false;
+		modifLtrPriv = false;
+		supLtrPriv = false;
+		impLtrPriv = false;
+
+		analyseFichePriv = false;
+		modifHistoAnalPriv = false;
+		consultHistoAnalPriv = false;
+		supHistoAnalPriv = false;
+
+		radioFichePriv = false;
+		modifHistoRadPriv = false;
+		consultHistoRadPriv = false;
+		supHistoRadPriv = false;
+		imprAnalPriv = false;
+		imprRadioPriv = false;
+
+		rapportFichePriv = false;
+
+		ordonceFichePriv = false;
+		consultOrdLibrePriv = false;
+		modifHistoOrdPriv = false;
+		supHistoOrdPriv = false;
+		rechercheOrdPriv = false;
+		imprOrdPriv = false;
+
+		ajoutModeleordPriv = false;
+		selectModeleordPriv = false;
+		suppModeleOrdPriv = false;
+		consultertHistoConsultationPriv = false;
+
+		gestSaisPriv = false;
+
+		/*
+		 * try { FacesContext.getCurrentInstance().getExternalContext()
+		 * .redirect("AjouterUtilisateur.xhtml"); } catch (Exception e) {
+		 * System.out.println(e.getMessage()); }
+		 */
 
 	}
-	
-	public void redirectverajoututl(){
-		
-		
+
+	public void redirectverajoututl() {
+
 		try {
 			FacesContext context2 = FacesContext.getCurrentInstance();
-		    context2.getExternalContext().getFlash().setKeepMessages(true);
+			context2.getExternalContext().getFlash().setKeepMessages(true);
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("AjoutUtilisateur");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-public void redirectverModifutl(){
-		
+
+	public void redirectverModifutl() {
+
 		try {
 			FacesContext context2 = FacesContext.getCurrentInstance();
-		    context2.getExternalContext().getFlash().setKeepMessages(true);
+			context2.getExternalContext().getFlash().setKeepMessages(true);
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("ModifierUtilisateur");
 		} catch (Exception e) {
@@ -6499,7 +6464,7 @@ public void redirectverModifutl(){
 
 	public void hideDialog() {
 		initialisation();
-		//redirectUtl();
+		// redirectUtl();
 	}
 
 	public void touCocherGeneral() {
@@ -6507,10 +6472,9 @@ public void redirectverModifutl(){
 		menuSalPriv = true;
 		menuGesPatPriv = true;
 		menuParamPriv = true;
-		menuRendvousPriv=true;
+		menuRendvousPriv = true;
 		menuStatPriv = true;
 		menuGesUtlPriv = true;
-
 
 	}
 
@@ -6519,15 +6483,14 @@ public void redirectverModifutl(){
 		menuSalPriv = false;
 		menuGesPatPriv = false;
 		menuParamPriv = false;
-		menuRendvousPriv=false;
+		menuRendvousPriv = false;
 		menuStatPriv = false;
 		menuGesUtlPriv = false;
-		
 
 	}
 
 	public void touCochersal() {
-		
+
 		verConsultPriv = true;
 		montPatSalPriv = true;
 		descdrePatSalPriv = true;
@@ -6536,12 +6499,11 @@ public void redirectverModifutl(){
 		dernierSalPriv = true;
 		supPatSalPriv = true;
 		chargPatSalPriv = true;
-		modifNoteSalPriv=true;
-		reponseSalPriv=true;
-		tabAnulSalPriv=true;
-		anulSalPriv=true;
-        //donnerRdvPriv=true;
-        
+		modifNoteSalPriv = true;
+		reponseSalPriv = true;
+		tabAnulSalPriv = true;
+		anulSalPriv = true;
+		// donnerRdvPriv=true;
 
 	}
 
@@ -6554,12 +6516,11 @@ public void redirectverModifutl(){
 		dernierSalPriv = false;
 		supPatSalPriv = false;
 		chargPatSalPriv = false;
-		modifNoteSalPriv=false;
-		reponseSalPriv=false;
-		tabAnulSalPriv=false;
-		anulSalPriv=false;
-		//donnerRdvPriv=false;
-		
+		modifNoteSalPriv = false;
+		reponseSalPriv = false;
+		tabAnulSalPriv = false;
+		anulSalPriv = false;
+		// donnerRdvPriv=false;
 
 	}
 
@@ -6576,9 +6537,9 @@ public void redirectverModifutl(){
 		detPatPriv = true;
 		chargPatPriv = true;
 		suppPatPriv = true;
-		donnerRdvPriv=true;
-		archiverPatPriv=true;
-        consultArchivePriv=true;
+		donnerRdvPriv = true;
+		archiverPatPriv = true;
+		consultArchivePriv = true;
 
 	}
 
@@ -6595,246 +6556,240 @@ public void redirectverModifutl(){
 		detPatPriv = false;
 		chargPatPriv = false;
 		suppPatPriv = false;
-		donnerRdvPriv=false;
-		archiverPatPriv=false;
-        consultArchivePriv=false;
+		donnerRdvPriv = false;
+		archiverPatPriv = false;
+		consultArchivePriv = false;
 
 	}
-	
-	
-	public void touCocherParam(){
-		gestDocPriv=true;
-		ajoutDocPriv=true;
-		modifDocPriv=true;
-		supDocPriv=true;
-		
-		gestCliPriv=true;
-		ajoutClinPriv=true;
-		modifClinPriv=true;
-		supClinPriv=true;
-		
-		gestProfPriv=true;
-		ajoutProfPriv=true;
-		modifProfPriv=true;
-		supProfPriv=true;
-		
-		gestVilPriv=true;
-		ajoutVilPriv=true;
-		modifVilPriv=true;
-		supVilPriv=true;
-		
-		gestFinGrossPriv=true;
-		ajoutFinGrossPriv=true;
-		modifFinGrossPriv=true;
-		supFinGrossPriv=true;
-		
-		gestEtBbPriv=true;
-		ajoutEtBbPriv=true;
-		modifEtBbPriv=true;
-		supEtBbPriv=true;
-		
-		gestAnalPriv=true;
-		ajoutAnalPriv=true;
-		modifAnalPriv=true;
-		supAnalPriv=true;
-		
-		gestMedPriv=true;
-		ajoutMedPriv=true;
-		modifMedPriv=true;
-		supMedPriv=true;
-		
-		gestExmPriv=true;
-		ajoutExmPriv=true;
-		modifExmPriv=true;
-		supExmPriv=true;
-		
-		gestMoyCtrPriv=true;
-		ajoutMoyCtrPriv=true;
-		modifMoyCtrPriv=true;
-		supMoyCtrPriv=true;
-		
-		gestDiagPriv=true;
-		ajoutDiagPriv=true;
-		modifDiagPriv=true;
-		supDiagPriv=true;
-		
-		gestSymPriv=true;
-		ajoutSymPriv=true;
-		modifSymPriv=true;
-		supSymPriv=true;
-		
-		gestExmCompPriv=true;
-		ajoutExmCompPriv=true;
-		modifExmCompPriv=true;
-		supExmCompPriv=true;
-		
-		gestUtPriv=true;
-		ajoutUtPriv=true;
-		modifUtPriv=true;
-		supUtPriv=true;
-		
-		gestAntecedentParamPriv=true;
-		paramtabAntMedPriv=true;
-		ajoutAntMedPriv=true;
-		modifAntMedPriv=true;
-		supAntMedPriv=true;
-		paramtabAntChirgPriv=true;
-		ajoutAntChirgPriv=true;
-		modifAntChirgPriv=true;
-		supAntChirgPriv=true;
-		paramtabAntFamPriv=true;
-		ajoutAntFamPriv=true;
-		modifAntFamPriv=true;
-		supAntFamPriv=true;
-		
-		gestJrFerParamPriv=true;
-		paramtabJrFerPriv=true;
-		ajouJrFerStndPriv=true;
-		modifJrFerStndPriv=true;
-		supJrFerStndPriv=true;
-		paramtabJrFerExpPriv=true;
-		ajouJrFerExpPriv=true;
-		modifJrFerExpPriv=true;
-		supJrFerExpPriv=true;
-		
-		gestConsPriv=true;
-		modifConsPriv=true;
-		
-		gestFrmMedPriv=true;
-		ajoutFrmMedPriv=true;
-		modifFrmMedPriv=true;
-		supFrmMedPriv=true;
-		
-		gestHorairePriv=true;
-		modifprdSaisPriv=true;
-		ajoutHorTravPriv=true;
-		modifHorTravPriv=true;
-		supHorTravPriv=true;
-		gestSaisPriv=true;
-		
-		gestCabinetPriv=true;
-		
-		
-	}
-	
-	public void touDecocherParam(){
-		
-		gestDocPriv=false;
-		ajoutDocPriv=false;
-		modifDocPriv=false;
-		supDocPriv=false;
-		
-		gestCliPriv=false;
-		ajoutClinPriv=false;
-		modifClinPriv=false;
-		supClinPriv=false;
-		
-		gestProfPriv=false;
-		ajoutProfPriv=false;
-		modifProfPriv=false;
-		supProfPriv=false;
-		
-		gestVilPriv=false;
-		ajoutVilPriv=false;
-		modifVilPriv=false;
-		supVilPriv=false;
-		
-		gestFinGrossPriv=false;
-		ajoutFinGrossPriv=false;
-		modifFinGrossPriv=false;
-		supFinGrossPriv=false;
-		
-		gestEtBbPriv=false;
-		ajoutEtBbPriv=false;
-		modifEtBbPriv=false;
-		supEtBbPriv=false;
-		
-		gestAnalPriv=false;
-		ajoutAnalPriv=false;
-		modifAnalPriv=false;
-		supAnalPriv=false;
-		
-		gestMedPriv=false;
-		ajoutMedPriv=false;
-		modifMedPriv=false;
-		supMedPriv=false;
-		
-		gestExmPriv=false;
-		ajoutExmPriv=false;
-		modifExmPriv=false;
-		supExmPriv=false;
 
-		gestMoyCtrPriv=false;
-		ajoutMoyCtrPriv=false;
-		modifMoyCtrPriv=false;
-		supMoyCtrPriv=false;
-		
-		gestDiagPriv=false;
-		ajoutDiagPriv=false;
-		modifDiagPriv=false;
-		supDiagPriv=false;
-		
-		gestSymPriv=false;
-		ajoutSymPriv=false;
-		modifSymPriv=false;
-		supSymPriv=false;
-		
-		gestExmCompPriv=false;
-		ajoutExmCompPriv=false;
-		modifExmCompPriv=false;
-		supExmCompPriv=false;
-		
-		gestUtPriv=false;
-		ajoutUtPriv=false;
-		modifUtPriv=false;
-		supUtPriv=false;
-		
-		gestAntecedentParamPriv=false;
-		paramtabAntMedPriv=false;
-		ajoutAntMedPriv=false;
-		modifAntMedPriv=false;
-		supAntMedPriv=false;
-		paramtabAntChirgPriv=false;
-		ajoutAntChirgPriv=false;
-		modifAntChirgPriv=false;
-		supAntChirgPriv=false;
-		paramtabAntFamPriv=false;
-		ajoutAntFamPriv=false;
-		modifAntFamPriv=false;
-		supAntFamPriv=false;
-		
-		gestJrFerParamPriv=false;
-		paramtabJrFerPriv=false;
-		ajouJrFerStndPriv=false;
-		modifJrFerStndPriv=false;
-		supJrFerStndPriv=false;
-		paramtabJrFerExpPriv=false;
-		ajouJrFerExpPriv=false;
-		modifJrFerExpPriv=false;
-		supJrFerExpPriv=false;
-		
-		gestConsPriv=false;
-		modifConsPriv=false;
-		
-		gestFrmMedPriv=false;
-		ajoutFrmMedPriv=false;
-		modifFrmMedPriv=false;
-		supFrmMedPriv=false;
-		
-		gestHorairePriv=false;
-		modifprdSaisPriv=false;
-		ajoutHorTravPriv=false;
-		modifHorTravPriv=false;
-		supHorTravPriv=false;
-		gestSaisPriv=false;
-		
-		
-		gestCabinetPriv=false;
-		
-		
+	public void touCocherParam() {
+		gestDocPriv = true;
+		ajoutDocPriv = true;
+		modifDocPriv = true;
+		supDocPriv = true;
+
+		gestCliPriv = true;
+		ajoutClinPriv = true;
+		modifClinPriv = true;
+		supClinPriv = true;
+
+		gestProfPriv = true;
+		ajoutProfPriv = true;
+		modifProfPriv = true;
+		supProfPriv = true;
+
+		gestVilPriv = true;
+		ajoutVilPriv = true;
+		modifVilPriv = true;
+		supVilPriv = true;
+
+		gestFinGrossPriv = true;
+		ajoutFinGrossPriv = true;
+		modifFinGrossPriv = true;
+		supFinGrossPriv = true;
+
+		gestEtBbPriv = true;
+		ajoutEtBbPriv = true;
+		modifEtBbPriv = true;
+		supEtBbPriv = true;
+
+		gestAnalPriv = true;
+		ajoutAnalPriv = true;
+		modifAnalPriv = true;
+		supAnalPriv = true;
+
+		gestMedPriv = true;
+		ajoutMedPriv = true;
+		modifMedPriv = true;
+		supMedPriv = true;
+
+		gestExmPriv = true;
+		ajoutExmPriv = true;
+		modifExmPriv = true;
+		supExmPriv = true;
+
+		gestMoyCtrPriv = true;
+		ajoutMoyCtrPriv = true;
+		modifMoyCtrPriv = true;
+		supMoyCtrPriv = true;
+
+		gestDiagPriv = true;
+		ajoutDiagPriv = true;
+		modifDiagPriv = true;
+		supDiagPriv = true;
+
+		gestSymPriv = true;
+		ajoutSymPriv = true;
+		modifSymPriv = true;
+		supSymPriv = true;
+
+		gestExmCompPriv = true;
+		ajoutExmCompPriv = true;
+		modifExmCompPriv = true;
+		supExmCompPriv = true;
+
+		gestUtPriv = true;
+		ajoutUtPriv = true;
+		modifUtPriv = true;
+		supUtPriv = true;
+
+		gestAntecedentParamPriv = true;
+		paramtabAntMedPriv = true;
+		ajoutAntMedPriv = true;
+		modifAntMedPriv = true;
+		supAntMedPriv = true;
+		paramtabAntChirgPriv = true;
+		ajoutAntChirgPriv = true;
+		modifAntChirgPriv = true;
+		supAntChirgPriv = true;
+		paramtabAntFamPriv = true;
+		ajoutAntFamPriv = true;
+		modifAntFamPriv = true;
+		supAntFamPriv = true;
+
+		gestJrFerParamPriv = true;
+		paramtabJrFerPriv = true;
+		ajouJrFerStndPriv = true;
+		modifJrFerStndPriv = true;
+		supJrFerStndPriv = true;
+		paramtabJrFerExpPriv = true;
+		ajouJrFerExpPriv = true;
+		modifJrFerExpPriv = true;
+		supJrFerExpPriv = true;
+
+		gestConsPriv = true;
+		modifConsPriv = true;
+
+		gestFrmMedPriv = true;
+		ajoutFrmMedPriv = true;
+		modifFrmMedPriv = true;
+		supFrmMedPriv = true;
+
+		gestHorairePriv = true;
+		modifprdSaisPriv = true;
+		ajoutHorTravPriv = true;
+		modifHorTravPriv = true;
+		supHorTravPriv = true;
+		gestSaisPriv = true;
+
+		gestCabinetPriv = true;
+
 	}
-	
-	
+
+	public void touDecocherParam() {
+
+		gestDocPriv = false;
+		ajoutDocPriv = false;
+		modifDocPriv = false;
+		supDocPriv = false;
+
+		gestCliPriv = false;
+		ajoutClinPriv = false;
+		modifClinPriv = false;
+		supClinPriv = false;
+
+		gestProfPriv = false;
+		ajoutProfPriv = false;
+		modifProfPriv = false;
+		supProfPriv = false;
+
+		gestVilPriv = false;
+		ajoutVilPriv = false;
+		modifVilPriv = false;
+		supVilPriv = false;
+
+		gestFinGrossPriv = false;
+		ajoutFinGrossPriv = false;
+		modifFinGrossPriv = false;
+		supFinGrossPriv = false;
+
+		gestEtBbPriv = false;
+		ajoutEtBbPriv = false;
+		modifEtBbPriv = false;
+		supEtBbPriv = false;
+
+		gestAnalPriv = false;
+		ajoutAnalPriv = false;
+		modifAnalPriv = false;
+		supAnalPriv = false;
+
+		gestMedPriv = false;
+		ajoutMedPriv = false;
+		modifMedPriv = false;
+		supMedPriv = false;
+
+		gestExmPriv = false;
+		ajoutExmPriv = false;
+		modifExmPriv = false;
+		supExmPriv = false;
+
+		gestMoyCtrPriv = false;
+		ajoutMoyCtrPriv = false;
+		modifMoyCtrPriv = false;
+		supMoyCtrPriv = false;
+
+		gestDiagPriv = false;
+		ajoutDiagPriv = false;
+		modifDiagPriv = false;
+		supDiagPriv = false;
+
+		gestSymPriv = false;
+		ajoutSymPriv = false;
+		modifSymPriv = false;
+		supSymPriv = false;
+
+		gestExmCompPriv = false;
+		ajoutExmCompPriv = false;
+		modifExmCompPriv = false;
+		supExmCompPriv = false;
+
+		gestUtPriv = false;
+		ajoutUtPriv = false;
+		modifUtPriv = false;
+		supUtPriv = false;
+
+		gestAntecedentParamPriv = false;
+		paramtabAntMedPriv = false;
+		ajoutAntMedPriv = false;
+		modifAntMedPriv = false;
+		supAntMedPriv = false;
+		paramtabAntChirgPriv = false;
+		ajoutAntChirgPriv = false;
+		modifAntChirgPriv = false;
+		supAntChirgPriv = false;
+		paramtabAntFamPriv = false;
+		ajoutAntFamPriv = false;
+		modifAntFamPriv = false;
+		supAntFamPriv = false;
+
+		gestJrFerParamPriv = false;
+		paramtabJrFerPriv = false;
+		ajouJrFerStndPriv = false;
+		modifJrFerStndPriv = false;
+		supJrFerStndPriv = false;
+		paramtabJrFerExpPriv = false;
+		ajouJrFerExpPriv = false;
+		modifJrFerExpPriv = false;
+		supJrFerExpPriv = false;
+
+		gestConsPriv = false;
+		modifConsPriv = false;
+
+		gestFrmMedPriv = false;
+		ajoutFrmMedPriv = false;
+		modifFrmMedPriv = false;
+		supFrmMedPriv = false;
+
+		gestHorairePriv = false;
+		modifprdSaisPriv = false;
+		ajoutHorTravPriv = false;
+		modifHorTravPriv = false;
+		supHorTravPriv = false;
+		gestSaisPriv = false;
+
+		gestCabinetPriv = false;
+
+	}
 
 	public void touCocherAnt() {
 		antecedentPriv = true;
@@ -6848,9 +6803,9 @@ public void redirectverModifutl(){
 		supHistGrossPriv = true;
 		modifContracepPriv = true;
 		supContacepPriv = true;
-		modifGynObsPriv=true;
-		modifAntPriv=true;
-		suppAntPriv=true;
+		modifGynObsPriv = true;
+		modifAntPriv = true;
+		suppAntPriv = true;
 
 	}
 
@@ -6867,340 +6822,331 @@ public void redirectverModifutl(){
 		supHistGrossPriv = false;
 		modifContracepPriv = false;
 		supContacepPriv = false;
-		modifGynObsPriv=false;
-		modifAntPriv=false;
-		suppAntPriv=false;
+		modifGynObsPriv = false;
+		modifAntPriv = false;
+		suppAntPriv = false;
 
 	}
 
 	public void touCocherGyn() {
 
 		gynecologiePriv = true;
-		
-       
+
 		gynNouvConsultPriv = true;
-		gynModifConsultPriv= true;
-		gynSupConsultPriv=true;
-		gynImprConsultPriv=true;
+		gynModifConsultPriv = true;
+		gynSupConsultPriv = true;
+		gynImprConsultPriv = true;
 
 	}
 
 	public void toudeCocherGyn() {
 
 		gynecologiePriv = false;
-		
+
 		gynNouvConsultPriv = false;
-		gynModifConsultPriv= false;
-		gynSupConsultPriv=false;
-		gynImprConsultPriv=false;
+		gynModifConsultPriv = false;
+		gynSupConsultPriv = false;
+		gynImprConsultPriv = false;
 	}
-	
-	public void touCocherEcoGyn(){
-		
-		echoGynPriv=true;
-		echoGynNouvConsultPriv=true;
-		echoGynModifConsultPriv=true;
-		echoGynsupConsultPriv=true;
-		echoGynNouvModeltPriv=true;
-		echoGynSupModeltPriv=true;
-		echoGynApplModeltPriv=true;
-		echoGynImprPriv=true;
+
+	public void touCocherEcoGyn() {
+
+		echoGynPriv = true;
+		echoGynNouvConsultPriv = true;
+		echoGynModifConsultPriv = true;
+		echoGynsupConsultPriv = true;
+		echoGynNouvModeltPriv = true;
+		echoGynSupModeltPriv = true;
+		echoGynApplModeltPriv = true;
+		echoGynImprPriv = true;
 	}
-	
-	public void touDecocherEcoGyn(){
-		
-		echoGynPriv=false;
-		echoGynNouvConsultPriv=false;
-		echoGynModifConsultPriv=false;
-		echoGynsupConsultPriv=false;
-		echoGynNouvModeltPriv=false;
-		echoGynSupModeltPriv=false;
-		echoGynApplModeltPriv=false;
-		echoGynImprPriv=false;
+
+	public void touDecocherEcoGyn() {
+
+		echoGynPriv = false;
+		echoGynNouvConsultPriv = false;
+		echoGynModifConsultPriv = false;
+		echoGynsupConsultPriv = false;
+		echoGynNouvModeltPriv = false;
+		echoGynSupModeltPriv = false;
+		echoGynApplModeltPriv = false;
+		echoGynImprPriv = false;
 	}
-	
-	public void touCocherEcoOst(){
-		
+
+	public void touCocherEcoOst() {
+
 		echoObstPriv = true;
-		echoObsNouvConsultPriv=true;
-		echoObsModifConsultPriv=true;
-		echoObsSupConsultPriv=true;
-		echoObsTrim1Priv=true;
-		echoObsTrim2Priv=true;
-		echoObsTrim3Priv=true;
-		echoObsImprPriv=true;
-		
+		echoObsNouvConsultPriv = true;
+		echoObsModifConsultPriv = true;
+		echoObsSupConsultPriv = true;
+		echoObsTrim1Priv = true;
+		echoObsTrim2Priv = true;
+		echoObsTrim3Priv = true;
+		echoObsImprPriv = true;
+
 	}
-	
-	public void touDecocherEcoObst(){
-		
+
+	public void touDecocherEcoObst() {
+
 		echoObstPriv = false;
-		echoObsNouvConsultPriv=false;
-		echoObsModifConsultPriv=false;
-		echoObsSupConsultPriv=false;
-		echoObsTrim1Priv=false;
-		echoObsTrim2Priv=false;
-		echoObsTrim3Priv=false;
-		echoObsImprPriv=false;
-		
+		echoObsNouvConsultPriv = false;
+		echoObsModifConsultPriv = false;
+		echoObsSupConsultPriv = false;
+		echoObsTrim1Priv = false;
+		echoObsTrim2Priv = false;
+		echoObsTrim3Priv = false;
+		echoObsImprPriv = false;
+
 	}
 
 	public void touCocherGross() {
 		consultGrossPriv = true;
-		
+
 		grossNouvConsultPriv = true;
-		grossSelectNouvConsultPriv=true;
-		grossModifConsultPriv=true;
-		grossSupvConsultPriv=true;
-		grossImprConsultPriv=true;
+		grossSelectNouvConsultPriv = true;
+		grossModifConsultPriv = true;
+		grossSupvConsultPriv = true;
+		grossImprConsultPriv = true;
 
 	}
 
 	public void toudeCocherGross() {
 		consultGrossPriv = false;
-		
+
 		grossNouvConsultPriv = false;
-		grossSelectNouvConsultPriv=false;
-		grossModifConsultPriv=false;
-		grossSupvConsultPriv=false;
-		grossImprConsultPriv=false;
+		grossSelectNouvConsultPriv = false;
+		grossModifConsultPriv = false;
+		grossSupvConsultPriv = false;
+		grossImprConsultPriv = false;
 
 	}
-	
-	public void touCocherPramRap(){
-		menuRappPriv=true;
-		rappCertifPriv=true;
-		rappLettrePriv=true;
-	}
-	
-	public void touDecocherPramRap(){
-		menuRappPriv=false;
-		rappCertifPriv=false;
-		rappLettrePriv=false;
-		
-	}
-	
-	public void touCocherPramInf(){
-		
-		sterilitePriv=true;
-		steriliteModifPriv=true;
-	}
-	
-	public void touDecocherPramInf(){
-		sterilitePriv=false;
-		steriliteModifPriv=false;
-		
-	}
-	
-	public void touCocherCertifFich(){
-		certifFichePriv=true;
-		ajoutCertifPriv=true;
-		modifCertifPriv=true;
-		supCertifPriv=true;
-		impCertifPriv=true;
-		
-	}
-	
-	public void touDecocherCertifFich(){
-		certifFichePriv=false;
-		ajoutCertifPriv=false;
-		modifCertifPriv=false;
-		supCertifPriv=false;
-		impCertifPriv=false;
-		
-	}
-	
-	public void touCocherLtrFich(){
-		
-		lettreFichePriv= true;
-		ajoutLtrPriv= true;
-		modifLtrPriv= true;
-		supLtrPriv= true;
-		impLtrPriv= true;
-		
-	}
-	
-	
-	public void touDecocherLtrFich(){
-		lettreFichePriv=false;
-		ajoutLtrPriv=false;
-		modifLtrPriv=false;
-		supLtrPriv=false;
-		impLtrPriv=false;
-		
+
+	public void touCocherPramRap() {
+		menuRappPriv = true;
+		rappCertifPriv = true;
+		rappLettrePriv = true;
 	}
 
-	
-	public void touCocherAnalFich(){
-		
-		analyseFichePriv=true;
-		modifHistoAnalPriv=true;
-		consultHistoAnalPriv=true;
-		supHistoAnalPriv=true;
-		imprAnalPriv=true;
-	}
-	
-	public void touDecocherAnalFich(){
-		analyseFichePriv=false;
-		modifHistoAnalPriv=false;
-		consultHistoAnalPriv=false;
-		supHistoAnalPriv=false;
-		imprAnalPriv=false;
-		
-	}
-	
-	public void touCocherRadFich(){
-		radioFichePriv=true;
-		modifHistoRadPriv=true;
-		consultHistoRadPriv=true;
-		supHistoRadPriv=true;
-		imprAnalPriv=true;
-		imprRadioPriv=true;
-		
-	}
-	
-	public void touDecocherRadFich(){
-		radioFichePriv=false;
-		modifHistoRadPriv=false;
-		consultHistoRadPriv=false;
-		supHistoRadPriv=false;
-		imprRadioPriv=false;
-		imprAnalPriv=false;
-	}
-	
-	public void touCocherOrdFich(){
-		
-		ordonceFichePriv=true;
-		modifHistoOrdPriv=true;
-		supHistoOrdPriv=true;
-		rechercheOrdPriv=true;
-		imprOrdPriv=true;
-		
-	}
-	
-	public void touDecocherOrdFich(){
-		ordonceFichePriv=false;
-		modifHistoOrdPriv=false;
-		supHistoOrdPriv=false;
-		rechercheOrdPriv=false;
-		imprOrdPriv=false;	
-	}
-	
-	public void touCocherOrdLbreFich(){
-		
-		consultOrdLibrePriv=true;
-		ajoutModeleordPriv=true;
-		selectModeleordPriv=true;
-		suppModeleOrdPriv=true;
-		
-	}
-	
-	public void touDecocherOrdLbreFich(){
-		
-		consultOrdLibrePriv=false;
-		ajoutModeleordPriv=false;
-		selectModeleordPriv=false;
-		suppModeleOrdPriv=false;
-		
-	}
-	
-	
-	
-	public void touCocherPramAntecedent(){
-		gestAntecedentParamPriv=true;
-		paramtabAntMedPriv=true;
-		ajoutAntMedPriv=true;
-		modifAntMedPriv=true;
-		supAntMedPriv=true;
-		paramtabAntChirgPriv=true;
-		ajoutAntChirgPriv=true;
-		modifAntChirgPriv=true;
-		supAntChirgPriv=true;
-		paramtabAntFamPriv=true;
-		ajoutAntFamPriv=true;
-		modifAntFamPriv=true;
-		supAntFamPriv=true;
-	}
-	
-	public void touDecocherParamAntecedent(){
-		gestAntecedentParamPriv=false;
-		paramtabAntMedPriv=false;
-		ajoutAntMedPriv=false;
-		modifAntMedPriv=false;
-		supAntMedPriv=false;
-		paramtabAntChirgPriv=false;
-		ajoutAntChirgPriv=false;
-		modifAntChirgPriv=false;
-		supAntChirgPriv=false;
-		paramtabAntFamPriv=false;
-		ajoutAntFamPriv=false;
-		modifAntFamPriv=false;
-		supAntFamPriv=false;
+	public void touDecocherPramRap() {
+		menuRappPriv = false;
+		rappCertifPriv = false;
+		rappLettrePriv = false;
+
 	}
 
-	
-	
-	public void touCocherPramJrFer(){
-		gestJrFerParamPriv=true;
-		paramtabJrFerPriv=true;
-		ajouJrFerStndPriv=true;
-		modifJrFerStndPriv=true;
-		supJrFerStndPriv=true;
-		paramtabJrFerExpPriv=true;
-		ajouJrFerExpPriv=true;
-		modifJrFerExpPriv=true;
-		supJrFerExpPriv=true;
-		
+	public void touCocherPramInf() {
+
+		sterilitePriv = true;
+		steriliteModifPriv = true;
 	}
-	
-	
-	public void touDecocherPramJrFer(){
-		gestJrFerParamPriv=false;
-		paramtabJrFerPriv=false;
-		ajouJrFerStndPriv=false;
-		modifJrFerStndPriv=false;
-		supJrFerStndPriv=false;
-		paramtabJrFerExpPriv=false;
-		ajouJrFerExpPriv=false;
-		modifJrFerExpPriv=false;
-		supJrFerExpPriv=false;
-		
+
+	public void touDecocherPramInf() {
+		sterilitePriv = false;
+		steriliteModifPriv = false;
+
 	}
-	
-	
+
+	public void touCocherCertifFich() {
+		certifFichePriv = true;
+		ajoutCertifPriv = true;
+		modifCertifPriv = true;
+		supCertifPriv = true;
+		impCertifPriv = true;
+
+	}
+
+	public void touDecocherCertifFich() {
+		certifFichePriv = false;
+		ajoutCertifPriv = false;
+		modifCertifPriv = false;
+		supCertifPriv = false;
+		impCertifPriv = false;
+
+	}
+
+	public void touCocherLtrFich() {
+
+		lettreFichePriv = true;
+		ajoutLtrPriv = true;
+		modifLtrPriv = true;
+		supLtrPriv = true;
+		impLtrPriv = true;
+
+	}
+
+	public void touDecocherLtrFich() {
+		lettreFichePriv = false;
+		ajoutLtrPriv = false;
+		modifLtrPriv = false;
+		supLtrPriv = false;
+		impLtrPriv = false;
+
+	}
+
+	public void touCocherAnalFich() {
+
+		analyseFichePriv = true;
+		modifHistoAnalPriv = true;
+		consultHistoAnalPriv = true;
+		supHistoAnalPriv = true;
+		imprAnalPriv = true;
+	}
+
+	public void touDecocherAnalFich() {
+		analyseFichePriv = false;
+		modifHistoAnalPriv = false;
+		consultHistoAnalPriv = false;
+		supHistoAnalPriv = false;
+		imprAnalPriv = false;
+
+	}
+
+	public void touCocherRadFich() {
+		radioFichePriv = true;
+		modifHistoRadPriv = true;
+		consultHistoRadPriv = true;
+		supHistoRadPriv = true;
+		imprAnalPriv = true;
+		imprRadioPriv = true;
+
+	}
+
+	public void touDecocherRadFich() {
+		radioFichePriv = false;
+		modifHistoRadPriv = false;
+		consultHistoRadPriv = false;
+		supHistoRadPriv = false;
+		imprRadioPriv = false;
+		imprAnalPriv = false;
+	}
+
+	public void touCocherOrdFich() {
+
+		ordonceFichePriv = true;
+		modifHistoOrdPriv = true;
+		supHistoOrdPriv = true;
+		rechercheOrdPriv = true;
+		imprOrdPriv = true;
+
+	}
+
+	public void touDecocherOrdFich() {
+		ordonceFichePriv = false;
+		modifHistoOrdPriv = false;
+		supHistoOrdPriv = false;
+		rechercheOrdPriv = false;
+		imprOrdPriv = false;
+	}
+
+	public void touCocherOrdLbreFich() {
+
+		consultOrdLibrePriv = true;
+		ajoutModeleordPriv = true;
+		selectModeleordPriv = true;
+		suppModeleOrdPriv = true;
+
+	}
+
+	public void touDecocherOrdLbreFich() {
+
+		consultOrdLibrePriv = false;
+		ajoutModeleordPriv = false;
+		selectModeleordPriv = false;
+		suppModeleOrdPriv = false;
+
+	}
+
+	public void touCocherPramAntecedent() {
+		gestAntecedentParamPriv = true;
+		paramtabAntMedPriv = true;
+		ajoutAntMedPriv = true;
+		modifAntMedPriv = true;
+		supAntMedPriv = true;
+		paramtabAntChirgPriv = true;
+		ajoutAntChirgPriv = true;
+		modifAntChirgPriv = true;
+		supAntChirgPriv = true;
+		paramtabAntFamPriv = true;
+		ajoutAntFamPriv = true;
+		modifAntFamPriv = true;
+		supAntFamPriv = true;
+	}
+
+	public void touDecocherParamAntecedent() {
+		gestAntecedentParamPriv = false;
+		paramtabAntMedPriv = false;
+		ajoutAntMedPriv = false;
+		modifAntMedPriv = false;
+		supAntMedPriv = false;
+		paramtabAntChirgPriv = false;
+		ajoutAntChirgPriv = false;
+		modifAntChirgPriv = false;
+		supAntChirgPriv = false;
+		paramtabAntFamPriv = false;
+		ajoutAntFamPriv = false;
+		modifAntFamPriv = false;
+		supAntFamPriv = false;
+	}
+
+	public void touCocherPramJrFer() {
+		gestJrFerParamPriv = true;
+		paramtabJrFerPriv = true;
+		ajouJrFerStndPriv = true;
+		modifJrFerStndPriv = true;
+		supJrFerStndPriv = true;
+		paramtabJrFerExpPriv = true;
+		ajouJrFerExpPriv = true;
+		modifJrFerExpPriv = true;
+		supJrFerExpPriv = true;
+
+	}
+
+	public void touDecocherPramJrFer() {
+		gestJrFerParamPriv = false;
+		paramtabJrFerPriv = false;
+		ajouJrFerStndPriv = false;
+		modifJrFerStndPriv = false;
+		supJrFerStndPriv = false;
+		paramtabJrFerExpPriv = false;
+		ajouJrFerExpPriv = false;
+		modifJrFerExpPriv = false;
+		supJrFerExpPriv = false;
+
+	}
+
 	public void recupererUtls(Utilisateur u) {
 
 		idUtilisateur = u.getIdutilisateur();
 
 	}
-	
-
 
 	public void modifMotPass() {
 		FacesContext face = FacesContext.getCurrentInstance();
-		//boolean addValid = false;
+		// boolean addValid = false;
 
 		UtilisateurService ser = new UtilisateurService();
 		Utilisateur u = ser.rechercheUtilisateur(idUtilisateur);
 		if (u != null) {
-             
+
 			if (motpass1.equals(motpass2)) {
-			//	addValid=true;
+				// addValid=true;
 				u.setMotPasse(motpass1);
 				ser.modifierUtilisateur(u);
-				//face.getPartialViewContext().getRenderIds().add("f1");
-				face.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Mots de passe modifié avec succès", " "));
+				// face.getPartialViewContext().getRenderIds().add("f1");
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO,
+						"Mots de passe modifié avec succès", " "));
 				idUtilisateur = null;
 				motpass1 = null;
 				motpass1 = null;
-				
+
 				RequestContext context = RequestContext.getCurrentInstance();
 				context.execute("PF('dialogMotPass').hide();");
-			
+
 			} else {
-				face.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Les deux mots de passe ne sont pas conformes", " "));
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"Les deux mots de passe ne sont pas conformes", " "));
 
 			}
 		}
@@ -7214,16 +7160,14 @@ public void redirectverModifutl(){
 	}
 
 	public void desactiveUtl(Utilisateur u) {
-       
+
 		FacesContext face = FacesContext.getCurrentInstance();
 		UtilisateurService ser = new UtilisateurService();
 		u.setActif(false);
 		u.setPassif(true);
 		ser.modifierUtilisateur(u);
-		face.addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Utilisateur désactivé avec succès", " "));
-		
-		
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Utilisateur désactivé avec succès", " "));
 
 	}
 
@@ -7233,68 +7177,64 @@ public void redirectverModifutl(){
 		u.setActif(true);
 		u.setPassif(false);
 		ser.modifierUtilisateur(u);
-		face.addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Utilisateur activé avec succès", " "));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Utilisateur activé avec succès", " "));
 
 	}
 
 	public void redirectUtl() {
-		
-		/*try {
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("GestionUtilisateur.xhtml");
+
+		/*
+		 * try { FacesContext.getCurrentInstance().getExternalContext()
+		 * .redirect("GestionUtilisateur.xhtml"); } catch (Exception e) {
+		 * System.out.println(e.getMessage()); }
+		 */
+
+		FacesContext context2 = FacesContext.getCurrentInstance();
+		context2.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+			context2.getExternalContext().redirect("Utilisateurs");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}*/
-		
-		FacesContext context2 = FacesContext.getCurrentInstance();
-	    context2.getExternalContext().getFlash().setKeepMessages(true);
-	    try {
-	     context2.getExternalContext().redirect("Utilisateurs");
-	    }catch(Exception e){
-			System.out.println(e.getMessage());
 		}
-		
-	   // return "../pages/GestionUtilisateur.xhtml?faces-redirect=true";
-		
+
+		// return "../pages/GestionUtilisateur.xhtml?faces-redirect=true";
+
 	}
-	
-	
+
 	public void modeleSelectionChanged(final AjaxBehaviorEvent event) {
-		
+
 		if (idmodelUtl != null)
 			applique = false;
 		else
 			applique = true;
 	}
-	
-	
+
 	public void ajouterModelUtl() {
 		FacesContext face = FacesContext.getCurrentInstance();
-		//boolean addValid = false;
-		
+		// boolean addValid = false;
+
 		// tester si existe un modèle avec le meme nom
 		ModelutlService ser = new ModelutlService();
 		Modelutl m = ser.rechercheParNomModelutl(nomModelUtl);
-		
+
 		if (nomModelUtl == null || (nomModelUtl.trim().length() == 0)) {
-			face.addMessage(null, new FacesMessage(
-			FacesMessage.SEVERITY_ERROR, "Nom Modèle vide",
-			"Invalid credentials"));
-			}
-		
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Nom Modèle vide", "Invalid credentials"));
+		}
+
 		if (m != null)// model existe déjà
 		{
-			face.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Existe déjà un Modèle sous ce nom", " "));
-			
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Existe déjà un Modèle sous ce nom", " "));
+
 		}
-		
-		if (face.getMessageList().size() == 0){
-			
-			Modelutl u= new Modelutl();
+
+		if (face.getMessageList().size() == 0) {
+
+			Modelutl u = new Modelutl();
 			u.setNomModelUtl(nomModelUtl);
-			
+
 			if (gestExmCompPriv) {
 				u.setGestExmComp("1");
 			} else {
@@ -7302,13 +7242,13 @@ public void redirectverModifutl(){
 			}
 			if (ajoutExmCompPriv) {
 				u.setAjoutExmComp(true);
-				
+
 			} else {
 				u.setAjoutExmComp(false);
 			}
 			if (modifExmCompPriv) {
 				u.setModifExmComp(true);
-				
+
 			} else {
 				u.setModifExmComp(false);
 			}
@@ -7326,13 +7266,13 @@ public void redirectverModifutl(){
 			}
 			if (ajoutSymPriv) {
 				u.setAjoutAsym(true);
-				
+
 			} else {
 				u.setAjoutAsym(false);
 			}
 			if (modifSymPriv) {
 				u.setModifAsym(true);
-				
+
 			} else {
 				u.setModifAsym(false);
 			}
@@ -7350,13 +7290,13 @@ public void redirectverModifutl(){
 			}
 			if (ajoutDiagPriv) {
 				u.setAjoutDiag(true);
-				
+
 			} else {
 				u.setAjoutDiag(false);
 			}
 			if (modifDiagPriv) {
 				u.setModifDiag(true);
-				
+
 			} else {
 				u.setModifDiag(false);
 			}
@@ -7374,13 +7314,13 @@ public void redirectverModifutl(){
 			}
 			if (ajoutMoyCtrPriv) {
 				u.setAjoutMoyCtr(true);
-				
+
 			} else {
 				u.setAjoutMoyCtr(false);
 			}
 			if (modifMoyCtrPriv) {
 				u.setModifMoyCtr(true);
-				
+
 			} else {
 				u.setModifMoyCtr(false);
 			}
@@ -7398,13 +7338,13 @@ public void redirectverModifutl(){
 			}
 			if (ajoutExmPriv) {
 				u.setAjoutExm(true);
-				
+
 			} else {
 				u.setAjoutExm(false);
 			}
 			if (modifExmPriv) {
 				u.setModifExm(true);
-				
+
 			} else {
 				u.setModifExm(false);
 			}
@@ -7414,53 +7354,52 @@ public void redirectverModifutl(){
 			} else {
 				u.setSupExm(false);
 			}
-			
-			if(gestJrFerParamPriv){
+
+			if (gestJrFerParamPriv) {
 				u.setGestionJourFr(true);
-			}else{
+			} else {
 				u.setGestionJourFr(false);
 			}
-			if(paramtabJrFerPriv){
+			if (paramtabJrFerPriv) {
 				u.setTabFerie(true);
-			}else{
+			} else {
 				u.setTabFerie(false);
 			}
-			if(ajouJrFerStndPriv){
+			if (ajouJrFerStndPriv) {
 				u.setNouvJFerie(true);
-			}else{
+			} else {
 				u.setNouvJFerie(false);
 			}
-			if(modifJrFerStndPriv){
+			if (modifJrFerStndPriv) {
 				u.setModifJFerie(true);
-			}else{
+			} else {
 				u.setModifJFerie(false);
 			}
-			if(supJrFerStndPriv){
+			if (supJrFerStndPriv) {
 				u.setSuppJFerie(true);
-			}else{
+			} else {
 				u.setSuppJFerie(false);
 			}
-			if(paramtabJrFerExpPriv){
+			if (paramtabJrFerExpPriv) {
 				u.setTabJFerieExp(true);
-			}else{
+			} else {
 				u.setTabJFerieExp(false);
 			}
-			if(ajouJrFerExpPriv){
+			if (ajouJrFerExpPriv) {
 				u.setNouvJFerieExp(true);
-			}else{
+			} else {
 				u.setNouvJFerieExp(false);
 			}
-			if(modifJrFerExpPriv){
+			if (modifJrFerExpPriv) {
 				u.setModifJFerieExp(true);
-			}else{
+			} else {
 				u.setModifJFerieExp(false);
 			}
-			if(supJrFerExpPriv){
+			if (supJrFerExpPriv) {
 				u.setSuppJFerieExp(true);
-			}else{
+			} else {
 				u.setSuppJFerieExp(false);
 			}
-			
 
 			if (gestMedPriv) {
 				u.setGestMed("1");
@@ -7469,13 +7408,13 @@ public void redirectverModifutl(){
 			}
 			if (ajoutMedPriv) {
 				u.setAjoutMed(true);
-				
+
 			} else {
 				u.setAjoutMed(false);
 			}
 			if (modifMedPriv) {
 				u.setModifMed(true);
-				
+
 			} else {
 				u.setModifMed(false);
 			}
@@ -7493,20 +7432,20 @@ public void redirectverModifutl(){
 			}
 			if (ajoutAnalPriv) {
 				u.setAjoutAnal(true);
-				
+
 			} else {
 				u.setAjoutAnal(false);
 			}
 			if (modifAnalPriv) {
 				u.setModifAnal(true);
-				
+
 			} else {
 				u.setModifAnal(false);
 			}
 
 			if (supAnalPriv) {
 				u.setSupAnal(true);
-				
+
 			} else {
 				u.setSupAnal(false);
 			}
@@ -7518,20 +7457,20 @@ public void redirectverModifutl(){
 			}
 			if (ajoutEtBbPriv) {
 				u.setAjoutEtBb(true);
-				
+
 			} else {
 				u.setAjoutEtBb(false);
 			}
 			if (modifEtBbPriv) {
 				u.setModifEtBb(true);
-				
+
 			} else {
 				u.setModifEtBb(false);
 			}
 
 			if (supEtBbPriv) {
 				u.setSupEtBb(true);
-				
+
 			} else {
 				u.setSupEtBb(false);
 			}
@@ -7561,34 +7500,32 @@ public void redirectverModifutl(){
 			} else {
 				u.setImprCertif(false);
 			}
-				
-			
+
 			if (lettreFichePriv) {
 				u.setLettreFiche("1");
 			} else {
 				u.setLettreFiche("0");
 			}
-			if(ajoutLtrPriv){
+			if (ajoutLtrPriv) {
 				u.setNouvLettre(true);
-			}else{
+			} else {
 				u.setNouvLettre(false);
 			}
-			if(modifLtrPriv){
+			if (modifLtrPriv) {
 				u.setModifLettre(true);
-			}else{
+			} else {
 				u.setModifLettre(false);
 			}
-			if(supLtrPriv){
+			if (supLtrPriv) {
 				u.setSuppLettre(true);
-			}else{
+			} else {
 				u.setSuppLettre(false);
 			}
-			if(impLtrPriv){
+			if (impLtrPriv) {
 				u.setImprLettre(true);
-			}else{
+			} else {
 				u.setImprLettre(false);
 			}
-			
 
 			if (analyseFichePriv) {
 				u.setAnalyseFiche("1");
@@ -7610,106 +7547,101 @@ public void redirectverModifutl(){
 			} else {
 				u.setSupAnalyse(false);
 			}
-			
-			
+
 			if (radioFichePriv) {
 				u.setRadioFiche("1");
 			} else {
 				u.setRadioFiche("0");
 			}
-			if(modifHistoRadPriv){
+			if (modifHistoRadPriv) {
 				u.setModifRadio(true);
-			}else{
+			} else {
 				u.setModifRadio(false);
 			}
-			if(consultHistoRadPriv){
+			if (consultHistoRadPriv) {
 				u.setDetHistoRad(true);
-			}else{
+			} else {
 				u.setDetHistoRad(false);
 			}
-			if(supHistoRadPriv){
+			if (supHistoRadPriv) {
 				u.setSupRadio(true);
-			}else{
+			} else {
 				u.setSupRadio(false);
 			}
-			if(imprAnalPriv){
+			if (imprAnalPriv) {
 				u.setImprmAnal(true);
-			}else{
+			} else {
 				u.setImprRadio(false);
 			}
-			if(imprRadioPriv){
+			if (imprRadioPriv) {
 				u.setImprRadio(true);
-			}else{
+			} else {
 				u.setImprRadio(false);
 			}
-			
-			
+
 			if (rapportFichePriv) {
 				u.setRapportFiche("1");
 			} else {
 				u.setRapportFiche("0");
 			}
-			if(ajoutModeleordPriv){
+			if (ajoutModeleordPriv) {
 				u.setAjoutModeleord(true);
-			}else{
+			} else {
 				u.setAjoutModeleord(false);
 			}
-			if(selectModeleordPriv){
+			if (selectModeleordPriv) {
 				u.setSelectModeleord(true);
-			}else{
+			} else {
 				u.setSelectModeleord(false);
 			}
-			if(suppModeleOrdPriv){
+			if (suppModeleOrdPriv) {
 				u.setSuppModeleOrd(true);
-			}else{
+			} else {
 				u.setSuppModeleOrd(false);
 			}
-			
-			if(gestSaisPriv){
+
+			if (gestSaisPriv) {
 				u.setGestSais(true);
-			}else{
+			} else {
 				u.setGestSais(false);
 			}
-			
-			
-			if(consultertHistoConsultationPriv){
+
+			if (consultertHistoConsultationPriv) {
 				u.setSelectTableConsultation(true);
-			}else{
+			} else {
 				u.setSelectTableConsultation(false);
 			}
-			
+
 			if (ordonceFichePriv) {
 				u.setOrdnanceFiche("1");
 			} else {
 				u.setOrdnanceFiche("0");
 			}
-			if(consultOrdLibrePriv){
+			if (consultOrdLibrePriv) {
 				u.setOrdonanceLibreFiche(true);
-			}else{
+			} else {
 				u.setOrdonanceLibreFiche(false);
 			}
-			if(modifHistoOrdPriv){
+			if (modifHistoOrdPriv) {
 				u.setModifOrdnce(true);
-			}else{
+			} else {
 				u.setModifOrdnce(false);
 			}
-			if(supHistoOrdPriv){
+			if (supHistoOrdPriv) {
 				u.setSupphistoOrd(true);
-			}else{
+			} else {
 				u.setSupphistoOrd(false);
 			}
-			if(rechercheOrdPriv){
+			if (rechercheOrdPriv) {
 				u.setRechercheOrd(true);
-			}else{
+			} else {
 				u.setRechercheOrd(false);
 			}
-			if(imprOrdPriv){
+			if (imprOrdPriv) {
 				u.setImprOrd(true);
-			}else{
+			} else {
 				u.setImprOrd(false);
 			}
-			
-		
 
 			if (verConsultPriv) {
 				u.setVerConsult("1");
@@ -7733,9 +7665,9 @@ public void redirectverModifutl(){
 			} else {
 				u.setMenuParametre("0");
 			}
-			if(menuRendvousPriv){
+			if (menuRendvousPriv) {
 				u.setMenuGestRdv("1");
-			}else{
+			} else {
 				u.setMenuGestRdv("0");
 			}
 
@@ -7744,10 +7676,10 @@ public void redirectverModifutl(){
 			} else {
 				u.setMenuRapport("0");
 			}
-			
-			if(menuStatPriv){
+
+			if (menuStatPriv) {
 				u.setMenuGestStat(true);
-			}else{
+			} else {
 				u.setMenuGestStat(false);
 			}
 
@@ -7799,8 +7731,6 @@ public void redirectverModifutl(){
 				u.setTabInfGenAjoutPat("0");
 			}
 
-			
-
 			if (tabContctPatPriv) {
 				u.setTabCntctAjoutPat("1");
 			} else {
@@ -7824,7 +7754,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setGestDoc("0");
 			}
-			
+
 			if (gestAntecedentParamPriv) {
 				u.setGestAntecedent(true);
 			} else {
@@ -7870,7 +7800,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setSuppGestAntChirg(false);
 			}
-			
+
 			if (paramtabAntFamPriv) {
 				u.setTabFamAnt(true);
 			} else {
@@ -7891,7 +7821,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setSuppGestAntFam(false);
 			}
-			
+
 			if (gestHorairePriv) {
 				u.setGestHoraire(true);
 			} else {
@@ -7917,14 +7847,13 @@ public void redirectverModifutl(){
 			} else {
 				u.setSupHeurTrav(false);
 			}
-			
-			
-			if(gestCabinetPriv){
+
+			if (gestCabinetPriv) {
 				u.setGestCabinet(true);
-			}else{
+			} else {
 				u.setGestCabinet(false);
 			}
-			
+
 			if (gestUtPriv) {
 				u.setGestionUterus(true);
 			} else {
@@ -7945,7 +7874,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setSupUt(false);
 			}
-			
+
 			if (gestFinGrossPriv) {
 				u.setGestEFG("1");
 			} else {
@@ -7966,7 +7895,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setSupEFG(false);
 			}
-			
+
 			if (gestConsPriv) {
 				u.setGestConsultation(true);
 			} else {
@@ -7977,7 +7906,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setModifCons(false);
 			}
-			
+
 			if (gestFrmMedPriv) {
 				u.setGestionFormMed(true);
 			} else {
@@ -8069,26 +7998,30 @@ public void redirectverModifutl(){
 				u.setChargPatSal("0");
 			}
 			if (modifNoteSalPriv) {
-				u.setModifNoteSal(true);;
+				u.setModifNoteSal(true);
+				;
 			} else {
 				u.setModifNoteSal(false);
 			}
 			if (reponseSalPriv) {
-				u.setReponseSal(true);;
+				u.setReponseSal(true);
+				;
 			} else {
 				u.setReponseSal(false);
 			}
 			if (tabAnulSalPriv) {
-				u.setTabAnulSal(true);;
+				u.setTabAnulSal(true);
+				;
 			} else {
 				u.setTabAnulSal(false);
 			}
 			if (anulSalPriv) {
-				u.setAnulSal(true);;
+				u.setAnulSal(true);
+				;
 			} else {
 				u.setAnulSal(false);
 			}
-			
+
 			if (donnerRdvPriv) {
 				u.setDonnerRdv(true);
 			} else {
@@ -8104,7 +8037,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setConsultArchiv(false);
 			}
-			
+
 			if (ajoutClinPriv) {
 				u.setAjoutClin("1");
 			} else {
@@ -8185,34 +8118,35 @@ public void redirectverModifutl(){
 			} else {
 				u.setModifechogyneco(false);
 			}
-			if(echoGynsupConsultPriv){
+			if (echoGynsupConsultPriv) {
 				u.setSuppechogyneco(true);
-			}else{
+			} else {
 				u.setSuppechogyneco(false);
 			}
-			if(echoGynNouvModeltPriv){
-				u.setAjoutmodelechogyneco(true);;
-			}else{
+			if (echoGynNouvModeltPriv) {
+				u.setAjoutmodelechogyneco(true);
+				;
+			} else {
 				u.setAjoutmodelechogyneco(false);
 			}
-             
-			if(echoGynSupModeltPriv){
+
+			if (echoGynSupModeltPriv) {
 				u.setSuppmodelechogyneco(true);
-			}else{
+			} else {
 				u.setSuppmodelechogyneco(false);
 			}
-			
-			if(echoGynApplModeltPriv){
+
+			if (echoGynApplModeltPriv) {
 				u.setAppliquemodelechogyneco(true);
-			}else{
+			} else {
 				u.setAppliquemodelechogyneco(false);
 			}
-			if(echoGynImprPriv){
+			if (echoGynImprPriv) {
 				u.setImprechogyneco(true);
-			}else{
+			} else {
 				u.setImprechogyneco(false);
 			}
-			
+
 			if (echoObstPriv) {
 				u.setEchoObs("1");
 			} else {
@@ -8228,7 +8162,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setModifechoObs(false);
 			}
-			
+
 			if (echoObsSupConsultPriv) {
 				u.setSuppechoObs(true);
 			} else {
@@ -8244,7 +8178,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setTrim2echoObs(false);
 			}
-			
+
 			if (echoObsTrim3Priv) {
 				u.setTrim3echoObs(true);
 			} else {
@@ -8255,7 +8189,7 @@ public void redirectverModifutl(){
 			} else {
 				u.setImprechoObs(false);
 			}
-			
+
 			if (gynecologiePriv) {
 				u.setGynecologie("1");
 			} else {
@@ -8281,23 +8215,24 @@ public void redirectverModifutl(){
 			} else {
 				u.setTabAntecedent("0");
 			}
-			if(modifGynObsPriv){
-				u.setModifGynObs(true);;
-			}else{
+			if (modifGynObsPriv) {
+				u.setModifGynObs(true);
+				;
+			} else {
 				u.setModifGynObs(false);
 			}
-			if(modifAntPriv){
-				u.setModifAnt(true);;
-			}else{
+			if (modifAntPriv) {
+				u.setModifAnt(true);
+				;
+			} else {
 				u.setModifAnt(false);
 			}
-			if(suppAntPriv){
+			if (suppAntPriv) {
 				u.setSuppAnt(true);
-			}else{
+			} else {
 				u.setSuppAnt(false);
 			}
-			
-			
+
 			if (tabGynecoObsPriv) {
 				u.setTabGynecoObs("1");
 			} else {
@@ -8373,29 +8308,29 @@ public void redirectverModifutl(){
 			} else {
 				u.setConsultDetOrd(false);
 			}
-			
+
 			if (gynNouvConsultPriv) {
 				u.setNouvConsGyn("1");
 			} else {
 				u.setNouvConsGyn("0");
 			}
-			if(gynModifConsultPriv){
+			if (gynModifConsultPriv) {
 				u.setModifGyneco(true);
-				
-			}else{
+
+			} else {
 				u.setModifGyneco(false);
 			}
-			
-			if(gynSupConsultPriv){
+
+			if (gynSupConsultPriv) {
 				u.setSuppGyneco(true);
-				
-			}else{
+
+			} else {
 				u.setSuppGyneco(false);
 			}
-			if(gynImprConsultPriv){
+			if (gynImprConsultPriv) {
 				u.setImprGyneco(true);
-				
-			}else{
+
+			} else {
 				u.setImprGyneco(false);
 			}
 			if (grossOrdPriv) {
@@ -8438,33 +8373,28 @@ public void redirectverModifutl(){
 			} else {
 				u.setNouvConsGross("0");
 			}
-       
-			ser.ajoutModelutl(u);	
-			
-			face.addMessage(null, new FacesMessage(
-			FacesMessage.SEVERITY_INFO, "Modèle ajouté avec succès",""));
-		//	addValid = true;
-			
+
+			ser.ajoutModelutl(u);
+
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Modèle ajouté avec succès", ""));
+			// addValid = true;
+
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('ajoutModel').hide();");
-			
-			
-	}
-		
-		
-		
+
+		}
+
 	}
 
-	
-	
-    public void applierModelutl(){
-		
-		if(idmodelUtl != null){
-			
-			ModelutlService ser= new ModelutlService();
-			Modelutl u= new Modelutl();
-			u=ser.rechercheModelutlbyId(idmodelUtl);
-			
+	public void applierModelutl() {
+
+		if (idmodelUtl != null) {
+
+			ModelutlService ser = new ModelutlService();
+			Modelutl u = new Modelutl();
+			u = ser.rechercheModelutlbyId(idmodelUtl);
+
 			gestExmComp = u.getGestExmComp();
 			ajoutExmComp = u.isAjoutExmComp();
 			modifExmComp = u.isModifExmComp();
@@ -8706,54 +8636,52 @@ public void redirectverModifutl(){
 			} else {
 				supExmPriv = false;
 			}
-			
-			if(u.isGestionJourFr()){
-				gestJrFerParamPriv=true;
-			}else{
-				gestJrFerParamPriv=false;
+
+			if (u.isGestionJourFr()) {
+				gestJrFerParamPriv = true;
+			} else {
+				gestJrFerParamPriv = false;
 			}
-			if(u.isTabFerie()){
-				paramtabJrFerPriv=true;
-			}else{
-				paramtabJrFerPriv=false;
+			if (u.isTabFerie()) {
+				paramtabJrFerPriv = true;
+			} else {
+				paramtabJrFerPriv = false;
 			}
-			if(u.isNouvJFerie()){
-				ajouJrFerStndPriv=true;
-			}else{
-				ajouJrFerStndPriv=false;
+			if (u.isNouvJFerie()) {
+				ajouJrFerStndPriv = true;
+			} else {
+				ajouJrFerStndPriv = false;
 			}
-			if(u.isModifJFerie()){
-				modifJrFerStndPriv=true;
-			}else{
-				modifJrFerStndPriv=false;
+			if (u.isModifJFerie()) {
+				modifJrFerStndPriv = true;
+			} else {
+				modifJrFerStndPriv = false;
 			}
-			if(u.isSuppJFerie()){
-				supJrFerStndPriv=true;
-			}else{
-				supJrFerStndPriv=false;
+			if (u.isSuppJFerie()) {
+				supJrFerStndPriv = true;
+			} else {
+				supJrFerStndPriv = false;
 			}
-			if(u.isTabJFerieExp()){
-				paramtabJrFerExpPriv=true;
-			}else{
-				paramtabJrFerExpPriv=false;
+			if (u.isTabJFerieExp()) {
+				paramtabJrFerExpPriv = true;
+			} else {
+				paramtabJrFerExpPriv = false;
 			}
-			if(u.isNouvJFerieExp()){
-				ajouJrFerExpPriv=true;
-			}else{
-				ajouJrFerExpPriv=false;
+			if (u.isNouvJFerieExp()) {
+				ajouJrFerExpPriv = true;
+			} else {
+				ajouJrFerExpPriv = false;
 			}
-			if(u.isModifJFerieExp()){
-				modifJrFerExpPriv=true;
-			}else{
-				modifJrFerExpPriv=false;
+			if (u.isModifJFerieExp()) {
+				modifJrFerExpPriv = true;
+			} else {
+				modifJrFerExpPriv = false;
 			}
-			if(u.isSuppJFerieExp()){
-				supJrFerExpPriv=true;
-			}else{
-				supJrFerExpPriv=false;
+			if (u.isSuppJFerieExp()) {
+				supJrFerExpPriv = true;
+			} else {
+				supJrFerExpPriv = false;
 			}
-			
-			
 
 			if (gestMed.equals("1")) {
 				gestMedPriv = true;
@@ -8832,143 +8760,137 @@ public void redirectverModifutl(){
 			} else {
 				certifFichePriv = false;
 			}
-			if(u.isNouvCertif()){
-				ajoutCertifPriv=true;
-			}else{
-				ajoutCertifPriv=false;
+			if (u.isNouvCertif()) {
+				ajoutCertifPriv = true;
+			} else {
+				ajoutCertifPriv = false;
 			}
-			if(u.isModifCertif()){
-				modifCertifPriv=true;
-			}else{
-				modifCertifPriv=false;
+			if (u.isModifCertif()) {
+				modifCertifPriv = true;
+			} else {
+				modifCertifPriv = false;
 			}
-			if(u.isSuppCertif()){
-				supCertifPriv=true;
-			}else{
-				supCertifPriv=false;
+			if (u.isSuppCertif()) {
+				supCertifPriv = true;
+			} else {
+				supCertifPriv = false;
 			}
-			if(u.isImprCertif()){
-				impCertifPriv=true;
-			}else{
-				impCertifPriv=false;
+			if (u.isImprCertif()) {
+				impCertifPriv = true;
+			} else {
+				impCertifPriv = false;
 			}
-			
 
 			if (lettreFiche.equals("1")) {
 				lettreFichePriv = true;
 			} else {
 				lettreFichePriv = false;
 			}
-			if(u.isNouvLettre()){
-				ajoutLtrPriv=true;
-			}else{
-				ajoutLtrPriv=false;
+			if (u.isNouvLettre()) {
+				ajoutLtrPriv = true;
+			} else {
+				ajoutLtrPriv = false;
 			}
-			if(u.isModifLettre()){
-				modifLtrPriv=true;
-			}else{
-				modifLtrPriv=false;
+			if (u.isModifLettre()) {
+				modifLtrPriv = true;
+			} else {
+				modifLtrPriv = false;
 			}
-			if(u.isSuppLettre()){
-				supLtrPriv=true;
-			}else{
-				supLtrPriv=false;
+			if (u.isSuppLettre()) {
+				supLtrPriv = true;
+			} else {
+				supLtrPriv = false;
 			}
-			if(u.isImprLettre()){
-				impLtrPriv=true;
-			}else{
-				impLtrPriv=false;
+			if (u.isImprLettre()) {
+				impLtrPriv = true;
+			} else {
+				impLtrPriv = false;
 			}
-			
-			
 
 			if (analyseFiche.equals("1")) {
 				analyseFichePriv = true;
 			} else {
 				analyseFichePriv = false;
 			}
-			if(u.isModifAnalyse()){
-				modifHistoAnalPriv=true;
-			}else{
-				modifHistoAnalPriv=false;
+			if (u.isModifAnalyse()) {
+				modifHistoAnalPriv = true;
+			} else {
+				modifHistoAnalPriv = false;
 			}
-			if(u.isDetHistoAnal()){
-				consultHistoAnalPriv=true;
-			}else{
-				consultHistoAnalPriv=false;
+			if (u.isDetHistoAnal()) {
+				consultHistoAnalPriv = true;
+			} else {
+				consultHistoAnalPriv = false;
 			}
-			
-			if(u.isSupAnalyse()){
-				supHistoAnalPriv=true;
-			}else{
-				supHistoAnalPriv=false;
+
+			if (u.isSupAnalyse()) {
+				supHistoAnalPriv = true;
+			} else {
+				supHistoAnalPriv = false;
 			}
-			
-			
-			
+
 			if (radioFiche.equals("1")) {
 				radioFichePriv = true;
 			} else {
 				radioFichePriv = false;
 			}
-			if(u.isModifRadio()){
-				modifHistoRadPriv=true;
-			}else{
-				modifHistoRadPriv=false;
+			if (u.isModifRadio()) {
+				modifHistoRadPriv = true;
+			} else {
+				modifHistoRadPriv = false;
 			}
-			if(u.isDetHistoRad()){
-				consultHistoRadPriv=true;
-			}else{
-				consultHistoRadPriv=false;
+			if (u.isDetHistoRad()) {
+				consultHistoRadPriv = true;
+			} else {
+				consultHistoRadPriv = false;
 			}
-			if(u.isSupRadio()){
-				supHistoRadPriv=true;
-			}else{
-				supHistoRadPriv=false;
+			if (u.isSupRadio()) {
+				supHistoRadPriv = true;
+			} else {
+				supHistoRadPriv = false;
 			}
-			if(u.isImprRadio()){
-				imprRadioPriv=true;
-			}else{
-				imprRadioPriv=false;
+			if (u.isImprRadio()) {
+				imprRadioPriv = true;
+			} else {
+				imprRadioPriv = false;
 			}
-			if(u.isImprmAnal()){
-				imprAnalPriv=true;
-			}else{
-				imprAnalPriv=false;
+			if (u.isImprmAnal()) {
+				imprAnalPriv = true;
+			} else {
+				imprAnalPriv = false;
 			}
-			
-			
+
 			if (rapportFiche.equals("1")) {
 				rapportFichePriv = true;
 			} else {
 				rapportFichePriv = false;
 			}
-			
-			if(u.isAjoutModeleord()){
-				ajoutModeleordPriv=true;
-			}else{
-				ajoutModeleordPriv=false;
+
+			if (u.isAjoutModeleord()) {
+				ajoutModeleordPriv = true;
+			} else {
+				ajoutModeleordPriv = false;
 			}
-			if(u.isSelectModeleord()){
-				selectModeleordPriv=true;
-			}else{
-				selectModeleordPriv=false;
+			if (u.isSelectModeleord()) {
+				selectModeleordPriv = true;
+			} else {
+				selectModeleordPriv = false;
 			}
-			if(u.isSuppModeleOrd()){
-				suppModeleOrdPriv=true;
-			}else{
-				suppModeleOrdPriv=false;
+			if (u.isSuppModeleOrd()) {
+				suppModeleOrdPriv = true;
+			} else {
+				suppModeleOrdPriv = false;
 			}
-			
-			if(u.isGestSais()){
-				gestSaisPriv=true;
-			}else{
-				gestSaisPriv=false;
+
+			if (u.isGestSais()) {
+				gestSaisPriv = true;
+			} else {
+				gestSaisPriv = false;
 			}
-			
-			if(consultertHistoConsultationPriv){
+
+			if (consultertHistoConsultationPriv) {
 				u.setSelectTableConsultation(true);
-			}else{
+			} else {
 				u.setSelectTableConsultation(false);
 			}
 
@@ -8977,40 +8899,37 @@ public void redirectverModifutl(){
 			} else {
 				ordonceFichePriv = false;
 			}
-			if(u.isOrdonanceLibreFiche()){
-				consultOrdLibrePriv=true;
-			}else{
-				consultOrdLibrePriv=false;
+			if (u.isOrdonanceLibreFiche()) {
+				consultOrdLibrePriv = true;
+			} else {
+				consultOrdLibrePriv = false;
 			}
-			if(u.isModifOrdnce()){
-				modifHistoOrdPriv=true;
-			}else{
-				modifHistoOrdPriv=false;
+			if (u.isModifOrdnce()) {
+				modifHistoOrdPriv = true;
+			} else {
+				modifHistoOrdPriv = false;
 			}
-			if(u.isSupphistoOrd()){
-				supHistoOrdPriv=true;
-			}else{
-				supHistoOrdPriv=false;
+			if (u.isSupphistoOrd()) {
+				supHistoOrdPriv = true;
+			} else {
+				supHistoOrdPriv = false;
 			}
-			if(u.isRechercheOrd()){
-				rechercheOrdPriv=true;
-			}else{
-				rechercheOrdPriv=false;
+			if (u.isRechercheOrd()) {
+				rechercheOrdPriv = true;
+			} else {
+				rechercheOrdPriv = false;
 			}
-			if(u.isImprOrd()){
-				imprOrdPriv=true;
-			}else{
-				imprOrdPriv=false;
+			if (u.isImprOrd()) {
+				imprOrdPriv = true;
+			} else {
+				imprOrdPriv = false;
 			}
-			
-			
-			
+
 			if (verConsult.equals("1")) {
 				verConsultPriv = true;
 			} else {
 				verConsultPriv = false;
 			}
-			
 
 			if (menuSal.equals("1")) {
 				menuSalPriv = true;
@@ -9035,11 +8954,11 @@ public void redirectverModifutl(){
 			} else {
 				menuParamPriv = false;
 			}
-			
-			if(u.getMenuGestRdv().equals("1")){
-				menuRendvousPriv=true;
-			}else{
-				menuRendvousPriv=false;
+
+			if (u.getMenuGestRdv().equals("1")) {
+				menuRendvousPriv = true;
+			} else {
+				menuRendvousPriv = false;
 			}
 
 			if (menuRapport.equals("1")) {
@@ -9047,7 +8966,7 @@ public void redirectverModifutl(){
 			} else {
 				menuRappPriv = false;
 			}
-			
+
 			if (u.isMenuGestStat()) {
 				menuStatPriv = true;
 			} else {
@@ -9118,186 +9037,182 @@ public void redirectverModifutl(){
 			} else {
 				gestDocPriv = false;
 			}
-			
-			if(u.isGestAntecedent()){
-				gestAntecedentParamPriv=true;
-			}else{
-				gestAntecedentParamPriv=false;
-			}
-			if(u.isTabMedAnt()){
-				paramtabAntMedPriv=true;
-			}else{
-				paramtabAntMedPriv=false;
-			}
-			
-			if(u.isAjoutGestAntMed()){
-				ajoutAntMedPriv=true;
-			}else{
-				ajoutAntMedPriv=false;
-			}
-			if(u.isModifGestAntMed()){
-				modifAntMedPriv=true;
-			}else{
-				modifAntMedPriv=false;
-			}
-			if(u.isSuppGestAntMed()){
-				supAntMedPriv=true;
-			}else{
-				supAntMedPriv=false;
-			}
-			if(u.isTabChirAnt()){
-				paramtabAntChirgPriv=true;
-			}else{
-				paramtabAntChirgPriv=false;
-			}
-			if(u.isAjoutGestChirg()){
-				ajoutAntChirgPriv=true;
-			}else{
-				ajoutAntChirgPriv=false;
-			}
-			if(u.isModifGestChirg()){
-				modifAntChirgPriv=true;
-			}else{
-				modifAntChirgPriv=false;
-			}
-			if(u.isSuppGestAntChirg()){
-				supAntChirgPriv=true;
-			}else{
-				supAntChirgPriv=false;
-			}
-			
-			if(u.isTabFamAnt()){
-				paramtabAntFamPriv=true;
-			}else{
-				paramtabAntFamPriv=false;
-			}
-			if(u.isAjoutGestFam()){
-				ajoutAntFamPriv=true;
-			}else{
-				ajoutAntFamPriv=false;
-			}
-			if(u.isModifGestFam()){
-				modifAntFamPriv=true;
-			}else{
-				modifAntFamPriv=false;
-			}
-			if(u.isSuppGestAntFam()){
-				supAntFamPriv=true;
-			}else{
-				supAntFamPriv=false;
-			}
-			
 
-			if(u.isGestHoraire()){
-				gestHorairePriv=true;
-			}else{
-				gestHorairePriv=false;
+			if (u.isGestAntecedent()) {
+				gestAntecedentParamPriv = true;
+			} else {
+				gestAntecedentParamPriv = false;
 			}
-			
-			if(u.isModifPrtSais()){
-				modifprdSaisPriv=true;
-			}else{
-				modifprdSaisPriv=false;
+			if (u.isTabMedAnt()) {
+				paramtabAntMedPriv = true;
+			} else {
+				paramtabAntMedPriv = false;
 			}
-			if(u.isAjoutHeurTrav()){
-				ajoutHorTravPriv=true;
-			}else{
-				ajoutHorTravPriv=false;
+
+			if (u.isAjoutGestAntMed()) {
+				ajoutAntMedPriv = true;
+			} else {
+				ajoutAntMedPriv = false;
 			}
-			if(u.isAjoutHeurTrav()){
-				modifHorTravPriv=true;
-			}else{
-				modifHorTravPriv=false;
+			if (u.isModifGestAntMed()) {
+				modifAntMedPriv = true;
+			} else {
+				modifAntMedPriv = false;
 			}
-			if(u.isSupHeurTrav()){
-				supHorTravPriv=true;
-			}else{
-				supHorTravPriv=false;
+			if (u.isSuppGestAntMed()) {
+				supAntMedPriv = true;
+			} else {
+				supAntMedPriv = false;
 			}
-			
-			
-			if(u.isGestCabinet()){
-				gestCabinetPriv=true;
-			}else{
-				gestCabinetPriv=false;
+			if (u.isTabChirAnt()) {
+				paramtabAntChirgPriv = true;
+			} else {
+				paramtabAntChirgPriv = false;
 			}
-			
-			if(u.isGestionUterus()){
-				gestUtPriv=true;
-			}else{
-				gestUtPriv=false;
+			if (u.isAjoutGestChirg()) {
+				ajoutAntChirgPriv = true;
+			} else {
+				ajoutAntChirgPriv = false;
 			}
-	        if(u.isAjoutUt()){
-	        	ajoutUtPriv=true;
-	        }else{
-	        	ajoutUtPriv=false;
-	        }
-	        if(u.isModifUt()){
-	        	modifUtPriv=true;
-	        }else{
-	        	modifUtPriv=false;
-	        }
-	        if(u.isSupUt()){
-	        	supUtPriv=true;
-	        }else{
-	        	supUtPriv=false;
-	        }
-	        
-	        if(u.getGestEFG().equals("1")){
-	        	gestFinGrossPriv=true;
-	        }else{
-	        	gestFinGrossPriv=false;
-	        }
-	        if(u.isAjoutEFG()){
-	        	ajoutFinGrossPriv=true;
-	        }else{
-	        	ajoutFinGrossPriv=false;
-	        }
-	        if(u.isModifEFG()){
-	        	modifFinGrossPriv=true;
-	        }else{
-	        	modifFinGrossPriv=false;
-	        }
-	        if(u.isSupEFG()){
-	        	supFinGrossPriv=true;
-	        }else{
-	        	supFinGrossPriv=false;
-	        }
-	        
-	        if(u.isGestConsultation()){
-	        	gestConsPriv=true;
-	        }else{
-	        	gestConsPriv=false;
-	        }
-	        if(u.isModifCons()){
-	        	modifConsPriv=true;
-	        }else{
-	        	modifConsPriv=false;
-	        }
-	        
-	        if(u.isGestionFormMed()){
-	        	gestFrmMedPriv=true;
-	        }else{
-	        	gestFrmMedPriv=false;
-	        }
-	        if(u.isAjoutFM()){
-	        	ajoutFrmMedPriv=true;
-	        }else{
-	        	ajoutFrmMedPriv=false;
-	        }
-	        if(u.isModifFM()){
-	        	modifFrmMedPriv=true;
-	        }else{
-	        	modifFrmMedPriv=false;
-	        }
-	        if(u.isSupFM()){
-	        	supFrmMedPriv=true;
-	        }else{
-	        	supFrmMedPriv=false;
-	        }
-	        
-	        
-			
+			if (u.isModifGestChirg()) {
+				modifAntChirgPriv = true;
+			} else {
+				modifAntChirgPriv = false;
+			}
+			if (u.isSuppGestAntChirg()) {
+				supAntChirgPriv = true;
+			} else {
+				supAntChirgPriv = false;
+			}
+
+			if (u.isTabFamAnt()) {
+				paramtabAntFamPriv = true;
+			} else {
+				paramtabAntFamPriv = false;
+			}
+			if (u.isAjoutGestFam()) {
+				ajoutAntFamPriv = true;
+			} else {
+				ajoutAntFamPriv = false;
+			}
+			if (u.isModifGestFam()) {
+				modifAntFamPriv = true;
+			} else {
+				modifAntFamPriv = false;
+			}
+			if (u.isSuppGestAntFam()) {
+				supAntFamPriv = true;
+			} else {
+				supAntFamPriv = false;
+			}
+
+			if (u.isGestHoraire()) {
+				gestHorairePriv = true;
+			} else {
+				gestHorairePriv = false;
+			}
+
+			if (u.isModifPrtSais()) {
+				modifprdSaisPriv = true;
+			} else {
+				modifprdSaisPriv = false;
+			}
+			if (u.isAjoutHeurTrav()) {
+				ajoutHorTravPriv = true;
+			} else {
+				ajoutHorTravPriv = false;
+			}
+			if (u.isAjoutHeurTrav()) {
+				modifHorTravPriv = true;
+			} else {
+				modifHorTravPriv = false;
+			}
+			if (u.isSupHeurTrav()) {
+				supHorTravPriv = true;
+			} else {
+				supHorTravPriv = false;
+			}
+
+			if (u.isGestCabinet()) {
+				gestCabinetPriv = true;
+			} else {
+				gestCabinetPriv = false;
+			}
+
+			if (u.isGestionUterus()) {
+				gestUtPriv = true;
+			} else {
+				gestUtPriv = false;
+			}
+			if (u.isAjoutUt()) {
+				ajoutUtPriv = true;
+			} else {
+				ajoutUtPriv = false;
+			}
+			if (u.isModifUt()) {
+				modifUtPriv = true;
+			} else {
+				modifUtPriv = false;
+			}
+			if (u.isSupUt()) {
+				supUtPriv = true;
+			} else {
+				supUtPriv = false;
+			}
+
+			if (u.getGestEFG().equals("1")) {
+				gestFinGrossPriv = true;
+			} else {
+				gestFinGrossPriv = false;
+			}
+			if (u.isAjoutEFG()) {
+				ajoutFinGrossPriv = true;
+			} else {
+				ajoutFinGrossPriv = false;
+			}
+			if (u.isModifEFG()) {
+				modifFinGrossPriv = true;
+			} else {
+				modifFinGrossPriv = false;
+			}
+			if (u.isSupEFG()) {
+				supFinGrossPriv = true;
+			} else {
+				supFinGrossPriv = false;
+			}
+
+			if (u.isGestConsultation()) {
+				gestConsPriv = true;
+			} else {
+				gestConsPriv = false;
+			}
+			if (u.isModifCons()) {
+				modifConsPriv = true;
+			} else {
+				modifConsPriv = false;
+			}
+
+			if (u.isGestionFormMed()) {
+				gestFrmMedPriv = true;
+			} else {
+				gestFrmMedPriv = false;
+			}
+			if (u.isAjoutFM()) {
+				ajoutFrmMedPriv = true;
+			} else {
+				ajoutFrmMedPriv = false;
+			}
+			if (u.isModifFM()) {
+				modifFrmMedPriv = true;
+			} else {
+				modifFrmMedPriv = false;
+			}
+			if (u.isSupFM()) {
+				supFrmMedPriv = true;
+			} else {
+				supFrmMedPriv = false;
+			}
+
 			if (gestProf.equals("1")) {
 				gestProfPriv = true;
 			} else {
@@ -9389,22 +9304,22 @@ public void redirectverModifutl(){
 			} else {
 				anulSalPriv = false;
 			}
-			
+
 			if (u.isDonnerRdv()) {
 				donnerRdvPriv = true;
 			} else {
 				donnerRdvPriv = false;
 			}
 			if (u.isArchiverPat()) {
-				archiverPatPriv= true;
+				archiverPatPriv = true;
 			} else {
 				archiverPatPriv = false;
 			}
 			if (u.isConsultArchiv()) {
-				consultArchivePriv= true;
+				consultArchivePriv = true;
 			} else {
 				consultArchivePriv = false;
-			}	
+			}
 
 			if (ajoutDoc.equals("1")) {
 				ajoutDocPriv = true;
@@ -9476,91 +9391,90 @@ public void redirectverModifutl(){
 			} else {
 				echoGynPriv = false;
 			}
-			if(u.isNouvchogyneco()){
-				echoGynNouvConsultPriv=true;
-			}else{
-				echoGynNouvConsultPriv=false;
+			if (u.isNouvchogyneco()) {
+				echoGynNouvConsultPriv = true;
+			} else {
+				echoGynNouvConsultPriv = false;
 			}
-			
-			if(u.isModifechogyneco()){
-				echoGynModifConsultPriv=true;
-			}else{
-				echoGynModifConsultPriv=false;
+
+			if (u.isModifechogyneco()) {
+				echoGynModifConsultPriv = true;
+			} else {
+				echoGynModifConsultPriv = false;
 			}
-			
-			if(u.isSuppechogyneco()){
-				echoGynsupConsultPriv=true;
-			}else{
-				echoGynsupConsultPriv=false;
+
+			if (u.isSuppechogyneco()) {
+				echoGynsupConsultPriv = true;
+			} else {
+				echoGynsupConsultPriv = false;
 			}
-			
-			if(u.isAjoutmodelechogyneco()){
-				echoGynNouvModeltPriv=true;
-			}else{
-				echoGynNouvModeltPriv=false;
+
+			if (u.isAjoutmodelechogyneco()) {
+				echoGynNouvModeltPriv = true;
+			} else {
+				echoGynNouvModeltPriv = false;
 			}
-			
-			if(u.isSuppmodelechogyneco()){
-				echoGynSupModeltPriv=true;
-			}else{
-				echoGynSupModeltPriv=false;
+
+			if (u.isSuppmodelechogyneco()) {
+				echoGynSupModeltPriv = true;
+			} else {
+				echoGynSupModeltPriv = false;
 			}
-			
-			if(u.isAppliquemodelechogyneco()){
-				echoGynApplModeltPriv=true;
-			}else{
-				echoGynApplModeltPriv=false;
+
+			if (u.isAppliquemodelechogyneco()) {
+				echoGynApplModeltPriv = true;
+			} else {
+				echoGynApplModeltPriv = false;
 			}
-			
-			if(u.isImprechogyneco()){
-				echoGynImprPriv=true;
-			}else{
-				echoGynImprPriv=false;
+
+			if (u.isImprechogyneco()) {
+				echoGynImprPriv = true;
+			} else {
+				echoGynImprPriv = false;
 			}
-			
+
 			if (echoObs.equals("1")) {
 				echoObstPriv = true;
 			} else {
 				echoObstPriv = false;
 			}
-			if(u.isModifechoObs()){
-				echoObsModifConsultPriv=true;
-			}else{
-				echoObsModifConsultPriv=false;
+			if (u.isModifechoObs()) {
+				echoObsModifConsultPriv = true;
+			} else {
+				echoObsModifConsultPriv = false;
 			}
-			if(u.isNouvechoObs()){
-				echoObsNouvConsultPriv=true;
-			}else{
-				echoObsNouvConsultPriv=false;
+			if (u.isNouvechoObs()) {
+				echoObsNouvConsultPriv = true;
+			} else {
+				echoObsNouvConsultPriv = false;
 			}
-			if(u.isSuppechoObs()){
-				echoObsSupConsultPriv=true;
-			}else{
-				echoObsSupConsultPriv=false;
+			if (u.isSuppechoObs()) {
+				echoObsSupConsultPriv = true;
+			} else {
+				echoObsSupConsultPriv = false;
 			}
-			if(u.isTrim1echoObs()){
-				echoObsTrim1Priv=true;
-			}else{
-				echoObsTrim1Priv=false;
+			if (u.isTrim1echoObs()) {
+				echoObsTrim1Priv = true;
+			} else {
+				echoObsTrim1Priv = false;
 			}
-			if(u.isTrim2echoObs()){
-				echoObsTrim2Priv=true;
-			}else{
-				echoObsTrim2Priv=false;
+			if (u.isTrim2echoObs()) {
+				echoObsTrim2Priv = true;
+			} else {
+				echoObsTrim2Priv = false;
 			}
-			if(u.isImprechoObs()){
-				echoObsImprPriv=true;
-			}else{
-				echoObsImprPriv=false;
+			if (u.isImprechoObs()) {
+				echoObsImprPriv = true;
+			} else {
+				echoObsImprPriv = false;
 			}
-			
-			if(u.isTrim3echoObs()){
-				echoObsTrim3Priv=true;
-			}else{
-				echoObsTrim3Priv=false;
+
+			if (u.isTrim3echoObs()) {
+				echoObsTrim3Priv = true;
+			} else {
+				echoObsTrim3Priv = false;
 			}
-			
-			
+
 			if (gynecologie.equals("1")) {
 				gynecologiePriv = true;
 			} else {
@@ -9576,31 +9490,31 @@ public void redirectverModifutl(){
 			} else {
 				sterilitePriv = false;
 			}
-			if(u.isModifSterilite()){
-				steriliteModifPriv=true;
-			}else{
-				steriliteModifPriv=false;
+			if (u.isModifSterilite()) {
+				steriliteModifPriv = true;
+			} else {
+				steriliteModifPriv = false;
 			}
 			if (tabAntecedent.equals("1")) {
 				tabAntecedentPriv = true;
 			} else {
 				tabAntecedentPriv = false;
 			}
-			
-			if(u.isModifGynObs()){
-				modifGynObsPriv=true;
-			}else{
-				modifGynObsPriv=false;
+
+			if (u.isModifGynObs()) {
+				modifGynObsPriv = true;
+			} else {
+				modifGynObsPriv = false;
 			}
-			if(u.isModifAnt()){
-				modifAntPriv=true;
-			}else{
-				modifAntPriv=false;
+			if (u.isModifAnt()) {
+				modifAntPriv = true;
+			} else {
+				modifAntPriv = false;
 			}
-			if(u.isSuppAnt()){
-				suppAntPriv=true;
-			}else{
-				suppAntPriv=false;
+			if (u.isSuppAnt()) {
+				suppAntPriv = true;
+			} else {
+				suppAntPriv = false;
 			}
 			if (tabGynecoObs.equals("1")) {
 				tabGynecoObsPriv = true;
@@ -9657,7 +9571,7 @@ public void redirectverModifutl(){
 			} else {
 				gynOrdPriv = false;
 			}
-			
+
 			if (u.isConsultDetAnal()) {
 				consultDetAnalPriv = true;
 			} else {
@@ -9673,7 +9587,7 @@ public void redirectverModifutl(){
 			} else {
 				consultDetOrdPriv = false;
 			}
-			
+
 			if (gynRadio.equals("1")) {
 				gynRadioPriv = true;
 			} else {
@@ -9684,24 +9598,24 @@ public void redirectverModifutl(){
 			} else {
 				gynNouvConsultPriv = false;
 			}
-			if(u.isModifGyneco()){
-				gynModifConsultPriv=true;
-			}else{
-				gynModifConsultPriv=false;
+			if (u.isModifGyneco()) {
+				gynModifConsultPriv = true;
+			} else {
+				gynModifConsultPriv = false;
 			}
-			
-			if(u.isSuppGyneco()){
-				gynSupConsultPriv=true;
-			}else{
-				gynSupConsultPriv=false;
+
+			if (u.isSuppGyneco()) {
+				gynSupConsultPriv = true;
+			} else {
+				gynSupConsultPriv = false;
 			}
-			
-			if(u.isImprGyneco()){
-				gynImprConsultPriv=true;
-			}else{
-				gynImprConsultPriv=false;
+
+			if (u.isImprGyneco()) {
+				gynImprConsultPriv = true;
+			} else {
+				gynImprConsultPriv = false;
 			}
-				
+
 			if (grossRadio.equals("1")) {
 				grossRadioPriv = true;
 			} else {
@@ -9712,27 +9626,27 @@ public void redirectverModifutl(){
 			} else {
 				grossOrdPriv = false;
 			}
-			if(u.isSelectNouvGross()){
-				grossSelectNouvConsultPriv=true;
-			}else{
-				grossSelectNouvConsultPriv=false;
+			if (u.isSelectNouvGross()) {
+				grossSelectNouvConsultPriv = true;
+			} else {
+				grossSelectNouvConsultPriv = false;
 			}
-			if(u.isModifGross()){
-				grossModifConsultPriv=true;
-			}else{
-				grossModifConsultPriv=false;
+			if (u.isModifGross()) {
+				grossModifConsultPriv = true;
+			} else {
+				grossModifConsultPriv = false;
 			}
-			if(u.isSuppGross()){
-				grossSupvConsultPriv=true;
-			}else{
-				grossSupvConsultPriv=false;
+			if (u.isSuppGross()) {
+				grossSupvConsultPriv = true;
+			} else {
+				grossSupvConsultPriv = false;
 			}
-			if(u.isImprGross()){
-				grossImprConsultPriv=true;
-			}else{
-				grossImprConsultPriv=false;
+			if (u.isImprGross()) {
+				grossImprConsultPriv = true;
+			} else {
+				grossImprConsultPriv = false;
 			}
-	        
+
 			if (grossAnal.equals("1")) {
 				grossAnaPriv = true;
 			} else {
@@ -9744,48 +9658,42 @@ public void redirectverModifutl(){
 				grossNouvConsultPriv = false;
 			}
 
+			idmodelUtl = null;
 			FacesContext face = FacesContext.getCurrentInstance();
-			face.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO, "Modèle appliqué avec succès",""));
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Modèle appliqué avec succès", ""));
 		}
-		
-		
-		
-			
-		}
-	
-	
-    public void init(){
-    	nomModelUtl=null;
-    }
-	
-	public void supprimerModelutl(Integer idm){
+
+	}
+
+	public void init() {
+		nomModelUtl = null;
+	}
+
+	public void supprimerModelutl(Integer idm) {
 		FacesContext face = FacesContext.getCurrentInstance();
 		ModelutlService ser = new ModelutlService();
 		ser.supprimerModelutl(idm);
-		
-		face.addMessage(null, new FacesMessage(
-				FacesMessage.SEVERITY_INFO, "Modèle supprimé avec succès",
-				""));
-		           
-		         index=1;
-	             redirectverajoututl();
+
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Modèle supprimé avec succès", ""));
+
+		index = 1;
+		redirectverajoututl();
 	}
-	
-	public void supprimerModelutlfromModif(Integer idm){
+
+	public void supprimerModelutlfromModif(Integer idm) {
 		FacesContext face = FacesContext.getCurrentInstance();
 		ModelutlService ser = new ModelutlService();
 		ser.supprimerModelutl(idm);
-		
-		face.addMessage(null, new FacesMessage(
-				FacesMessage.SEVERITY_INFO, "Modèle supprimé avec succès",
-				""));
-		           
-		         index=1;
-		         redirectverModifutl();
+
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Modèle supprimé avec succès", ""));
+
+		index = 1;
+		redirectverModifutl();
 	}
-	
-	
+
 	public void gotoAcceuil() {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -9794,7 +9702,7 @@ public void redirectverModifutl(){
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void gotoGestionUtl() {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -9803,32 +9711,23 @@ public void redirectverModifutl(){
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
-	public void updateF1(){
-		
-		
-		
+
+	public void updateF1() {
+
 		RequestContext.getCurrentInstance().update("f1");
 	}
-	
-	
-	public void activerSousArbre(){
-		
-		
-		
-		
-		if(gynAnaPriv){
-			
-			consultAnalActiv=false;
-		}else{
-			consultAnalActiv=true;
+
+	public void activerSousArbre() {
+
+		if (gynAnaPriv) {
+
+			consultAnalActiv = false;
+		} else {
+			consultAnalActiv = true;
 		}
 	}
-	
-	
+
 	public void goToSalle() {
-		
 
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -9837,5 +9736,5 @@ public void redirectverModifutl(){
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 }

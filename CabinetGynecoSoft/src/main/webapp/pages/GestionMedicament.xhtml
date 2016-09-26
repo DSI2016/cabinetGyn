@@ -113,7 +113,7 @@
 						paginator="true" paginatorPosition="bottom"
 						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 						rows="10">
-						<p:column width="5%">
+						<p:column width="6%">
 							<f:facet name="header">
 								<h:outputLabel value="Code" />
 							</f:facet>
@@ -191,17 +191,17 @@
 							showHeader="false" closable="false" resizable="false">
 							<p:panel id="dialog"
 								header="#{medicamentBean.action} du médicament">
-								<h:panelGrid columns="2">
-									<p:outputLabel value="Médicament : " />
+								<h:panelGrid columns="2" cellspacing="5">
+									<p:outputLabel value="Médicament* : " />
 									<p:inputText value="#{medicamentBean.designation}" id="pro"
 										size="30" />
 									<h:outputLabel value="Forme : " />
 									<h:panelGrid columns="2" cellspacing="5">
-										<p:selectOneMenu id="formeid"
+										<p:selectOneMenu id="formeid" 
 											value="#{medicamentBean.idForme}" panelStyle="width:180px"
 											filter="true" filterMatchMode="startsWith" effect="fade"
 											placeholder="Forme">
-											<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+											<f:selectItem itemLabel="--Selectioner--" itemValue=""  />
 											<f:selectItems value="#{medicamentBean.formesMedicament}"
 												var="pro" itemLabel="#{pro.forme}"
 												itemValue="#{pro.idFormeMedicament}" />
@@ -216,15 +216,15 @@
 									<p:inputText value="#{medicamentBean.posologie}" size="30" />
 
 									<p:outputLabel value="Prix : " />
-									<p:inputText value="#{medicamentBean.prixString}" size="5">
+									<p:inputText value="#{medicamentBean.prixString}" size="30">
 									</p:inputText>
 
 
 									<p:outputLabel value="Laboratoire : " />
-									<p:inputText value="#{medicamentBean.laboratoire}" size="18" />
+									<p:inputText value="#{medicamentBean.laboratoire}" size="30" />
 
 									<p:outputLabel value="Tableau : " />
-									<p:inputText value="#{medicamentBean.tableau}" size="5" />
+									<p:inputText value="#{medicamentBean.tableau}" size="30" />
 									<p:outputLabel value="Observation : " />
 									<p:inputTextarea value="#{medicamentBean.observation}" />
 								</h:panelGrid>
@@ -241,12 +241,12 @@
 						</p:dialog>
 
 						<h:form id="f4">
-							<p:dialog widgetVar="dialogforme" modal="false" closable="false"
+							<p:dialog widgetVar="dialogforme" modal="true" closable="false"
 								resizable="false" showHeader="false">
 
 								<p:panel id="dialog1" header="Ajout d'une forme">
 									<h:panelGrid columns="2">
-										<p:outputLabel value="Forme : " />
+										<p:outputLabel value="Forme* : " />
 										<p:inputText value="#{medicamentBean.forme}" id="pro" />
 									</h:panelGrid>
 									<h:panelGrid columns="2">

@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 
+
 import com.doctor.persistance.Connecte;
 import com.doctor.persistance.EnLigne;
 import com.doctor.persistance.TabSalle;
@@ -1882,10 +1883,33 @@ public class ConnectionBean implements java.io.Serializable {
 				    donnerRdv=true;
 					tabAnulSal=true;
 					tabTelSal=true;
+					Module.menuConfig = "0";
+					Module.actif = true;
+					Module.passif = false;
+					EnLigne enLigne = new EnLigne();
+					EnLigneService ser1 = new EnLigneService();
+					HttpSession session5 = (HttpSession) FacesContext
+							.getCurrentInstance().getExternalContext()
+							.getSession(true);
+					String idSessionCourant=session5.getId();
+				
+					enLigne.setIdSession(idSessionCourant);
+					ser1.ajoutEnLigne(enLigne);
+				    System.out.println("mpest juste  "+motpass);
+				    //redirection
+//				    try {
+//
+//						FacesContext.getCurrentInstance().getExternalContext()
+//								.redirect("Patients");
+//					} catch (Exception e) {
+//						System.out.println(e.getMessage());
+//					}
+//				    
 				    
-
+				    
 					return "accepted";
 				}
+				 System.out.println("mpest juste  "+motpass);
 			}
 
 			else if (Test.currentConnect < Test.maxConnect) {
@@ -2576,6 +2600,7 @@ public class ConnectionBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("name", utilisateur);
+		System.out.println("c'est null");
 		return null;
 	}
 

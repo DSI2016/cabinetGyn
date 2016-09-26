@@ -116,7 +116,7 @@
 							<p:panel id="dialog"
 								header="#{professionBean.action} de profession">
 								<h:panelGrid columns="2">
-									<p:outputLabel value="Profession" />
+									<p:outputLabel value="Profession* : " />
 									<p:inputText value="#{professionBean.libprofession}" id="pro" />
 								</h:panelGrid>
 								<h:panelGrid columns="2">
@@ -124,6 +124,7 @@
 										actionListener="#{professionBean.validation()}"
 										update=":f1:growl"
 										oncomplete="handleLoginRequest(xhr, status, args)" />
+										
 									<p:commandButton value="Annuler"
 										icon="ui-icon-arrowreturnthick-1-n"
 										actionListener="#{professionBean.closeDiag()}" update=":f1" />
@@ -138,6 +139,7 @@
 							PF('dialogprof').jq.effect("shake", {
 								times : 5
 							}, 100);
+							
 						} else {
 							PF('dialogprof').hide();
 							$('#loginLink').fadeOut();

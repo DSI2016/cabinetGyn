@@ -27,12 +27,7 @@
 									actionListener="#{analyseDemandeeBean.retour()}">
 									<p:graphicImage value="/images/retour.png"></p:graphicImage>
 								</p:commandLink></td>
-							<td style="width: 20%" align="right"><h:commandLink
-									actionListener="#{analyseDemandeeBean.viewAnalyse}"
-									target="_blanc">
-									<p:graphicImage value="/imagesMenu/imprimente10.png">
-									</p:graphicImage>
-								</h:commandLink></td>
+							
 						</tr>
 					</table>
 
@@ -52,10 +47,15 @@
 								<table border="0" align="center" width="90%">
 									<tr>
 										<td><h:outputText value="Date:"
-												style="font-size:12pt;font-weight:bold" /> <p:calendar
-												id="button" value="#{analyseDemandeeBean.dateAna}"
+												style="font-size:12pt;font-weight:bold" /> 
+											<p:calendar
+												id="button" value="#{analyseDemandeeBean.dateAnal}"
 												disabled="#{analyseDemandeeBean.consultation}"
-												showOn="button" size="7" pattern="dd/MM/yyyy" /></td>
+												showOn="button" size="7" pattern="dd/MM/yyyy" >
+												<p:ajax event="blur" listener="#{analyseDemandeeBean.changerDate}"></p:ajax>
+												</p:calendar>
+												
+												</td>
 										<td align="right"><h:panelGrid columns="3">
 												<h:outputText value="Analyse pour : "
 													style="font-size:13pt;font-weight:bold" />
@@ -199,8 +199,9 @@
 										<td width="500px"></td>
 										<td><p:commandButton value="Valider"
 												disabled="#{analyseDemandeeBean.consultation}"
-												rendered="#{!connectionBean.consultDetAnal}" update=":f1"
+												rendered="#{!connectionBean.consultDetAnal}" 
 												actionListener="#{analyseDemandeeBean.valider}"
+												action="#{analyseDemandeeBean.redirect()}"
 												immediate="true" ajax="false"
 												
 												style="font-size:12pt;font-weight:bold">
@@ -212,7 +213,7 @@
 											</p:commandButton></td>
 										<td><h:commandLink
 												actionListener="#{analyseDemandeeBean.selectAnalyse}"
-												target="_blank"
+												
 												rendered="#{analyseDemandeeBean.desibledImpr}">
 												<p:graphicImage value="/imagesMenu/imprimente10.png">
 												</p:graphicImage>

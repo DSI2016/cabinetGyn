@@ -318,6 +318,16 @@ public class AccueilBean {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void goToConfigSalle() {
+
+		try {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("ConfigurationSalleAtt");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	public void goToRecap() {
 
@@ -328,4 +338,30 @@ public class AccueilBean {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	
+	
+	public void goToGestionCertificat() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("Modélle-Certificat");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void goToGestionLettre() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("Modélle-Lettre");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
+	
+	
+	
+	
 }

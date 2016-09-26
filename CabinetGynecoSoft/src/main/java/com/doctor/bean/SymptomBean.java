@@ -108,6 +108,7 @@ public class SymptomBean implements java.io.Serializable {
 	}
 
 	public void ajouterSymptome() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -122,7 +123,7 @@ public class SymptomBean implements java.io.Serializable {
 		ser.supprimerSymptome(id);
 		FacesContext faces = FacesContext.getCurrentInstance();
 		faces.addMessage(null, new FacesMessage(
-				"Suppression Symptôme :  Symptôme supprimé avec succès."));
+				"Symptôme supprimé avec succès."));
 		FacesContext context2 = FacesContext.getCurrentInstance();
 		context2.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -134,6 +135,7 @@ public class SymptomBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		symptome=symptome.replaceAll("\\s+", " ");
 		SymptomeService ser = new SymptomeService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -159,8 +161,7 @@ public class SymptomBean implements java.io.Serializable {
 				} else {
 					d.setIdsymptome(idsymptome);
 					ser.modifierSymptome(d);
-					faces.addMessage(null, new FacesMessage("Le symptôme  \""
-							+ symptome + "\" modifié avec succès."));
+					faces.addMessage(null, new FacesMessage("Symptôme modifié avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");

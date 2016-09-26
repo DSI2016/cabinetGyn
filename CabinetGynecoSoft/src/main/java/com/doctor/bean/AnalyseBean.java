@@ -101,6 +101,7 @@ public class AnalyseBean implements java.io.Serializable {
 	}
 
 	public void ajouterAnalyse() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -134,6 +135,7 @@ public class AnalyseBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		libAnalyse=libAnalyse.replaceAll("\\s+", " ");
 		AnalyseService ser = new AnalyseService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -142,16 +144,21 @@ public class AnalyseBean implements java.io.Serializable {
 		if (action.equals("Modfication")) {
 			if (libAnalyse == null || (libAnalyse.trim().length() == 0)) {
 				// tester si cette zone de text est vide
+				
 				faces.addMessage(null, new FacesMessage(
-						"Veuillez donner le nom de l'analyse."));
+						FacesMessage.SEVERITY_ERROR,
+						"Veuillez donner le nom de l'analyse.", null));
 				addValid = false;
 			} else // tester si cette ville existe déjà
 			{
 				Analyse d = new Analyse(libAnalyse);
 				Analyse d2 = ser.rechercheAnalyseParLibelleAnalyse(libAnalyse);
 				if (d2 != null && !d2.getIdanalyse().equals(idanalyse)) {
+					
 					faces.addMessage("f1:f2:dialog:pro", new FacesMessage(
-							"L'analyse \"" + libAnalyse + "\" existe déjà."));
+							FacesMessage.SEVERITY_ERROR, "L'analyse \""
+									+ libAnalyse + "\" existe déjà.", null));
+					
 					addValid = false;
 				} else {
 					d.setIdanalyse(idanalyse);
@@ -181,7 +188,10 @@ public class AnalyseBean implements java.io.Serializable {
 			if (libAnalyse == null || (libAnalyse.trim().length() == 0)) {
 				// tester si cette zone de text est vide
 				faces.addMessage(null, new FacesMessage(
-						"Veuillez donner le nom de l'analyse."));
+						FacesMessage.SEVERITY_ERROR,
+						"Veuillez donner le nom de l'analyse.", null));
+				
+				
 				addValid = false;
 			} else // tester si cette etat existe déjà
 			{
@@ -194,8 +204,11 @@ public class AnalyseBean implements java.io.Serializable {
 					Analyse d1 = new Analyse(libAnalyse);
 
 					ser.ajoutAnalyse(d1);
-					faces.addMessage(null, new FacesMessage(
-							"Analyse ajoutée avec succès."));
+					
+					faces.addMessage(null, new FacesMessage("L'Analyse \""
+							+ libAnalyse + "\" est ajoutée avec succès."));
+					
+					
 					addValid = true;
 					initialisation();
 					//init();
@@ -211,8 +224,11 @@ public class AnalyseBean implements java.io.Serializable {
 					}
 				} else {
 
-					faces.addMessage(null, new FacesMessage("L'Analyse "
-							+ libAnalyse + " existe déjà."));
+					//faces.addMessage(null, new FacesMessage("L'Analyse "
+							//+ libAnalyse + " existe déjà."));
+					faces.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "L'analyse \""
+									+ libAnalyse + "\" existe déjà.", null));
 					addValid = false;
 				}
 

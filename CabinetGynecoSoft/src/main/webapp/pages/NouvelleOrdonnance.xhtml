@@ -180,7 +180,7 @@
 										<td><br /> <p:panel>
 												<div align="right">
 													<h:commandLink actionListener="#{ordonnanceBean.viewOrd}"
-														id="idimp" target="_blanc"
+														id="idimp" 
 														rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledimpOrdHistorique}">
 														<p:graphicImage value="/imagesMenu/imprimente10.png">
 														</p:graphicImage>
@@ -304,7 +304,7 @@
 									<div align="center">
 										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
 											actionListener="#{ordonnanceBean.validerOrd}" value="Valider"
-											onclick="target='_blank'; return true;"
+											
 											disabled="#{ordonnanceBean.consultation}" immediate="true"
 											ajax="false" rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>

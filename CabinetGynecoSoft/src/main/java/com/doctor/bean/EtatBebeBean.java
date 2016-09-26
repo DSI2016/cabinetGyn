@@ -130,6 +130,7 @@ public class EtatBebeBean implements java.io.Serializable {
 	}
 
 	public void ajouterEtatBebe() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -166,6 +167,7 @@ public class EtatBebeBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		etatBebe=etatBebe.replaceAll("\\s+", " ");
 		EtatBebeService ser = new EtatBebeService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();

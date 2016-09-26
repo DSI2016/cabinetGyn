@@ -96,6 +96,7 @@ public class ExamenBean implements java.io.Serializable {
 	}
 
 	public void ajouterExamen() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -128,6 +129,7 @@ public class ExamenBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		examen=examen.replaceAll("\\s+", " ");
 		ExamenService ser = new ExamenService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -190,8 +192,11 @@ public class ExamenBean implements java.io.Serializable {
 					Examen d1 = new Examen(examen.trim());
 
 					ser.ajouterExamen(d1);
-					faces.addMessage(null, new FacesMessage(
-							"Examen ajouté avec succès."));
+					
+					
+					faces.addMessage(null, new FacesMessage("L'Examen \""
+							+ examen + "\" est ajouté avec succès."));
+					
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");
@@ -208,8 +213,8 @@ public class ExamenBean implements java.io.Serializable {
 
 				{
 					faces.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, "L'examen " + examen
-									+ " existe déjà.", null));
+							FacesMessage.SEVERITY_ERROR, "L'examen \"" + examen
+							+ "\" existe déjà.", null));
 					addValid = false;
 
 				}

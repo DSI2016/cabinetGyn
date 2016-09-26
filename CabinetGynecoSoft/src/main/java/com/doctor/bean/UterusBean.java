@@ -98,6 +98,7 @@ public class UterusBean implements java.io.Serializable {
 	}
 
 	public void ajouterUterus() {
+		initialisation();
 		action = "Ajout";
 	}
 
@@ -118,7 +119,7 @@ public class UterusBean implements java.io.Serializable {
 		if (l.size() == 0 && ll.size() == 0) {
 			ser.supprimerUterus(id);
 			faces.addMessage(null, new FacesMessage(
-					"Suppression Utérus :  Utérus supprimé avec succès."));
+					"Utérus supprimé avec succès."));
 		}
 
 		else
@@ -137,6 +138,7 @@ public class UterusBean implements java.io.Serializable {
 	}
 
 	public void validation() {
+		uterus=uterus.replaceAll("\\s+", " ");
 		UterusService ser = new UterusService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
@@ -162,8 +164,7 @@ public class UterusBean implements java.io.Serializable {
 				} else {
 					d.setIduterus(iduterus);
 					ser.modifierUterus(d);
-					faces.addMessage(null, new FacesMessage("Utérus \""
-							+ uterus + "\" modifié avec succès."));
+					faces.addMessage(null, new FacesMessage("Utérus modifié avec succès."));
 					addValid = true;
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");

@@ -77,7 +77,7 @@
 						border="1" paginator="true" paginatorPosition="bottom"
 						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 						rows="10">
-						<p:column width="7%">
+						<p:column width="8%">
 							<div align="center">
 								<f:facet name="header">
 
@@ -102,13 +102,14 @@
 								actionListener="#{analyseBean.Supprimer(analyse.idanalyse)}"
 								icon="ui-icon-trash" title="Suppression Analyse" update=":f1">
 								<p:confirm header="Suppression Analyse"
-									message="Voulez-vous vraiment supprimer cette Ville ?"
+									message="Voulez-vous vraiment supprimer cette Analyse ?"
 									icon="ui-icon-alert" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 					<p:confirmDialog global="true" showEffect="fade"
 						hideEffect="explode">
+						
 						<p:commandButton value="Oui" type="button"
 							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 						<p:commandButton value="Non" type="button"
@@ -121,9 +122,9 @@
 						<p:dialog id="dialog" widgetVar="dialogprof" modal="true"
 							closable="false" resizable="false" showHeader="false">
 
-							<p:panel header="#{analyseBean.action} d'analyse">
+							<p:panel header="#{analyseBean.action} d'Analyse">
 								<h:panelGrid columns="2">
-									<p:outputLabel value="Analyse" />
+									<p:outputLabel value="Analyse* : " />
 									<p:inputText value="#{analyseBean.libAnalyse}" id="pro" />
 								</h:panelGrid>
 								<h:panelGrid columns="2">
