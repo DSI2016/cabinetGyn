@@ -16,18 +16,25 @@
 		<h:form id="f1">
 			<table width="100%">
 				<tr>
-					<td width="95%"><h:commandLink
-							actionListener="#{consultationDetailBean.gotoAcceuil()}">
+					<td width="95%"><h:commandLink actionListener="#{consultationDetailBean.gotoAcceuil()}">
 							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
 						</h:commandLink> <h:commandLink
 							actionListener="#{consultationDetailBean.changeRead()}">
 							<p:graphicImage value="/images/retour.png"></p:graphicImage>
 						</h:commandLink></td>
-					<td align="left"><h:commandLink
-							rendered="#{connectionBean.imprGross}">
-							<p:graphicImage value="/imagesMenu/imprimente10.png"></p:graphicImage>
-						</h:commandLink></td>
-				</tr>
+						<td align="right" >
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="25px" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+					</tr>
 			</table>
 			<p:growl id="growl" showDetail="true"
 				sticky="#{consultationDetailBean.blocage}"
