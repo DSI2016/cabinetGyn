@@ -32,22 +32,20 @@
 								</h:commandLink>
 							</h:panelGrid>
 						</div></td>
-					
-						<td align="right" >
-							<h:panelGrid columns="3">
-								
-								<h:outputText value="#{connectionBean.utilisateur}"
-									style="font-size:19px;font-weight:bold;font-style: italic" />
-							
+
+					<td align="right"><h:panelGrid columns="3">
+
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
+
 							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
 								<p:graphicImage value="/images/dec.png" width="25px" />
 							</h:commandLink>
-							
-                        </h:panelGrid>
-					</td>
-					
+
+						</h:panelGrid></td>
+
 				</tr>
-				
+
 			</table>
 			<p:panel id="p1" style="height:100%">
 				<table>
@@ -58,40 +56,57 @@
 								style="font-size:14pt;font-weight:bold" /> <br></br> <br></br>
 							<p:panel id="e" style="width:97%">
 
-								<table border="0"><tr><td><h:outputText value="DDR"
-										style="font-size:small;font-weight:bold" /></td><td><h:inputText value="#{consultationDetailBean.ddr}"
-										style="width:100%;font-size:small;font-weight:bold"
-										readonly="true">
-										<p:ajax event="blur" update="ddg,tp,ta,:f1:growl"
-											listener="#{consultationDetailBean.calculDate() }" />
-									</h:inputText></td><td><p:graphicImage value="/images/c.png" width="18" height="18" rendered="#{consultationDetailBean.cfclient.ddgCorigee}"></p:graphicImage>
+								<table border="0">
+									<tr>
+										<td><h:outputText value="DDR"
+												style="font-size:small;font-weight:bold" /></td>
+										<td><h:inputText value="#{consultationDetailBean.ddr}"
+												style="width:100%;font-size:small;font-weight:bold"
+												readonly="true">
+												<p:ajax event="blur" update="ddg,tp,ta,:f1:growl"
+													listener="#{consultationDetailBean.calculDate() }" />
+											</h:inputText></td>
+										<td><p:graphicImage value="/images/c.png" width="18"
+												height="18"
+												rendered="#{consultationDetailBean.cfclient.ddgCorigee}"></p:graphicImage>
 										</td>
-										<td>	<h:outputText value="DDG"
-										style="font-size:small;font-weight:bold" /></td><td><h:inputText id="ddg" value="#{consultationDetailBean.ddg}"
-										style="width:100%;font-size:small;font-weight:bold"
-										readonly="true" /></td></tr>
-										<tr><td><h:outputText value="Terme Prévu:"
-										style="width:100%;font-size:small;font-weight:bold" /></td><td><h:inputText id="tp"
-										value="#{consultationDetailBean.termePrevu}"
-										style="width:100%;font-size:small;font-weight:bold"
-										readonly="true" /></td><td ><h:outputText value=" " /></td><td><h:outputText value="Terme Actuel:"
-										style="width:100%;font-size:small;font-weight:bold" /></td><td><h:inputText id="ta"
-										value="#{consultationDetailBean.termeActuel}"
-										style="width:100%;font-size:small;font-weight:bold"
-										readonly="true" /></td></tr>
-										
-										</table>
-										
-										<div align="center">
-										<h:outputText
-									value="T.echo Moyen: " style="font-size:small;font-weight:bold" />
-										<h:inputText id="moyen" readonly="#{consultationDetailBean.lireReadOnly()}"
-									value="#{consultationDetailBean.echomoyen}" disabled="#{consultationDetailBean.lireReadOnly()}"
-									style="width:50%;font-size:small;font-weight:bold" />
-										
-										</div>
-										
-										
+										<td><h:outputText value="DDG"
+												style="font-size:small;font-weight:bold" /></td>
+										<td><h:inputText id="ddg"
+												value="#{consultationDetailBean.ddg}"
+												style="width:100%;font-size:small;font-weight:bold"
+												readonly="true" /></td>
+									</tr>
+									<tr>
+										<td><h:outputText value="Terme Prévu:"
+												style="width:100%;font-size:small;font-weight:bold" /></td>
+										<td><h:inputText id="tp"
+												value="#{consultationDetailBean.termePrevu}"
+												style="width:100%;font-size:small;font-weight:bold"
+												readonly="true" /></td>
+										<td><h:outputText value=" " /></td>
+										<td><h:outputText value="Terme Actuel:"
+												style="width:100%;font-size:small;font-weight:bold" /></td>
+										<td><h:inputText id="ta"
+												value="#{consultationDetailBean.termeActuel}"
+												style="width:100%;font-size:small;font-weight:bold"
+												readonly="true" /></td>
+									</tr>
+
+								</table>
+
+								<div align="center">
+									<h:outputText value="T.echo Moyen: "
+										style="font-size:small;font-weight:bold" />
+									<h:inputText id="moyen"
+										readonly="#{consultationDetailBean.lireReadOnly()}"
+										value="#{consultationDetailBean.echomoyen}"
+										disabled="#{consultationDetailBean.lireReadOnly()}"
+										style="width:50%;font-size:small;font-weight:bold" />
+
+								</div>
+
+
 							</p:panel> <br></br>
 
 
@@ -218,24 +233,24 @@
 													<h:panelGrid columns="2">
 														<h:outputText value="Bip         :  "
 															style="font-size:small;font-weight:bold" />
-															<h:panelGrid columns="1">
-														<p:spinner value="#{consultationDetailBean.bip}"
-															readonly="#{consultationDetailBean.lireReadOnly()}"
-															disabled="#{consultationDetailBean.lireReadOnly()}"
-															stepFactor="0.01" min="0" max="100" size="1">
+														<h:panelGrid columns="1">
+															<p:spinner value="#{consultationDetailBean.bip}"
+																readonly="#{consultationDetailBean.lireReadOnly()}"
+																disabled="#{consultationDetailBean.lireReadOnly()}"
+																stepFactor="0.01" min="0" max="100" size="1">
 
-														</p:spinner>
+															</p:spinner>
 														</h:panelGrid>
 
 														<h:outputText value="Lcc         :  "
 															style="font-size:small;font-weight:bold" />
-															<h:panelGrid columns="1">
-														<p:spinner value="#{consultationDetailBean.lcc}"
-															readonly="#{consultationDetailBean.lireReadOnly()}"
-															disabled="#{consultationDetailBean.lireReadOnly()}"
-															stepFactor="0.01" min="0" max="100" size="1">
+														<h:panelGrid columns="1">
+															<p:spinner value="#{consultationDetailBean.lcc}"
+																readonly="#{consultationDetailBean.lireReadOnly()}"
+																disabled="#{consultationDetailBean.lireReadOnly()}"
+																stepFactor="0.01" min="0" max="100" size="1">
 
-														</p:spinner>
+															</p:spinner>
 														</h:panelGrid>
 
 
@@ -698,24 +713,12 @@
 						value="Annuler"
 						actionListener="#{consultationDetailBean.initialisationEchoObs()}"
 						update=":f1,:f1:e"></p:commandButton>
-						<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
-											actionListener="#{consultationDetailBean.viewEchoObsTrim2}"
-											value="Imprimer"
-											rendered="#{connectionBean.imprechoObs}"
-											disabled="#{consultationDetailBean.afficheImprEchoObs}"
-										    immediate="true"
-											ajax="false" >
-							</p:commandButton>
-							
-							
-					<h:commandLink
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
 						actionListener="#{consultationDetailBean.viewEchoObsTrim2}"
-						
-						rendered="#{connectionBean.imprechoObs and not consultationDetailBean.desibledImpr()}">
-						<p:graphicImage value="/imagesMenu/imprimente10.png">
-						</p:graphicImage>
-					</h:commandLink>
-					
+						value="Imprimer" rendered="#{connectionBean.imprechoObs}"
+						disabled="#{consultationDetailBean.afficheImprEchoObs}"
+						immediate="true" ajax="false">
+					</p:commandButton>
 				</div>
 			</p:panel>
 
