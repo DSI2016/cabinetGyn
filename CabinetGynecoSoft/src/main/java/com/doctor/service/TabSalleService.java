@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 
 import com.doctor.dao.HibernateUtil;
 import com.doctor.dao.TabSalleHome;
-import com.doctor.persistance.EtatFinGross;
 import com.doctor.persistance.TabSalle;
 
 public class TabSalleService {
