@@ -139,6 +139,8 @@ public class HistoriqueGrossHome {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(HistoriqueGross.class)
 				.setFetchMode("etatBebe", FetchMode.JOIN)
+				.setFetchMode("etatBebe2", FetchMode.JOIN)
+				.setFetchMode("etatBebe3", FetchMode.JOIN)
 				.setFetchMode("etatFinGross", FetchMode.JOIN)
 				.setFetchMode("cfclient",FetchMode.JOIN)
 				.createCriteria("cfclient")

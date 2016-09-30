@@ -225,7 +225,7 @@
 							</p:ajax>
 						</p:inputText>
 						<h:outputText value="Code: "
-							style="font-size:small;font-weight:bold;" />
+							 />
 						<p:inputText value="#{historiqueLettreBean.code}"
 							style="font-size:small;font-weight:bold;">
 							<p:ajax event="blur"
@@ -233,7 +233,7 @@
 							</p:ajax>
 						</p:inputText>
 						<h:outputText value="Clinique: "
-							style="font-size:small;font-weight:bold;" />
+							 />
 						<p:inputText value="#{historiqueLettreBean.clinique}"
 							style="font-size:small;font-weight:bold;">
 							<p:ajax event="blur"
@@ -241,7 +241,7 @@
 							</p:ajax>
 						</p:inputText>
 						<h:outputText value="Description: "
-							style="font-size:small;font-weight:bold;" />
+							 />
 						<p:inputTextarea value="#{historiqueLettreBean.description}"
 							style="font-size:small;font-weight:bold;height:70px; width : 400px;">
 							<p:ajax event="blur"
@@ -427,6 +427,7 @@
 					<table>
 						<tr>
 							<td width="350"><h:outputLabel
+							
 									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
 							</td>
 							<td><h:outputText value="Le: " /> <p:inputText
@@ -497,6 +498,9 @@
 							filterMatchMode="startsWith" effect="fade">
 							<f:selectItem itemLabel="--Selectioner--" itemValue="" />
 							<f:selectItem itemLabel="GR.Arréter" itemValue="GR.Arréter" />
+							<p:ajax event="change"
+								listener="#{historiqueLettreBean.V1natureChange()}">
+							</p:ajax>
 						</p:selectOneMenu>
 
 						<h:outputText value="Signe clinique" />

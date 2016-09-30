@@ -101,6 +101,7 @@ public class AntecedentBean implements Serializable, LineListener {
 	private String etatBebe;
 	private String etatBebeAncien;
 	private Float poids;
+	public HistoriqueGross HistoriqueModif;
 
 	private String prenomBebe2;
 	private String sexeBebe2;
@@ -162,6 +163,7 @@ public class AntecedentBean implements Serializable, LineListener {
 	private List<Contraception> contraceptions = new ArrayList<Contraception>();
 	private String am;
 	private String dateAm;
+	private String termeancian;
 	private Integer idantmedcfclient;
 	private Integer idantchircfclient;
 	private Integer idantfamcfclient;
@@ -192,6 +194,14 @@ public class AntecedentBean implements Serializable, LineListener {
 
 	public String getNomAntecedent() {
 		return nomAntecedent;
+	}
+
+	public String getTermeancian() {
+		return termeancian;
+	}
+
+	public void setTermeancian(String termeancian) {
+		this.termeancian = termeancian;
 	}
 
 	public void setNomAntecedent(String nomAntecedent) {
@@ -969,8 +979,11 @@ public class AntecedentBean implements Serializable, LineListener {
 	}
 
 	public void modifierGross(HistoriqueGross h) {
+		HistoriqueModif = h;
 		etatFinGross = null;
+EtatBebeService setetab=new EtatBebeService();
 		idhistoriqueGross = h.getIdhistoriqueGross();
+
 		dateFinGross = h.getDateFinGross();
 		dateFinGrossString = dateFormat.format(h.getDateFinGross());
 		if (h.getEtatFinGross() != null) {
@@ -983,6 +996,7 @@ public class AntecedentBean implements Serializable, LineListener {
 		lieu = h.getLieu();
 		nbBebe = 0;
 		nbBebeAncien = 0;
+
 		sexeBebe = h.getSexeBebe();
 		sexeBebe2 = h.getSexeBebe2();
 		sexeBebe3Ancien = h.getSexeBebe3();
@@ -990,32 +1004,36 @@ public class AntecedentBean implements Serializable, LineListener {
 		sexeBebe2Ancien = h.getSexeBebe2();
 		sexeBebe3 = h.getSexeBebe3();
 		if (h.getEtatBebe() != null)
-			etatBebe = h.getEtatBebe().getEtatBebe();
+			etatBebe = setetab.rechercheEtatBebe(h.getEtatBebe().getIdetatBebe()).getEtatBebe();
 		if (h.getEtatBebe2() != null)
-			etatBebe2 = h.getEtatBebe2().getEtatBebe();
+			etatBebe2 =setetab.rechercheEtatBebe(h.getEtatBebe2().getIdetatBebe()).getEtatBebe();
 		if (h.getEtatBebe3() != null)
-			etatBebe3 = h.getEtatBebe3().getEtatBebe();
+			etatBebe3 = setetab.rechercheEtatBebe(h.getEtatBebe3().getIdetatBebe()).getEtatBebe();
 		prenomBebe = h.getPrenomBebe();
 		prenomBebe2 = h.getPrenomBebe2();
 		prenomBebe3 = h.getPrenomBebe3();
 		if (h.getEtatBebe() != null) {
-			etatBebe = h.getEtatBebe().getEtatBebe();
-			etatBebeAncien = h.getEtatBebe().getEtatBebe();
+			etatBebe = setetab.rechercheEtatBebe(h.getEtatBebe().getIdetatBebe()).getEtatBebe();
+			//etatBebe = h.getEtatBebe().getEtatBebe();
+			//etatBebeAncien = h.getEtatBebe().getEtatBebe();
 			setNbBebe(1);
 			nbBebeAncien = 1;
 		}
+		if ((terme != null) && (terme.length() != 0))
+			termeancian = h.getTerme();
 
 		if (h.getEtatBebe2() != null) {
 			setNbBebe(2);
 			nbBebeAncien = 2;
-			etatBebe2 = h.getEtatBebe2().getEtatBebe();
-			etatBebe2Ancien = h.getEtatBebe2().getEtatBebe();
+			etatBebe2 = setetab.rechercheEtatBebe(h.getEtatBebe2().getIdetatBebe()).getEtatBebe();
+//			etatBebe2 = h.getEtatBebe2().getEtatBebe();
+			//etatBebe2Ancien = h.getEtatBebe2().getEtatBebe();
 		}
 
 		if (h.getEtatBebe3() != null) {
 
-			etatBebe3 = h.getEtatBebe3().getEtatBebe();
-			etatBebe3Ancien = h.getEtatBebe3().getEtatBebe();
+			etatBebe3 = setetab.rechercheEtatBebe(h.getEtatBebe3().getIdetatBebe()).getEtatBebe();
+			//etatBebe3Ancien = h.getEtatBebe3().getEtatBebe();
 			setNbBebe(3);
 			nbBebeAncien = 3;
 		}
@@ -1051,12 +1069,11 @@ public class AntecedentBean implements Serializable, LineListener {
 	}
 
 	public void initialisation() {
-		HttpSession session = (HttpSession) FacesContext
-				.getCurrentInstance().getExternalContext()
-				.getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService se = new CfclientService();
-		Cfclient  cf = se.RechercheCfclient(idPatient);
+		Cfclient cf = se.RechercheCfclient(idPatient);
 		debutGross = null;
 		finGross = null;
 		notes = null;
@@ -1127,10 +1144,12 @@ public class AntecedentBean implements Serializable, LineListener {
 					"Veuillez donner la date de fin de grossesse", ""));
 			addValid = false;
 		} else {
+			
 			// if (Module.corigerDate(dateFinGrossString) != null) {
 			// this.setDateFinGrossString(Module.corigerDate(dateFinGrossString));
 			// }
-			if (!(Module.verifierDate(dateFinGrossString).equals("")))
+			
+			if ((Module.verifierDate(dateFinGrossString).equals(""))==false)
 
 			{
 				face.addMessage(null,
@@ -1146,7 +1165,18 @@ public class AntecedentBean implements Serializable, LineListener {
 					"Veuillez donner l'état de fin de grossesse", ""));
 			addValid = false;
 		}
+		if ((terme == null) || (terme.trim().length() == 0)) {
 
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Veuillez donner le terme de fin de grossesse", ""));
+			addValid = false;
+		} else if ((Module.isNumeric(terme) == false)
+				&& (Module.isNumeric(terme.substring(0, 1)) == false)) {
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Format de terme invalide", ""));
+			addValid = false;
+
+		}
 		if (nbBebe >= 1) {
 			if ((sexeBebe == null) || (sexeBebe.trim().length() == 0)) {
 				face.addMessage(null, new FacesMessage(
@@ -1163,13 +1193,6 @@ public class AntecedentBean implements Serializable, LineListener {
 
 		}
 		if (nbBebe >= 2) {
-			// if ((prenomBebe2 == null) || (prenomBebe2.trim().length() == 0))
-			// {
-			// face.addMessage(null, new FacesMessage(
-			// FacesMessage.SEVERITY_ERROR,
-			// "Veuillez donner le prénom du deuxième bébé", ""));
-			// addValid = false;
-			// }
 
 			if ((sexeBebe2 == null) || (sexeBebe2.trim().length() == 0)) {
 				face.addMessage(null, new FacesMessage(
@@ -1363,10 +1386,9 @@ public class AntecedentBean implements Serializable, LineListener {
 					initialisation();
 					RequestContext.getCurrentInstance().update("f1");
 					index = 2;
-
-					face.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_INFO, "",
-							"Grosseses Modifié avec succès"));
+					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Grosseses Modifié avec succès", ""));
+					
 					FacesContext context2 = FacesContext.getCurrentInstance();
 					context2.getExternalContext().getFlash()
 							.setKeepMessages(true);
@@ -1463,595 +1485,805 @@ public class AntecedentBean implements Serializable, LineListener {
 				EtatBebe eBebe3 = serb.rechercheParEtatBebe(etatBebe3);
 				cf = se.RechercheCfclient(idPatient);
 
-				if (eFinG != null) {
-
-					if (eFinG.isIncrementation()) {
-
-						if (eFinG.getEtatFinG().equals("Césarienne")) {
-							cf.setCesar(cf.getCesar() + 1);
-						}
-						if (eBebe != null) {
-							hg.setEtatBebe(eBebe);
-							if (sexeBebe != null
-									&& sexeBebe.trim().length() != 0) {
-								hg.setSexeBebe(sexeBebe);
-								if (eBebe.isIncrementation()) {
+				// CALCUL PARITEE
+				if (nbBebe == 1) {
+					if (eBebe != null) {
+						hg.setEtatBebe(eBebe);
+						if (terme != null && terme.trim().length() != 0) {
+							if (Module.NumericTermeGrossese(terme) != null) {
+								if (Module.NumericTermeGrossese(terme) >= 28) {
 									cf.setPartie(cf.getPartie() + 1);
-
-									if (sexeBebe.equals("Masculin"))
-										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-
-									else if (sexeBebe != null
-											&& sexeBebe.equals("Féminin"))
-										cf.setNbrFille(cf.getNbrFille() + 1);
 
 								}
 							}
-							se.modifierPatient(cf);
+
 						}
+					}
+				}
+				if (nbBebe == 2) {
+					if ((eBebe != null) && (eBebe2 != null)) {
+						hg.setEtatBebe(eBebe);
+						hg.setEtatBebe2(eBebe2);
+						if (terme != null && terme.trim().length() != 0) {
+							if (Module.NumericTermeGrossese(terme) != null) {
+								if (Module.NumericTermeGrossese(terme) >= 28) {
+									cf.setPartie(cf.getPartie() + 2);
+								}
+							}
+						}
+					}
+				}
+				if (nbBebe == 3) {
+					if ((eBebe != null) && (eBebe2 != null) && (eBebe3 != null)) {
+						hg.setEtatBebe(eBebe);
+						hg.setEtatBebe2(eBebe2);
+						hg.setEtatBebe3(eBebe3);
+						if (terme != null && terme.trim().length() != 0) {
+							if (Module.NumericTermeGrossese(terme) != null) {
+								if (Module.NumericTermeGrossese(terme) >= 28) {
+									cf.setPartie(cf.getPartie() + 3);
 
-						if (eBebe2 != null) {
-							hg.setEtatBebe2(eBebe2);
-							if (eBebe2.isIncrementation())
+								}
+							}
+						}
+					}
+				}
 
-								cf.setPartie(cf.getPartie() + 1);
+				// CALCUL CéSARIENNE
+				if (eFinG != null) {
+					if (eFinG.getEtatFinG().equals("Césarienne")) {
+						cf.setCesar(cf.getCesar() + 1);
+					}
+				}
+
+				// CALCUL NBR FILLE et Garcon
+
+				if (eFinG.isIncrementation()) {
+
+					// nbr ==1
+					if (nbBebe == 1) {
+						if ((eBebe != null) && (eBebe.isIncrementation())) {
+
+							if (sexeBebe != null
+									&& sexeBebe.trim().length() != 0) {
+
+								if (eBebe.isIncrementation()) {
+
+									if (sexeBebe.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe != null
+											&& sexeBebe.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+					}
+					// nbr == 2
+					if (nbBebe == 2) {
+						if ((eBebe != null) && (eBebe.isIncrementation())) {
+
+							if (sexeBebe != null
+									&& sexeBebe.trim().length() != 0) {
+
+								if (eBebe.isIncrementation()) {
+
+									if (sexeBebe.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe != null
+											&& sexeBebe.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+						if ((eBebe2 != null) && (eBebe2.isIncrementation())) {
+
 							if (sexeBebe2 != null
 									&& sexeBebe2.trim().length() != 0) {
-								if (sexeBebe2.equals("Masculin"))
-									cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-								else if (sexeBebe2.equals("Féminin"))
-									cf.setNbrFille(cf.getNbrFille() + 1);
+
+								if (eBebe2.isIncrementation()) {
+
+									if (sexeBebe2.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe2 != null
+											&& sexeBebe2.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
 							}
-							se.modifierPatient(cf);
 						}
 
-						if (eBebe3 != null) {
-							hg.setEtatBebe3(eBebe3);
-							if (eBebe3.isIncrementation())
+					}
+					// nbr==3
+					if (nbBebe == 3) {
+						if ((eBebe != null) && (eBebe.isIncrementation())) {
 
-								cf.setPartie(cf.getPartie() + 1);
+							if (sexeBebe != null
+									&& sexeBebe.trim().length() != 0) {
+
+								if (eBebe.isIncrementation()) {
+
+									if (sexeBebe.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe != null
+											&& sexeBebe.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+						if ((eBebe2 != null) && (eBebe2.isIncrementation())) {
+
+							if (sexeBebe2 != null
+									&& sexeBebe2.trim().length() != 0) {
+
+								if (eBebe2.isIncrementation()) {
+
+									if (sexeBebe2.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe2 != null
+											&& sexeBebe2.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+
+						if ((eBebe3 != null) && (eBebe3.isIncrementation())) {
 
 							if (sexeBebe3 != null
 									&& sexeBebe3.trim().length() != 0) {
-								if (sexeBebe3.equals("Masculin"))
-									cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-								else if (sexeBebe3.equals("Féminin")) {
-									cf.setNbrFille(cf.getNbrFille() + 1);
 
-								}
-								se.modifierPatient(cf);
-							}
-							se.modifierPatient(cf);
-						}
+								if (eBebe3.isIncrementation()) {
 
-					}
-					cf.setGestite(cf.getGestite() + 1);
-					se.modifierPatient(cf);
-					hg.setEtatBebe(eBebe);
-					hg.setEtatBebe2(eBebe2);
-					hg.setEtatBebe3(eBebe3);
-					hg.setSexeBebe(sexeBebe);
-					hg.setSexeBebe2(sexeBebe2);
-					hg.setSexeBebe3(sexeBebe3);
-					hg.setCfclient(cf);
-					hg.setNotes(notes);
-					sere.ajouterHistoriqueGross(hg);
-					addValid = true;
-					initialisation();
-					RequestContext.getCurrentInstance().update("f1");
-					index = 2;
-
-					face.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_INFO, "",
-							"Grosseses Ajouté avec succès"));
-					FacesContext context2 = FacesContext.getCurrentInstance();
-					context2.getExternalContext().getFlash()
-							.setKeepMessages(true);
-					context.addCallbackParam("addValid", addValid);
-					try {
-
-						context2.getExternalContext().redirect("Antecedent");
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				}
-
-			}
-
-			if (action1.equals("Modification")) {
-
-				hg2 = sere.rechercheHistoriqueGrossParId(idhistoriqueGross);
-				EtatFinGrossService ser = new EtatFinGrossService();
-				EtatFinGross eFinG = ser.rechercheParEtatFinGross(etatFinGross);
-				EtatFinGross eFinGA = ser
-						.rechercheParEtatFinGross(etatFinGrossAncien);
-				EtatBebeService seretatbebe = new EtatBebeService();
-
-				EtatBebe etatbeb1 = seretatbebe.rechercheParEtatBebe(etatBebe);
-				EtatBebe etatbebA1 = seretatbebe
-						.rechercheParEtatBebe(etatBebeAncien);
-				EtatBebe etatbeb2 = seretatbebe.rechercheParEtatBebe(etatBebe2);
-				EtatBebe etatbebA2 = seretatbebe
-						.rechercheParEtatBebe(etatBebe2Ancien);
-				EtatBebe etatbeb3 = seretatbebe.rechercheParEtatBebe(etatBebe3);
-				EtatBebe etatbebA3 = seretatbebe
-						.rechercheParEtatBebe(etatBebe3Ancien);
-				cf = se.RechercheCfclient(idPatient);
-				if (hg2 != null) {
-					if (etatFinGross != null && etatFinGrossAncien != null) {
-
-						if ((eFinG.getEtatFinG().equals("Césarienne"))
-								&& (eFinGA.getEtatFinG().equals("Césarienne") == false))
-							cf.setCesar(cf.getCesar() + 1);
-						if ((eFinG.getEtatFinG().equals("Césarienne") == false)
-								&& (eFinGA.getEtatFinG().equals("Césarienne")))
-							cf.setCesar(cf.getCesar() - 1);
-
-						// etat fi grossesse courant incrimente
-						if ((eFinG.isIncrementation()))
-
-						{
-
-							if (eFinGA.isIncrementation()) {
-
-								if (nbBebe == 1) {
-									if (nbBebe == nbBebeAncien) {
-										if (etatbebA1.isIncrementation()
-												&& etatbeb1.isIncrementation() == false) {
-											cf.setPartie(cf.getPartie() - 1);
-											if (sexeBebe.equals("Féminin")) {
-												cf.setNbrFille(cf.getNbrFille() - 1);
-											} else if (sexeBebeAncien
-													.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-
-										if ((etatbebA1.isIncrementation() == false)
-												&& (etatbeb1.isIncrementation())) {
-											cf.setPartie(cf.getPartie() + 1);
-											if (sexeBebe.equals("Féminin")) {
-												cf.setNbrFille(cf.getNbrFille() + 1);
-											} else if (sexeBebeAncien
-													.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-
-										if ((etatbebA1.isIncrementation())
-												&& (etatbeb1.isIncrementation())) {
-											if (sexeBebe.equals(sexeBebeAncien) == false)
-												if (sexeBebe.equals("Féminin")
-														&& sexeBebeAncien
-																.equals("Masculin")) {
-													cf.setNbrFille(cf
-															.getNbrFille() + 1);
-													cf.setNbrGarcon(cf
-															.getNbrGarcon() - 1);
-												}
-											if (sexeBebe.equals("Masculin")
-													&& sexeBebeAncien
-															.equals("Féminin")) {
-												cf.setNbrFille(cf.getNbrFille() - 1);
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() + 1);
-											}
-										}
-
+									if (sexeBebe3.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
 									}
 
-									else
-
-									if (nbBebeAncien == 2) {
-										if (etatbebA2.isIncrementation()) {
-											cf.setPartie(cf.getPartie() - 1);
-											if (sexeBebe2 != null)
-												if (sexeBebe2.equals("Féminin"))
-
-													cf.setNbrFille(cf
-															.getNbrFille() - 1);
-											if (sexeBebe2.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-
+									else if (sexeBebe3 != null
+											&& sexeBebe3.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
 									}
-									if (nbBebeAncien == 3) {
-
-										if (etatbebA2.isIncrementation()) {
-											cf.setPartie(cf.getPartie() - 1);
-											if (sexeBebe2 != null)
-												if (sexeBebe2.equals("Féminin"))
-
-													cf.setNbrFille(cf
-															.getNbrFille() - 1);
-											if (sexeBebe2.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-										if (etatbebA3.isIncrementation()) {
-											cf.setPartie(cf.getPartie() - 1);
-											if (sexeBebe3.equals("Féminin"))
-
-												cf.setNbrFille(cf.getNbrFille() - 1);
-											if (sexeBebe3.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-									}
-								}
-								if (nbBebe == 2) {
-									if (nbBebe == nbBebeAncien) {
-
-										if (etatbebA1.isIncrementation()
-												&& etatbeb1.isIncrementation() == false)
-											cf.setPartie(cf.getPartie() - 1);
-										if ((etatbebA1.isIncrementation() == false)
-												&& (etatbeb1.isIncrementation())) {
-											cf.setPartie(cf.getPartie() + 1);
-										}
-										if (etatbebA2.isIncrementation()
-												&& etatbeb2.isIncrementation() == false)
-											cf.setPartie(cf.getPartie() - 1);
-										if ((etatbebA2.isIncrementation() == false)
-												&& (etatbeb2.isIncrementation())) {
-											cf.setPartie(cf.getPartie() + 1);
-										}
-
-										if ((etatbebA1.isIncrementation())
-												&& (etatbeb1.isIncrementation())) {
-											if (sexeBebe.equals(sexeBebeAncien) == false)
-												if (sexeBebe.equals("Féminin")
-														&& sexeBebeAncien
-																.equals("Masculin")) {
-													cf.setNbrFille(cf
-															.getNbrFille() + 1);
-													cf.setNbrGarcon(cf
-															.getNbrGarcon() - 1);
-												}
-											if (sexeBebe.equals("Masculin")
-													&& sexeBebeAncien
-															.equals("Féminin")) {
-												cf.setNbrFille(cf.getNbrFille() - 1);
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() + 1);
-											}
-										}
-
-										if ((etatbebA2.isIncrementation())
-												&& (etatbeb2.isIncrementation())) {
-											if (sexeBebe2
-													.equals(sexeBebe2Ancien) == false)
-												if (sexeBebe2.equals("Féminin")
-														&& sexeBebe2Ancien
-																.equals("Masculin")) {
-													cf.setNbrFille(cf
-															.getNbrFille() + 1);
-													cf.setNbrGarcon(cf
-															.getNbrGarcon() - 1);
-												}
-											if (sexeBebe2.equals("Masculin")
-													&& sexeBebe2Ancien
-															.equals("Féminin")) {
-												cf.setNbrFille(cf.getNbrFille() - 1);
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() + 1);
-											}
-										} else if (nbBebeAncien == 1) {
-											if (etatbebA1.isIncrementation()) {
-												if (sexeBebe
-														.equals(sexeBebeAncien) == false)
-													if (sexeBebe
-															.equals("Féminin")
-															&& sexeBebeAncien
-																	.equals("Masculin")) {
-														cf.setNbrFille(cf
-																.getNbrFille() + 1);
-														cf.setNbrGarcon(cf
-																.getNbrGarcon() - 1);
-													}
-												if (sexeBebe.equals("Masculin")
-														&& sexeBebeAncien
-																.equals("Féminin")) {
-													cf.setNbrFille(cf
-															.getNbrFille() - 1);
-													cf.setNbrGarcon(cf
-															.getNbrGarcon() + 1);
-												}
-
-											}
-										}
-									}
-									if (nbBebeAncien == 3) {
-										if (etatbebA2.isIncrementation()) {
-											cf.setPartie(cf.getPartie() - 1);
-											if (sexeBebe2 != null)
-												if (sexeBebe2.equals("Féminin"))
-
-													cf.setNbrFille(cf
-															.getNbrFille() - 1);
-											if (sexeBebe2.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-										if (etatbebA3.isIncrementation()) {
-											cf.setPartie(cf.getPartie() - 1);
-											if (sexeBebe3.equals("Féminin"))
-
-												cf.setNbrFille(cf.getNbrFille() - 1);
-											if (sexeBebe3.equals("Masculin"))
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-										}
-									}
-
-								}
-
-								if ((nbBebe == 3)) {
-									if (etatbebA1.isIncrementation()
-											&& etatbeb1.isIncrementation() == false)
-										cf.setPartie(cf.getPartie() - 1);
-									if ((etatbebA1.isIncrementation() == false)
-											&& (etatbeb1.isIncrementation())) {
-										cf.setPartie(cf.getPartie() + 1);
-									}
-
-									if (etatbebA2.isIncrementation()
-											&& etatbeb2.isIncrementation() == false)
-										cf.setPartie(cf.getPartie() - 1);
-									if ((etatbebA2.isIncrementation() == false)
-											&& (etatbeb2.isIncrementation())) {
-										cf.setPartie(cf.getPartie() + 1);
-									}
-									if (etatbebA3.isIncrementation()
-											&& etatbeb3.isIncrementation() == false)
-										cf.setPartie(cf.getPartie() - 1);
-
-									if ((etatbebA3.isIncrementation() == false)
-											&& (etatbeb3.isIncrementation())) {
-										cf.setPartie(cf.getPartie() + 1);
-									}
-									if ((etatbebA1.isIncrementation())
-											&& (etatbeb1.isIncrementation())) {
-
-										if (sexeBebe.equals("Féminin")
-												&& sexeBebeAncien
-														.equals("Masculin")) {
-											cf.setNbrFille(cf.getNbrFille() + 1);
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										}
-										if (sexeBebe.equals("Masculin")
-												&& sexeBebeAncien
-														.equals("Féminin")) {
-											cf.setNbrFille(cf.getNbrFille() - 1);
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										}
-									}
-
-									if ((etatbebA2.isIncrementation())
-											&& (etatbeb2.isIncrementation())) {
-										if (sexeBebe2.equals(sexeBebeAncien) == false)
-											if (sexeBebe2.equals("Féminin")
-													&& sexeBebe2Ancien
-															.equals("Masculin")) {
-												cf.setNbrFille(cf.getNbrFille() + 1);
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-											}
-										if (sexeBebe2.equals("Masculin")
-												&& sexeBebe2Ancien
-														.equals("Féminin")) {
-											cf.setNbrFille(cf.getNbrFille() - 1);
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										}
-									}
-									if ((etatbebA3.isIncrementation())
-											&& (etatbeb3.isIncrementation())) {
-										if (sexeBebe3.equals(sexeBebeAncien) == false)
-											if (sexeBebe3.equals("Féminin")
-													&& sexeBebe3Ancien
-															.equals("Masculin")) {
-												cf.setNbrFille(cf.getNbrFille() + 1);
-												cf.setNbrGarcon(cf
-														.getNbrGarcon() - 1);
-											}
-										if (sexeBebe3.equals("Masculin")
-												&& sexeBebe3Ancien
-														.equals("Féminin")) {
-											cf.setNbrFille(cf.getNbrFille() - 1);
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										}
-									}
-
-								}
-
-							}
-							if (eFinGA.isIncrementation() == false)// ancien
-																	// n'icrimente
-																	// pas
-							{
-								if (nbBebe == 1) {
-									if (etatbeb1.isIncrementation()) {
-										cf.setPartie(cf.getPartie() + 1);
-										if (sexeBebe.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										if (sexeBebe.equals("Féminin")) {
-											cf.setNbrFille(cf.getNbrFille() + 1);
-										}
-
-									}
-								}
-								if (nbBebe == 2) {
-									if (etatbeb1.isIncrementation()) {
-										cf.setPartie(cf.getPartie() + 1);
-										if (sexeBebe.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										if (sexeBebe.equals("Féminin")) {
-											cf.setNbrFille(cf.getNbrFille() + 1);
-										}
-									}
-
-									if (etatbeb2.isIncrementation()) {
-										cf.setPartie(cf.getPartie() + 1);
-										if (sexeBebe2.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										if (sexeBebe2.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() + 1);
-									}
-								}
-
-								if (nbBebe == 3) {
-									if (etatbeb1.isIncrementation()) {
-										cf.setPartie(cf.getPartie() + 1);
-										if (sexeBebe.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										if (sexeBebe.equals("Féminin")) {
-											cf.setNbrFille(cf.getNbrFille() + 1);
-										}
-									}
-									if (etatbeb2.isIncrementation()) {
-										cf.setPartie(cf.getPartie() + 1);
-										if (sexeBebe2.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										if (sexeBebe2.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() + 1);
-									}
-									if (etatbeb3.isIncrementation()) {
-										cf.setPartie(cf.getPartie() + 1);
-										if (sexeBebe3.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() + 1);
-										if (sexeBebe3.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() + 1);
-									}
-								}
-							}
-
-						}
-						// etat fin grossese courant n'icrimente pas
-
-						else if (eFinG.isIncrementation() == false) {
-							if (eFinGA.isIncrementation()) {
-
-								if (nbBebe == 1) {
-									if (etatbebA1.isIncrementation()) {
-										cf.setPartie(cf.getPartie() - 1);
-										if (sexeBebe.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										if (sexeBebe.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() - 1);
-
-									}
-
-								}
-								if (nbBebe == 2) {
-									if (etatbebA1.isIncrementation()) {
-										cf.setPartie(cf.getPartie() - 1);
-
-										if (sexeBebe.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										if (sexeBebe.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() - 1);
-
-									}
-									if (etatbebA2.isIncrementation()) {
-										cf.setPartie(cf.getPartie() - 1);
-
-										if (sexeBebe2.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										if (sexeBebe2.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() - 1);
-									}
-
-								}
-
-								if (nbBebe == 3) {
-									if (etatbebA1.isIncrementation()) {
-										cf.setPartie(cf.getPartie() - 1);
-										if (sexeBebe.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										if (sexeBebe.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() - 1);
-
-									}
-									if (etatbebA2.isIncrementation()) {
-										cf.setPartie(cf.getPartie() - 1);
-
-										if (sexeBebe2.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										if (sexeBebe2.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() - 1);
-									}
-
-									if (etatbebA3.isIncrementation()) {
-										cf.setPartie(cf.getPartie() - 1);
-
-										if (sexeBebe3.equals("Masculin"))
-
-											cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-										if (sexeBebe3.equals("Féminin"))
-											cf.setNbrFille(cf.getNbrFille() - 1);
-
-									}
-
 								}
 							}
 						}
 
-					}
-					se.modifierPatient(cf);
-					hg2.setEtatFinGross(eFinG);
-					hg2.setDateFinGross(dateFinGross);
-					hg2.setPoids(poids);
-					hg2.setNotes(notes);
-					hg2.setPoids2(poids2);
-					hg2.setPoids3(poids3);
-					hg2.setSexeBebe(sexeBebe);
-					hg2.setSexeBebe2(sexeBebe2);
-					hg2.setSexeBebe3(sexeBebe3);
-					hg2.setEtatBebe(etatbeb1);
-					hg2.setEtatBebe2(etatbeb2);
-					hg2.setEtatBebe3(etatbeb3);
-					hg2.setPrenomBebe(prenomBebe);
-					hg2.setPrenomBebe2(prenomBebe2);
-					hg2.setPrenomBebe3(prenomBebe3);
-					hg2.setTerme(terme);
-					hg2.setLieu(lieu);
-					sere.ModifierHistoriqueGross(hg2);
-					addValid = true;
-					initialisation();
-					RequestContext.getCurrentInstance().update("f1");
-					index = 2;
-
-					face.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_INFO, "",
-							"Grosseses modifiée avec succès"));
-					FacesContext context2 = FacesContext.getCurrentInstance();
-					context2.getExternalContext().getFlash()
-							.setKeepMessages(true);
-					context.addCallbackParam("addValid", addValid);
-					try {
-
-						context2.getExternalContext().redirect("Antecedent");
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
 					}
 
 				}
 
+				hg.setEtatFinGross(eFinG);
+				cf.setGestite(cf.getGestite() + 1);
+				se.modifierPatient(cf);
+				hg.setEtatBebe(eBebe);
+				hg.setEtatBebe2(eBebe2);
+				hg.setEtatBebe3(eBebe3);
+				hg.setSexeBebe(sexeBebe);
+				hg.setSexeBebe2(sexeBebe2);
+				hg.setSexeBebe3(sexeBebe3);
+				hg.setCfclient(cf);
+				hg.setNotes(notes);
+				OnchangedateFinGrossString();
+				try {
+					dateFinGross = dateFormat.parse(dateFinGrossString);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				hg.setDateFinGross(dateFinGross);
+				sere.ajouterHistoriqueGross(hg);
+				addValid = true;
+				initialisation();
+				//RequestContext.getCurrentInstance().update("f1");
+				index = 2;
+				face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Grosseses Ajouter avec succès", ""));
+				
+				
+				FacesContext context2 = FacesContext.getCurrentInstance();
+				context2.getExternalContext().getFlash().setKeepMessages(true);
+				context.addCallbackParam("addValid", addValid);
+				try {
+
+					context2.getExternalContext().redirect("Antecedent");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 
 		}
+
+		if (action1.equals("Modification")) {
+
+			// hg2 = sere.rechercheHistoriqueGrossParId(idhistoriqueGross);
+			hg2 = HistoriqueModif; // l'objet historiqueModif remplir par
+									// l'objet historique grosses dans l'etape
+									// de modification
+			if (hg2.getEtatBebe() != null) {
+				System.out.println("etatbebe ! null");
+			}
+			EtatFinGrossService ser = new EtatFinGrossService();
+			EtatFinGross eFinG = ser.rechercheParEtatFinGross(etatFinGross);
+			EtatFinGross eFinGA = ser
+					.rechercheParEtatFinGross(etatFinGrossAncien);
+			EtatBebeService seretatbebe = new EtatBebeService();
+
+			EtatBebe etatbeb1 = seretatbebe.rechercheParEtatBebe(etatBebe);
+			EtatBebe etatbebA1 = seretatbebe
+					.rechercheParEtatBebe(etatBebeAncien);
+			EtatBebe etatbeb2 = seretatbebe.rechercheParEtatBebe(etatBebe2);
+			EtatBebe etatbebA2 = seretatbebe
+					.rechercheParEtatBebe(etatBebe2Ancien);
+			EtatBebe etatbeb3 = seretatbebe.rechercheParEtatBebe(etatBebe3);
+			EtatBebe etatbebA3 = seretatbebe
+					.rechercheParEtatBebe(etatBebe3Ancien);
+			cf = se.RechercheCfclient(idPatient);
+			if (hg2 != null) {
+				
+				// pour ivite les beaucoup de test sur l'ancian et le nouveau
+				// valeurs dans le cas de modification donc je supp les ancians
+				// donnes et je reajoute avec son modification dans le méme
+				// objet
+				// etape de suppression
+				// Calcul Parité
+
+				if ((hg2.getTerme() != null)
+						&& (hg2.getTerme().trim().length() != 0)) {
+					if ((hg2.getEtatBebe() != null)
+							&& (hg2.getEtatBebe2() == null)
+							&& (hg2.getEtatBebe3() == null)) {
+						if (Module.NumericTermeGrossese(hg2.getTerme()) != null) {
+
+							if (Module.NumericTermeGrossese(hg2.getTerme()) >= 28) {
+								if (cf.getPartie() >= 1)
+									cf.setPartie(cf.getPartie() - 1);
+
+							}
+						}
+					}
+
+					if ((hg2.getEtatBebe() != null)
+							&& (hg2.getEtatBebe2() != null)
+							&& (hg2.getEtatBebe3() == null)) {
+						if (Module.NumericTermeGrossese(hg2.getTerme()) != null) {
+
+							if (Module.NumericTermeGrossese(hg2.getTerme()) >= 28) {
+								if (cf.getPartie() >= 2)
+									cf.setPartie(cf.getPartie() - 2);
+
+							}
+						}
+
+					}
+
+					if ((hg2.getEtatBebe() != null)
+							&& (hg2.getEtatBebe2() != null)
+							&& (hg2.getEtatBebe3() != null)) {
+						if (Module.NumericTermeGrossese(hg2.getTerme()) != null) {
+
+							if (Module.NumericTermeGrossese(hg2.getTerme()) >= 28) {
+								if (cf.getPartie() >= 3)
+									cf.setPartie(cf.getPartie() - 3);
+
+							}
+						}
+
+					}
+
+				}
+
+				// Calcul césarienne
+
+				if (hg2.getEtatFinGross() != null) {
+					
+					if (hg2.getEtatFinGross().getEtatFinG()
+							.equals("Césarienne")) {
+						if (cf.getCesar() >= 1)
+							cf.setCesar(cf.getCesar() - 1);
+					}
+				}
+
+				// CALCUL NBR FILLE et Garcon
+				if (hg2.getEtatFinGross() != null) {
+					if (hg2.getEtatFinGross().isIncrementation()) {
+
+						// nbr ==1
+						
+						if ((hg2.getEtatBebe() != null)
+								&& (hg2.getEtatBebe2() == null)
+								&& (hg2.getEtatBebe3() == null)) {
+							if ((hg2.getEtatBebe() != null)
+									&& (hg2.getEtatBebe().isIncrementation())) {
+
+								if (hg2.getSexeBebe() != null
+										&& hg2.getSexeBebe().trim().length() != 0) {
+
+									if (hg2.getEtatBebe().isIncrementation()) {
+
+										if (hg2.getSexeBebe()
+												.equals("Masculin")) {
+											if (cf.getNbrGarcon() >= 1)
+												cf.setNbrGarcon(cf
+														.getNbrGarcon() - 1);
+										}
+
+										else if (hg2.getSexeBebe() != null
+												&& hg2.getSexeBebe().equals(
+														"Féminin")) {
+											if (cf.getNbrFille() >= 1)
+												cf.setNbrFille(cf.getNbrFille() - 1);
+										}
+									}
+								}
+							}
+						}
+						// nbr == 2
+						if ((hg2.getEtatBebe() != null)
+								&& (hg2.getEtatBebe2() != null)
+								&& (hg2.getEtatBebe3() == null)) {
+							if ((hg2.getEtatBebe() != null)
+									&& (hg2.getEtatBebe().isIncrementation())) {
+
+								if (hg2.getSexeBebe() != null
+										&& hg2.getSexeBebe().trim().length() != 0) {
+
+									if (hg2.getEtatBebe().isIncrementation()) {
+
+										if (hg2.getSexeBebe()
+												.equals("Masculin")) {
+											if (cf.getNbrGarcon() >= 1)
+												cf.setNbrGarcon(cf
+														.getNbrGarcon() - 1);
+										}
+
+										else if (hg2.getSexeBebe() != null
+												&& hg2.getSexeBebe().equals(
+														"Féminin")) {
+											if (cf.getNbrFille() >= 1)
+												cf.setNbrFille(cf.getNbrFille() - 1);
+										}
+									}
+								}
+							}
+							if ((hg2.getEtatBebe2() != null)
+									&& (hg2.getEtatBebe2().isIncrementation())) {
+
+								if (hg2.getSexeBebe2() != null
+										&& hg2.getSexeBebe2()
+												.trim().length() != 0) {
+
+									if (hg2.getEtatBebe2().isIncrementation()) {
+
+										if (hg2.getSexeBebe2().equals(
+												"Masculin")) {
+											if (cf.getNbrGarcon() >= 1)
+												cf.setNbrGarcon(cf
+														.getNbrGarcon() - 1);
+										}
+
+										else if (hg2.getEtatBebe2() != null
+												&& hg2.getSexeBebe2().equals(
+														"Féminin")) {
+											if (cf.getNbrFille() >= 1)
+												cf.setNbrFille(cf.getNbrFille() - 1);
+										}
+									}
+								}
+							}
+
+						}
+						// nbr==3
+						if ((hg2.getEtatBebe() != null)
+								&& (hg2.getEtatBebe2() != null)
+								&& (hg2.getEtatBebe3() != null)) {
+							if ((hg2.getEtatBebe() != null)
+									&& (hg2.getEtatBebe().isIncrementation())) {
+
+								if (hg2.getSexeBebe() != null
+										&& hg2.getSexeBebe().trim().length() != 0) {
+
+									if (hg2.getEtatBebe().isIncrementation()) {
+
+										if (hg2.getSexeBebe()
+												.equals("Masculin")) {
+											if (cf.getNbrGarcon() >= 1)
+												cf.setNbrGarcon(cf
+														.getNbrGarcon() - 1);
+										}
+
+										else if (hg2.getSexeBebe() != null
+												&& hg2.getSexeBebe().equals(
+														"Féminin")) {
+											if (cf.getNbrFille() >= 1)
+												cf.setNbrFille(cf.getNbrFille() - 1);
+										}
+									}
+								}
+							}
+							if ((hg2.getEtatBebe2() != null)
+									&& (hg2.getEtatBebe2().isIncrementation())) {
+
+								if (hg2.getEtatBebe2() != null
+										&& hg2.getEtatBebe2().getEtatBebe()
+												.trim().length() != 0) {
+
+									if (hg2.getEtatBebe2().isIncrementation()) {
+
+										if (hg2.getSexeBebe2().equals(
+												"Masculin")) {
+											if (cf.getNbrGarcon() >= 1)
+												cf.setNbrGarcon(cf
+														.getNbrGarcon() - 1);
+										}
+
+										else if (hg2.getEtatBebe2() != null
+												&& hg2.getSexeBebe2().equals(
+														"Féminin")) {
+											if (cf.getNbrFille() >= 1)
+												cf.setNbrFille(cf.getNbrFille() - 1);
+										}
+									}
+								}
+							}
+
+							if ((hg2.getEtatBebe3() != null)
+									&& (hg2.getEtatBebe3().isIncrementation())) {
+
+								if (hg2.getSexeBebe3() != null
+										&& hg2.getSexeBebe3().trim().length() != 0) {
+
+									if (hg2.getEtatBebe3().isIncrementation()) {
+
+										if (hg2.getSexeBebe3().equals(
+												"Masculin")) {
+											if (cf.getNbrGarcon() >= 1)
+												cf.setNbrGarcon(cf
+														.getNbrGarcon() - 1);
+										}
+
+										else if (hg2.getSexeBebe3() != null
+												&& hg2.getSexeBebe3().equals(
+														"Féminin")) {
+											if (cf.getNbrFille() >= 1)
+												cf.setNbrFille(cf.getNbrFille() - 1);
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+				}
+				if (cf.getGestite() >= 1) {
+					cf.setGestite(cf.getGestite() - 1);
+				}
+
+				se.modifierPatient(cf);
+				Integer code = hg2.getIdhistoriqueGross();
+				sere.ModifierHistoriqueGross(hg2);
+
+				// etape d'ajout
+
+				hg2.setDateFinGross(dateFinGross);
+
+				hg2.setEtatFinGross(eFinG);
+				hg2.setLieu(lieu);
+				hg2.setTerme(terme);
+
+				if (nbBebe == 1) {
+					hg2.setPrenomBebe(prenomBebe);
+
+					try {
+						poids = Float.parseFloat(poids + "");
+						setPoids(poids);
+					} catch (Exception e) {
+						poids = (float) 0;
+
+					}
+					hg2.setPoids(poids);
+
+				}
+				if (nbBebe == 2) {
+					hg2.setPrenomBebe(prenomBebe);
+					try {
+						poids = Float.parseFloat(poids + "");
+						setPoids(poids);
+					} catch (Exception e) {
+						poids = (float) 0;
+
+					}
+					hg2.setPoids(poids);
+
+					hg2.setPrenomBebe2(prenomBebe2);
+					try {
+						poids = Float.parseFloat(poids + "");
+						setPoids2(poids);
+					} catch (Exception e) {
+						poids2 = (float) 0;
+
+					}
+					hg2.setPoids2(poids2);
+
+				}
+
+				if (nbBebe == 3) {
+					hg2.setPrenomBebe(prenomBebe);
+					try {
+						poids = Float.parseFloat(poids + "");
+						setPoids(poids);
+					} catch (Exception e) {
+						poids = (float) 0;
+
+					}
+					hg2.setPoids(poids);
+
+					hg2.setPrenomBebe2(prenomBebe2);
+					try {
+						poids = Float.parseFloat(poids + "");
+						setPoids2(poids);
+					} catch (Exception e) {
+						poids2 = (float) 0;
+
+					}
+					hg2.setPoids2(poids2);
+
+					hg2.setPrenomBebe3(prenomBebe3);
+					try {
+						poids = Float.parseFloat(poids + "");
+						setPoids3(poids);
+					} catch (Exception e) {
+						poids3 = (float) 0;
+
+					}
+					hg2.setPoids3(poids3);
+				}
+
+				EtatBebeService serb = new EtatBebeService();
+				EtatBebe eBebe = serb.rechercheParEtatBebe(etatBebe);
+				EtatBebe eBebe2 = serb.rechercheParEtatBebe(etatBebe2);
+				EtatBebe eBebe3 = serb.rechercheParEtatBebe(etatBebe3);
+				cf = se.RechercheCfclient(idPatient);
+
+				// CALCUL PARITEE
+				if (nbBebe == 1) {
+					if (eBebe != null) {
+						hg2.setEtatBebe(eBebe);
+						if (terme != null && terme.trim().length() != 0) {
+							if (Module.NumericTermeGrossese(terme) != null) {
+								if (Module.NumericTermeGrossese(terme) >= 28) {
+									cf.setPartie(cf.getPartie() + 1);
+
+								}
+							}
+
+						}
+					}
+				}
+				if (nbBebe == 2) {
+					if ((eBebe != null) && (eBebe2 != null)) {
+						hg2.setEtatBebe(eBebe);
+						hg2.setEtatBebe2(eBebe2);
+						if (terme != null && terme.trim().length() != 0) {
+							if (Module.NumericTermeGrossese(terme) != null) {
+								if (Module.NumericTermeGrossese(terme) >= 28) {
+									cf.setPartie(cf.getPartie() + 2);
+								}
+							}
+						}
+					}
+				}
+				if (nbBebe == 3) {
+					if ((eBebe != null) && (eBebe2 != null) && (eBebe3 != null)) {
+						hg2.setEtatBebe(eBebe);
+						hg2.setEtatBebe2(eBebe2);
+						hg2.setEtatBebe3(eBebe3);
+						if (terme != null && terme.trim().length() != 0) {
+							if (Module.NumericTermeGrossese(terme) != null) {
+								if (Module.NumericTermeGrossese(terme) >= 28) {
+									cf.setPartie(cf.getPartie() + 3);
+
+								}
+							}
+						}
+					}
+				}
+
+				// CALCUL CéSARIENNE
+				if (eFinG != null) {
+					if (eFinG.getEtatFinG().equals("Césarienne")) {
+						cf.setCesar(cf.getCesar() + 1);
+					}
+				}
+
+				// CALCUL NBR FILLE et Garcon
+
+				if (eFinG.isIncrementation()) {
+
+					// nbr ==1
+					if (nbBebe == 1) {
+						if ((eBebe != null) && (eBebe.isIncrementation())) {
+
+							if (sexeBebe != null
+									&& sexeBebe.trim().length() != 0) {
+
+								if (eBebe.isIncrementation()) {
+
+									if (sexeBebe.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe != null
+											&& sexeBebe.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+					}
+					// nbr == 2
+					if (nbBebe == 2) {
+						if ((eBebe != null) && (eBebe.isIncrementation())) {
+
+							if (sexeBebe != null
+									&& sexeBebe.trim().length() != 0) {
+
+								if (eBebe.isIncrementation()) {
+
+									if (sexeBebe.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe != null
+											&& sexeBebe.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+						if ((eBebe2 != null) && (eBebe2.isIncrementation())) {
+
+							if (sexeBebe2 != null
+									&& sexeBebe2.trim().length() != 0) {
+
+								if (eBebe2.isIncrementation()) {
+
+									if (sexeBebe2.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe2 != null
+											&& sexeBebe2.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+
+					}
+					// nbr==3
+					if (nbBebe == 3) {
+						if ((eBebe != null) && (eBebe.isIncrementation())) {
+
+							if (sexeBebe != null
+									&& sexeBebe.trim().length() != 0) {
+
+								if (eBebe.isIncrementation()) {
+
+									if (sexeBebe.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe != null
+											&& sexeBebe.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+						if ((eBebe2 != null) && (eBebe2.isIncrementation())) {
+
+							if (sexeBebe2 != null
+									&& sexeBebe2.trim().length() != 0) {
+
+								if (eBebe2.isIncrementation()) {
+
+									if (sexeBebe2.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe2 != null
+											&& sexeBebe2.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+
+						if ((eBebe3 != null) && (eBebe3.isIncrementation())) {
+
+							if (sexeBebe3 != null
+									&& sexeBebe3.trim().length() != 0) {
+
+								if (eBebe3.isIncrementation()) {
+
+									if (sexeBebe3.equals("Masculin")) {
+										cf.setNbrGarcon(cf.getNbrGarcon() + 1);
+									}
+
+									else if (sexeBebe3 != null
+											&& sexeBebe3.equals("Féminin")) {
+										cf.setNbrFille(cf.getNbrFille() + 1);
+									}
+								}
+							}
+						}
+
+					}
+
+				}
+
+			}
+
+			cf.setGestite(cf.getGestite() + 1);
+			se.modifierPatient(cf);
+			hg2.setEtatFinGross(eFinG);
+			hg2.setEtatFinGross(eFinG);
+			hg2.setDateFinGross(dateFinGross);
+			hg2.setPoids(poids);
+			hg2.setNotes(notes);
+			hg2.setPoids2(poids2);
+			hg2.setPoids3(poids3);
+			hg2.setSexeBebe(sexeBebe);
+			hg2.setSexeBebe2(sexeBebe2);
+			hg2.setSexeBebe3(sexeBebe3);
+			hg2.setEtatBebe(etatbeb1);
+			hg2.setEtatBebe2(etatbeb2);
+			hg2.setEtatBebe3(etatbeb3);
+			hg2.setPrenomBebe(prenomBebe);
+			hg2.setPrenomBebe2(prenomBebe2);
+			hg2.setPrenomBebe3(prenomBebe3);
+			hg2.setTerme(terme);
+			OnchangedateFinGrossString();
+			try {
+				dateFinGross = dateFormat.parse(dateFinGrossString);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			hg2.setDateFinGross(dateFinGross);
+			hg2.setLieu(lieu);
+			sere.ModifierHistoriqueGross(hg2);
+			addValid = true;
+			initialisation();
+			RequestContext.getCurrentInstance().update("f1");
+			index = 2;
+
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Grosseses modifiée avec succès"));
+			FacesContext context2 = FacesContext.getCurrentInstance();
+
+			context.addCallbackParam("addValid", addValid);
+			try {
+
+				context2.getExternalContext().redirect("Antecedent");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+		}
+
 	}
 
 	public void validerContraception() {
@@ -2340,63 +2572,213 @@ public class AntecedentBean implements Serializable, LineListener {
 		HistoriqueGrossService ser = new HistoriqueGrossService();
 		Cfclient cf = h.getCfclient();
 		CfclientService sercf = new CfclientService();
+
+		// Calcul Parité
+
+		if ((h.getTerme() != null) && (h.getTerme().trim().length() != 0)) {
+			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() == null)
+					&& (h.getEtatBebe3() == null)) {
+				if (Module.NumericTermeGrossese(h.getTerme()) != null) {
+
+					if (Module.NumericTermeGrossese(h.getTerme()) >= 28) {
+						if (cf.getPartie() >= 1)
+							cf.setPartie(cf.getPartie() - 1);
+
+					}
+				}
+			}
+
+			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() != null)
+					&& (h.getEtatBebe3() == null)) {
+				if (Module.NumericTermeGrossese(h.getTerme()) != null) {
+
+					if (Module.NumericTermeGrossese(h.getTerme()) >= 28) {
+						if (cf.getPartie() >= 2)
+							cf.setPartie(cf.getPartie() - 2);
+
+					}
+				}
+
+			}
+
+			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() != null)
+					&& (h.getEtatBebe3() != null)) {
+				if (Module.NumericTermeGrossese(h.getTerme()) != null) {
+
+					if (Module.NumericTermeGrossese(h.getTerme()) >= 28) {
+						if (cf.getPartie() >= 3)
+							cf.setPartie(cf.getPartie() - 3);
+
+					}
+				}
+
+			}
+
+		}
+
+		// Calcul césarienne
+
 		if (h.getEtatFinGross() != null) {
-			if (h.getEtatFinGross().getEtatFinG().equals("Césarienne"))
-				cf.setCesar(cf.getCesar() - 1);
-			// tester sur la valeur de etatfingross et etatbebe
-			if (h.getEtatBebe() != null && h.getEtatBebe().isIncrementation()
-					&& h.getEtatFinGross().isIncrementation()) {
+			if (h.getEtatFinGross().getEtatFinG().equals("Césarienne")) {
 
-				if (cf.getPartie() != 0) {
-					cf.setPartie(cf.getPartie() - 1);
-				}
-				if (h.getSexeBebe() != null
-						&& h.getSexeBebe().equals("Masculin"))
-					cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-				if (h.getSexeBebe() != null
-						&& h.getSexeBebe().equals("Féminin")) {
-					cf.setNbrFille(cf.getNbrFille() - 1);
-				}
-			}
-//System.out.println("ettbebe 1 "+h.getEtatBebe()+"2 "+h.getEtatBebe2()+"3 "+h.getEtatBebe3()+"");
-			if (h.getEtatBebe2() != null )
-			{
-				if(h.getEtatBebe2().isIncrementation()
-					&& h.getEtatFinGross().isIncrementation()) {
-
-				if (cf.getPartie() != 0) {
-					cf.setPartie(cf.getPartie() - 1);
-				}
-				if (h.getSexeBebe2() != null
-						&& h.getSexeBebe2().equals("Masculin"))
-					cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-				if (h.getSexeBebe2() != null
-						&& h.getSexeBebe2().equals("Féminin")) {
-
-					cf.setNbrFille(cf.getNbrFille() - 1);
-				}
+				if (cf.getCesar() >= 1)
+					cf.setCesar(cf.getCesar() - 1);
 			}
 		}
 
-			if (h.getEtatBebe3() != null ) 
-				{if(h.getEtatBebe3().isIncrementation()
-					&& h.getEtatFinGross().isIncrementation()) {
+		// Calcul nbr fille et nbr garcon
+		// CALCUL NBR FILLE et Garcon
 
-				if (cf.getPartie() != 0) {
-					cf.setPartie(cf.getPartie() - 1);
+		if (h.getEtatFinGross().isIncrementation()) {
+
+			// nbr ==1
+			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() == null)
+					&& (h.getEtatBebe3() == null)) {
+				if ((h.getEtatBebe() != null)
+						&& (h.getEtatBebe().isIncrementation())) {
+
+					if (h.getSexeBebe() != null
+							&& h.getSexeBebe().trim().length() != 0) {
+
+						if (h.getEtatBebe().isIncrementation()) {
+
+							if (h.getSexeBebe().equals("Masculin")) {
+								if (cf.getNbrGarcon() >= 1)
+									cf.setNbrGarcon(cf.getNbrGarcon() - 1);
+							}
+
+							else if (h.getSexeBebe() != null
+									&& h.getSexeBebe().equals("Féminin")) {
+								if (cf.getNbrFille() >= 1)
+									cf.setNbrFille(cf.getNbrFille() - 1);
+							}
+						}
+					}
 				}
-				if (h.getSexeBebe3() != null
-						&& h.getSexeBebe3().equals("Masculin"))
-					cf.setNbrGarcon(cf.getNbrGarcon() - 1);
-				if (h.getSexeBebe3() != null
-						&& h.getSexeBebe3().equals("Féminin"))
-					cf.setNbrFille(cf.getNbrFille() - 1);
-			}}
-			if(cf.getGestite()>=1)
+			}
+			// nbr == 2
+			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() != null)
+					&& (h.getEtatBebe3() == null)) {
+				if ((h.getEtatBebe() != null)
+						&& (h.getEtatBebe().isIncrementation())) {
+
+					if (h.getSexeBebe() != null
+							&& h.getSexeBebe().trim().length() != 0) {
+
+						if (h.getEtatBebe().isIncrementation()) {
+
+							if (h.getSexeBebe().equals("Masculin")) {
+								if (cf.getNbrGarcon() >= 1)
+									cf.setNbrGarcon(cf.getNbrGarcon() - 1);
+							}
+
+							else if (h.getSexeBebe() != null
+									&& h.getSexeBebe().equals("Féminin")) {
+								if (cf.getNbrFille() >= 1)
+									cf.setNbrFille(cf.getNbrFille() - 1);
+							}
+						}
+					}
+				}
+				if ((h.getEtatBebe2() != null)
+						&& (h.getEtatBebe2().isIncrementation())) {
+
+					if (h.getSexeBebe2() != null
+							&& h.getEtatBebe2().getEtatBebe().trim().length() != 0) {
+
+						if (h.getEtatBebe2().isIncrementation()) {
+
+							if (h.getSexeBebe2().equals("Masculin")) {
+								if (cf.getNbrGarcon() >= 1)
+									cf.setNbrGarcon(cf.getNbrGarcon() - 1);
+							}
+
+							else if (h.getEtatBebe2() != null
+									&& h.getSexeBebe2().equals("Féminin")) {
+								if (cf.getNbrFille() >= 1)
+									cf.setNbrFille(cf.getNbrFille() - 1);
+							}
+						}
+					}
+				}
+
+			}
+			// nbr==3
+			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() != null)
+					&& (h.getEtatBebe3() != null)) {
+				if ((h.getEtatBebe() != null)
+						&& (h.getEtatBebe().isIncrementation())) {
+
+					if (h.getSexeBebe() != null
+							&& h.getSexeBebe().trim().length() != 0) {
+
+						if (h.getEtatBebe().isIncrementation()) {
+
+							if (h.getSexeBebe().equals("Masculin")) {
+								if (cf.getNbrGarcon() >= 1)
+									cf.setNbrGarcon(cf.getNbrGarcon() - 1);
+							}
+
+							else if (h.getSexeBebe() != null
+									&& h.getSexeBebe().equals("Féminin")) {
+								if (cf.getNbrFille() >= 1)
+									cf.setNbrFille(cf.getNbrFille() - 1);
+							}
+						}
+					}
+				}
+				if ((h.getEtatBebe2() != null)
+						&& (h.getEtatBebe2().isIncrementation())) {
+
+					if (h.getEtatBebe2() != null
+							&& h.getEtatBebe2().getEtatBebe().trim().length() != 0) {
+
+						if (h.getEtatBebe2().isIncrementation()) {
+
+							if (h.getSexeBebe2().equals("Masculin")) {
+								if (cf.getNbrGarcon() >= 1)
+									cf.setNbrGarcon(cf.getNbrGarcon() - 1);
+							}
+
+							else if (h.getEtatBebe2() != null
+									&& h.getSexeBebe2().equals("Féminin")) {
+								if (cf.getNbrFille() >= 1)
+									cf.setNbrFille(cf.getNbrFille() - 1);
+							}
+						}
+					}
+				}
+
+				if ((h.getEtatBebe3() != null)
+						&& (h.getEtatBebe3().isIncrementation())) {
+
+					if (h.getSexeBebe3() != null
+							&& h.getSexeBebe3().trim().length() != 0) {
+
+						if (h.getEtatBebe3().isIncrementation()) {
+
+							if (h.getSexeBebe3().equals("Masculin")) {
+								if (cf.getNbrGarcon() >= 1)
+									cf.setNbrGarcon(cf.getNbrGarcon() - 1);
+							}
+
+							else if (h.getSexeBebe3() != null
+									&& h.getSexeBebe3().equals("Féminin")) {
+								if (cf.getNbrFille() >= 1)
+									cf.setNbrFille(cf.getNbrFille() - 1);
+							}
+						}
+					}
+				}
+
+			}
+
+		}
+
+		if (cf.getGestite() >= 1) {
 			cf.setGestite(cf.getGestite() - 1);
-			sercf.modifierPatient(cf);
 		}
-
+		sercf.modifierPatient(cf);
 		Integer code = h.getIdhistoriqueGross();
 		ser.supprimerHistoriqueGross(code);
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
@@ -2404,7 +2786,16 @@ public class AntecedentBean implements Serializable, LineListener {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
-
+		try {
+			index = 2;
+			
+			context.getExternalContext()
+					.redirect("Antecedent");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+				"Grossesse supprimé avec succés"));
 		index = 2;
 
 	}
@@ -2758,59 +3149,48 @@ public class AntecedentBean implements Serializable, LineListener {
 		}
 	}
 
-	// public void verifDate() {
-	//
-	// // corriger la date
-	// // DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-	//
-	// // String reportDate = df.format(dateFinGross);
-	// //
-	// // String dateCorrige = Module.corigerDate(reportDate);
-	// if (dateFinGross != null) {
-	// try {// vérifie la validité de la date
-	// // Module.verifierDate(dateCorrige);
-	// // calcul et mettre à jour du champs terme
-	// // terme= date_Fin_Gross-DDR=X semaines Y jours
-	// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	//
-	// // dateFinGross = sdf.parse(dateCorrige);
-	// CfclientService serc = new CfclientService();
-	// Cfclient cf = serc.RechercheCfclient(idPatient);
-	// Date ddr = null;
-	// if (cf != null)
-	// if (cf.getDdr() != null) {
-	// ddr = sdf.parse(cf.getDdr());
-	// long CONST_DURATION_OF_DAY = 1000l * 60 * 60 * 24;
-	// long diff = Math.abs(ddr.getTime()
-	// - dateFinGross.getTime());
-	// long numberOfDay = (long) diff / CONST_DURATION_OF_DAY;
-	// int semaine = (int) (numberOfDay / 7);
-	// int jourr = (int) (numberOfDay % 7);
-	// terme = semaine + "s" + jourr + "j";
-	// }
-	// } catch (ParseException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// // dateCorrige = null;
-	// }
-
-	public void nbrBebeChange() {
+	
+	public void nbrBebeChange()//cette methode afficher le dialogue apartir de nbr bebe selectionné et initialiser son valeurs
+	{
 		if (nbBebe == 0) {
 			unBebe = false;
 			deuxBebe = false;
 			troisBebe = false;
+			etatBebe=null;
+			prenomBebe=null;
+			poids=null;
+			sexeBebe=null;
+			etatBebe2=null;
+			prenomBebe2=null;
+			poids2=null;
+			sexeBebe2=null;
+			etatBebe3=null;
+			prenomBebe3=null;
+			poids3=null;
+			sexeBebe3=null;
 		}
 		if (nbBebe == 1) {
 			unBebe = true;
 			deuxBebe = false;
 			troisBebe = false;
-
+etatBebe2=null;
+prenomBebe2=null;
+poids2=null;
+sexeBebe2=null;
+etatBebe3=null;
+prenomBebe3=null;
+poids3=null;
+sexeBebe3=null;
 		}
 		if (nbBebe == 2) {
 			unBebe = true;
 			deuxBebe = true;
 			troisBebe = false;
+			
+			etatBebe3=null;
+			prenomBebe3=null;
+			poids3=null;
+			sexeBebe3=null;
 
 		}
 		if (nbBebe == 3) {
@@ -2842,8 +3222,12 @@ public class AntecedentBean implements Serializable, LineListener {
 	}
 
 	public void changePoids() {
-		poids = Float.parseFloat(poids + "");
-		setPoids(poids);
+		try {
+			poids = Float.parseFloat(poids + "");
+			setPoids(poids);
+		} catch (Exception e) {
+			System.out.println("erreur" + e.getMessage());
+		}
 	}
 
 	public void changeSexeBebe() {
@@ -3677,6 +4061,10 @@ public class AntecedentBean implements Serializable, LineListener {
 		}
 
 	}
+	public void OnchangedateFinGrossString()
+	{
+		setDateFinGrossString(dateFinGrossString);
+	}
 
 	public SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -3695,4 +4083,13 @@ public class AntecedentBean implements Serializable, LineListener {
 			e.printStackTrace();
 		}
 	}
+
+	public HistoriqueGross getHistoriqueModif() {
+		return HistoriqueModif;
+	}
+
+	public void setHistoriqueModif(HistoriqueGross historiqueModif) {
+		HistoriqueModif = historiqueModif;
+	}
+
 }

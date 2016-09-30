@@ -118,6 +118,23 @@ private boolean blocage;
 	public String getDateLet() {
 		return dateLet;
 	}
+	public void diagnosticChange() {
+		setDiagnostic(diagnostic);
+	}
+	public String getDiagnostic() {
+		return diagnostic;
+	}
+	public void V2SigneCliniqueChange()
+	{
+		setV2SigneClinique(v2SigneClinique);
+		
+	}
+
+
+	public void setDiagnostic(String diagnostic) {
+		this.diagnostic = diagnostic;
+	}
+
 
 	public void setDateLet(String dateLet) {
 		this.dateLet = dateLet;
@@ -276,14 +293,7 @@ private boolean blocage;
 		this.resultatfrotti = resultatfrotti;
 	}
 
-	public String getDiagnostic() {
-		return diagnostic;
-	}
-
-	public void setDiagnostic(String diagnostic) {
-		this.diagnostic = diagnostic;
-	}
-
+	
 	
 
 	public String getV3() {
@@ -302,6 +312,10 @@ private boolean blocage;
 
 	public void setV1Nature(String v1Nature) {
 		this.v1Nature = v1Nature;
+	}
+	public void V1natureChange()
+	{
+		setV1Nature(v1Nature);
 	}
 
 	public String getV2SigneClinique() {
@@ -707,7 +721,7 @@ private boolean blocage;
 		else
 			rem = remplaceMot(rem, "$NP", "");
 		if (Module.age(cfclient.getDateNaiss()) != null) {
-			rem = remplaceMot(rem, "$Age", Module.calculAgeEnAns(cfclient.getDateNaiss())+" Ans");
+			rem = remplaceMot(rem, "$Age", Module.calculAgeEnAnsParRapportDateRapport(cfclient.getDateNaiss(),dateLet)+" Ans");
 		} else
 			rem = remplaceMot(rem, "$Age", "");
 
@@ -903,7 +917,6 @@ private boolean blocage;
 					"", "Lettre modifiée avec succées"));
 			RequestContext.getCurrentInstance().update("f1:growl");
 		}
-		// String nomReport = "lettrereponce";
 		String nomReport = "lettreconfidentielle";
 
 		Connection connection = (Connection) DriverManager.getConnection(
@@ -1009,6 +1022,7 @@ private boolean blocage;
 	}
 
 	public void ajoutLettreReponse() throws SQLException, Exception {
+		
 		//reponce a une demande de prise en charge
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
@@ -1101,6 +1115,7 @@ private boolean blocage;
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
+		initialitationDonneesLettre();
 	}
 	public void ajoutLettrePriseEnCharge() throws SQLException, Exception {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -1195,6 +1210,7 @@ private boolean blocage;
 		outStream.flush();
 		outStream.close();
 		FacesContext.getCurrentInstance().responseComplete();
+		initialitationDonneesLettre();
 	}
 
 	public void intialiserDateLettre() {
@@ -1259,6 +1275,7 @@ private boolean blocage;
 		rh = cfclient.getRh();
 		resultatfrotti = cfclient.getResultatFrotti();
 		toxo = cfclient.getToxo();
+		
 		tpha = cfclient.getTpha();
 		selectedhistolettre = null;
 
@@ -1393,10 +1410,7 @@ v1Nature=null;
 		setAutre(autre);
 	}
 
-	public void diagnosticChange() {
-		setDiagnostic(diagnostic);
-	}
-
+	
 	public void dateLetChange() {
 		setDateLet(dateLet);
 	}
@@ -1467,6 +1481,8 @@ v1Nature=null;
 		code = h.getCode();
 		if (h.getDateActe() != null)
 			acte = format.format(h.getDateActe());
+v1Nature=h.getV1();
+v2SigneClinique=h.getV2();
 
 		autre = h.getAutre();
 		toxo = h.getToxo();
@@ -1476,18 +1492,25 @@ v1Nature=null;
 		diagnostic = h.getDiagnostic();
 
 		if (nomLettre
-				.equals("Lettre de réponse à une demande de prise en charge")) {
-			context.execute("PF('lettrereponse').show();");
+				.equals("Lettre de réponse a une demande de prise en charge")) {
+			context.execute("PF('lettreReponse2').show();");
 
 		}
 		if (nomLettre.equals("Lettre d'accouchement")) {
 			context.execute("PF('lettreAccouchement').show();");
 
 		}
-		if (nomLettre.equals("Lettre de réponse")) {
-			context.execute("PF('lettreReponse2').show();");
+		if (nomLettre.equals("Lettre de prise en charge")) {
+			context.execute("PF('lettrepriseencharge').show();");
 
 		}
+		if (nomLettre.equals("Lettre Confidentielle")) {
+			context.execute("PF('lettrereponse').show();");
+
+		}
+
+		
+		
 
 	}
 
@@ -1524,10 +1547,5 @@ v1Nature=null;
 	public void setBlocage(boolean blocage) {
 		this.blocage = blocage;
 	}
-	public void V2SigneCliniqueChange()
-	{
-		setV2SigneClinique(v2SigneClinique);
-		
-	}
-
+	
 }

@@ -99,8 +99,21 @@ userDate = null;
 return (success);
 }
 
+	//retourner les deucx premier entier de la chaine 
+	public static Integer NumericTermeGrossese(String terme)
+	{
+		if(isNumeric(terme.substring(0, 2))==true)
+			return(Integer.parseInt(terme.substring(0, 2)));
+		else
+			if(isNumeric(terme.substring(0, 1))==true)
+				{return(Integer.parseInt(terme.substring(0, 1)));}
+			else
+			
+		return null;
+		
+	}
 	
-	
+	//verifier le chaine numeric ou non
 	
 	public static boolean isNumeric(String str) {
 		try {
@@ -421,6 +434,32 @@ return (success);
 			int year = c.get(Calendar.YEAR);
 
 			return (year - j);
+		}
+
+		return 0;
+	}
+	public static int calculAgeEnAnsParRapportDateRapport(String dateNaiss,String DateRapport) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		//let.setDatelettre(sdf.parse(dateLet));
+		if (dateNaiss != null && dateNaiss.length() > 0) {
+			int i = dateNaiss.lastIndexOf("/");
+			int j = Integer.parseInt(dateNaiss.substring(i + 1));
+			//Calendar c = Calendar.getInstance();
+			Date c;
+			try {
+				c = sdf.parse(DateRapport);
+				System.out.println("date c"+c);
+				int year = c.getYear();
+				System.out.println("year"+year);
+				return (year - j);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
+			
 		}
 
 		return 0;
