@@ -32,15 +32,7 @@
 								</h:commandLink>
 							</h:panelGrid>
 						</div></td>
-					<td align="right">
-					<h:commandLink
-						actionListener="#{consultationDetailBean.viewEchoObsTrim2}"
-						
-						rendered="#{connectionBean.imprechoObs and not consultationDetailBean.desibledImpr()}">
-						<p:graphicImage value="/imagesMenu/imprimente10.png">
-						</p:graphicImage>
-					</h:commandLink>
-					</td>
+					
 						<td align="right" >
 							<h:panelGrid columns="3">
 								
@@ -355,10 +347,6 @@
 
 								</p:tab>
 
-
-
-
-
 								<p:tab title="Trim 2" rendered="#{connectionBean.trim2echoObs}"
 									style="font-size:small;font-weight:bold">
 
@@ -532,8 +520,6 @@
 								</p:tab>
 								<p:tab title="Trim 3" rendered="#{connectionBean.trim3echoObs}"
 									style="font-size:small;font-weight:bold">
-
-
 									<table>
 
 										<tr>
@@ -704,13 +690,32 @@
 
 				<div align="center">
 
-					<p:commandButton icon="ui-icon-disk" value="Valider"
+					<p:commandButton icon="ui-icon-check" value="Valider"
 						actionListener="#{consultationDetailBean.validerConsEchoObs()}"
+						disabled="#{consultationDetailBean.afficheValidEchoObs}"
 						update=":f1,:f1:e,:f1:growl"></p:commandButton>
 					<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
 						value="Annuler"
 						actionListener="#{consultationDetailBean.initialisationEchoObs()}"
 						update=":f1,:f1:e"></p:commandButton>
+						<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+											actionListener="#{consultationDetailBean.viewEchoObsTrim2}"
+											value="Imprimer"
+											rendered="#{connectionBean.imprechoObs}"
+											disabled="#{consultationDetailBean.afficheImprEchoObs}"
+										    immediate="true"
+											ajax="false" >
+							</p:commandButton>
+							
+							
+					<h:commandLink
+						actionListener="#{consultationDetailBean.viewEchoObsTrim2}"
+						
+						rendered="#{connectionBean.imprechoObs and not consultationDetailBean.desibledImpr()}">
+						<p:graphicImage value="/imagesMenu/imprimente10.png">
+						</p:graphicImage>
+					</h:commandLink>
+					
 				</div>
 			</p:panel>
 

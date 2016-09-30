@@ -57,10 +57,6 @@ public class Module {
 		Calendar today = new GregorianCalendar();// contient le date system
 		Calendar userDate = new GregorianCalendar();
 		
-
-		
-		
-
 		try {
 			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
 														// en date
@@ -73,6 +69,7 @@ public class Module {
 		}
 		return (success);
 	}
+	
 //cette methode pour detectéé si ce date est tres ancien
 	
 	

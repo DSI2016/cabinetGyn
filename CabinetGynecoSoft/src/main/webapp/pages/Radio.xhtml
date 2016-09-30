@@ -15,7 +15,7 @@
 		<br />
 		<div align="left">
 			<h:form id="f1">
-				<p:growl id="growl" showDetail="true" life="3000" sticky="#{radioBean.blocage}" />
+				<p:growl id="growl" showDetail="false" life="3000" sticky="#{radioBean.blocage}" />
 				<table>
 					<tr>
 						<td><h:commandLink
@@ -46,11 +46,20 @@
 								<tr>
 									<td><h:outputText value="Date:"
 											style="font-size:12pt;font-weight:bold" /> 
-										<p:calendar
-											id="button" value="#{radioBean.dateRadios}"
-											disabled="#{radioBean.consultation}" size="7" mask="true"
-											pattern="dd/MM/yyyy" >
-										</p:calendar></td>
+									
+									
+								       <p:calendar immediate="true" id="button"
+								                converterMessage="Veuillez vérifier la date que vous avez saisi"
+											    value="#{radioBean.dateRadios}"
+												disabled="#{radioBean.consultation}" 
+												showOn="button" size="7" pattern="dd/MM/yyyy" >
+												<p:ajax  event="blur" update=":f1:growl"
+												listener="#{radioBean.changerDate()}" immediate="true"
+												   ></p:ajax>
+										</p:calendar>	
+											
+								
+										</td>
 									<td align="right"><h:panelGrid columns="3">
 											<h:outputText value="Radio pour : "
 												style="font-size:13pt;font-weight:bold" />
@@ -142,7 +151,7 @@
 									<td><p:commandButton value="Valider"
 											actionListener="#{radioBean.valider}" update=":f1:growl,:f1"
 											immediate="true" ajax="false"
-											
+											disabled="#{radioBean.consultation}"
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
 									<td width="500px"><p:commandButton value="Annuler"

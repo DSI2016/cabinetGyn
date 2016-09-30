@@ -217,6 +217,46 @@ public class ConsultationDetailBean implements Serializable {
 	private String typeConsultation;
 	private String cat;
 	private boolean testr;
+	private boolean afficheValid=true;
+	private boolean afficheImpr=true;
+	private boolean afficheValidEchoObs=true;
+	private boolean afficheImprEchoObs=true;
+	
+	
+	
+	
+	public boolean isAfficheValidEchoObs() {
+		return afficheValidEchoObs;
+	}
+
+	public void setAfficheValidEchoObs(boolean afficheValidEchoObs) {
+		this.afficheValidEchoObs = afficheValidEchoObs;
+	}
+
+	public boolean isAfficheImprEchoObs() {
+		return afficheImprEchoObs;
+	}
+
+	public void setAfficheImprEchoObs(boolean afficheImprEchoObs) {
+		this.afficheImprEchoObs = afficheImprEchoObs;
+	}
+
+	public boolean isAfficheImpr() {
+		return afficheImpr;
+	}
+
+	public void setAfficheImpr(boolean afficheImpr) {
+		this.afficheImpr = afficheImpr;
+	}
+
+	public boolean isAfficheValid() {
+		return afficheValid;
+	}
+
+	public void setAfficheValid(boolean afficheValid) {
+		this.afficheValid = afficheValid;
+	}
+
 	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	public boolean isTestr() {
@@ -769,6 +809,8 @@ public class ConsultationDetailBean implements Serializable {
 	// methode de echo gyneco
 	public void ajoutConsEchoGyneco() {
 
+		afficheValid=false;
+		afficheImpr=true;
 		indications = null;
 		contours = "--selectionner--";
 		echostructure = "--selectionner--";
@@ -803,7 +845,9 @@ public class ConsultationDetailBean implements Serializable {
 
 	// methode de echo gyneco
 	public void ajoutConsEchoObs() {
-
+		
+        afficheImprEchoObs=true;
+        afficheValidEchoObs=false;
 		read = "editable";
 		bip = 0.0;
 		bip2 = 0.0;
@@ -877,6 +921,8 @@ public class ConsultationDetailBean implements Serializable {
 
 	public void initialisationechogyneco() {
 		
+		afficheValid=true;
+		afficheImpr=true;
 		indications = null;
 		contours = "--selectionner--";
 		echostructure = "--selectionner--";
@@ -1174,6 +1220,8 @@ idmodele = null;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cons.getIdConsultationDetail());
+		afficheValid=false;
+		afficheImpr=true;
 		idConsultationDetail = cons.getIdConsultationDetail();
 
 		ancienValeur = formatter.format(cons.getDateConsultation());
@@ -1654,6 +1702,8 @@ cons=se.rechercheConsultationDetail(idConsultationDetail);
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", c.getIdConsultationDetail());
+		afficheImpr=false;
+		afficheValid=true;
 		read = "noeditable";
 
 		selectedCons = c;
@@ -1689,6 +1739,7 @@ cons=se.rechercheConsultationDetail(idConsultationDetail);
 		ConsultationDetail c = (ConsultationDetail) event.getObject();
 		selectedCons = c;
 		action = null;
+		afficheImprEchoObs=false;
 
 		if (c != null) {
 			if (c.getTrim() == 1) {
@@ -3345,6 +3396,8 @@ action=null;
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = new Cfclient();
 		clt = serclt.RechercheCfclient(idPatient);
+		afficheImprEchoObs=true;
+		afficheValidEchoObs=true;
 			ddr =null;
 			ddg = null;
 			termeActuel =null;
@@ -3403,10 +3456,15 @@ action=null;
 	}
 
 	public void validerConsEchoObs() {
+		
+        afficheImprEchoObs=false;
+        afficheValidEchoObs=true;
+        
 		String msg = "";
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetailService ser = new ConsultationDetailService();
 		CfclientService serclt = new CfclientService();
+		ConsultationDetail cons=null;
 		if(action != null)
 		{
 		if (trim == 1) {
@@ -3439,7 +3497,7 @@ action=null;
 					else if (face.getMessageList().size() == 0)
 
 					{
-						ConsultationDetail cons = new ConsultationDetail();
+						 cons = new ConsultationDetail();
 						if (consultationmotif != null) {
 							ConsultaionService s = new ConsultaionService();
 							consultation = s
@@ -3543,7 +3601,7 @@ action=null;
 					{
 						ConsultationDetailService se = new ConsultationDetailService();
 
-						ConsultationDetail cons = se
+						 cons = se
 								.rechercheConsultationDetail(idConsultationDetail);
 
 						ConsultaionService s = new ConsultaionService();
@@ -3621,7 +3679,7 @@ action=null;
 					else if (face.getMessageList().size() == 0)
 
 					{
-						ConsultationDetail cons = new ConsultationDetail();
+						 cons = new ConsultationDetail();
 						if (consultationmotif != null) {
 							ConsultaionService s = new ConsultaionService();
 							consultation = s
@@ -3707,7 +3765,7 @@ action=null;
 					{
 						ConsultationDetailService se = new ConsultationDetailService();
 
-						ConsultationDetail cons = se
+						 cons = se
 								.rechercheConsultationDetail(idConsultationDetail);
 
 						ConsultaionService s = new ConsultaionService();
@@ -3792,7 +3850,7 @@ action=null;
 					else if (face.getMessageList().size() == 0)
 
 					{
-						ConsultationDetail cons = new ConsultationDetail();
+						 cons = new ConsultationDetail();
 						if (consultationmotif != null) {
 							ConsultaionService s = new ConsultaionService();
 							consultation = s
@@ -3881,7 +3939,7 @@ action=null;
 					{
 						ConsultationDetailService se = new ConsultationDetailService();
 
-						ConsultationDetail cons = se
+						 cons = se
 								.rechercheConsultationDetail(idConsultationDetail);
 
 						ConsultaionService s = new ConsultaionService();
@@ -3942,6 +4000,8 @@ action=null;
 				}
 			}
 		}
+		
+		selectedCons=cons;
 		}
 		else if (action == null) {
 			blocage = true;
@@ -4945,6 +5005,11 @@ c.settActuel("");
 
 	public void viewEchogyneco(ActionEvent actionEvent) throws SQLException,
 			Exception {
+		String age1 ;
+		String age;
+		Cfclient clt=null;
+		String nomReport=null;
+		
 		if (selectedCons != null) {
 			if (idUterus != null) {
 				UterusService seruterus = new UterusService();
@@ -4953,16 +5018,20 @@ c.settActuel("");
 			}
 
 			CfclientService serclt = new CfclientService();
-			Cfclient clt = serclt.RechercheCfclient(idPatient);
-
-			String nomReport = "echoGynecologie";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
+			 clt = serclt.RechercheCfclient(idPatient);
+			 nomReport = "echoGynecologie";
+			
+			 if(clt.getDateNaiss()!=null)
+			      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+				 else
+					 age1="";
+	
+		if(age1.equals("")){
+			age=age1;
+		}else{
+			age="( "+age1+" )"+" Ans";
+		}
+			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idConsultation", idConsultationDetail);
 			param.put("age", age);
@@ -4971,20 +5040,10 @@ c.settActuel("");
 			} else
 				param.put("position", uterus.getUterus());
 
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			Module.imprimer(nomReport, param);
 		}
 
-	}
+}
 
 	public void onTypeConsultChange() {
 		
