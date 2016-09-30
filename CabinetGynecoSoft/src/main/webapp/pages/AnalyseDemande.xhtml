@@ -49,7 +49,7 @@
 										<td><h:outputText value="Date:"
 												style="font-size:12pt;font-weight:bold" /> 
 											<p:calendar
-												id="button" value="#{analyseDemandeeBean.dateAnal}"
+												id="button" value="#{analyseDemandeeBean.dateAna}"
 												disabled="#{analyseDemandeeBean.consultation}"
 												showOn="button" size="7" pattern="dd/MM/yyyy" >
 												<p:ajax event="blur" listener="#{analyseDemandeeBean.changerDate}"></p:ajax>
@@ -209,11 +209,10 @@
 										<td width="500px"><p:commandButton value="Annuler"
 												rendered="#{!connectionBean.consultDetAnal}"
 												style="font-size:12pt;font-weight:bold">
-												<p:ajax listener="#{analyseDemandeeBean.retour()}" />
+												<p:ajax listener="#{analyseDemandeeBean.annulation()}" />
 											</p:commandButton></td>
 										<td><h:commandLink
 												actionListener="#{analyseDemandeeBean.selectAnalyse}"
-												
 												rendered="#{analyseDemandeeBean.desibledImpr}">
 												<p:graphicImage value="/imagesMenu/imprimente10.png">
 												</p:graphicImage>

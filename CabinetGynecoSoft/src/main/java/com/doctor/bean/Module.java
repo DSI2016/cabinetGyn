@@ -51,8 +51,7 @@ public class Module {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar today = new GregorianCalendar();// contient le date system
 		Calendar userDate = new GregorianCalendar();
-
-		try {
+				try {
 			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
 														// en date
 			if (userDate.after(today))// le fonction after pour tester le date
@@ -64,9 +63,9 @@ public class Module {
 		}
 		return (success);
 	}
-
-	// cette methode pour detectéé si ce date est tres ancien
-
+//cette methode pour detectéé si ce date est tres ancien
+	
+	
 	static boolean dateTresAncien(String date) { // pour verifier que le date ne
 
 		boolean success = false;

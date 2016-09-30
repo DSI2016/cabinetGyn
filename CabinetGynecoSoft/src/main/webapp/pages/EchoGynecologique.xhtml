@@ -8,7 +8,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="../templates/templateGyneco.xhtml">
-	<ui:define name="title">Echographie Gynécologuque</ui:define>
+	<ui:define name="title">Echographie Gynécologique</ui:define>
 	<ui:define name="body">
 		<p:graphicImage value="/imagesTitre/echogyn1.png" width="100%"></p:graphicImage>
 		<br />
@@ -71,25 +71,14 @@
 											icon="ui-icon-alert" />
 									</p:commandButton></td>
 
-
-								<td style="width: 20%" align="right"><h:commandLink
-										actionListener="#{consultationDetailBean.viewEchogyneco}"
-										
-										rendered="#{connectionBean.imprechogyneco and not consultationDetailBean.desibledImpr()}">
-										<p:graphicImage value="/imagesMenu/imprimente10.png">
-										</p:graphicImage>
-									</h:commandLink></td>
-
 							</tr>
 
 						</table>
 					</td>
 				<td align="right" width="30%">
 							<h:panelGrid columns="3">
-								
 								<h:outputText value="#{connectionBean.utilisateur}"
 									style="font-size:19px;font-weight:bold;font-style: italic" />
-							
 							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
 								<p:graphicImage value="/images/dec.png" width="80%" />
 							</h:commandLink>
@@ -261,7 +250,7 @@
 											rowKey="#{cons.idConsultationDetail}">
 											<p:ajax event="rowSelect"
 												listener="#{consultationDetailBean.onRowSelectEchiGyneco}"
-												update=":f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
+												update=":f1,:f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
 											<p:column headerText="Date" 
 												style="font-size:small;font-weight:bold;width:10px">
 												<h:outputText value="#{cons.dateConsultation}"
@@ -276,6 +265,7 @@
 											</p:column>
 											<p:column headerText="" style="width:20px">
 												<p:commandButton icon="ui-icon-pencil"
+												   title="Modification Consultation"
 													action="#{consultationDetailBean.modiefierConsEchoGyneco(cons)}"
 													update=":f1:p2,:f1:p3,:f1:p4,:f1"
 													rendered="#{connectionBean.modifechogyneco}" />
@@ -318,10 +308,6 @@
 															readonly="#{consultationDetailBean.lireReadOnly()}">
 														</h:inputText>
 
-
-
-
-
 														<p:outputLabel value="Indications:   "
 															style="font-size:small;font-weight:bold" />
 
@@ -347,6 +333,8 @@
 															style="font-size:small;font-weight:bold;height:95px; width : 620px;"
 															readonly="#{consultationDetailBean.lireReadOnly()}"
 															disabled="#{consultationDetailBean.lireReadOnly()}" />
+															
+															
 													</h:panelGrid></td>
 											</tr>
 										</table>
@@ -358,13 +346,24 @@
 
 
 						<div align="center">
-							<p:commandButton icon="ui-icon-disk" value="Valider"
+							<p:commandButton icon="ui-icon-check" value="Valider"
 								actionListener="#{consultationDetailBean.validerConsEchoGyneco()}"
+								disabled="#{consultationDetailBean.afficheValid}"
 								update=":f1,:f1:growl"></p:commandButton>
 							<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
 								value="Annuler"
 								actionListener="#{consultationDetailBean.initialisationechogyneco()}"
 								update=":f1,:f1:growl"></p:commandButton>
+							<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+											actionListener="#{consultationDetailBean.viewEchogyneco}" 
+											value="Imprimer"
+											rendered="#{connectionBean.imprechogyneco}"
+											disabled="#{consultationDetailBean.afficheImpr}"
+										    immediate="true"
+											ajax="false" >
+							</p:commandButton>	
+										
+											
 						</div>
 					</p:panel>
 

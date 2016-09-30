@@ -178,15 +178,7 @@
 									</tr>
 									<tr>
 										<td><br /> <p:panel>
-												<div align="right">
-													<h:commandLink actionListener="#{ordonnanceBean.viewOrd}"
-														id="idimp" 
-														rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledimpOrdHistorique}">
-														<p:graphicImage value="/imagesMenu/imprimente10.png">
-														</p:graphicImage>
-
-													</h:commandLink>
-												</div>
+												
 												<p:dataTable value="#{ordonnanceBean.histoOrdCons}"
 													var="ord" selectionMode="single"
 													selection="#{ordonnanceBean.selectedOrd}"
@@ -302,16 +294,26 @@
 									</h:panelGrid>
 									<br></br>
 									<div align="center">
-										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-check"
 											actionListener="#{ordonnanceBean.validerOrd}" value="Valider"
-											
 											disabled="#{ordonnanceBean.consultation}" immediate="true"
 											ajax="false" rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>
 
 										<p:commandButton value="Annuler"
+										    icon="ui-icon-arrowreturnthick-1-s"
 											actionListener="#{ordonnanceBean.annulation()}" update=":f1"
-											rendered="#{!connectionBean.consultDetOrd}"></p:commandButton>
+											rendered="#{!connectionBean.consultDetOrd}">
+										</p:commandButton>
+									
+										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+											actionListener="#{ordonnanceBean.viewOrd}" value="Imprimer"
+											rendered="#{connectionBean.imprOrd}"
+											disabled="#{not ordonnanceBean.consultation}"
+										    immediate="true"
+											ajax="false" >
+										</p:commandButton>	
+										
 									</div>
 								</p:panel></td>
 						</tr>

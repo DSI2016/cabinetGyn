@@ -1271,43 +1271,30 @@ System.out.println("model");
 		} else {
 			nomReport = "ord";
 		}
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
+		
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idOrd", idOrdSelectionne);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+		
+		Module.imprimer(nomReport, param);
 	}
 
 	public void validerOrd(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		String nomReport = "ord";
+		//String nomReport = "ord"
 
 		FacesContext face = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
+		Ordonnance ord=null;
 
 		idPatient = (Integer) session.getAttribute("idu");
-
 		idConsult = (Integer) session.getAttribute("idConsultD");
-		// action = (String) session.getAttribute("act");
 		if (idConsult != null) {
 			if (action != null
 					&& (action.equals("Ajout") || action.equals("Modif") || action
 							.equals("ajoutCons"))) {
 
-				Ordonnance ord = new OrdonnanceService()
+				 ord = new OrdonnanceService()
 						.rechercheOrdonnance(idOrdonnance);
 
 				ord.setNotes(notes);
@@ -1337,20 +1324,23 @@ System.out.println("model");
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Ordonnance ajoutée avec succès"));
-					if ((ord.getType() != null)) {
+					
+					/*if ((ord.getType() != null)) {
 						if (ord.getType().equals("Libre")) {
 							nomReport = "ordonnaceLibre";
 						} else {
 							nomReport = "ord";
 						}
-					}
+					}*/
 
 					idMedicament = null;
 					posologie = null;
 					qte = 1;
 					unite = null;
 					notes = null;
-					RequestContext.getCurrentInstance().update(":f1");
+					
+					/*RequestContext.getCurrentInstance().update(":f1");
+					
 					Connection connection = (Connection) DriverManager
 							.getConnection(HibernateUtil.url,
 									HibernateUtil.login, HibernateUtil.pass);
@@ -1372,19 +1362,21 @@ System.out.println("model");
 					outStream.close();
 					response.addHeader("Content-disposition",
 							"attachment; filename=ordonnance.pdf");
-					FacesContext.getCurrentInstance().responseComplete();
+					FacesContext.getCurrentInstance().responseComplete();*/
+					
 				} else
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Ordonnance modifiée avec succès"));
-				if ((ord.getType() != null)) {
+				/*if ((ord.getType() != null)) {
 					if (ord.getType().equals("Libre")) {
 						nomReport = "ordonnaceLibre";
 					} else {
 						nomReport = "ord";
 					}
-				}
-				Connection connection = (Connection) DriverManager
+				}*/
+				
+				/*Connection connection = (Connection) DriverManager
 						.getConnection(HibernateUtil.url, HibernateUtil.login,
 								HibernateUtil.pass);
 				Map<String, Object> param = new HashMap<String, Object>();
@@ -1402,7 +1394,7 @@ System.out.println("model");
 				outStream.write(bytes, 0, bytes.length);
 				outStream.flush();
 				outStream.close();
-				FacesContext.getCurrentInstance().responseComplete();
+				FacesContext.getCurrentInstance().responseComplete();*/
 			}
 		} else {
 
@@ -1411,7 +1403,7 @@ System.out.println("model");
 							|| action.equals("ajoutOrdLibreHistorique")
 							|| action.equals("Ajout") || action.equals("Modif") || action
 								.equals("ModifLibre"))) {
-				Ordonnance ord = new OrdonnanceService()
+				 ord = new OrdonnanceService()
 						.rechercheOrdonnance(idOrdonnance);
 
 				ord.setNotes(notes);
@@ -1425,14 +1417,15 @@ System.out.println("model");
 				ord.setDateOrd(dateOrd);
 				ord.setType("Libre");
 				new OrdonnanceService().modifierOrdonnance(ord);
-				if ((ord.getType() != null)) {
+				/*if ((ord.getType() != null)) {
 					if (ord.getType().equals("Libre")) {
 						nomReport = "ordonnaceLibre";
 					} else {
 						nomReport = "ord";
 					}
-				}
-				Connection connection = (Connection) DriverManager
+				}*/
+				
+				/*Connection connection = (Connection) DriverManager
 						.getConnection(HibernateUtil.url, HibernateUtil.login,
 								HibernateUtil.pass);
 				Map<String, Object> param = new HashMap<String, Object>();
@@ -1454,13 +1447,13 @@ System.out.println("model");
 				outStream.write(bytes, 0, bytes.length);
 				outStream.flush();
 				outStream.close();
-				FacesContext.getCurrentInstance().responseComplete();
+				FacesContext.getCurrentInstance().responseComplete();*/
 
 			}
 		}
 
 		if (action != null && action.equals("modifierHistorique")) {
-			Ordonnance ord = new OrdonnanceService()
+			 ord = new OrdonnanceService()
 					.rechercheOrdonnance(idOrdonnance);
 
 			ord.setNotes(notes);
@@ -1473,14 +1466,16 @@ System.out.println("model");
 			}
 			ord.setDateOrd(dateOrd);
 			new OrdonnanceService().modifierOrdonnance(ord);
-			if ((ord.getType() != null)) {
+			
+			
+			/*if ((ord.getType() != null)) {
 				if (ord.getType().equals("Libre")) {
 					nomReport = "ordonnaceLibre";
 				} else {
 					nomReport = "ord";
 				}
-			}
-			Connection connection = (Connection) DriverManager.getConnection(
+			}*/
+			/*Connection connection = (Connection) DriverManager.getConnection(
 					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idOrd", ord.getIdOrdonnance());
@@ -1496,10 +1491,11 @@ System.out.println("model");
 			outStream.write(bytes, 0, bytes.length);
 			outStream.flush();
 			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			FacesContext.getCurrentInstance().responseComplete();*/
 
 		}
 		action = null;
+		selectedOrd=ord;
 		session.setAttribute("act", null);
 
 	}

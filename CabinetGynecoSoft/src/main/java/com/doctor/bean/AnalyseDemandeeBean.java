@@ -21,6 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.primefaces.event.SelectEvent;
 
 import net.sf.jasperreports.engine.JasperRunManager;
@@ -70,23 +71,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	private String proprietaire;
 	private Date dateAna;
 	
-	private Date dateAnal;
 	private boolean consultation;
-
-	
-	
-	
-	
-	
-	public Date getDateAnal() {
-		System.out.println("val de  anal dan le get=========== "+dateAnal);
-		return dateAnal;
-	}
-
-	public void setDateAnal(Date dateAnal) {
-		System.out.println("val de anal dan le set=========  "+dateAnal);
-		this.dateAnal = dateAnal;
-	}
 
 	public boolean isConsultation() {
 		if (action == null)
@@ -103,12 +88,10 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	}
 
 	public Date getDateAna() {
-		System.out.println("val de dateAna dans get== "+dateAna);
 		return dateAna;
 	}
 
 	public void setDateAna(Date dateAna) {
-		System.out.println("val de dateAna dans set== "+dateAna);
 		this.dateAna = dateAna;
 	}
 
@@ -230,9 +213,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
-
 		toxo = null;
 		tpha = null;
 		rubeole = null;
@@ -241,12 +222,25 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		analyseDemandee=null;
 		desibledImpr = false;
 		consultation=false;
-
 		agHbs = null;
-
 		glycemie = null;
 		frottis = null;
+		proprietaire=null;
+		nomProprietaire=null;
+		dateAna=null;
+		
 	}
+	
+	public void initApresValidation(){
+		action = null;
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		idPatient = (Integer) session.getAttribute("idu");
+		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
+		consultation=false;
+		
+	}
+	
 
 	public ConsultationDetail getConsultationDetail() {
 		// initialisationAnalysea();
@@ -473,13 +467,13 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	}
 	
 	public void  changerDate(){
-		System.out.println("get in changer date et l val de dateAnal===== "+dateAnal);
-		setDateAna(dateAnal);
+		setDateAna(dateAna);
 		
 	}
 
 	public void valider(ActionEvent actionEvent) throws SQLException, Exception {
 		
+		changerDate();
 		FacesContext face = FacesContext.getCurrentInstance();
 		AnalyseDemandeeService ser = new AnalyseDemandeeService();
 		AnalyseDemandee ana = new AnalyseDemandee();
@@ -497,7 +491,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		ana.setFrottis(frottis);
 		ana.setProprietaire(nomProprietaire);
 		ana.setPossesseur(proprietaire);
-		System.out.println("data analyse== "+dateAna);
 		ana.setDateAnalyse(dateAna);
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -515,40 +508,12 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		
 		if (action != null && action.equals("ajout")) {
 			
-			System.out.println("action == "+ action);
 			ser.ajoutAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Demande analyse ajoutée avec succés"));
-			String nomReport = "demandeAnalyse";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			
-			/*Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idAnalyse", ana.getIdanalyseDemandee());
-			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();*/
-			//initialisationAnalyse();
-			// FacesContext context = FacesContext.getCurrentInstance();
-			// context.getExternalContext().getFlash().setKeepMessages(true);
 			
 			
-			// ecrire analyse dans la ligne de consultationDetail
+			
 			consultationDetail
 					.setNbAnalyse(consultationDetail.getNbAnalyse() + 1);
 			new ConsultationDetailService()
@@ -558,78 +523,34 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
 			
-			initialisationAnalysea();
-			//initialisationAnalyse();
+			initApresValidation();
+			desibledImpr = true;
+			selectedAnalyse = ana;
 			
-//			 try {
-//			   System.out.println("get in redirect");
-//			 FacesContext.getCurrentInstance().getExternalContext()
-//			 .redirect("DemandeAnalyse");
-//			 } catch (Exception e) {
-//			 System.out.println(e.getMessage());
-//			 }
-			 
-			 
-
 		}
 		if (action != null && action.equals("Modif")) {
 			ana.setIdanalyseDemandee(idanalyseDemandee);
 			ser.modifierAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Demande analyse modifiée avec succés"));
-			String nomReport = "demandeAnalyse";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
 			
-			
-			/*Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idAnalyse", ana.getIdanalyseDemandee());
-			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();*/
-
-			// FacesContext context = FacesContext.getCurrentInstance();
-			// context.getExternalContext().getFlash().setKeepMessages(true);
 			clt.setToxo(toxo);
 			clt.setTpha(tpha);
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
+			initApresValidation();
 		}
 
 		
-		// try {
-		//
-		// FacesContext.getCurrentInstance().getExternalContext()
-		// .redirect("DemandeAnalyse");
-		// } catch (Exception e) {
-		// System.out.println(e.getMessage());
-		// }
-		// retour();
+		
 	}
 	
 	public void redirect(){
 		
 		try {
-			System.out.println("get in redirect");
 			 FacesContext.getCurrentInstance().getExternalContext()
 			 .redirect("DemandeAnalyse");
 			 } catch (Exception e) {
-			 System.out.println(e.getMessage());
 			}
 	}
 
@@ -685,7 +606,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("HistoriqueAnalyses");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 		}
 		initialisationAnalyse();
 	}
@@ -828,12 +748,28 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		}
 
 	}
+	
+	public void annulation() {
+		initialisationAnalysea();
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+
+			context.getExternalContext().redirect("DemandeAnalyse");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 
 	public void verifierDate() {
 		FacesContext face = FacesContext.getCurrentInstance();
+		
 		if (Module.corigerDate(dateAnalyse) != null) {
 			this.setDateAnalyse(Module.corigerDate(dateAnalyse));
 		}
+		
+		
 		if (!(Module.verifierDate(dateAnalyse).equals("")))
 
 		{
@@ -958,30 +894,38 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
+		String age1;
+		String age;
 		if (selectedAnalyse != null) {
 			String nomReport = "demandeAnalyse";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
+			
+			
+					if(proprietaire.equals("Patiente")){
+						 if(clt.getDateNaiss()!=null)
+					      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+						 else
+							 age1="";
+						 
+					  
+					}else{
+						if(clt.getDateNaissC()!=null)
+						 age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+						else
+							age1="";	
+					}
+			
+				if(age1.equals("")){
+					age=age1;
+				}else{
+					age="( "+age1+" )"+" Ans";
+				}
+			
+			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idAnalyse", selectedAnalyse.getIdanalyseDemandee());
 			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			Module.imprimer(nomReport, param);
+			
 
 		}
 	}
