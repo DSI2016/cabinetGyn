@@ -1205,8 +1205,8 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cons.getIdConsultationDetail());
-		afficheValid = false;
-		afficheImpr = true;
+		
+		selectedCons=cons;
 		idConsultationDetail = cons.getIdConsultationDetail();
 
 		ancienValeur = formatter.format(cons.getDateConsultation());
@@ -1236,6 +1236,8 @@ public class ConsultationDetailBean implements Serializable {
 
 		read = "editable";
 		action = "modifier";
+		afficheValid = false;
+		afficheImpr = true;
 	}
 
 	public void supprimerModeleConsEchoGyn(Integer idModelee) {
@@ -1268,8 +1270,10 @@ public class ConsultationDetailBean implements Serializable {
 		session.setAttribute("idConsultD", c.getIdConsultationDetail());
 		idConsultationDetail = c.getIdConsultationDetail();
 		dateConsultation = formatter.format(c.getDateConsultation());
+		
 		action = "selection";
 		if (c != null) {
+			selectedCons=c;
 			if (c.getTrim() == 1) {
 				this.indexTbView = 0;
 				cfclient = c.getCfclient();
@@ -1368,6 +1372,8 @@ public class ConsultationDetailBean implements Serializable {
 		}
 		read = "editable";
 		action = "modifier";
+		afficheValidEchoObs = false;
+		afficheImprEchoObs = true;
 
 	}
 
@@ -1462,7 +1468,9 @@ public class ConsultationDetailBean implements Serializable {
 							"Consultation Ajoutée Avec Succés"));
 					action = null;
 					initialisationechogyneco();
-
+                    afficheImpr=false;
+                    afficheValid=true;
+                    selectedCons=cons;
 				}
 
 				if (action != null && action.equals("modifier")) {
@@ -1498,14 +1506,17 @@ public class ConsultationDetailBean implements Serializable {
 					cons.setConsultation(consultation);
 					cons.setLigne(ligne);
 					se.modifierConsultationDetail(cons);
-
+					
 					blocage = false;
 					tempsface = 3500;
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, " ",
 							"Consultation Modifiée Avec Succés"));
 					initialisationechogyneco();
-					selectedCons = null;
+					//selectedCons = null;
+					afficheImpr=false;
+                    afficheValid=true;
+                    selectedCons=cons;
 
 				}
 
@@ -1676,8 +1687,7 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", c.getIdConsultationDetail());
-		afficheImpr = false;
-		afficheValid = true;
+		
 		read = "noeditable";
 
 		selectedCons = c;
@@ -1706,6 +1716,9 @@ public class ConsultationDetailBean implements Serializable {
 			read = "noeditable";
 
 		}
+		
+		afficheImpr = false;
+		afficheValid = true;
 	}
 
 	public void onRowSelectEchoObs(SelectEvent event) {
@@ -1893,6 +1906,10 @@ public class ConsultationDetailBean implements Serializable {
 			desibledRadio = true;
 
 		}
+		
+		afficheImpr=false;
+        afficheValid=true;
+        
 	}
 
 	public void demandeRadio() {
