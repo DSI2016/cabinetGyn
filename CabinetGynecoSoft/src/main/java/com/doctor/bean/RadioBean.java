@@ -1,7 +1,5 @@
 package com.doctor.bean;
 
-import java.io.File;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,16 +16,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-
-import net.sf.jasperreports.engine.JasperRunManager;
-
-import com.doctor.dao.HibernateUtil;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.ExamenComplementaire;
@@ -36,7 +27,6 @@ import com.doctor.service.CfclientService;
 import com.doctor.service.ConsultationDetailService;
 import com.doctor.service.ExamenComplementaireService;
 import com.doctor.service.RadioService;
-import com.mysql.jdbc.Connection;
 
 @ManagedBean(name = "radioBean")
 @SessionScoped
@@ -112,21 +102,12 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public void setDateRadios(Date dateRadios) {
-
 		this.dateRadios = dateRadios;
 	}
 
 	public void changerDate() {
-
-		System.out.println("get in methode changerDate");
-
-		// setDateRadios(dateRadios);
 		setDateRadios(dateRadios);
-		System.out.println("dateRadios dans changer date= "+dateRadios);
-		
 	}
-	
-	
 
 	public String getNomProprietaire() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -184,7 +165,6 @@ public class RadioBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient=Module.idpatient;
 		RadioService ser = new RadioService();
 		radiosParPatient = ser.rechercheRadioParPatient(idPatient);
 
@@ -217,7 +197,7 @@ public class RadioBean implements java.io.Serializable {
 
 	public void ajoutRad() {
 		selectedRAdio = null;
-		viewImprim=true;
+		viewImprim = true;
 		desibledImpr = false;
 		action = "ajout";
 		exam = null;
@@ -260,12 +240,12 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public String getDateRadio() {
-		System.out.println("get in getdateradio le val de dateradio est=  "+dateRadio);
+	
 		return dateRadio;
 	}
 
 	public void setDateRadio(String dateRadio) {
-		System.out.println("get in setdateradio le val de dateradio est=  "+dateRadio);
+		
 		this.dateRadio = dateRadio;
 	}
 
@@ -310,25 +290,6 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public String getResultat() {
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);
-		//
-		// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-		// if (idconsultationDetail != null) {
-		// RadioService ser = new RadioService();
-		// Radio r = new Radio();
-		//
-		// List<Radio> a = ser
-		// .rechercheRadioParConsultation(idconsultationDetail);
-		// if (a.size() > 0) {
-		// r = a.get(0);
-		// resultat = r.getResultat();
-		//
-		// action = "modification";
-		// } else {
-		// action = "ajout";
-		// }
-		// }
 		return resultat;
 	}
 
@@ -366,7 +327,6 @@ public class RadioBean implements java.io.Serializable {
 
 		idconsultationDetail = (Integer) session.getAttribute("idConsultD");
 		if (idconsultationDetail != null) {
-			// ConsultationDetailService sr = new ConsultationDetailService();
 			RadioService ser = new RadioService();
 			Radio r = new Radio();
 
@@ -395,39 +355,9 @@ public class RadioBean implements java.io.Serializable {
 		this.blocage = blocage;
 	}
 
-	/*
-	 * public void dateChange() { //dateRadios=(Date) event.getObject();
-	 * System.out.println("dddd: "+dateRadios); String dateString=""; //conertir
-	 * en string if(dateRadios!= null){ DateFormat df = new
-	 * SimpleDateFormat("dd/MM/yyyy"); dateString = df.format(dateRadios);
-	 * System.out.println("date après conv  "+dateString); }
-	 * 
-	 * FacesContext faces = FacesContext.getCurrentInstance(); //Format format =
-	 * new SimpleDateFormat("dd/MM/yyyy"); //String dateString =
-	 * format.format(dateRadios); //String dateString = dateRadios+""; if
-	 * (Module.corigerDate(dateString) != null) { dateString=Module
-	 * .corigerDate(dateString);
-	 * System.out.println("date après correction= "+dateString); } if
-	 * (!(Module.verifierDate(dateString).equals("")))
-	 * 
-	 * {System.out.println("dddd"+Module.verifierDate(dateString));
-	 * faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-	 * Module.verifierDate(dateString))); blocage=true; dateRadios=new Date(); }
-	 * else { SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); try {
-	 * dateRadios=sdf.parse(dateString); } catch (ParseException e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * }
-	 * 
-	 * setDateRadios(dateRadios); }
-	 */
-
-	public void verifierDateRadio(){ 
-		System.out.println("get in datechange");
+	public void verifierDateRadio() {
 		setDateRadio(dateRadio);
-		System.out.println("val de dateRadio in verifdate=="+dateRadio);
 		FacesContext face = FacesContext.getCurrentInstance();
-		// Format format = new SimpleDateFormat("dd/MM/yyyy");
 
 		if ((dateRadio == null) || (dateRadio.equals(""))) {
 			blocage = true;
@@ -437,7 +367,7 @@ public class RadioBean implements java.io.Serializable {
 		}
 
 		if ((dateRadio != null) && (dateRadio.length() != 0)) {
-			
+
 			if (Module.corigerDate(dateRadio) != null) {
 				this.setDateRadio(Module.corigerDate(dateRadio));
 			}
@@ -466,38 +396,6 @@ public class RadioBean implements java.io.Serializable {
 	public void setIdradio(Integer idradio) {
 		this.idradio = idradio;
 	}
-
-	// @PostConstruct
-	// public void intr(){
-	// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-	// .getExternalContext().getSession(false);
-	//
-	// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-	// if (idconsultationDetail != null) {
-	// // ConsultationDetailService sr = new ConsultationDetailService();
-	// RadioService ser = new RadioService();
-	// Radio r = new Radio();
-	//
-	// List<Radio> a = ser
-	// .rechercheRadioParConsultation(idconsultationDetail);
-	// if (a.size() > 0) {
-	// r = a.get(0);
-	// examenComplementaire = r.getExamenComplementaire();
-	//
-	// action = "modification";
-	// } else {
-	// action = "ajout";
-	// }
-	// if(action.equals("modification"))
-	// {
-	// modifRadio(idconsultationDetail);
-	// }
-	//
-	//
-	// }
-	// System.out.println("_______examen get  "+examenComplementaire+"__________");
-	//
-	// }
 
 	public String getExamenComplementaire() {
 		return examenComplementaire;
@@ -535,27 +433,6 @@ public class RadioBean implements java.io.Serializable {
 		this.idconsultationDetail = idconsultationDetail;
 	}
 
-	// @PostConstruct
-	// public void init() {
-	// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-	// .getExternalContext().getSession(false);
-	// idPatient = (Integer) session.getAttribute("idu");
-	// // idPatient = Module.idpatient;
-	// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-	//
-	// ConsultationDetailService sr = new ConsultationDetailService();
-	//
-	// if (idconsultationDetail != null) {
-	// consultationDetail = sr
-	// .rechercheConsultationDetail(idconsultationDetail);
-	// dateRadio = consultationDetail.getDateConsultation();
-	//
-	// // this.dateAnalyse = ancienValeur;
-	// }
-	// initialeRadio();
-	// }
-
-	//
 	@PostConstruct
 	public void init() {
 		action = null;
@@ -575,7 +452,7 @@ public class RadioBean implements java.io.Serializable {
 		idPatient = (Integer) session.getAttribute("idu");
 
 		idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-
+		impress = true;
 	}
 
 	public void annulation() {
@@ -606,8 +483,6 @@ public class RadioBean implements java.io.Serializable {
 			setExamenComplementaire(test);
 
 		}
-		// RequestContext.getCurrentInstance().update("f1");
-		// setExamenComplementaire(examenComplementaire);
 	}
 
 	public void verifDate() {
@@ -640,16 +515,7 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public void valider() {
-		// dateChange();
-		// changerDate();
-		//RequestContext.getCurrentInstance().update(":f1");
-		FacesContext faces = FacesContext.getCurrentInstance();
-		// SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		// dateRadio=formatter.format(dateRadios);
-
-		
-        verifierDateRadio();
-        System.out.println("dateRadio après click valider== "+dateRadios);
+		verifierDateRadio();
 		ontextexamenChange();
 		onchangeRenseignementClinique();
 		onchangeresultat();
@@ -711,8 +577,6 @@ public class RadioBean implements java.io.Serializable {
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_INFO, "",
 						"Demande radio modifiée avec succès"));
-				CfclientService serclt = new CfclientService();
-				Cfclient clt = serclt.RechercheCfclient(idPatient);
 
 			}
 
@@ -727,26 +591,17 @@ public class RadioBean implements java.io.Serializable {
 		nomProprietaire = null;
 		action = null;
 		viewImprim = false;
-
-		// try {
-		//
-		// context.getExternalContext().redirect("DemandeRadio");
-		// } catch (Exception e) {
-		// System.out.println(e.getMessage());
-		// }
 	}
 
 	public void validerHisto() {
 		Radio r = new Radio();
-		r.setDateRadios(dateRadios);
+		r.setDateRadios(datRadios);
 		r.setExamenComplementaire(examenComplementaire);
 		r.setPossesseur(proprietaire);
 		r.setProprietaire(nomProprietaire);
 		r.setRenseignementClinique(renseignementClinique);
 		r.setResultat(resultat);
-		onRadioChange();
-		ontextexamenChange();
-		onchangeRenseignementClinique();
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -1012,7 +867,6 @@ public class RadioBean implements java.io.Serializable {
 		action = "modification";
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		// HttpSession session= new Session();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 
@@ -1027,7 +881,6 @@ public class RadioBean implements java.io.Serializable {
 		}
 
 		if (idconsultationDetail != null) {
-			// Integer idConsultationDetail = idConsult;
 			consultationDetail = sr
 					.rechercheConsultationDetail(idconsultationDetail);
 			dateRadio = formatter.format(consultationDetail
@@ -1063,6 +916,7 @@ public class RadioBean implements java.io.Serializable {
 				session.setAttribute("idu", idPatient);
 			}
 			idradio = radi.getIdradio();
+			datRadios = radi.getDateRadios();
 			dateRadios = radi.getDateRadios();
 			examenComplementaire = radi.getExamenComplementaire();
 			renseignementClinique = radi.getRenseignementClinique();
@@ -1112,14 +966,11 @@ public class RadioBean implements java.io.Serializable {
 					.rechercheConsultationDetail(idcons);
 			if (consultationDetail != null) {
 				ConsultationDetailService se = new ConsultationDetailService();
-				System.out.println("supp rad");
 				consultationDetail
 						.setNbRadio(consultationDetail.getNbRadio() - 1);
 				se.modifierConsultationDetail(consultationDetail);
 			}
 			FacesContext face = FacesContext.getCurrentInstance();
-			// RadioService ser = new RadioService();
-			// ser.supprimerRadio(idradio);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Radio supprimée avec succés", ""));
 
@@ -1142,13 +993,10 @@ public class RadioBean implements java.io.Serializable {
 
 	public void viewRadio(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		System.out.println("consultRadio==" + consultRadio);
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
 		String age1;
 		String age;
-
-		System.out.println("proprietaire== " + proprietaire);
 		if (consultRadio != null) {
 
 			if (proprietaire.equals("Patiente")) {
@@ -1190,26 +1038,12 @@ public class RadioBean implements java.io.Serializable {
 		String nomReport = "demandeRadio";
 		String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 		String age = "(" + age1 + ")";
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
+
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idrad", selectedRAdio.getIdradio());
 		param.put("age", age);
 
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+		Module.imprimer(nomReport, param);
 	}
 
 	public Radio getSelectedRAdio() {
@@ -1225,7 +1059,8 @@ public class RadioBean implements java.io.Serializable {
 	{
 		Radio r = (Radio) event.getObject();
 		idradio = r.getIdradio();
-
+		selectedRAdio=r;
+		impress = false;
 		desibledImpr = true;
 	}
 
@@ -1247,5 +1082,25 @@ public class RadioBean implements java.io.Serializable {
 
 	public void proprietaireChange() {
 		setNomProprietaire(nomProprietaire);
+	}
+
+	public Date datRadios;
+
+	public Date getDatRadios() {
+		return datRadios;
+	}
+
+	public void setDatRadios(Date datRadios) {
+		this.datRadios = datRadios;
+	}
+
+	private boolean impress;
+
+	public boolean isImpress() {
+		return impress;
+	}
+
+	public void setImpress(boolean impress) {
+		this.impress = impress;
 	}
 }
