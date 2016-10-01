@@ -122,9 +122,11 @@ public class RadioBean implements java.io.Serializable {
 
 		// setDateRadios(dateRadios);
 		setDateRadios(dateRadios);
-		System.out.println("dateRadios dans changer date= " + dateRadios);
-
+		System.out.println("dateRadios dans changer date= "+dateRadios);
+		
 	}
+	
+	
 
 	public String getNomProprietaire() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
