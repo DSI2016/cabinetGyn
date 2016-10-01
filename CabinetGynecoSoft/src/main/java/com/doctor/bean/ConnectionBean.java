@@ -2404,7 +2404,7 @@ public class ConnectionBean implements java.io.Serializable {
 						
 						tabAnulSal=u.isTabAnulSal();
 						tabTelSal=u.isTabTelSal();
-
+						
 						ajoutAntecedentListe = u.isAjoutAntecedentListe();
 						/*nouvelleContraceptionAntecedent = u
 								.isNouvelleContraceptionAntecedent();
@@ -2413,8 +2413,15 @@ public class ConnectionBean implements java.io.Serializable {
 								.isNouvelleGrossesseAntecedent();
 						System.out.println("nouvelleGrossesseAntecedent=="+nouvelleGrossesseAntecedent);*/
 						
+						
+						
 						modifCab = u.isModifCab();
 
+						if(u.getConsultGrossOrd().equals("0"))
+							consulGrosstOrd = false;
+						else
+							consulGrosstOrd = true;
+						
 						if (u.getAntecedent().equals("0"))
 							antecedent = false;
 						else
@@ -2544,8 +2551,9 @@ public class ConnectionBean implements java.io.Serializable {
 							analGyn = false;
 						else
 							analGyn = true;
-
-						if (u.getConsultGrossOrd().equals("0"))
+						
+						if (u.getGynOrd().equals("0"))
+						
 							consulGrosstOrd = false;
 						else
 							consulGrosstOrd = true;

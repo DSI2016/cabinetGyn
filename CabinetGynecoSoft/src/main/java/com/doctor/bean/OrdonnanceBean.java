@@ -1101,6 +1101,7 @@ System.out.println("model");
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("act", "consulter");
+		selectedOrd=o;
 		medOrds.clear();
 		// recherche liste des medicament par idord
 		if (o != null) {
@@ -1265,13 +1266,16 @@ System.out.println("model");
 
 	// impression ordonnance de la liste
 	public void viewOrd(ActionEvent actionEvent) throws SQLException, Exception {
+		
+		if(selectedOrd!=null){
+			typee=selectedOrd.getType();
+			idOrdSelectionne=selectedOrd.getIdOrdonnance();}
 		String nomReport = "";
 		if (typee.equals("Libre")) {
 			nomReport = "ordonnaceLibre";
 		} else {
 			nomReport = "ord";
 		}
-		
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idOrd", idOrdSelectionne);
 		

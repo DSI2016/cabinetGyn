@@ -207,6 +207,7 @@
 												itemValue="#{pro.idFormeMedicament}" />
 										</p:selectOneMenu>
 										<p:commandButton icon="ui-icon-plusthick"
+											rendered="#{connectionBean.ajoutFormMed}"
 											update=":f1:f2:f4:dialog1"
 											actionListener="#{medicamentBean.initForme}"
 											oncomplete="PF('dialogforme').show()" />

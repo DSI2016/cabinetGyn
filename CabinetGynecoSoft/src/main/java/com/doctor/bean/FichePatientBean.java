@@ -149,18 +149,18 @@ public class FichePatientBean implements Serializable {
 		} else
 			agePat = "0";
 
-		if (cfclient.getProfessionByProfessp() != null) {
+		if (cfclient != null && cfclient.getProfessionByProfessp() != null) {
 			profession = cfclient.getProfessionByProfessp().getLibprofession();
 		} else
 			profession = "";
 
-		if (cfclient.getProfessionByProfesscp() != null) {
+		if (cfclient != null && cfclient.getProfessionByProfesscp() != null) {
 			professionC = cfclient.getProfessionByProfesscp()
 					.getLibprofession();
 		} else
 			professionC = "";
 
-		if (cfclient.getVille() != null) {
+		if (cfclient != null && cfclient.getVille() != null) {
 			vil = cfclient.getVille().getVille();
 		} else
 			vil = "";

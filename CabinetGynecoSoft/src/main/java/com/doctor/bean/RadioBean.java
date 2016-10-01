@@ -112,7 +112,6 @@ public class RadioBean implements java.io.Serializable {
 		System.out.println("get in methode changerDate");
 		
 		setDateRadios(dateRadios);
-		setDateRadios(dateRadios);
 		System.out.println("dateRadios dans changer date= "+dateRadios);
 		
 	}
