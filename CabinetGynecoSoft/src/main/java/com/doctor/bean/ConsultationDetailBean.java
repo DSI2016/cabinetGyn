@@ -1,8 +1,6 @@
 package com.doctor.bean;
 
-import java.io.File;
 import java.io.Serializable;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,16 +20,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import net.sf.jasperreports.engine.JasperRunManager;
-
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
-
-import com.doctor.dao.HibernateUtil;
 import com.doctor.persistance.Analyse;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Consultation;
@@ -56,7 +46,6 @@ import com.doctor.service.ModeleService;
 import com.doctor.service.OrdonnanceService;
 import com.doctor.service.SymptomeService;
 import com.doctor.service.UterusService;
-import com.mysql.jdbc.Connection;
 
 @ManagedBean(name = "consultationDetailBean")
 @SessionScoped
@@ -217,14 +206,11 @@ public class ConsultationDetailBean implements Serializable {
 	private String typeConsultation;
 	private String cat;
 	private boolean testr;
-	private boolean afficheValid=true;
-	private boolean afficheImpr=true;
-	private boolean afficheValidEchoObs=true;
-	private boolean afficheImprEchoObs=true;
-	
-	
-	
-	
+	private boolean afficheValid = true;
+	private boolean afficheImpr = true;
+	private boolean afficheValidEchoObs = true;
+	private boolean afficheImprEchoObs = true;
+
 	public boolean isAfficheValidEchoObs() {
 		return afficheValidEchoObs;
 	}
@@ -809,8 +795,8 @@ public class ConsultationDetailBean implements Serializable {
 	// methode de echo gyneco
 	public void ajoutConsEchoGyneco() {
 
-		afficheValid=false;
-		afficheImpr=true;
+		afficheValid = false;
+		afficheImpr = true;
 		indications = null;
 		contours = "--selectionner--";
 		echostructure = "--selectionner--";
@@ -844,9 +830,9 @@ public class ConsultationDetailBean implements Serializable {
 
 	// methode de echo gyneco
 	public void ajoutConsEchoObs() {
-		
-        afficheImprEchoObs=true;
-        afficheValidEchoObs=false;
+
+		afficheImprEchoObs = true;
+		afficheValidEchoObs = false;
 		read = "editable";
 		bip = 0.0;
 		bip2 = 0.0;
@@ -919,9 +905,9 @@ public class ConsultationDetailBean implements Serializable {
 	}
 
 	public void initialisationechogyneco() {
-		
-		afficheValid=true;
-		afficheImpr=true;
+
+		afficheValid = true;
+		afficheImpr = true;
 		indications = null;
 		contours = "--selectionner--";
 		echostructure = "--selectionner--";
@@ -1219,8 +1205,8 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cons.getIdConsultationDetail());
-		afficheValid=false;
-		afficheImpr=true;
+		afficheValid = false;
+		afficheImpr = true;
 		idConsultationDetail = cons.getIdConsultationDetail();
 
 		ancienValeur = formatter.format(cons.getDateConsultation());
@@ -1500,13 +1486,6 @@ public class ConsultationDetailBean implements Serializable {
 
 					cons.setAnnexes(annexes);
 					cons.setContours(contours);
-					ConsultaionService serf = new ConsultaionService();
-					Consultation consf = serf
-							.rechercheParConsultation(consultationmotif);
-					// honoraire = consf.getHonoraire();
-					// honorairestring = Double.toString(honoraire);
-
-					// cons.setHonoraire(honoraire);
 					cons.setHonoraire(Double.parseDouble(honorairestring));
 					cons.setCfclient(c);
 					cons.setConclusion(conclusion);
@@ -1697,8 +1676,8 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", c.getIdConsultationDetail());
-		afficheImpr=false;
-		afficheValid=true;
+		afficheImpr = false;
+		afficheValid = true;
 		read = "noeditable";
 
 		selectedCons = c;
@@ -1734,7 +1713,7 @@ public class ConsultationDetailBean implements Serializable {
 		ConsultationDetail c = (ConsultationDetail) event.getObject();
 		selectedCons = c;
 		action = null;
-		afficheImprEchoObs=false;
+		afficheImprEchoObs = false;
 
 		if (c != null) {
 			if (c.getTrim() == 1) {
@@ -3389,15 +3368,13 @@ public class ConsultationDetailBean implements Serializable {
 	}
 
 	public void initialisationEchoObs() {
-		CfclientService serclt = new CfclientService();
-		Cfclient clt = new Cfclient();
-		clt = serclt.RechercheCfclient(idPatient);
-		afficheImprEchoObs=true;
-		afficheValidEchoObs=true;
-			ddr =null;
-			ddg = null;
-			termeActuel =null;
-			termePrevu = null;
+		
+		afficheImprEchoObs = true;
+		afficheValidEchoObs = true;
+		ddr = null;
+		ddg = null;
+		termeActuel = null;
+		termePrevu = null;
 		bip = 0.0;
 		bip2 = 0.0;
 		bip3 = 0.0;
@@ -3452,557 +3429,581 @@ public class ConsultationDetailBean implements Serializable {
 	}
 
 	public void validerConsEchoObs() {
-		
-        afficheImprEchoObs=false;
-        afficheValidEchoObs=true;
-        
+
 		String msg = "";
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetailService ser = new ConsultationDetailService();
 		CfclientService serclt = new CfclientService();
-	//	ConsultationDetail cons=null;
-		if(action != null)
-		{
-		if (trim == 1) {
-			if (action != null) {
-				if (action.equals("ajouter")) {
-					if (echomoyen == null || (echomoyen.trim().length() == 0)) {
-						blocage = true;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_ERROR, "Erreur",
-								"Veuillez saisir l'echo moyen"));
+		ConsultationDetail cons = null;
+		if (action != null) {
+			if (trim == 1) {
+				if (action != null) {
+					if (action.equals("ajouter")) {
+						if (echomoyen == null
+								|| (echomoyen.trim().length() == 0)) {
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "Erreur",
+									"Veuillez saisir l'echo moyen"));
 
+						}
+						if (Module.corigerDate(dateconsultation1) != null) {
+							this.setDateconsultation1(Module
+									.corigerDate(dateconsultation1));
+						}
+						if (!(Module.verifierDate(dateconsultation1).equals("")))
+
+						{
+							this.blocage = true;
+							face.addMessage(
+									null,
+									new FacesMessage(
+											FacesMessage.SEVERITY_ERROR,
+											"",
+											Module.verifierDate(dateconsultation1)));
+
+							dateconsultation1 = ancienValeur1;
+						}
+
+						else if (face.getMessageList().size() == 0)
+
+						{
+							cons = new ConsultationDetail();
+							if (consultationmotif != null) {
+								ConsultaionService s = new ConsultaionService();
+								consultation = s
+										.rechercheParConsultation(consultationmotif);
+								cons.setConsultation(consultation);
+							}
+							HttpSession session = (HttpSession) FacesContext
+									.getCurrentInstance().getExternalContext()
+									.getSession(false);
+							idPatient = (Integer) session.getAttribute("idu");
+
+							// idPatient = Module.idpatient;
+							if (idPatient != null) {
+								Cfclient c = serclt
+										.RechercheCfclient(idPatient);
+								c.setDernierVisite(dateconsultation1);
+								c.setTypCons(consultationmotif);
+								c.setNbCons(c.getNbCons() + 1);
+								serclt.modifierPatient(c);
+								cons.setCfclient(c);
+							}
+							try {
+								cons.setDateConsultation(formatter
+										.parse(dateconsultation1));
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							}
+							cons.setTrim(trim);
+							cons.setEchomoyen(echomoyen);
+							cons.setSac(sac);
+							cons.setTonique(tonique);
+							cons.setConclusionobs(conclusionobs);
+							cons.setLcc(lcc);
+							cons.setBip(bip);
+							cons.setAc(ac);
+							cons.setEf(ef);
+							cons.setTrophoblaste(trophoblaste);
+							cons.setVesicule(vesicule);
+							cons.setAnnexesobs(annexesobs);
+							try {
+
+								honorairesobs = Float
+										.parseFloat(honoraireStringobs1);
+								setHonoraire(honorairesobs);
+
+							} catch (Exception e) {
+								honorairesobs = (float) 0;
+								msg = msg
+										+ "L'honoraire ne contient que des chiffres";
+								ConsultaionService serf = new ConsultaionService();
+								Consultation consf = serf
+										.rechercheParConsultation(consultationmotif);
+								honoraire = consf.getHonoraire();
+								honoraireStringobs1 = Double
+										.toString(honorairesobs);
+							}
+							cons.setHonoraire(honorairesobs);
+
+							cons.setConsultation(consultation);
+							cons.setDdr(ddr);
+							cons.setDdg(ddg);
+							cons.setDdgCorigee(ddgCorigee);
+							cons.setTermePrevu(termePrevu);
+							cons.setTermeActuel(termeActuel);
+							ser.ajouterConsultationDetail(cons);
+							this.blocage = false;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_INFO, "",
+									"Consultation Ajoutée Avec Succés"));
+							tempsface = 3500;
+							action = null;
+							initialisationEchoObs();
+							afficheImprEchoObs = false;
+							afficheValidEchoObs = true;
+							selectedCons = cons;
+
+						}
 					}
-					if (Module.corigerDate(dateconsultation1) != null) {
-						this.setDateconsultation1(Module
-								.corigerDate(dateconsultation1));
-					}
-					if (!(Module.verifierDate(dateconsultation1).equals("")))
 
-					{
-						this.blocage = true;
-						face.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"",
-										Module.verifierDate(dateconsultation1)));
-						
-						dateconsultation1 = ancienValeur1;
-					}
+					else if (action.equals("modifier")) {
+						if (echomoyen == null
+								|| (echomoyen.trim().length() == 0)) {
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "Erreur",
+									"Veuillez saisir l'echo moyen"));
 
-					else if (face.getMessageList().size() == 0)
+						}
+						if (Module.corigerDate(dateconsultation1) != null) {
+							this.setDateconsultation1(Module
+									.corigerDate(dateconsultation1));
+						}
+						if (!(Module.verifierDate(dateconsultation1).equals("")))
 
-					{
-						ConsultationDetail cons = new ConsultationDetail();
-						if (consultationmotif != null) {
+						{
+							blocage = true;
+							face.addMessage(
+									null,
+									new FacesMessage(Module
+											.verifierDate(dateconsultation1)));
+							dateconsultation1 = ancienValeur1;
+						}
+
+						else if (face.getMessageList().size() == 0)
+
+						{
+							ConsultationDetailService se = new ConsultationDetailService();
+
+							cons = se
+									.rechercheConsultationDetail(idConsultationDetail);
+
 							ConsultaionService s = new ConsultaionService();
 							consultation = s
 									.rechercheParConsultation(consultationmotif);
-							cons.setConsultation(consultation);
-						}
-						HttpSession session = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(false);
-						idPatient = (Integer) session.getAttribute("idu");
-
-						// idPatient = Module.idpatient;
-						if (idPatient != null) {
+							HttpSession session = (HttpSession) FacesContext
+									.getCurrentInstance().getExternalContext()
+									.getSession(false);
+							idPatient = (Integer) session.getAttribute("idu");
+							// idPatient = Module.idpatient;
 							Cfclient c = serclt.RechercheCfclient(idPatient);
-							c.setDernierVisite(dateconsultation1);
-							c.setTypCons(consultationmotif);
-							c.setNbCons(c.getNbCons() + 1);
-							serclt.modifierPatient(c);
+							try {
+								cons.setDateConsultation(formatter
+										.parse(dateconsultation1));
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
 							cons.setCfclient(c);
+							cons.setSac(sac);
+							cons.setTonique(tonique);
+							cons.setConclusionobs(conclusionobs);
+							cons.setLcc(lcc);
+							cons.setBip(bip);
+							cons.setAc(ac);
+							cons.setEchomoyen(echomoyen);
+							cons.setEf(ef);
+							cons.setTrophoblaste(trophoblaste);
+							cons.setVesicule(vesicule);
+							cons.setAnnexesobs(annexesobs);
+							cons.setDdr(ddr);
+							cons.setDdg(ddg);
+							cons.setDdgCorigee(ddgCorigee);
+							cons.setTermePrevu(termePrevu);
+							cons.setTermeActuel(termeActuel);
+
+							cons.setHonoraire(honorairesobs);
+							cons.setConsultation(consultation);
+							se.modifierConsultationDetail(cons);
+							this.blocage = false;
+							tempsface = 3500;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_INFO, "",
+									"Consultation Modifiée  Avec Succés"));
+
+							initialisationEchoObs();
+							afficheImprEchoObs = false;
+							afficheValidEchoObs = true;
+							selectedCons = cons;
 						}
-						try {
-							cons.setDateConsultation(formatter
-									.parse(dateconsultation1));
-						} catch (ParseException e1) {
-							e1.printStackTrace();
-						}
-						cons.setTrim(trim);
-						cons.setEchomoyen(echomoyen);
-						cons.setSac(sac);
-						cons.setTonique(tonique);
-						cons.setConclusionobs(conclusionobs);
-						cons.setLcc(lcc);
-						cons.setBip(bip);
-						cons.setAc(ac);
-						cons.setEf(ef);
-						cons.setTrophoblaste(trophoblaste);
-						cons.setVesicule(vesicule);
-						cons.setAnnexesobs(annexesobs);
-						try {
-
-							honorairesobs = Float
-									.parseFloat(honoraireStringobs1);
-							setHonoraire(honorairesobs);
-
-						} catch (Exception e) {
-							honorairesobs = (float) 0;
-							msg = msg
-									+ "L'honoraire ne contient que des chiffres";
-							ConsultaionService serf = new ConsultaionService();
-							Consultation consf = serf
-									.rechercheParConsultation(consultationmotif);
-							honoraire = consf.getHonoraire();
-							honoraireStringobs1 = Double
-									.toString(honorairesobs);
-						}
-						cons.setHonoraire(honorairesobs);
-
-						cons.setConsultation(consultation);
-						cons.setDdr(ddr);
-						cons.setDdg(ddg);
-						cons.setDdgCorigee(ddgCorigee);
-						cons.setTermePrevu(termePrevu);
-						cons.setTermeActuel(termeActuel);
-						ser.ajouterConsultationDetail(cons);
-						this.blocage = false;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_INFO, "",
-								"Consultation Ajoutée Avec Succés"));
-						tempsface=3500;
-						action = null;
-						initialisationEchoObs();
-
 					}
 				}
 
-				else if (action.equals("modifier")) {
-					if (echomoyen == null || (echomoyen.trim().length() == 0)) {
-						blocage = true;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_ERROR, "Erreur",
-								"Veuillez saisir l'echo moyen"));
-
-					}
-					if (Module.corigerDate(dateconsultation1) != null) {
-						this.setDateconsultation1(Module
-								.corigerDate(dateconsultation1));
-					}
-					if (!(Module.verifierDate(dateconsultation1).equals("")))
-
-					{
-						blocage=true;
-						face.addMessage(
-								null,
-								new FacesMessage(Module
-										.verifierDate(dateconsultation1)));
-						dateconsultation1 = ancienValeur1;
-					}
-
-					else if (face.getMessageList().size() == 0)
-
-					{
-						ConsultationDetailService se = new ConsultationDetailService();
-
-						ConsultationDetail cons = se
-								.rechercheConsultationDetail(idConsultationDetail);
-
-						ConsultaionService s = new ConsultaionService();
-						consultation = s
-								.rechercheParConsultation(consultationmotif);
-						HttpSession session = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(false);
-						idPatient = (Integer) session.getAttribute("idu");
-						// idPatient = Module.idpatient;
-						Cfclient c = serclt.RechercheCfclient(idPatient);
-						try {
-							cons.setDateConsultation(formatter
-									.parse(dateconsultation1));
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-						cons.setCfclient(c);
-						cons.setSac(sac);
-						cons.setTonique(tonique);
-						cons.setConclusionobs(conclusionobs);
-						cons.setLcc(lcc);
-						cons.setBip(bip);
-						cons.setAc(ac);
-						cons.setEchomoyen(echomoyen);
-						cons.setEf(ef);
-						cons.setTrophoblaste(trophoblaste);
-						cons.setVesicule(vesicule);
-						cons.setAnnexesobs(annexesobs);
-						cons.setDdr(ddr);
-						cons.setDdg(ddg);
-						cons.setDdgCorigee(ddgCorigee);
-						cons.setTermePrevu(termePrevu);
-						cons.setTermeActuel(termeActuel);
-
-						cons.setHonoraire(honorairesobs);
-						cons.setConsultation(consultation);
-						se.modifierConsultationDetail(cons);
-						this.blocage = false;
-						tempsface=3500;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_INFO, "",
-								"Consultation Modifiée  Avec Succés"));
-						initialisationEchoObs();
-					}
-				}
 			}
+			if (trim == 3) {
+				if (action != null) {
+					if (action.equals("ajouter")) {
+						if (echomoyen == null
+								|| (echomoyen.trim().length() == 0)) {
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "Erreur",
+									"Veuillez saisir l'echo moyen"));
 
-		}
-		if (trim == 3) {
-			if (action != null) {
-				if (action.equals("ajouter")) {
-					if (echomoyen == null || (echomoyen.trim().length() == 0)) {
-						blocage = true;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_ERROR, "Erreur",
-								"Veuillez saisir l'echo moyen"));
+						}
+						if (Module.corigerDate(dateconsultation3) != null) {
+							this.setDateconsultation3(Module
+									.corigerDate(dateconsultation3));
+						}
+						if (!(Module.verifierDate(dateconsultation3).equals("")))
 
+						{
+							tempsface = 3500;
+							face.addMessage(null, new FacesMessage("Erreur",
+									Module.verifierDate(dateconsultation3)));
+							dateconsultation3 = ancienValeur3;
+						}
+
+						else if (face.getMessageList().size() == 0)
+
+						{
+							cons = new ConsultationDetail();
+							if (consultationmotif != null) {
+								ConsultaionService s = new ConsultaionService();
+								consultation = s
+										.rechercheParConsultation(consultationmotif);
+								cons.setConsultation(consultation);
+							}
+							HttpSession session = (HttpSession) FacesContext
+									.getCurrentInstance().getExternalContext()
+									.getSession(false);
+							idPatient = (Integer) session.getAttribute("idu");
+							// idPatient = Module.idpatient;
+							if (idPatient != null) {
+								Cfclient c = serclt
+										.RechercheCfclient(idPatient);
+								c.setDernierVisite(dateconsultation3);
+								c.setTypCons(consultationmotif);
+								c.setNbCons(c.getNbCons() + 1);
+								serclt.modifierPatient(c);
+								cons.setCfclient(c);
+							}
+							try {
+								cons.setDateConsultation(formatter
+										.parse(dateconsultation3));
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+							cons.setTrim(trim);
+							cons.setMorphologie(morphologie3);
+							cons.setLiq(liq3);
+							cons.setPlacenta(placenta3);
+							cons.setConclusionobs(conclusionobs3);
+							cons.setDat(dat3);
+							cons.setCa(ca3);
+							cons.setBip(bip3);
+							cons.setFemur(femur3);
+							cons.setHonoraire(honorairesobs3);
+							cons.setAc(ac3);
+							cons.setMf(mf3);
+							cons.setEchomoyen(echomoyen);
+							cons.setPresentation(presentation3);
+							cons.setConclusionobs(conclusionobs3);
+							cons.setDdr(ddr);
+							cons.setDdg(ddg);
+							cons.setDdgCorigee(ddgCorigee);
+							cons.setTermePrevu(termePrevu);
+							cons.setTermeActuel(termeActuel);
+
+							cons.setConsultation(consultation);
+							ser.ajouterConsultationDetail(cons);
+							this.blocage = false;
+							tempsface = 3500;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_INFO, "",
+									"Consultation Ajoutée Avec Succés"));
+							initialisationEchoObs();
+							afficheImprEchoObs = false;
+							afficheValidEchoObs = true;
+							selectedCons = cons;
+							action = null;
+
+						}
 					}
-					if (Module.corigerDate(dateconsultation3) != null) {
-						this.setDateconsultation3(Module
-								.corigerDate(dateconsultation3));
-					}
-					if (!(Module.verifierDate(dateconsultation3).equals("")))
 
-					{
-						tempsface = 3500;
-						face.addMessage(
-								null,
-								new FacesMessage("Erreur", Module
-										.verifierDate(dateconsultation3)));
-						dateconsultation3 = ancienValeur3;
-					}
+					else if (action.equals("modifier")) {
+						if (echomoyen == null
+								|| (echomoyen.trim().length() == 0)) {
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "Erreur",
+									"Veuillez saisir l'echo moyen "));
 
-					else if (face.getMessageList().size() == 0)
+						}
+						if (Module.corigerDate(dateconsultation3) != null) {
+							this.setDateconsultation3(Module
+									.corigerDate(dateconsultation3));
+						}
+						if (!(Module.verifierDate(dateconsultation3).equals(""))) {
+							blocage = true;
+							face.addMessage(
+									null,
+									new FacesMessage(Module
+											.verifierDate(dateconsultation3)));
+							dateconsultation3 = ancienValeur3;
+						}
 
-					{
-						ConsultationDetail cons = new ConsultationDetail();
-						if (consultationmotif != null) {
+						else if (face.getMessageList().size() == 0)
+
+						{
+							ConsultationDetailService se = new ConsultationDetailService();
+
+							cons = se
+									.rechercheConsultationDetail(idConsultationDetail);
+
 							ConsultaionService s = new ConsultaionService();
 							consultation = s
 									.rechercheParConsultation(consultationmotif);
-							cons.setConsultation(consultation);
-						}
-						HttpSession session = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(false);
-						idPatient = (Integer) session.getAttribute("idu");
-						// idPatient = Module.idpatient;
-						if (idPatient != null) {
+
+							HttpSession session = (HttpSession) FacesContext
+									.getCurrentInstance().getExternalContext()
+									.getSession(false);
+							idPatient = (Integer) session.getAttribute("idu");
+							// idPatient = Module.idpatient;
 							Cfclient c = serclt.RechercheCfclient(idPatient);
-							c.setDernierVisite(dateconsultation3);
-							c.setTypCons(consultationmotif);
-							c.setNbCons(c.getNbCons() + 1);
-							serclt.modifierPatient(c);
 							cons.setCfclient(c);
-						}
-						try {
-							cons.setDateConsultation(formatter
-									.parse(dateconsultation3));
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-						cons.setTrim(trim);
-						cons.setMorphologie(morphologie3);
-						cons.setLiq(liq3);
-						cons.setPlacenta(placenta3);
-						cons.setConclusionobs(conclusionobs3);
-						cons.setDat(dat3);
-						cons.setCa(ca3);
-						cons.setBip(bip3);
-						cons.setFemur(femur3);
-						cons.setHonoraire(honorairesobs3);
-						cons.setAc(ac3);
-						cons.setMf(mf3);
-						cons.setEchomoyen(echomoyen);
-						cons.setPresentation(presentation3);
-						cons.setConclusionobs(conclusionobs3);
-						cons.setDdr(ddr);
-						cons.setDdg(ddg);
-						cons.setDdgCorigee(ddgCorigee);
-						cons.setTermePrevu(termePrevu);
-						cons.setTermeActuel(termeActuel);
+							try {
+								cons.setDateConsultation(formatter
+										.parse(dateconsultation3));
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+							cons.setTrim(trim);
+							cons.setMorphologie(morphologie3);
+							cons.setLiq(liq3);
+							cons.setPlacenta(placenta3);
+							cons.setConclusionobs(conclusionobs3);
+							cons.setDdr(ddr);
+							cons.setDdg(ddg);
+							cons.setDdgCorigee(ddgCorigee);
+							cons.setTermePrevu(termePrevu);
+							cons.setTermeActuel(termeActuel);
 
-						cons.setConsultation(consultation);
-						ser.ajouterConsultationDetail(cons);
-						this.blocage = false;
-						tempsface=3500;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_INFO, "",
-								"Consultation Ajoutée Avec Succés"));
-						initialisationEchoObs();
-						action = null;
-
+							cons.setDat(dat3);
+							cons.setCa(ca3);
+							cons.setEchomoyen(echomoyen);
+							cons.setBip(bip3);
+							cons.setHonoraire(honorairesobs3);
+							cons.setFemur(femur3);
+							cons.setAc(ac3);
+							cons.setMf(mf3);
+							cons.setPresentation(presentation3);
+							cons.setConclusionobs(conclusionobs3);
+							cons.setConsultation(consultation);
+							se.modifierConsultationDetail(cons);
+							this.blocage = false;
+							tempsface = 3500;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_INFO, "",
+									"Consultation modifiée avec Succès"));
+							afficheImprEchoObs = false;
+							afficheValidEchoObs = true;
+							selectedCons = cons;
+							initialisationEchoObs();
+						}
 					}
 				}
 
-				else if (action.equals("modifier")) {
-					if (echomoyen == null || (echomoyen.trim().length() == 0)) {
-						blocage = true;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_ERROR, "Erreur",
-								"Veuillez saisir l'echo moyen "));
-
-					}
-					if (Module.corigerDate(dateconsultation3) != null) {
-						this.setDateconsultation3(Module
-								.corigerDate(dateconsultation3));
-					}
-					if (!(Module.verifierDate(dateconsultation3).equals(""))) {
-						blocage=true;
-						face.addMessage(
-								null,
-								new FacesMessage(Module
-										.verifierDate(dateconsultation3)));
-						dateconsultation3 = ancienValeur3;
-					}
-
-					else if (face.getMessageList().size() == 0)
-
-					{
-						ConsultationDetailService se = new ConsultationDetailService();
-
-						ConsultationDetail cons = se
-								.rechercheConsultationDetail(idConsultationDetail);
-
-						ConsultaionService s = new ConsultaionService();
-						consultation = s
-								.rechercheParConsultation(consultationmotif);
-
-						HttpSession session = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(false);
-						idPatient = (Integer) session.getAttribute("idu");
-						// idPatient = Module.idpatient;
-						Cfclient c = serclt.RechercheCfclient(idPatient);
-						cons.setCfclient(c);
-						try {
-							cons.setDateConsultation(formatter
-									.parse(dateconsultation3));
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-						cons.setTrim(trim);
-						cons.setMorphologie(morphologie3);
-						cons.setLiq(liq3);
-						cons.setPlacenta(placenta3);
-						cons.setConclusionobs(conclusionobs3);
-						cons.setDdr(ddr);
-						cons.setDdg(ddg);
-						cons.setDdgCorigee(ddgCorigee);
-						cons.setTermePrevu(termePrevu);
-						cons.setTermeActuel(termeActuel);
-
-						cons.setDat(dat3);
-						cons.setCa(ca3);
-						cons.setEchomoyen(echomoyen);
-						cons.setBip(bip3);
-						cons.setHonoraire(honorairesobs3);
-						cons.setFemur(femur3);
-						cons.setAc(ac3);
-						cons.setMf(mf3);
-						cons.setPresentation(presentation3);
-						cons.setConclusionobs(conclusionobs3);
-						cons.setConsultation(consultation);
-						se.modifierConsultationDetail(cons);
-						this.blocage = false;
-						tempsface=3500;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_INFO, "",
-								"Consultation modifiée avec Succès"));
-						initialisationEchoObs();
-					}
-				}
 			}
 
-		}
+			if (trim == 2) {
+				if (action != null) {
+					if (action.equals("ajouter")) {
+						if (echomoyen == null
+								|| (echomoyen.trim().length() == 0)) {
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "Erreur",
+									"Veuillez remplir l'echo vide"));
 
-		if (trim == 2) {
-			if (action != null) {
-				if (action.equals("ajouter")) {
-					if (echomoyen == null || (echomoyen.trim().length() == 0)) {
-						blocage = true;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_ERROR, "Erreur",
-								"Veuillez remplir l'echo vide"));
+						}
+						if (Module.corigerDate(dateconsultation2) != null) {
+							this.setDateconsultation2(Module
+									.corigerDate(dateconsultation2));
+						}
+						if (!(Module.verifierDate(dateconsultation2).equals("")))
 
+						{
+							this.blocage = true;
+							face.addMessage(
+									null,
+									new FacesMessage(
+											FacesMessage.SEVERITY_ERROR,
+											"",
+											Module.verifierDate(dateconsultation2)));
+							tempsface = 3500;
+							dateconsultation2 = ancienValeur2;
+						}
+
+						else if (face.getMessageList().size() == 0)
+
+						{
+							cons = new ConsultationDetail();
+							if (consultationmotif != null) {
+								ConsultaionService s = new ConsultaionService();
+								consultation = s
+										.rechercheParConsultation(consultationmotif);
+								cons.setConsultation(consultation);
+							}
+							HttpSession session = (HttpSession) FacesContext
+									.getCurrentInstance().getExternalContext()
+									.getSession(false);
+							idPatient = (Integer) session.getAttribute("idu");
+
+							// idPatient = Module.idpatient;
+							if (idPatient != null) {
+								Cfclient c = serclt
+										.RechercheCfclient(idPatient);
+								c.setDernierVisite(dateConsultation);
+								c.setTypCons(consultationmotif);
+								c.setNbCons(c.getNbCons() + 1);
+								serclt.modifierPatient(c);
+								cons.setCfclient(c);
+							}
+							try {
+								cons.setDateConsultation(formatter
+										.parse(dateconsultation2));
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+							cons.setTrim(trim);
+							cons.setMorphologie(morphologie2);
+							cons.setHonoraire(honorairesobs2);
+							cons.setLiq(liq2);
+							cons.setPlacenta(placenta2);
+							cons.setEchomoyen(echomoyen);
+							cons.setConclusionobs(conclusionobs2);
+							cons.setDat(dat2);
+							cons.setCa(ca2);
+							cons.setBip(bip2);
+							cons.setFemur(femur2);
+							cons.setAc(ac2);
+							cons.setMf(mf2);
+							cons.setPresentation(presentation2);
+							cons.setDdr(ddr);
+							cons.setDdg(ddg);
+							cons.setDdgCorigee(ddgCorigee);
+							cons.setTermePrevu(termePrevu);
+							cons.setTermeActuel(termeActuel);
+
+							cons.setConclusionobs(conclusionobs2);
+							cons.setConsultation(consultation);
+							ser.ajouterConsultationDetail(cons);
+							this.blocage = false;
+							tempsface = 3500;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_INFO, "",
+									"Consultation ajoutée avec succés"));
+							action = null;
+							initialisationEchoObs();
+							afficheImprEchoObs = false;
+							afficheValidEchoObs = true;
+							selectedCons = cons;
+
+						}
 					}
-					if (Module.corigerDate(dateconsultation2) != null) {
-						this.setDateconsultation2(Module
-								.corigerDate(dateconsultation2));
-					}
-					if (!(Module.verifierDate(dateconsultation2).equals("")))
 
-					{
-						this.blocage = true;
-						face.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"",
-										Module.verifierDate(dateconsultation2)));
-						tempsface = 3500;
-						dateconsultation2 = ancienValeur2;
-					}
+					else if (action.equals("modifier")) {
+						if (echomoyen == null
+								|| (echomoyen.trim().length() == 0)) {
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "Erreur",
+									"Veuillez remplir l' echo moyen "));
 
-					else if (face.getMessageList().size() == 0)
+						}
+						if (Module.corigerDate(dateconsultation2) != null) {
+							this.setDateconsultation2(Module
+									.corigerDate(dateconsultation2));
+						}
+						if (!(Module.verifierDate(dateconsultation2).equals("")))
 
-					{
-						ConsultationDetail cons = new ConsultationDetail();
-						if (consultationmotif != null) {
+						{
+							this.blocage = true;
+							face.addMessage(
+									null,
+									new FacesMessage(
+											FacesMessage.SEVERITY_ERROR,
+											"",
+											Module.verifierDate(dateconsultation2)));
+							tempsface = 3500;
+							dateconsultation2 = ancienValeur2;
+						} else if (face.getMessageList().size() == 0)
+
+						{
+							ConsultationDetailService se = new ConsultationDetailService();
+
+							cons = se
+									.rechercheConsultationDetail(idConsultationDetail);
+
 							ConsultaionService s = new ConsultaionService();
 							consultation = s
 									.rechercheParConsultation(consultationmotif);
-							cons.setConsultation(consultation);
-						}
-						HttpSession session = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(false);
-						idPatient = (Integer) session.getAttribute("idu");
 
-						// idPatient = Module.idpatient;
-						if (idPatient != null) {
+							HttpSession session = (HttpSession) FacesContext
+									.getCurrentInstance().getExternalContext()
+									.getSession(false);
+							idPatient = (Integer) session.getAttribute("idu");
+							// idPatient = Module.idpatient;
 							Cfclient c = serclt.RechercheCfclient(idPatient);
-							c.setDernierVisite(dateConsultation);
-							c.setTypCons(consultationmotif);
-							c.setNbCons(c.getNbCons() + 1);
-							serclt.modifierPatient(c);
 							cons.setCfclient(c);
+							try {
+								cons.setDateConsultation(formatter
+										.parse(dateconsultation2));
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+							cons.setTrim(trim);
+							cons.setMorphologie(morphologie2);
+							cons.setLiq(liq2);
+							cons.setPlacenta(placenta2);
+							cons.setConclusionobs(conclusionobs2);
+							cons.setDat(dat2);
+							cons.setEchomoyen(echomoyen);
+							cons.setCa(ca2);
+							cons.setBip(bip2);
+							cons.setFemur(femur2);
+							cons.setDdr(ddr);
+							cons.setDdg(ddg);
+							cons.setDdgCorigee(ddgCorigee);
+							cons.setTermePrevu(termePrevu);
+							cons.setTermeActuel(termeActuel);
+
+							cons.setAc(ac2);
+							cons.setMf(mf2);
+							cons.setHonoraire(honorairesobs2);
+							cons.setPresentation(presentation2);
+							cons.setConclusionobs(conclusionobs2);
+							cons.setConsultation(consultation);
+							se.modifierConsultationDetail(cons);
+							this.blocage = false;
+							tempsface = 3500;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_INFO, "",
+									"Consultation modifiée avec Succès"));
+							initialisationEchoObs();
+							afficheImprEchoObs = false;
+							afficheValidEchoObs = true;
+							selectedCons = cons;
+							CfclientService serclt1 = new CfclientService();
+							Cfclient clt = new Cfclient();
+							clt = serclt1.RechercheCfclient(idPatient);
+							ddr = clt.getDdr();
+							ddg = clt.getDdg();
+							termeActuel = clt.gettActuel();
+							termePrevu = clt.gettPrevu();
+
 						}
-						try {
-							cons.setDateConsultation(formatter
-									.parse(dateconsultation2));
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-						cons.setTrim(trim);
-						cons.setMorphologie(morphologie2);
-						cons.setHonoraire(honorairesobs2);
-						cons.setLiq(liq2);
-						cons.setPlacenta(placenta2);
-						cons.setEchomoyen(echomoyen);
-						cons.setConclusionobs(conclusionobs2);
-						cons.setDat(dat2);
-						cons.setCa(ca2);
-						cons.setBip(bip2);
-						cons.setFemur(femur2);
-						cons.setAc(ac2);
-						cons.setMf(mf2);
-						cons.setPresentation(presentation2);
-						cons.setDdr(ddr);
-						cons.setDdg(ddg);
-						cons.setDdgCorigee(ddgCorigee);
-						cons.setTermePrevu(termePrevu);
-						cons.setTermeActuel(termeActuel);
-
-						cons.setConclusionobs(conclusionobs2);
-						cons.setConsultation(consultation);
-						ser.ajouterConsultationDetail(cons);
-						this.blocage = false;
-						tempsface=3500;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_INFO, "",
-								"Consultation ajoutée avec succés"));
-						action = null;
-						initialisationEchoObs();
-
-					}
-				}
-
-				else if (action.equals("modifier")) {
-					if (echomoyen == null || (echomoyen.trim().length() == 0)) {
-						blocage = true;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_ERROR, "Erreur",
-								"Veuillez remplir l' echo moyen "));
-
-					}
-					if (Module.corigerDate(dateconsultation2) != null) {
-						this.setDateconsultation2(Module
-								.corigerDate(dateconsultation2));
-					}
-					if (!(Module.verifierDate(dateconsultation2).equals("")))
-
-					{
-						this.blocage = true;
-						face.addMessage(
-								null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR,
-										"",
-										Module.verifierDate(dateconsultation2)));
-						tempsface = 3500;
-						dateconsultation2 = ancienValeur2;
-					} else if (face.getMessageList().size() == 0)
-
-					{
-						ConsultationDetailService se = new ConsultationDetailService();
-
-						ConsultationDetail cons = se
-								.rechercheConsultationDetail(idConsultationDetail);
-
-						ConsultaionService s = new ConsultaionService();
-						consultation = s
-								.rechercheParConsultation(consultationmotif);
-
-						HttpSession session = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(false);
-						idPatient = (Integer) session.getAttribute("idu");
-						// idPatient = Module.idpatient;
-						Cfclient c = serclt.RechercheCfclient(idPatient);
-						cons.setCfclient(c);
-						try {
-							cons.setDateConsultation(formatter
-									.parse(dateconsultation2));
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-						cons.setTrim(trim);
-						cons.setMorphologie(morphologie2);
-						cons.setLiq(liq2);
-						cons.setPlacenta(placenta2);
-						cons.setConclusionobs(conclusionobs2);
-						cons.setDat(dat2);
-						cons.setEchomoyen(echomoyen);
-						cons.setCa(ca2);
-						cons.setBip(bip2);
-						cons.setFemur(femur2);
-						cons.setDdr(ddr);
-						cons.setDdg(ddg);
-						cons.setDdgCorigee(ddgCorigee);
-						cons.setTermePrevu(termePrevu);
-						cons.setTermeActuel(termeActuel);
-
-						cons.setAc(ac2);
-						cons.setMf(mf2);
-						cons.setHonoraire(honorairesobs2);
-						cons.setPresentation(presentation2);
-						cons.setConclusionobs(conclusionobs2);
-						cons.setConsultation(consultation);
-						se.modifierConsultationDetail(cons);
-						this.blocage = false;
-						tempsface=3500;
-						face.addMessage(null, new FacesMessage(
-								FacesMessage.SEVERITY_INFO, "",
-								"Consultation modifiée avec Succès"));
-						initialisationEchoObs();
-						CfclientService serclt1 = new CfclientService();
-						Cfclient clt = new Cfclient();
-						clt = serclt1.RechercheCfclient(idPatient);
-						ddr = clt.getDdr();
-						ddg = clt.getDdg();
-						termeActuel = clt.gettActuel();
-						termePrevu = clt.gettPrevu();
-
 					}
 				}
 			}
-		}
-		}
-		else if (action == null) {
+		} else if (action == null) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
 					"", "Aucune action n'est détectée"));
 		}
-       
+
 	}
 
 	public int getTempsgrowlconsechogyn() {
@@ -4883,7 +4884,6 @@ public class ConsultationDetailBean implements Serializable {
 			typeConsultation = "Suivi";
 
 		ancianTypeCons = typeConsultation;
-		// System.out.println("type de cons"+ancianTypeCons);
 
 		action = "modif";
 
@@ -4926,12 +4926,21 @@ public class ConsultationDetailBean implements Serializable {
 			Exception {
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
-		String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+		String age1;
 		String age = "";
-		if (age1 != null) {
-			age = "(" + age1 + ")";
-		}
 		String nomReport = "";
+
+		if (clt.getDateNaiss() != null)
+			age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+		else
+			age1 = "";
+
+		if (age1.equals("")) {
+			age = age1;
+		} else {
+			age = "( " + age1 + " )" + " Ans";
+		}
+
 		if (trim == 1)
 			nomReport = "echoObsTrim1";
 		if (trim == 2)
@@ -4939,65 +4948,20 @@ public class ConsultationDetailBean implements Serializable {
 		if (trim == 3)
 			nomReport = "echoObstetriqueTrim2";
 
-		// Connection connection = (Connection) DriverManager.getConnection(
-		// HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		// // File jasper = new File(FacesContext.getCurrentInstance()
-		// // .getExternalContext()
-		// // .getRealPath("/reports/" + nomReport + ".jasper"));
-		//
-		// JasperDesign jasperDesign = JRXmlLoader
-		// .load("C:/d/CabinetGynecoSoft/src/main/webapp/reports/echoObsTrim1.jrxml");
-		// JasperReport jasperReport = JasperCompileManager
-		// .compileReport(jasperDesign);
-		//
-		// Map<String, Object> param = new HashMap<String, Object>();
-		// param.put("idConsultation", idConsultationDetail);
-		// param.put("age", age);
-		//
-		// JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
-		// param, connection);
-		//
-		// JasperExportManager.exportReportToPdf(jasperPrint);
-		// byte[] bytes = JasperRunManager.runReportToPdf(jasperReport, param,
-		// connection);
-		// HttpServletResponse response = (HttpServletResponse) FacesContext
-		// .getCurrentInstance().getExternalContext().getResponse();
-		// response.setContentType("application/pdf");
-		// response.setContentLength(bytes.length);
-		//
-		// ServletOutputStream outStream = response.getOutputStream();
-		// outStream.write(bytes, 0, bytes.length);
-		// outStream.flush();
-		// outStream.close();
-		// FacesContext.getCurrentInstance().responseComplete();
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idConsultation", idConsultationDetail);
 		param.put("age", age);
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+		Module.imprimer(nomReport, param);
+
 	}
 
 	public void viewEchogyneco(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		String age1 ;
+		String age1;
 		String age;
-		Cfclient clt=null;
-		String nomReport=null;
-		
+		Cfclient clt = null;
+		String nomReport = null;
+
 		if (selectedCons != null) {
 			if (idUterus != null) {
 				UterusService seruterus = new UterusService();
@@ -5006,20 +4970,20 @@ public class ConsultationDetailBean implements Serializable {
 			}
 
 			CfclientService serclt = new CfclientService();
-			 clt = serclt.RechercheCfclient(idPatient);
-			 nomReport = "echoGynecologie";
-			
-			 if(clt.getDateNaiss()!=null)
-			      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-				 else
-					 age1="";
-	
-		if(age1.equals("")){
-			age=age1;
-		}else{
-			age="( "+age1+" )"+" Ans";
-		}
-			
+			clt = serclt.RechercheCfclient(idPatient);
+			nomReport = "echoGynecologie";
+
+			if (clt.getDateNaiss() != null)
+				age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+			else
+				age1 = "";
+
+			if (age1.equals("")) {
+				age = age1;
+			} else {
+				age = "( " + age1 + " )" + " Ans";
+			}
+
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idConsultation", idConsultationDetail);
 			param.put("age", age);
@@ -5031,45 +4995,9 @@ public class ConsultationDetailBean implements Serializable {
 			Module.imprimer(nomReport, param);
 		}
 
-}
+	}
 
 	public void onTypeConsultChange() {
-
-		// System.out.println("entree methode ontypechange");
-		// System.out.println("typeConsultation     "+typeConsultation+"ancianTypeCons    "+ancianTypeCons);
-		// if(ancianTypeCons.equals(typeConsultation)==false)
-		// {
-		//
-		// System.out.println("entree if 1");
-		//
-		//
-		// if((ancianTypeCons.equals("Nouvelle"))&&(typeConsultation.equals("Suivi")))
-		//
-		// {
-		// System.out.println("entree if 2");
-		// ConsultationDetailService serd =new ConsultationDetailService();
-		// HttpSession session = (HttpSession) FacesContext
-		// .getCurrentInstance().getExternalContext()
-		// .getSession(false);
-		// idPatient = (Integer) session.getAttribute("idu");
-		// List<ConsultationDetail>
-		// consultationDetails=serd.rechercheConsultationBytype(idPatient,1);
-		// System.out.println("size liste"+consultationDetails.size());
-		// ConsultationDetail cons
-		// =consultationDetails.get(consultationDetails.size()-2);
-		// System.out.println("cons"+cons.getDdg()+""+cons.getDdr());
-		// setDdg(cons.getDdg());
-		// setDdr(cons.getDdr());
-		// setTermeActuel(cons.getTermeActuel());
-		// setTermePrevu(cons.getTermePrevu());
-		//
-		// System.out.println("fin if 2");
-		//
-		//
-		// }
-		// }
-		// else if(ancianTypeCons.equals(typeConsultation))
-		// {
 
 		if ((ancianTypeCons == null)
 				|| (ancianTypeCons.equals(typeConsultation))) {
@@ -5096,7 +5024,6 @@ public class ConsultationDetailBean implements Serializable {
 					ddgCorigee = c.isDdgCorigee();
 					termePrevu = c.gettPrevu();
 					// terme actuel est tjrs calculé
-					// termeActuel = c.gettActuel();
 					if ((ddr != null)
 							&& (ddr.equals("") == false)
 							&& ((ddg != null) && (ddg.equals("") == false))
@@ -5164,7 +5091,6 @@ public class ConsultationDetailBean implements Serializable {
 						.getCurrentInstance().getExternalContext()
 						.getSession(false);
 				idPatient = (Integer) session.getAttribute("idu");
-				// idPatient = Module.idpatient;
 				CfclientService serc = new CfclientService();
 				Cfclient c = serc.RechercheCfclient(idPatient);
 				poids = c.getPoids();
@@ -5177,23 +5103,19 @@ public class ConsultationDetailBean implements Serializable {
 				Consultation cons = ser
 						.rechercheParConsultation(consultationmotif);
 				honoraire = cons.getHonoraire();
-
 				honorairestring = Double.toString(honoraire);
-
 				action = "ajout";
 				read = "editable";
-				// }
+				
 			}
 		} else {
 			if (ancianTypeCons.equals(typeConsultation) == false) {
 
-				// System.out.println("entree if 1");
 
 				if ((ancianTypeCons.equals("Nouvelle"))
 						&& (typeConsultation.equals("Suivi")))
 
 				{
-					// System.out.println("entree if 2");
 					ConsultationDetailService serd = new ConsultationDetailService();
 					HttpSession session = (HttpSession) FacesContext
 							.getCurrentInstance().getExternalContext()
@@ -5201,19 +5123,14 @@ public class ConsultationDetailBean implements Serializable {
 					idPatient = (Integer) session.getAttribute("idu");
 					List<ConsultationDetail> consultationDetails = serd
 							.rechercheConsultationBytype(idPatient, 1);
-					// System.out.println("size liste"+consultationDetails.size());
 					if (consultationDetails.size() > 1) {
 						ConsultationDetail cons = consultationDetails
 								.get(consultationDetails.size() - 2);
-						// System.out.println("cons"+cons.getDdg()+""+cons.getDdr());
 						setDdg(cons.getDdg());
 						setDdr(cons.getDdr());
 						setTermeActuel(cons.getTermeActuel());
 						setTermePrevu(cons.getTermePrevu());
 					}
-
-					// System.out.println("fin if 2");
-
 				}
 			}
 		}
@@ -5253,18 +5170,14 @@ public class ConsultationDetailBean implements Serializable {
 
 	public void ajoutConGenerale() {
 		notes = null;
-
 		cat = null;
 		symptome = null;
 		examen = null;
 		diagnostique = null;
 		Date actuelle = new Date();
-		// * Definition du format utilise pour les dates
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		this.dateConsultation = dateFormat.format(actuelle);
-
 		action = "ajouter";
-
 		read = "editable";
 	}
 
@@ -5283,7 +5196,6 @@ public class ConsultationDetailBean implements Serializable {
 			cd.setPoids(poids);
 			cd.setTas(tas);
 			cd.setTad(tad);
-
 			cd.setSymptome(symptome);
 			cd.setExamen(examen);
 			cd.setDiagnostique(diagnostique);
@@ -5330,16 +5242,8 @@ public class ConsultationDetailBean implements Serializable {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		Date actuelle = new Date();
-		// * Definition du format utilise pour les dates
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		// dateConsultation = dateFormat.format(actuelle);
-		// ConsultaionService ser = new ConsultaionService();
-		// Consultation cons = ser.rechercheParConsultation(consultationmotif);
+		
 		initialisationechogyneco();
-		// honoraire = cons.getHonoraire();
-		//
-		// honorairestring = Double.toString(honoraire);
 	}
 
 	public void goToEchoObstetricale() {
@@ -5370,30 +5274,8 @@ public class ConsultationDetailBean implements Serializable {
 			System.out.println(e.getMessage());
 		}
 		initialisationConGyneco();
-		// modif 10-06-2016
-		// Date actuelle = new Date();
-		// // * Definition du format utilise pour les dates
-		// DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		// dateConsultation = dateFormat.format(actuelle);
-
-		//
-
-		// ConsultaionService ser = new ConsultaionService();
-		// Consultation cons = ser.rechercheParConsultation(consultationmotif);
-		//
-		// honoraire = cons.getHonoraire();
-		//
-		// honorairestring = Double.toString(honoraire);
 		selectedCons = null;
 		selectedConsult = null;
-		// modif 10-06-2016
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);
-		// idPatient = (Integer) session.getAttribute("idu");
-		// CfclientService serclt = new CfclientService();
-		// Cfclient clt = serclt.RechercheCfclient(idPatient);
-		// poids = clt.getPoids();
-		// modif 10-06-2016
 		if (selectedCons == null) {
 
 			desibledAnalyse = true;
@@ -5417,12 +5299,7 @@ public class ConsultationDetailBean implements Serializable {
 			System.out.println(e.getMessage());
 		}
 		initialiserConObs();
-		// modif 10-06-2016
-		// Date actuelle = new Date();
-		// // * Definition du format utilise pour les dates
-		// DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		// dateConsultation = dateFormat.format(actuelle);
-		// modif 10-06-2016
+		
 		selectedCons = null;
 		selectedConsult = null;
 		typeConsultation = "--selectionner--";
@@ -5433,7 +5310,6 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idu", idPatient);
-		// Module.idpatient = idP;
 		idPatient = idP;
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -5486,34 +5362,6 @@ public class ConsultationDetailBean implements Serializable {
 					"Erreur", "il faut que entiers"));
 		}
 	}
-
-	// public void changeHonoraire() {
-	// FacesContext face = FacesContext.getCurrentInstance();
-	// Boolean testValid = true;
-	// String msg = "";
-	// try {
-	//
-	// honoraire = Float.parseFloat(honorairestring);
-	// setHonoraire(honoraire);
-	// testValid = true;
-	// } catch (Exception e) {
-	// honoraire = (float) 0;
-	// testValid = false;
-	// msg = msg + "L'honoraire ne contient que des chiffres";
-	// ConsultaionService serf = new ConsultaionService();
-	// Consultation consf = serf
-	// .rechercheParConsultation(consultationmotif);
-	// honoraire = consf.getHonoraire();
-	// honorairestring = Double.toString(honoraire);
-	// }
-	//
-	// if (testValid == false) {
-	// blocage = true;
-	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-	// "", msg));
-	// }
-	//
-	// }
 
 	public void changeHonoraireObs1() {
 		FacesContext face = FacesContext.getCurrentInstance();

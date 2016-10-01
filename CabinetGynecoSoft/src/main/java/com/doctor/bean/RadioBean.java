@@ -4,7 +4,6 @@ import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,6 +69,16 @@ public class RadioBean implements java.io.Serializable {
 	private String proprietaire;
 	private Date dateRadios;
 	private boolean consultation;
+	private boolean viewImprim = false;
+
+	public boolean isViewImprim() {
+
+		return viewImprim;
+	}
+
+	public void setViewImprim(boolean viewImprim) {
+		this.viewImprim = viewImprim;
+	}
 
 	public boolean isConsultation() {
 		if (action == null)
@@ -103,14 +112,15 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public void setDateRadios(Date dateRadios) {
-	
+
 		this.dateRadios = dateRadios;
 	}
-	
-	public void  changerDate(){
-		
+
+	public void changerDate() {
+
 		System.out.println("get in methode changerDate");
-		
+
+		// setDateRadios(dateRadios);
 		setDateRadios(dateRadios);
 		System.out.println("dateRadios dans changer date= "+dateRadios);
 		
@@ -187,26 +197,28 @@ public class RadioBean implements java.io.Serializable {
 
 	public void consulterRadio(SelectEvent event) {
 		action = "consulter";
+		viewImprim = false;
 		Radio r = (Radio) event.getObject();
-		
+
 		consultRadio = selectedRAdio;
 		desibledImpr = true;
 		examenComplementaire = r.getExamenComplementaire();
 		resultat = r.getResultat();
 		renseignementClinique = r.getRenseignementClinique();
 		dateRadios = r.getDateRadios();
-		
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		 dateRadio=formatter.format(dateRadios);
-		 
-		 proprietaire = r.getPossesseur();
-		 nomProprietaire = r.getProprietaire();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		dateRadio = formatter.format(dateRadios);
+
+		proprietaire = r.getPossesseur();
+		nomProprietaire = r.getProprietaire();
 
 	}
 
 	public void ajoutRad() {
-		selectedRAdio=null;
-		desibledImpr=false;
+		selectedRAdio = null;
+		viewImprim=true;
+		desibledImpr = false;
 		action = "ajout";
 		exam = null;
 		examenComplementaire = null;
@@ -219,83 +231,41 @@ public class RadioBean implements java.io.Serializable {
 
 		consultationDetail = new ConsultationDetailService()
 				.rechercheConsultationDetail(idconsultationDetail);
-		if (consultationDetail != null){
+		if (consultationDetail != null) {
 			dateRadios = consultationDetail.getDateConsultation();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
-				
-				dateRadio=sdf.format(dateRadios);
+
+				dateRadio = sdf.format(dateRadios);
 				dateRadios = sdf.parse(dateRadio);
-				
+
 			} catch (ParseException e) {
-				
+
 				e.printStackTrace();
 			}
-			
-			
-		    }
-		else{
+
+		} else {
 			dateRadios = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
-				dateRadio=sdf.format(dateRadios);
-				dateRadios=sdf.parse(sdf.format(dateRadios));
+				dateRadio = sdf.format(dateRadios);
+				dateRadios = sdf.parse(sdf.format(dateRadios));
 			} catch (ParseException e) {
-				
+
 				e.printStackTrace();
-			} 
-			
+			}
+
 		}
 		proprietaire = "Patiente";
 	}
 
 	public String getDateRadio() {
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);init
-
-		// idPatient = (Integer) session.getAttribute("idu");
-		//
-		// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-		// ConsultationDetailService sr = new ConsultationDetailService();
-		//
-		// if (idconsultationDetail != null) {
-		// consultationDetail = sr
-		// .rechercheConsultationDetail(idconsultationDetail);
-		// dateRadio = consultationDetail.getDateConsultation();
-		//
-		// // recherche radio lié à cette consultation si existe si non c'est
-		// // un nouveau radio
-		// RadioService ser = new RadioService();
-		//
-		// List<Radio> a =
-		// ser.rechercheRadioParConsultation(idconsultationDetail);
-		// if (a.size() > 0) {
-		// Radio r = a.get(0);
-		// idradio = r.getIdradio();
-		//
-		// action = "modification";
-		//
-		//
-		// modifRadio(idconsultationDetail);
-		// idradio = r.getIdradio();
-		// examenComplementaire = r.getExamenComplementaire();
-		// renseignementClinique = r.getRenseignementClinique();
-		// resultat = r.getResultat();
-		// action = "modification";
-		// }
-		//
-		//
-		// } else {
-		// action = "ajout";
-		// }
-		//
-		//
-
+		System.out.println("get in getdateradio le val de dateradio est=  "+dateRadio);
 		return dateRadio;
 	}
 
 	public void setDateRadio(String dateRadio) {
-
+		System.out.println("get in setdateradio le val de dateradio est=  "+dateRadio);
 		this.dateRadio = dateRadio;
 	}
 
@@ -414,102 +384,88 @@ public class RadioBean implements java.io.Serializable {
 
 		return idradio;
 	}
-private boolean blocage;
+
+	private boolean blocage;
 
 	public boolean isBlocage() {
-	return blocage;
-}
+		return blocage;
+	}
 
-public void setBlocage(boolean blocage) {
-	this.blocage = blocage;
-}
+	public void setBlocage(boolean blocage) {
+		this.blocage = blocage;
+	}
 
-	/*public void dateChange() {
-		//dateRadios=(Date) event.getObject();
-		System.out.println("dddd: "+dateRadios);
-		String dateString="";
-		//conertir en string 
-		if(dateRadios!= null){
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		 dateString = df.format(dateRadios);
-		System.out.println("date après conv  "+dateString);
-		}
-		
-		FacesContext faces = FacesContext.getCurrentInstance();
-		//Format format = new SimpleDateFormat("dd/MM/yyyy");
-		//String dateString = format.format(dateRadios);
-		//String dateString = dateRadios+"";
-		if (Module.corigerDate(dateString) != null) {
-			dateString=Module
-					.corigerDate(dateString);
-			System.out.println("date après correction= "+dateString);
-		}
-		if (!(Module.verifierDate(dateString).equals("")))
+	/*
+	 * public void dateChange() { //dateRadios=(Date) event.getObject();
+	 * System.out.println("dddd: "+dateRadios); String dateString=""; //conertir
+	 * en string if(dateRadios!= null){ DateFormat df = new
+	 * SimpleDateFormat("dd/MM/yyyy"); dateString = df.format(dateRadios);
+	 * System.out.println("date après conv  "+dateString); }
+	 * 
+	 * FacesContext faces = FacesContext.getCurrentInstance(); //Format format =
+	 * new SimpleDateFormat("dd/MM/yyyy"); //String dateString =
+	 * format.format(dateRadios); //String dateString = dateRadios+""; if
+	 * (Module.corigerDate(dateString) != null) { dateString=Module
+	 * .corigerDate(dateString);
+	 * System.out.println("date après correction= "+dateString); } if
+	 * (!(Module.verifierDate(dateString).equals("")))
+	 * 
+	 * {System.out.println("dddd"+Module.verifierDate(dateString));
+	 * faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+	 * Module.verifierDate(dateString))); blocage=true; dateRadios=new Date(); }
+	 * else { SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); try {
+	 * dateRadios=sdf.parse(dateString); } catch (ParseException e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * }
+	 * 
+	 * setDateRadios(dateRadios); }
+	 */
 
-		{System.out.println("dddd"+Module.verifierDate(dateString));
-			faces.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-							Module.verifierDate(dateString)));
-			blocage=true;
-			dateRadios=new Date();
+	public void verifierDateRadio(){ 
+		System.out.println("get in datechange");
+		setDateRadio(dateRadio);
+		System.out.println("val de dateRadio in verifdate=="+dateRadio);
+		FacesContext face = FacesContext.getCurrentInstance();
+		// Format format = new SimpleDateFormat("dd/MM/yyyy");
+
+		if ((dateRadio == null) || (dateRadio.equals(""))) {
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Veuillez saisi le date de radio", ""));
+
 		}
-		else
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				dateRadios=sdf.parse(dateString);
-			} catch (ParseException e) {
-				e.printStackTrace();
+
+		if ((dateRadio != null) && (dateRadio.length() != 0)) {
+			
+			if (Module.corigerDate(dateRadio) != null) {
+				this.setDateRadio(Module.corigerDate(dateRadio));
 			}
+			if (!(Module.verifierDate(dateRadio).equals("")))
 
-		}
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, Module
+								.verifierDate(dateRadio), ""));
 
-		setDateRadios(dateRadios);
-	}*/
+			} else {
 
+				try {
+					dateRadios = formatter.parse(dateRadio);
+				} catch (ParseException e) {
 
-public void dateChange() {
-	//System.out.println("dddd");
-	//conertir en string 
-	FacesContext faces = FacesContext.getCurrentInstance();
-	//Format format = new SimpleDateFormat("dd/MM/yyyy");
-	//String dateString = format.format(dateOrd);
-	String dateString = dateRadios+"";
-	//System.out.println("msg de verif date avant le if: "+Module.verifierDate(dateString));
-	System.out.println("get in datechange");
-	if (!(Module.verifierDate(dateString).equals("")))
-
-	{
-		System.out.println("msg de verif date: "+Module.verifierDate(dateString));
-		faces.addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, Module.verifierDate(dateString),
-						""));
-		RequestContext.getCurrentInstance().update("f1:growl");
-						
-		blocage=true;
-		dateRadios=new Date();
-	}
-	else
-	{
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			dateRadios=sdf.parse(dateString);
-		} catch (ParseException e) {
-			e.printStackTrace();
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
 
-	setDateRadios(dateRadios);
-}
-
-public void setIdradio(Integer idradio) {
-	this.idradio = idradio;
-}
-
-
-
-
+	public void setIdradio(Integer idradio) {
+		this.idradio = idradio;
+	}
 
 	// @PostConstruct
 	// public void intr(){
@@ -609,10 +565,11 @@ public void setIdradio(Integer idradio) {
 		desibledImpr = false;
 		consultRadio = null;
 		dateRadios = null;
-		dateRadio=null;
+		dateRadio = null;
 		proprietaire = null;
 		nomProprietaire = null;
-		consultation= true;
+		consultation = true;
+		viewImprim = true;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -652,63 +609,47 @@ public void setIdradio(Integer idradio) {
 		// RequestContext.getCurrentInstance().update("f1");
 		// setExamenComplementaire(examenComplementaire);
 	}
-	
+
 	public void verifDate() {
-		
-				FacesContext faces = FacesContext.getCurrentInstance();
-				
-				if (Module.corigerDate(dateRadio) != null) {
-					dateRadio=Module
-							.corigerDate(dateRadio);
-				}
-				if (!(Module.verifierDate(dateRadio).equals("")))
 
-				{
-					faces.addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-									Module.verifierDate(dateRadio)));
-					blocage=true;
-					dateRadios=new Date();
-				}
-				else
-				{
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					try {
-						dateRadios=sdf.parse(dateRadio);
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
+		FacesContext faces = FacesContext.getCurrentInstance();
 
-				}
+		if (Module.corigerDate(dateRadio) != null) {
+			dateRadio = Module.corigerDate(dateRadio);
+		}
+		if (!(Module.verifierDate(dateRadio).equals("")))
 
-				setDateRadios(dateRadios);
+		{
+			faces.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", Module
+							.verifierDate(dateRadio)));
+			blocage = true;
+			dateRadios = new Date();
+		} else {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				dateRadios = sdf.parse(dateRadio);
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
 
-	public void valider() {
-		//dateChange();
-		changerDate();
-		
-		FacesContext faces = FacesContext.getCurrentInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		dateRadio=formatter.format(dateRadios);
-		
-		System.out.println("dateRadio== "+dateRadio);
-		
-		boolean isDepasse=Module.dateDepassee(dateRadio);
-		
-		
-		System.out.println("isDepasse== "+isDepasse);
-		
-		if(isDepasse){
-			faces.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Date dépassée",
-							""));
-			RequestContext.getCurrentInstance().update("f1:growl");
-			
-			
 		}
+
+		setDateRadios(dateRadios);
+	}
+
+	public void valider() {
+		// dateChange();
+		// changerDate();
+		//RequestContext.getCurrentInstance().update(":f1");
+		FacesContext faces = FacesContext.getCurrentInstance();
+		// SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		// dateRadio=formatter.format(dateRadios);
+
 		
-	else{	
+        verifierDateRadio();
+        System.out.println("dateRadio après click valider== "+dateRadios);
 		ontextexamenChange();
 		onchangeRenseignementClinique();
 		onchangeresultat();
@@ -719,7 +660,7 @@ public void setIdradio(Integer idradio) {
 		r.setProprietaire(nomProprietaire);
 		r.setRenseignementClinique(renseignementClinique);
 		r.setResultat(resultat);
-		
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 
@@ -739,52 +680,54 @@ public void setIdradio(Integer idradio) {
 		FacesContext face = FacesContext.getCurrentInstance();
 		r.setConsultationDetail(consultationDetail);
 
-		if (action != null && action.equals("ajout")) {
-			new RadioService().ajoutRadio(r);
-			if (consultationDetail != null)
-				consultationDetail
-						.setNbRadio(consultationDetail.getNbRadio() + 1);
-			new ConsultationDetailService()
-					.modifierConsultationDetail(consultationDetail);
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Demande radio ajoutée avec succés", ""));
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			 try {
-					
-					 context.getExternalContext().redirect("DemandeRadio");
-					} catch (Exception e) {
-					 System.out.println(e.getMessage());
-					 }
-			selectedRAdio=r;
-			consultRadio=r;
-			desibledImpr=true;
-			
-			
+		if (face.getMessageList().size() == 0) {
+			if (action != null && action.equals("ajout")) {
+
+				new RadioService().ajoutRadio(r);
+				if (consultationDetail != null)
+					consultationDetail.setNbRadio(consultationDetail
+							.getNbRadio() + 1);
+				new ConsultationDetailService()
+						.modifierConsultationDetail(consultationDetail);
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO,
+						"Demande radio ajoutée avec succés", ""));
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				try {
+
+					context.getExternalContext().redirect("DemandeRadio");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				selectedRAdio = r;
+				consultRadio = r;
+				desibledImpr = true;
+
+			}
+			if (action != null && action.equals("modification")) {
+				r.setIdradio(idradio);
+				new RadioService().modifierRadio(r);
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Demande radio modifiée avec succès"));
+				CfclientService serclt = new CfclientService();
+				Cfclient clt = serclt.RechercheCfclient(idPatient);
+
+			}
 
 		}
-		if (action != null && action.equals("modification")) {
-			r.setIdradio(idradio);
-			new RadioService().modifierRadio(r);
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande radio modifiée avec succès"));
-			CfclientService serclt = new CfclientService();
-			Cfclient clt = serclt.RechercheCfclient(idPatient);
-
-		}
-
-	
 		exam = null;
 		examenComplementaire = null;
 		resultat = null;
 		renseignementClinique = null;
 		dateRadios = null;
-		dateRadio=null;
+		dateRadio = null;
 		proprietaire = null;
 		nomProprietaire = null;
 		action = null;
-		
-	}
+		viewImprim = false;
+
 		// try {
 		//
 		// context.getExternalContext().redirect("DemandeRadio");
@@ -1144,8 +1087,8 @@ public void setIdradio(Integer idradio) {
 		new RadioService().supprimerRadio(idradio);
 
 		FacesContext face = FacesContext.getCurrentInstance();
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Demande de radio supprimée avec succés",
-				""));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Demande de radio supprimée avec succés", ""));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -1193,44 +1136,42 @@ public void setIdradio(Integer idradio) {
 
 	public void corection() {
 		FacesContext face = FacesContext.getCurrentInstance();
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Radio supprimée avec succés",
-				""));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Radio supprimée avec succés", ""));
 	}
 
 	public void viewRadio(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		System.out.println("consultRadio=="+consultRadio);
+		System.out.println("consultRadio==" + consultRadio);
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
 		String age1;
 		String age;
-		
-		System.out.println("proprietaire== "+proprietaire);
+
+		System.out.println("proprietaire== " + proprietaire);
 		if (consultRadio != null) {
-			
-			if(proprietaire.equals("Patiente")){
-				 if(clt.getDateNaiss()!=null)
-			      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-				 else
-					 age1="";
-				 
-			  
-			}else{
-				if(clt.getDateNaissC()!=null)
-				 age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+
+			if (proprietaire.equals("Patiente")) {
+				if (clt.getDateNaiss() != null)
+					age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 				else
-					age1="";	
+					age1 = "";
+
+			} else {
+				if (clt.getDateNaissC() != null)
+					age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+				else
+					age1 = "";
 			}
-	
-		if(age1.equals("")){
-			age=age1;
-		}else{
-			age="( "+age1+" )"+" Ans";
-		}
-			
+
+			if (age1.equals("")) {
+				age = age1;
+			} else {
+				age = "( " + age1 + " )" + " Ans";
+			}
 
 			String nomReport = "demandeRadio";
-			
+
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idrad", consultRadio.getIdradio());
 			param.put("age", age);
