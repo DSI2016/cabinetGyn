@@ -86,9 +86,9 @@
 							<td width="300px"><p:outputLabel for="button" value="Date:  " />
 								<p:calendar id="button"
 									disabled="#{ordonnanceBean.consultation}" converterMessage="Veuillez vérifier la date que vous avez saisi"
-									value="#{ordonnanceBean.dateOrd}" showOn="button" size="7" onblur="#{ordonnanceBean.dateChange()}" 
+									value="#{ordonnanceBean.dateOrdon}"  size="7" onchange="#{ordonnanceBean.dateChange()}" 
 									pattern="dd/MM/yyyy">
-									<p:ajax event="blur"  update="button,:f1:growl"></p:ajax>
+									<p:ajax event="change"  update="button,:f1:growl"></p:ajax>
 								</p:calendar></td>
 
 							<td><h:panelGrid columns="3">
@@ -113,7 +113,7 @@
 
 								</h:panelGrid></td>
 							<td align="right"><p:commandButton value="Nouveau"
-									icon="ui-icon-plus" style="font-size:small;font-weight:bold"
+									icon="ui-icon-plus" style="font-size:small;font-weight:bold" disabled="#{not ordonnanceBean.consultation}"
 									actionListener="#{ordonnanceBean.nouvelOrd()}" update=":f1"></p:commandButton>
 							</td>
 						</tr>
@@ -295,9 +295,9 @@
 									<br></br>
 									<div align="center">
 										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-check"
-											actionListener="#{ordonnanceBean.validerOrd}" value="Valider"
-											disabled="#{ordonnanceBean.consultation}" immediate="true"
-											ajax="false" rendered="#{!connectionBean.consultDetOrd}">
+											actionListener="#{ordonnanceBean.validationOrd}" value="Valider"
+											disabled="#{ordonnanceBean.consultation}" 
+											 rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>
 
 										<p:commandButton value="Annuler"
