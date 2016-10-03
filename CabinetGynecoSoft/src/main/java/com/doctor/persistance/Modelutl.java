@@ -43,6 +43,7 @@ public class Modelutl implements Serializable {
 	private String dernierPatSal;
 	private String supPatSal;
 	private String chargPatSal;
+	private boolean supAnulSal;
 	private String ajoutDoc;
 	private String modifDoc;
 	private String supDoc;
@@ -1646,6 +1647,15 @@ public class Modelutl implements Serializable {
 	}
 	public void setGestLettre(boolean gestLettre) {
 		this.gestLettre = gestLettre;
+	}
+	
+	
+	
+	public boolean isSupAnulSal() {
+		return supAnulSal;
+	}
+	public void setSupAnulSal(boolean supAnulSal) {
+		this.supAnulSal = supAnulSal;
 	}
 	@Override
 	public int hashCode() {

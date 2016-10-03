@@ -155,7 +155,12 @@
 											<p:ajax listener="#{radioBean.annulation()}" />
 										</p:commandButton></td>
 									<td width="500px"><p:commandButton value="Imprimer"
-											actionListener="#{radioBean.viewRadio}" icon="ui-icon-print"
+
+									        ajax="false"
+											actionListener="#{radioBean.viewRadio}" 
+											icon="ui-icon-print"
+
+
 											disabled="#{radioBean.viewImprim}"
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
