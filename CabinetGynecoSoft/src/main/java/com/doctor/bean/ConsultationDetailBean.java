@@ -1941,7 +1941,7 @@ public class ConsultationDetailBean implements Serializable {
 		idPatient = (Integer) session.getAttribute("idu");
 		session.setAttribute("idu", idPatient);
 		session.setAttribute("source", "Consultation-Gynecologique");
-		// session.setAttribute("act", "ajoutCons");
+		//session.setAttribute("act", "ajoutCons");
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("NouvelleOrdonnance");

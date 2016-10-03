@@ -165,7 +165,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		AnalyseDemandeeService ser = new AnalyseDemandeeService();
 		analysesParPatient = ser.rechercheAnalyseDemandeeParPatient(idPatient);
 
@@ -276,7 +275,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		return idPatient;
 	}
 
@@ -711,7 +709,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 					.getCurrentInstance().getExternalContext()
 					.getSession(false);
 			idPatient = (Integer) session.getAttribute("idu");
-			// idPatient = Module.idpatient;
 			idConsultationDetail = (Integer) session.getAttribute("idConsultD");
 
 			ConsultationDetailService sr = new ConsultationDetailService();
