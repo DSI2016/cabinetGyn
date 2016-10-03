@@ -51,8 +51,12 @@
 											<p:calendar
 												id="button" value="#{analyseDemandeeBean.dateAna}"
 												disabled="#{analyseDemandeeBean.consultation}"
+												converterMessage="Veuillez vérifier la date que vous avez saisi"
 												showOn="button" size="7" pattern="dd/MM/yyyy" >
-												<p:ajax event="blur" listener="#{analyseDemandeeBean.changerDate}"></p:ajax>
+												<p:ajax  listener="#{analyseDemandeeBean.dateChange2}"
+												update="button,:f1:growl"></p:ajax>
+											<p:ajax event="dateSelect" listener="#{analyseDemandeeBean.dateChange}"
+												update="button,:f1:growl"></p:ajax>
 												</p:calendar>
 												
 												</td>
@@ -194,29 +198,27 @@
 								</p:panel>
 
 
-								<table>
+								<table border="1">
 									<tr>
-										<td width="500px"></td>
+										<td></td>
 										<td><p:commandButton value="Valider"
 												disabled="#{analyseDemandeeBean.consultation}"
 												rendered="#{!connectionBean.consultDetAnal}" 
 												actionListener="#{analyseDemandeeBean.valider}"
-												action="#{analyseDemandeeBean.redirect()}"
-												immediate="true" ajax="false"
-												
 												style="font-size:12pt;font-weight:bold">
 											</p:commandButton></td>
-										<td width="500px"><p:commandButton value="Annuler"
+										<td><p:commandButton value="Annuler"
 												rendered="#{!connectionBean.consultDetAnal}"
 												style="font-size:12pt;font-weight:bold">
 												<p:ajax listener="#{analyseDemandeeBean.annulation()}" />
 											</p:commandButton></td>
-										<td><h:commandLink
-												actionListener="#{analyseDemandeeBean.selectAnalyse}"
-												rendered="#{analyseDemandeeBean.desibledImpr}">
-												<p:graphicImage value="/imagesMenu/imprimente10.png">
-												</p:graphicImage>
-											</h:commandLink></td>
+										<td>
+										<p:commandButton value="Imprimer"
+											actionListener="#{analyseDemandeeBean.selectAnalyse}" icon="ui-icon-print"
+											disabled="#{radioBean.viewImprim}"
+											style="font-size:12pt;font-weight:bold">
+										</p:commandButton>
+										</td>
 									</tr>
 								</table>
 							</p:panel>

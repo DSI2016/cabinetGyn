@@ -233,12 +233,8 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	
 	public void initApresValidation(){
 		desibledImpr=false;
-		action = null;
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-		idPatient = (Integer) session.getAttribute("idu");
-		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
-		consultation=false;
+		initialisationAnalysea();
+		redirect();
 		
 	}
 	
@@ -401,7 +397,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 	public void valider(ActionEvent actionEvent) throws SQLException, Exception {
 		
-		changerDate();
+		//changerDate();
 		FacesContext face = FacesContext.getCurrentInstance();
 		AnalyseDemandeeService ser = new AnalyseDemandeeService();
 		AnalyseDemandee ana = new AnalyseDemandee();
@@ -438,7 +434,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			
 			ser.ajoutAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse ajoutée avec succés"));
+					"Demande analyse ajoutée avec succés", ""));
 			
 			
 			
@@ -451,16 +447,16 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
 			
-			initApresValidation();
+			
 			desibledImpr = true;
 			selectedAnalyse = ana;
-			
+			initApresValidation();
 		}
 		if (action != null && action.equals("Modif")) {
 			ana.setIdanalyseDemandee(idanalyseDemandee);
 			ser.modifierAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse modifiée avec succés"));
+					"Demande analyse modifiée avec succés", ""));
 			
 			clt.setToxo(toxo);
 			clt.setTpha(tpha);
@@ -827,8 +823,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		String age;
 		if (selectedAnalyse != null) {
 			String nomReport = "demandeAnalyse";
-			
-			
 					if(proprietaire.equals("Patiente")){
 						 if(clt.getDateNaiss()!=null)
 					      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
@@ -1045,5 +1039,16 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			 .redirect("HistoriqueAnalyses");
 			 } catch (Exception e) {
 			}
+	}
+	
+	public void dateChange(SelectEvent event) {
+
+		setDateAna((Date) event.getObject());
+		setDateAna(dateAna);
+	}
+
+	public void dateChange2() {
+
+		setDateAna(dateAna);
 	}
 }
