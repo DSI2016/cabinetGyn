@@ -15,7 +15,8 @@
 		<br />
 		<div align="left">
 			<h:form id="f1">
-				<p:growl id="growl" showDetail="false" life="3000" sticky="#{radioBean.blocage}" />
+				<p:growl id="growl" showDetail="false" life="3000"
+					sticky="#{radioBean.blocage}" />
 				<table>
 					<tr>
 						<td><h:commandLink
@@ -45,20 +46,16 @@
 							<table border="0" align="center" width="90%">
 								<tr>
 									<td><h:outputText value="Date:"
-											style="font-size:12pt;font-weight:bold" /> 
-									
-									
-								       
-										
-										<p:inputMask mask="99/99/9999"  value="#{radioBean.dateRadio}"
-													id="button" 
-													style="width:100px;font-weight:bold"
-													disabled="#{radioBean.consultation}">
-										</p:inputMask>
-											
-											
-								
-										</td>
+											style="font-size:12pt;font-weight:bold" /> <p:calendar
+											id="button" disabled="#{radioBean.consultation}"
+											converterMessage="Veuillez vérifier la date que vous avez saisi"
+											value="#{radioBean.dateRadios}" size="7"
+											 pattern="dd/MM/yyyy">
+											<p:ajax  listener="#{radioBean.dateChange2}"
+												update="button,:f1:growl"></p:ajax>
+											<p:ajax event="dateSelect" listener="#{radioBean.dateChange}"
+												update="button,:f1:growl"></p:ajax>
+										</p:calendar></td>
 									<td align="right"><h:panelGrid columns="3">
 											<h:outputText value="Radio pour : "
 												style="font-size:13pt;font-weight:bold" />
@@ -149,22 +146,20 @@
 									<td width="500px"></td>
 									<td><p:commandButton value="Valider"
 											actionListener="#{radioBean.valider}" update=":f1:growl,:f1"
-											immediate="true" 
-											disabled="#{radioBean.consultation}"
+											immediate="true" disabled="#{radioBean.consultation}"
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
-									<td ><p:commandButton value="Annuler"
+									<td><p:commandButton value="Annuler"
 											rendered="#{!connectionBean.consultDetRad}"
 											style="font-size:12pt;font-weight:bold">
 											<p:ajax listener="#{radioBean.annulation()}" />
 										</p:commandButton></td>
 									<td width="500px"><p:commandButton value="Imprimer"
-											actionListener="#{radioBean.viewRadio}" 
-											icon="ui-icon-print"
+											actionListener="#{radioBean.viewRadio}" icon="ui-icon-print"
 											disabled="#{radioBean.viewImprim}"
 											style="font-size:12pt;font-weight:bold">
-										</p:commandButton></td>	
-									
+										</p:commandButton></td>
+
 								</tr>
 							</table>
 						</p:panel>

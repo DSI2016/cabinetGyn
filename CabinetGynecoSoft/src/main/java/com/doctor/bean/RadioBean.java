@@ -2,7 +2,6 @@ package com.doctor.bean;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +42,7 @@ public class RadioBean implements java.io.Serializable {
 	private ConsultationDetail consultationDetail;
 	private Integer idconsultationDetail;
 	private String exam;
-	private String dateRadio;
+	// private String dateRadio;
 	private Radio consultRadio;
 	private String action = "";
 	private Cfclient cfclient;
@@ -187,8 +186,8 @@ public class RadioBean implements java.io.Serializable {
 		renseignementClinique = r.getRenseignementClinique();
 		dateRadios = r.getDateRadios();
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		dateRadio = formatter.format(dateRadios);
+		// SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		// dateRadio = formatter.format(dateRadios);
 
 		proprietaire = r.getPossesseur();
 		nomProprietaire = r.getProprietaire();
@@ -213,41 +212,41 @@ public class RadioBean implements java.io.Serializable {
 				.rechercheConsultationDetail(idconsultationDetail);
 		if (consultationDetail != null) {
 			dateRadios = consultationDetail.getDateConsultation();
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-
-				dateRadio = sdf.format(dateRadios);
-				dateRadios = sdf.parse(dateRadio);
-
-			} catch (ParseException e) {
-
-				e.printStackTrace();
-			}
+			// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			// try {
+			//
+			// dateRadio = sdf.format(dateRadios);
+			// dateRadios = sdf.parse(dateRadio);
+			//
+			// } catch (ParseException e) {
+			//
+			// e.printStackTrace();
+			// }
 
 		} else {
 			dateRadios = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				dateRadio = sdf.format(dateRadios);
-				dateRadios = sdf.parse(sdf.format(dateRadios));
-			} catch (ParseException e) {
-
-				e.printStackTrace();
-			}
+			// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			// try {
+			// dateRadio = sdf.format(dateRadios);
+			// dateRadios = sdf.parse(sdf.format(dateRadios));
+			// } catch (ParseException e) {
+			//
+			// e.printStackTrace();
+			// }
 
 		}
 		proprietaire = "Patiente";
 	}
 
-	public String getDateRadio() {
-	
-		return dateRadio;
-	}
-
-	public void setDateRadio(String dateRadio) {
-		
-		this.dateRadio = dateRadio;
-	}
+	// public String getDateRadio() {
+	//
+	// return dateRadio;
+	// }
+	//
+	// public void setDateRadio(String dateRadio) {
+	//
+	// this.dateRadio = dateRadio;
+	// }
 
 	public String getAction() {
 		return action;
@@ -355,43 +354,43 @@ public class RadioBean implements java.io.Serializable {
 		this.blocage = blocage;
 	}
 
-	public void verifierDateRadio() {
-		setDateRadio(dateRadio);
-		FacesContext face = FacesContext.getCurrentInstance();
-
-		if ((dateRadio == null) || (dateRadio.equals(""))) {
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Veuillez saisi le date de radio", ""));
-
-		}
-
-		if ((dateRadio != null) && (dateRadio.length() != 0)) {
-
-			if (Module.corigerDate(dateRadio) != null) {
-				this.setDateRadio(Module.corigerDate(dateRadio));
-			}
-			if (!(Module.verifierDate(dateRadio).equals("")))
-
-			{
-				blocage = true;
-				face.addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, Module
-								.verifierDate(dateRadio), ""));
-
-			} else {
-
-				try {
-					dateRadios = formatter.parse(dateRadio);
-				} catch (ParseException e) {
-
-					e.printStackTrace();
-				}
-			}
-		}
-
-	}
+	// public void verifierDateRadio() {
+	// setDateRadio(dateRadio);
+	// FacesContext face = FacesContext.getCurrentInstance();
+	//
+	// if ((dateRadio == null) || (dateRadio.equals(""))) {
+	// blocage = true;
+	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	// "Veuillez saisi le date de radio", ""));
+	//
+	// }
+	//
+	// if ((dateRadio != null) && (dateRadio.length() != 0)) {
+	//
+	// if (Module.corigerDate(dateRadio) != null) {
+	// this.setDateRadio(Module.corigerDate(dateRadio));
+	// }
+	// if (!(Module.verifierDate(dateRadio).equals("")))
+	//
+	// {
+	// blocage = true;
+	// face.addMessage(
+	// null,
+	// new FacesMessage(FacesMessage.SEVERITY_ERROR, Module
+	// .verifierDate(dateRadio), ""));
+	//
+	// } else {
+	//
+	// try {
+	// dateRadios = formatter.parse(dateRadio);
+	// } catch (ParseException e) {
+	//
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	//
+	// }
 
 	public void setIdradio(Integer idradio) {
 		this.idradio = idradio;
@@ -442,7 +441,7 @@ public class RadioBean implements java.io.Serializable {
 		desibledImpr = false;
 		consultRadio = null;
 		dateRadios = null;
-		dateRadio = null;
+		// dateRadio = null;
 		proprietaire = null;
 		nomProprietaire = null;
 		consultation = true;
@@ -485,42 +484,19 @@ public class RadioBean implements java.io.Serializable {
 		}
 	}
 
-	public void verifDate() {
-
-		FacesContext faces = FacesContext.getCurrentInstance();
-
-		if (Module.corigerDate(dateRadio) != null) {
-			dateRadio = Module.corigerDate(dateRadio);
-		}
-		if (!(Module.verifierDate(dateRadio).equals("")))
-
-		{
-			faces.addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", Module
-							.verifierDate(dateRadio)));
-			blocage = true;
-			dateRadios = new Date();
-		} else {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				dateRadios = sdf.parse(dateRadio);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		setDateRadios(dateRadios);
-	}
-
 	public void valider() {
-		verifierDateRadio();
-		ontextexamenChange();
-		onchangeRenseignementClinique();
-		onchangeresultat();
+		FacesContext face = FacesContext.getCurrentInstance();
 		Radio r = new Radio();
-		r.setDateRadios(dateRadios);
+		String dateRadioS = formatter.format(dateRadios);
+		if (Module.dateDepassee(dateRadioS))
+			face.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"La date saisie a dépassé la date de jour", ""));
+		if( Module.dateTresAncien(dateRadioS))
+			face.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"La date saisie est très ancienne", ""));;
+			r.setDateRadios(dateRadios);
 		r.setExamenComplementaire(examenComplementaire);
 		r.setPossesseur(proprietaire);
 		r.setProprietaire(nomProprietaire);
@@ -543,9 +519,8 @@ public class RadioBean implements java.io.Serializable {
 				r.setPatient(cfclient);
 		}
 
-		FacesContext face = FacesContext.getCurrentInstance();
+		
 		r.setConsultationDetail(consultationDetail);
-
 		if (face.getMessageList().size() == 0) {
 			if (action != null && action.equals("ajout")) {
 
@@ -579,18 +554,20 @@ public class RadioBean implements java.io.Serializable {
 						"Demande radio modifiée avec succès"));
 
 			}
-
+			exam = null;
+			examenComplementaire = null;
+			resultat = null;
+			renseignementClinique = null;
+			dateRadios = null;
+			// dateRadio = null;
+			proprietaire = null;
+			nomProprietaire = null;
+			action = null;
+			viewImprim = false;
 		}
-		exam = null;
-		examenComplementaire = null;
-		resultat = null;
-		renseignementClinique = null;
-		dateRadios = null;
-		dateRadio = null;
-		proprietaire = null;
-		nomProprietaire = null;
-		action = null;
-		viewImprim = false;
+		else
+			blocage=true;
+		
 	}
 
 	public void validerHisto() {
@@ -640,52 +617,52 @@ public class RadioBean implements java.io.Serializable {
 		setExamenComplementaire(examenComplementaire);
 	}
 
-	public void verifierDate() {
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(dateRadio) != null) {
-			this.setDateRadio(Module.corigerDate(dateRadio));
-		}
-		if (!(Module.verifierDate(dateRadio).equals("")))
+	// public void verifierDate() {
+	// FacesContext face = FacesContext.getCurrentInstance();
+	// if (Module.corigerDate(dateRadio) != null) {
+	// this.setDateRadio(Module.corigerDate(dateRadio));
+	// }
+	// if (!(Module.verifierDate(dateRadio).equals("")))
+	//
+	// {
+	// // blocage = true;
+	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	// "", Module.verifierDate(dateRadio)));
+	// HttpSession session = (HttpSession) FacesContext
+	// .getCurrentInstance().getExternalContext()
+	// .getSession(false);
+	// idPatient = (Integer) session.getAttribute("idu");
+	//
+	// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
+	// ConsultationDetailService sr = new ConsultationDetailService();
+	//
+	// if (idconsultationDetail != null) {
+	// consultationDetail = sr
+	// .rechercheConsultationDetail(idconsultationDetail);
+	// dateRadio = formatter.format(consultationDetail
+	// .getDateConsultation());
+	// }
+	//
+	// }
+	//
+	// }
 
-		{
-			// blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateRadio)));
-			HttpSession session = (HttpSession) FacesContext
-					.getCurrentInstance().getExternalContext()
-					.getSession(false);
-			idPatient = (Integer) session.getAttribute("idu");
-
-			idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-			ConsultationDetailService sr = new ConsultationDetailService();
-
-			if (idconsultationDetail != null) {
-				consultationDetail = sr
-						.rechercheConsultationDetail(idconsultationDetail);
-				dateRadio = formatter.format(consultationDetail
-						.getDateConsultation());
-			}
-
-		}
-
-	}
-
-	public void verifierDate1() {
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(dateRadio) != null) {
-			this.setDateRadio(Module.corigerDate(dateRadio));
-		}
-		if (!(Module.verifierDate(dateRadio).equals("")))
-
-		{
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateRadio)));
-
-			this.dateRadio = ancienValeur;
-
-		} else
-			this.dateRadio = ancienValeur;
-	}
+	// public void verifierDate1() {
+	// FacesContext face = FacesContext.getCurrentInstance();
+	// if (Module.corigerDate(dateRadio) != null) {
+	// this.setDateRadio(Module.corigerDate(dateRadio));
+	// }
+	// if (!(Module.verifierDate(dateRadio).equals("")))
+	//
+	// {
+	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	// "", Module.verifierDate(dateRadio)));
+	//
+	// this.dateRadio = ancienValeur;
+	//
+	// } else
+	// this.dateRadio = ancienValeur;
+	// }
 
 	public String getAncienValeur() {
 		return ancienValeur;
@@ -704,8 +681,9 @@ public class RadioBean implements java.io.Serializable {
 			ConsultationDetailService sr = new ConsultationDetailService();
 			consultationDetail = sr
 					.rechercheConsultationDetail(idconsultationDetail);
-			dateRadio = formatter.format(consultationDetail
-					.getDateConsultation());
+			dateRadios = consultationDetail.getDateConsultation();
+			// dateRadio = formatter.format(consultationDetail
+			// .getDateConsultation());
 		}
 	}
 
@@ -717,9 +695,9 @@ public class RadioBean implements java.io.Serializable {
 		setRenseignementClinique(renseignementClinique);
 	}
 
-	public void onchangedateRadio() {
-		setRenseignementClinique(dateRadio);
-	}
+	// public void onchangedateRadio() {
+	// setRenseignementClinique(dateRadio);
+	// }
 
 	public void onchangeresultat() {
 		setResultat(resultat);
@@ -883,8 +861,9 @@ public class RadioBean implements java.io.Serializable {
 		if (idconsultationDetail != null) {
 			consultationDetail = sr
 					.rechercheConsultationDetail(idconsultationDetail);
-			dateRadio = formatter.format(consultationDetail
-					.getDateConsultation());
+			dateRadios = consultationDetail.getDateConsultation();
+			// dateRadio = formatter.format(consultationDetail
+			// .getDateConsultation());
 			// recherche analyse lié à cette consultation si existe si non c'est
 			// une nouvelle analyse
 			RadioService ser = new RadioService();
@@ -1059,7 +1038,7 @@ public class RadioBean implements java.io.Serializable {
 	{
 		Radio r = (Radio) event.getObject();
 		idradio = r.getIdradio();
-		selectedRAdio=r;
+		selectedRAdio = r;
 		impress = false;
 		desibledImpr = true;
 	}
@@ -1102,5 +1081,16 @@ public class RadioBean implements java.io.Serializable {
 
 	public void setImpress(boolean impress) {
 		this.impress = impress;
+	}
+
+	public void dateChange(SelectEvent event) {
+
+		setDateRadios((Date) event.getObject());
+		setDateRadios(dateRadios);
+	}
+
+	public void dateChange2() {
+
+		setDateRadios(dateRadios);
 	}
 }
