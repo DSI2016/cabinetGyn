@@ -128,32 +128,37 @@
 
 							<p:splitButton value="Permuter" ajax="true"
 								style="font-size:13pt;font-weight:bold"
-								update=":f1" actionListener="#{salleBean.getParameter(salle)}" 
-								oncomplete="PF('modord').show()">
+								update=":f1" actionListener="#{salleBean.getParameter(salle,connectionBean.permuterPatientSal)}" 
+								rendered="#{connectionBean.permuterPatientSal || connectionBean.dernierPatientSal || connectionBean.premierPatientSal || connectionBean.monterPatientSal || connectionBean.descendrePatientSal }">
 								
 								<p:menuitem value="Monter" icon="ui-icon-triangle-1-n"
 									style="font-size:10pt" update=":f1" ajax="true"
 									actionListener="#{salleBean.up(salle)}"
-									action="#{salleBean.redirectVersSalle()}" >
+									action="#{salleBean.redirectVersSalle()}"
+									rendered="#{connectionBean.monterPatientSal}" >
 									
 								</p:menuitem>
 								<p:menuitem value="Désender" icon="ui-icon-triangle-1-s"
 									style="font-size:10pt" update=":f1" ajax="true"
-									actionListener="#{salleBean.down(salle)}" 
+									actionListener="#{salleBean.down(salle)}"
+									rendered="#{connectionBean.descendrePatientSal}" 
 									action="#{salleBean.redirectVersSalle()}"/>
 
 								<p:menuitem value="permutter avec"
 									icon="ui-icon-transferthick-e-w" style="font-size:10pt"
+									rendered="#{connectionBean.permuterPatientSal}"
 									update=":f1" actionListener="#{salleBean.getParameter(salle)}" 
 									oncomplete="PF('modord').show()" />
 
 								<p:menuitem value="dernier" icon="ui-icon-arrowthickstop-1-s"
 									style="font-size:10pt" update=":f1" ajax="true"
+									rendered="#{connectionBean.dernierPatientSal}"
 									actionListener="#{salleBean.devenirDernier(salle)}" 
 									action="#{salleBean.redirectVersSalle()}"/>
 
 								<p:menuitem value="1er" icon="ui-icon-arrowthickstop-1-n"
 									style="font-size:10pt" update=":f1" ajax="true"
+									rendered="#{connectionBean.premierPatientSal}"
 									actionListener="#{salleBean.devenirPremier(salle)}" 
 									action="#{salleBean.redirectVersSalle()}"/>
 							</p:splitButton>
@@ -1087,6 +1092,7 @@
 
 							<p:commandButton icon="ui-icon-trash" title="Suppression"
 								actionListener="#{salleBean.supprimeAnn(salle.idannuleSalle)}"
+								rendered="#{connectionBean.supAnulSal}"
 								oncomplete="PF('suppAnn').show()" update=":f1"
 								style="font-size:13pt;width:35pt;font-weight:bold">
 							</p:commandButton>

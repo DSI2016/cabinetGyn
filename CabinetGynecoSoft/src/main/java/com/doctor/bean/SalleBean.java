@@ -691,7 +691,8 @@ public class SalleBean implements java.io.Serializable {
 	
 	}
 
-	public void getParameter(Salle s) {
+	public void getParameter(Salle s,Boolean permut) {
+		if(permut){
 		code = s.getCode();
 		motif = s.getMotif();
 		notes = s.getNotes();
@@ -700,6 +701,12 @@ public class SalleBean implements java.io.Serializable {
 		cfclient = s.getCfclient();
 		heure = s.getHeure();
 		cause = null;
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('modord').show();");
+		}else{
+			
+			
+		}
 
 	}
 

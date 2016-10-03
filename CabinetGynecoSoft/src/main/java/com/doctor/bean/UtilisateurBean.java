@@ -239,6 +239,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean modifNoteSalPriv;
 	private boolean tabAnulSalPriv;
 	private boolean anulSalPriv;
+	private boolean supAnulSalPriv;
 	private boolean ajoutDocPriv;
 	private boolean modifDocPriv;
 	private boolean supDocPriv;
@@ -464,6 +465,16 @@ public class UtilisateurBean implements java.io.Serializable {
 
 	public void setAnulSalPriv(boolean anulSalPriv) {
 		this.anulSalPriv = anulSalPriv;
+	}
+	
+	
+
+	public boolean isSupAnulSalPriv() {
+		return supAnulSalPriv;
+	}
+
+	public void setSupAnulSalPriv(boolean supAnulSalPriv) {
+		this.supAnulSalPriv = supAnulSalPriv;
 	}
 
 	public boolean isReponseSalPriv() {
@@ -3200,6 +3211,11 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setAnulSal(false);
 			}
+			if (supAnulSalPriv) {
+				u.setSupAnulSal(true);
+			} else {
+				u.setSupAnulSal(false);
+			}
 
 			if (donnerRdvPriv) {
 				u.setDonnerRdv(true);
@@ -4497,6 +4513,12 @@ public class UtilisateurBean implements java.io.Serializable {
 					u.setAnulSal(true);
 				} else {
 					u.setAnulSal(false);
+				}
+				
+				if (supAnulSalPriv) {
+					u.setSupAnulSal(true);
+				} else {
+					u.setSupAnulSal(false);
 				}
 				if (donnerRdvPriv) {
 					u.setDonnerRdv(true);
@@ -5812,6 +5834,11 @@ public class UtilisateurBean implements java.io.Serializable {
 		} else {
 			anulSalPriv = false;
 		}
+		if (u.isSupAnulSal()) {
+			supAnulSalPriv = true;
+		} else {
+			supAnulSalPriv = false;
+		}
 
 		if (u.isDonnerRdv()) {
 			donnerRdvPriv = true;
@@ -6323,6 +6350,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		reponseSalPriv = false;
 		tabAnulSalPriv = false;
 		anulSalPriv = false;
+		supAnulSalPriv=false;
 		donnerRdvPriv = false;
 		archiverPatPriv = false;
 		consultArchivePriv = false;
@@ -6503,6 +6531,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		reponseSalPriv = true;
 		tabAnulSalPriv = true;
 		anulSalPriv = true;
+		supAnulSalPriv=true;
 		// donnerRdvPriv=true;
 
 	}
@@ -6520,6 +6549,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		reponseSalPriv = false;
 		tabAnulSalPriv = false;
 		anulSalPriv = false;
+		supAnulSalPriv=false;
 		// donnerRdvPriv=false;
 
 	}
@@ -8005,21 +8035,23 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (reponseSalPriv) {
 				u.setReponseSal(true);
-				;
 			} else {
 				u.setReponseSal(false);
 			}
 			if (tabAnulSalPriv) {
 				u.setTabAnulSal(true);
-				;
 			} else {
 				u.setTabAnulSal(false);
 			}
 			if (anulSalPriv) {
 				u.setAnulSal(true);
-				;
 			} else {
 				u.setAnulSal(false);
+			}
+			if (supAnulSalPriv) {
+				u.setSupAnulSal(true);
+			} else {
+				u.setSupAnulSal(false);
 			}
 
 			if (donnerRdvPriv) {
@@ -9304,6 +9336,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				anulSalPriv = false;
 			}
+
+			if (u.isSupAnulSal()) {
+			supAnulSalPriv = true;
+		    } else {
+			supAnulSalPriv = false;
+		    }
 
 			if (u.isDonnerRdv()) {
 				donnerRdvPriv = true;

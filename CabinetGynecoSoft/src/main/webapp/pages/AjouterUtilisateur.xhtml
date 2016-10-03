@@ -221,26 +221,42 @@
 										</h:panelGrid>
 									</div>
 									<div align="center">
-										<p:panel style="width:900px;height:180px">
+										<p:panel
+											style="width:900px;height:220px">
 											<br />
 											<h:panelGrid columns="6" style="margin-bottom:20px"
 												cellpadding="7">
 
 												<p:selectBooleanCheckbox
+													value="#{utilisateurBean.descdrePatSalPriv}" />
+												<h:outputText value="Descendre Patient " />
+												<p:selectBooleanCheckbox
+													value="#{utilisateurBean.reponseSalPriv}" />
+												<h:outputText value="Repondre téléphone" />
+												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.verConsultPriv}" />
 												<h:outputText value="Envoyer Patient vers consultation" />
-												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.montPatSalPriv}" />
-												<h:outputText value="Monter Patient" />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.descdrePatSalPriv}" />
 												<h:outputText value="Descendre Patient " />
 												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.permutPatSalPriv}" />
-												<h:outputText value="Permuter Patient" />
+													value="#{utilisateurBean.modifNoteSalPriv}" />
+												<h:outputText value="Modifier note et motif" />
 												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.premierPatSalPriv}" />
-												<h:outputText value="Rendre patien le premier" />
+													value="#{utilisateurBean.supAnulSalPriv}" />
+												<h:outputText value="Supprimer Patient de la liste des annulés" />
+												
+												<p:selectBooleanCheckbox
+													value="#{utilisateurBean.montPatSalPriv}" />
+												<h:outputText value="Monter Patient " />
+												
+												<p:selectBooleanCheckbox
+													value="#{utilisateurBean.chargPatSalPriv}" />
+												<h:outputText value="Charger Patient " />
+												<p:selectBooleanCheckbox
+													value="#{utilisateurBean.tabAnulSalPriv}" />
+												<h:outputText value="Consulter liste patients annulés" />
+												
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.dernierSalPriv}" />
 												<h:outputText value="Rendre patient le dernier" />
@@ -248,21 +264,12 @@
 													value="#{utilisateurBean.supPatSalPriv}" />
 												<h:outputText value="Supprimer Patient " />
 												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.chargPatSalPriv}" />
-												<h:outputText value="Charger Patient " />
-												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.reponseSalPriv}" />
-												<h:outputText value="Repondre téléphone" />
-												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.modifNoteSalPriv}" />
-												<h:outputText value="Modifier note et motif" />
-												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.anulSalPriv}" />
 												<h:outputText value="Annuler Patient liste d'attente" />
 												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.tabAnulSalPriv}" />
-												<h:outputText value="Consulter liste patients annulés" />
-
+													value="#{utilisateurBean.premierPatSalPriv}" />
+												<h:outputText value="Rendre patient le premier " />
+												
 											</h:panelGrid>
 										</p:panel>
 

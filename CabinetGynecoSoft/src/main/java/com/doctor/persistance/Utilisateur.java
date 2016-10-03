@@ -50,6 +50,7 @@ public class Utilisateur implements Serializable {
 	private String dernierPatSal;
 	private String supPatSal;
 	private String chargPatSal;
+	private boolean supAnulSal;
 	private String ajoutDoc;
 	private String modifDoc;
 	private String supDoc;
@@ -272,6 +273,7 @@ public class Utilisateur implements Serializable {
     private boolean modifAnt;
     private boolean suppAnt;
     private boolean modifGynObs;
+    
     
     
     
@@ -1602,6 +1604,16 @@ public class Utilisateur implements Serializable {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+	
+	
+
+	public boolean isSupAnulSal() {
+		return supAnulSal;
+	}
+
+	public void setSupAnulSal(boolean supAnulSal) {
+		this.supAnulSal = supAnulSal;
 	}
 
 	@Override

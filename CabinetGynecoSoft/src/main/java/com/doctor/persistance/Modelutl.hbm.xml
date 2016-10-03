@@ -860,5 +860,9 @@
 		<property name="modifGynObs" type="boolean">
 			<column name="modifGynObs" length="1" default="false" />
 		</property>
+		
+		<property name="supAnulSal" type="boolean">
+			<column name="supAnulSal" length="1" default="false" />
+		</property>
 </class>
 </hibernate-mapping>		

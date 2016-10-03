@@ -29,6 +29,7 @@ import com.doctor.service.UtilisateurService;
 public class ConnectionBean implements java.io.Serializable {
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -53,6 +54,7 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean verConsultation;
 	private boolean consultPat =false;
 	private boolean chargerPatientSal;
+	private boolean supAnulSal;
 	private boolean modifNoteSal;
 	private boolean anulSal;
 	private  boolean consultArchiv;
@@ -289,6 +291,14 @@ public class ConnectionBean implements java.io.Serializable {
 	
 	
 	
+	public boolean isSupAnulSal() {
+		return supAnulSal;
+	}
+
+	public void setSupAnulSal(boolean supAnulSal) {
+		this.supAnulSal = supAnulSal;
+	}
+
 	//liste des tabSalle active pour récuperer les motifs
 	private List<TabSalle> tabSallesActiv= new ArrayList<TabSalle>();
 	
@@ -1658,6 +1668,7 @@ public class ConnectionBean implements java.io.Serializable {
 					suppressionPatientSal = true;
 					verConsultation = true;
 					chargerPatientSal = true;
+					supAnulSal=true;
 					anulSal=true;
 					modifNoteSal=true;
 					menuSalle = false;
@@ -1895,7 +1906,6 @@ public class ConnectionBean implements java.io.Serializable {
 				
 					enLigne.setIdSession(idSessionCourant);
 					ser1.ajoutEnLigne(enLigne);
-				    System.out.println("mpest juste  "+motpass);
 				    //redirection
 //				    try {
 //
@@ -1909,7 +1919,6 @@ public class ConnectionBean implements java.io.Serializable {
 				    
 					return "accepted";
 				}
-				 System.out.println("mpest juste  "+motpass);
 			}
 
 			else if (Test.currentConnect < Test.maxConnect) {
@@ -2201,6 +2210,8 @@ public class ConnectionBean implements java.io.Serializable {
 						
 						anulSal=u.isAnulSal();
 						modifNoteSal=u.isModifNoteSal();
+						
+						supAnulSal=u.isSupAnulSal();
 
 						if (u.getAjoutVil().equals("0"))
 							ajoutVille = false;
