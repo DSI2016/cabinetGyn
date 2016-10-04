@@ -71,6 +71,15 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	private Date dateAna;
 	
 	private boolean consultation;
+	private boolean viewImprim = false;
+	
+	public boolean isViewImprim() {
+		return viewImprim;
+	}
+
+	public void setViewImprim(boolean viewImprim) {
+		this.viewImprim = viewImprim;
+	}
 
 	public boolean isConsultation() {
 		if (action == null)
@@ -228,17 +237,15 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		dateAna=null;
 		desibledImpr=false;
 		impress=true;
+		viewImprim = true;
 		
 	}
 	
 	public void initApresValidation(){
 		desibledImpr=false;
-		action = null;
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-		idPatient = (Integer) session.getAttribute("idu");
-		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
-		consultation=false;
+		initialisationAnalysea();
+		viewImprim = false;
+		redirect();
 		
 	}
 	
@@ -380,6 +387,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	public void ajoutAna() {
 		action = "ajout";
 		initialisationAnalyse();
+		viewImprim = true;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -401,7 +409,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 	public void valider(ActionEvent actionEvent) throws SQLException, Exception {
 		
-		changerDate();
+		//changerDate();
 		FacesContext face = FacesContext.getCurrentInstance();
 		AnalyseDemandeeService ser = new AnalyseDemandeeService();
 		AnalyseDemandee ana = new AnalyseDemandee();
@@ -419,6 +427,16 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		ana.setFrottis(frottis);
 		ana.setProprietaire(nomProprietaire);
 		ana.setPossesseur(proprietaire);
+		
+		String dateAnaS = formatter.format(dateAna);
+		if (Module.dateDepassee(dateAnaS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie a dépassé la date de jour", ""));
+		if (Module.dateTresAncien(dateAnaS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie est très ancienne", ""));
+		
+		
 		ana.setDateAnalyse(dateAna);
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -433,12 +451,12 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		if (consultationDetail != null)
 			ana.setConsultationDetail(consultationDetail);
 		
-		
+		if(face.getMessageList().size()==0){
 		if (action != null && action.equals("ajout")) {
 			
 			ser.ajoutAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse ajoutée avec succés"));
+					"Demande analyse ajoutée avec succés", ""));
 			
 			
 			
@@ -451,26 +469,25 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
 			
-			initApresValidation();
+			viewImprim = false;
 			desibledImpr = true;
 			selectedAnalyse = ana;
-			
+			initApresValidation();
 		}
 		if (action != null && action.equals("Modif")) {
 			ana.setIdanalyseDemandee(idanalyseDemandee);
 			ser.modifierAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse modifiée avec succés"));
+					"Demande analyse modifiée avec succés", ""));
 			
 			clt.setToxo(toxo);
 			clt.setTpha(tpha);
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
+			viewImprim = false;
 			initApresValidation();
 		}
-
-		
-		
+		}
 	}
 	
 	public void redirect(){
@@ -593,6 +610,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		glycemie = ana.getGlycemie();
 		frottis = ana.getFrottis();
 		action = "Modif";
+		viewImprim = true;
 
 	}
 
@@ -827,8 +845,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		String age;
 		if (selectedAnalyse != null) {
 			String nomReport = "demandeAnalyse";
-			
-			
 					if(proprietaire.equals("Patiente")){
 						 if(clt.getDateNaiss()!=null)
 					      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
@@ -960,8 +976,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		action = "consulter";
 		AnalyseDemandee analysee = (AnalyseDemandee) event.getObject();
 		
-		
-		
 		idanalyseDemandee = analysee.getIdanalyseDemandee();
 		proprietaire = analysee.getPossesseur();
 		nomProprietaire = analysee.getProprietaire();
@@ -974,6 +988,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		frottis = analysee.getFrottis();
 		dateAna = analysee.getDateAnalyse();
 		desibledImpr = true;
+		viewImprim = false;
 
 	}
 
@@ -1045,5 +1060,16 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			 .redirect("HistoriqueAnalyses");
 			 } catch (Exception e) {
 			}
+	}
+	
+	public void dateChange(SelectEvent event) {
+
+		setDateAna((Date) event.getObject());
+		setDateAna(dateAna);
+	}
+
+	public void dateChange2() {
+
+		setDateAna(dateAna);
 	}
 }
