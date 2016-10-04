@@ -214,6 +214,7 @@
 												<p:ajax listener="#{analyseDemandeeBean.annulation()}" />
 											</p:commandButton></td>
 										<td><p:commandButton value="Imprimer" ajax="false"
+										        rendered="#{connectionBean.imprAnal}"
 												actionListener="#{analyseDemandeeBean.selectAnalyse}"
 												icon="ui-icon-print"
 												disabled="#{analyseDemandeeBean.viewImprim}"

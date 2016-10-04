@@ -221,7 +221,8 @@
 										</h:panelGrid>
 									</div>
 									<div align="center">
-										<p:panel style="width:900px;height:220px">
+										<p:panel
+											style="width:900px;height:220px">
 											<br />
 											<h:panelGrid columns="6" style="margin-bottom:20px"
 												cellpadding="7">
@@ -243,20 +244,19 @@
 												<h:outputText value="Modifier note et motif" />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.supAnulSalPriv}" />
-												<h:outputText
-													value="Supprimer Patient de la liste des annulés" />
-
+												<h:outputText value="Supprimer Patient de la liste des annulés" />
+												
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.montPatSalPriv}" />
 												<h:outputText value="Monter Patient " />
-
+												
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.chargPatSalPriv}" />
 												<h:outputText value="Charger Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.tabAnulSalPriv}" />
 												<h:outputText value="Consulter liste patients annulés" />
-
+												
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.dernierSalPriv}" />
 												<h:outputText value="Rendre patient le dernier" />
@@ -269,7 +269,7 @@
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.premierPatSalPriv}" />
 												<h:outputText value="Rendre patient le premier " />
-
+												
 											</h:panelGrid>
 										</p:panel>
 
@@ -381,6 +381,196 @@
 									</div>
 									<br />
 									<p:tabView>
+										<p:tab title="Docteur"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:350px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestDocPriv}" />
+														<h:outputText value="Gérer Docteurs" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutDocPriv}" />
+														<h:outputText value="Ajouter Docteur" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifDocPriv}" />
+														<h:outputText value="Modifier Docteur" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supDocPriv}" />
+														<h:outputText value="Supprimer Docteur" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Clinique"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:350px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestCliPriv}" />
+														<h:outputText value="Gérer Cliniques" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutClinPriv}" />
+														<h:outputText value="Ajouter Clinique" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifClinPriv}" />
+														<h:outputText value="Modifier Clinique" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supClinPriv}" />
+														<h:outputText value="Supprimer Clinique" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Profession"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:350px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestProfPriv}" />
+														<h:outputText value="Gérer Professions" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutProfPriv}" />
+														<h:outputText value="Ajouter Profession" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifProfPriv}" />
+														<h:outputText value="Modifier Profession" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supProfPriv}" />
+														<h:outputText value="Supprimer Profession" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Ville"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:330px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestVilPriv}" />
+														<h:outputText value="Gérer Villes" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutVilPriv}" />
+														<h:outputText value="Ajouter Ville" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifVilPriv}" />
+														<h:outputText value="Modifier Ville" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supVilPriv}" />
+														<h:outputText value="Supprimer Ville" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Etat fin grossese"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:400px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestFinGrossPriv}" />
+														<h:outputText value="Gérer Etats Fin Grossese" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutFinGrossPriv}" />
+														<h:outputText value="Ajouter Etat Fin Grossese" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifFinGrossPriv}" />
+														<h:outputText value="Modifier Etat Fin Grossese" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supFinGrossPriv}" />
+														<h:outputText value="Supprimer Etat Fin Grossese" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Etat Bb"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:320px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestEtBbPriv}" />
+														<h:outputText value="Gérer Etats Bébé" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutEtBbPriv}" />
+														<h:outputText value="Ajouter Etat" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifEtBbPriv}" />
+														<h:outputText value="Modifier Etat" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supEtBbPriv}" />
+														<h:outputText value="Supprimer Etat" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+
+										</p:tab>
+										<p:tab title="Analyse"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:320px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestAnalPriv}" />
+														<h:outputText value="Gérer Analyses" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutAnalPriv}" />
+														<h:outputText value="Ajouter Analyse" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifAnalPriv}" />
+														<h:outputText value="Modifier Analyse" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supAnalPriv}" />
+														<h:outputText value="Supprimer Analyse" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
 										<p:tab title="Medicament"
 											titleStyle="font-size:small;font-weight:bold">
 											<p:panel style="width:350px;height:180px">
@@ -404,114 +594,6 @@
 														<p:selectBooleanCheckbox
 															value="#{utilisateurBean.supMedPriv}" />
 														<h:outputText value="Supprimer Médicament" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Forme médicament"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:370px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestFrmMedPriv}" />
-														<h:outputText value="Gérer Formes Médicament" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutFrmMedPriv}" />
-														<h:outputText value="Ajouter Forme Médicament" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifFrmMedPriv}" />
-														<h:outputText value="Modifier Forme Médicament" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supFrmMedPriv}" />
-														<h:outputText value="Supprimer Forme Médicament" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Symptome"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:350px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestSymPriv}" />
-														<h:outputText value="Gérer Symptomes" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutSymPriv}" />
-														<h:outputText value="Ajouter Symptome" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifSymPriv}" />
-														<h:outputText value="Modifier Symptome" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supSymPriv}" />
-														<h:outputText value="Supprimer Symptome" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Diagnostique"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:350px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestDiagPriv}" />
-														<h:outputText value="Gérer Diagnostique" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutDiagPriv}" />
-														<h:outputText value="Ajouter Diagnostique" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifDiagPriv}" />
-														<h:outputText value="Modifier Diagnostique" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supDiagPriv}" />
-														<h:outputText value="Supprimer Diagnostique" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Exm complémentaire"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:450px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestExmCompPriv}" />
-														<h:outputText value="Gérer Examens complémentaires" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutExmCompPriv}" />
-														<h:outputText value="Ajouter Examen complémentaire" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifExmCompPriv}" />
-														<h:outputText value="Modifier Examen complémentaire" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supExmCompPriv}" />
-														<h:outputText value="Supprimer Examen complémentaire" />
 													</h:panelGrid>
 												</div>
 											</p:panel>
@@ -543,29 +625,137 @@
 												</div>
 											</p:panel>
 										</p:tab>
-										<p:tab title="Analyse"
+										<p:tab title="Moyen contracéption"
 											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:320px;height:180px">
+											<p:panel style="width:430px;height:180px">
 												<div align="left">
 													<h:panelGrid columns="2" style="margin-bottom:10px"
 														cellpadding="5">
 														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestAnalPriv}" />
-														<h:outputText value="Gérer Analyses" />
+															value="#{utilisateurBean.gestMoyCtrPriv}" />
+														<h:outputText value="Gérer Moyens Contracéption" />
 													</h:panelGrid>
 												</div>
 												<div align="center">
 													<h:panelGrid columns="2" style="margin-bottom:10px"
 														cellpadding="5">
 														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutAnalPriv}" />
-														<h:outputText value="Ajouter Analyse" />
+															value="#{utilisateurBean.ajoutMoyCtrPriv}" />
+														<h:outputText value="Ajouter Moyen Contracéption" />
 														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifAnalPriv}" />
-														<h:outputText value="Modifier Analyse" />
+															value="#{utilisateurBean.modifMoyCtrPriv}" />
+														<h:outputText value="Modifier Moyen Contracéption" />
 														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supAnalPriv}" />
-														<h:outputText value="Supprimer Analyse" />
+															value="#{utilisateurBean.supMoyCtrPriv}" />
+														<h:outputText value="Supprimer Moyen Contracéption" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Diagnostique"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:350px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestDiagPriv}" />
+														<h:outputText value="Gérer Diagnostique" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutDiagPriv}" />
+														<h:outputText value="Ajouter Diagnostique" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifDiagPriv}" />
+														<h:outputText value="Modifier Diagnostique" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supDiagPriv}" />
+														<h:outputText value="Supprimer Diagnostique" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Symptome"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:350px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestSymPriv}" />
+														<h:outputText value="Gérer Symptomes" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutSymPriv}" />
+														<h:outputText value="Ajouter Symptome" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifSymPriv}" />
+														<h:outputText value="Modifier Symptome" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supSymPriv}" />
+														<h:outputText value="Supprimer Symptome" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Exm complémentaire"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:450px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestExmCompPriv}" />
+														<h:outputText value="Gérer Examens complémentaires" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutExmCompPriv}" />
+														<h:outputText value="Ajouter Examen complémentaire" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifExmCompPriv}" />
+														<h:outputText value="Modifier Examen complémentaire" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supExmCompPriv}" />
+														<h:outputText value="Supprimer Examen complémentaire" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Uterus"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:350px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestUtPriv}" />
+														<h:outputText value="Gérer Uterus" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutUtPriv}" />
+														<h:outputText value="Ajouter Uterus" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifUtPriv}" />
+														<h:outputText value="Modifier Uterus" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supUtPriv}" />
+														<h:outputText value="Supprimer Uterus" />
 													</h:panelGrid>
 												</div>
 											</p:panel>
@@ -611,6 +801,10 @@
 																	style="font-size:small;font-weight:bold" />
 															</h:panelGrid>
 														</h:panelGrid>
+
+
+
+
 														<h:panelGrid columns="2">
 															<h:panelGrid style="width:20px"></h:panelGrid>
 															<h:panelGrid columns="2" cellpadding="5">
@@ -692,289 +886,6 @@
 												</h:panelGrid>
 
 											</div>
-										</p:tab>
-										<p:tab title="Etat fin grossese"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:400px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestFinGrossPriv}" />
-														<h:outputText value="Gérer Etats Fin Grossese" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutFinGrossPriv}" />
-														<h:outputText value="Ajouter Etat Fin Grossese" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifFinGrossPriv}" />
-														<h:outputText value="Modifier Etat Fin Grossese" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supFinGrossPriv}" />
-														<h:outputText value="Supprimer Etat Fin Grossese" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Etat Bb"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:320px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestEtBbPriv}" />
-														<h:outputText value="Gérer Etats Bébé" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutEtBbPriv}" />
-														<h:outputText value="Ajouter Etat" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifEtBbPriv}" />
-														<h:outputText value="Modifier Etat" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supEtBbPriv}" />
-														<h:outputText value="Supprimer Etat" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-
-										</p:tab>
-										<p:tab title="Uterus"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:350px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestUtPriv}" />
-														<h:outputText value="Gérer Uterus" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutUtPriv}" />
-														<h:outputText value="Ajouter Uterus" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifUtPriv}" />
-														<h:outputText value="Modifier Uterus" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supUtPriv}" />
-														<h:outputText value="Supprimer Uterus" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Moyen contracéption"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:430px;height:180px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestMoyCtrPriv}" />
-														<h:outputText value="Gérer Moyens Contracéption" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutMoyCtrPriv}" />
-														<h:outputText value="Ajouter Moyen Contracéption" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifMoyCtrPriv}" />
-														<h:outputText value="Modifier Moyen Contracéption" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supMoyCtrPriv}" />
-														<h:outputText value="Supprimer Moyen Contracéption" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Rapports"
-											titleStyle="font-size:small;font-weight:bold">
-											
-											<div align="center">
-												<p:panel style="width:300px;height:160px">
-													<div align="left">
-														<h:panelGrid columns="2" style="margin-bottom:10px"
-															cellpadding="5">
-															<p:selectBooleanCheckbox
-																value="#{utilisateurBean.menuRappPriv}" />
-															<h:outputText value="Gérer Rapport" />
-														</h:panelGrid>
-													</div>
-													<div align="center">
-														<h:panelGrid columns="2" style="margin-bottom:10px"
-															cellpadding="5">
-															<p:selectBooleanCheckbox
-																value="#{utilisateurBean.rappCertifPriv}" />
-															<h:outputText value="Certificats" />
-															<p:selectBooleanCheckbox
-																value="#{utilisateurBean.rappLettrePriv}" />
-															<h:outputText value="Lettres" />
-														</h:panelGrid>
-													</div>
-												</p:panel>
-											</div>
-										</p:tab>
-										<p:tab title="Ville"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:330px;height:160px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestVilPriv}" />
-														<h:outputText value="Gérer Villes" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutVilPriv}" />
-														<h:outputText value="Ajouter Ville" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifVilPriv}" />
-														<h:outputText value="Modifier Ville" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supVilPriv}" />
-														<h:outputText value="Supprimer Ville" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Clinique"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:350px;height:160px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestCliPriv}" />
-														<h:outputText value="Gérer Cliniques" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutClinPriv}" />
-														<h:outputText value="Ajouter Clinique" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifClinPriv}" />
-														<h:outputText value="Modifier Clinique" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supClinPriv}" />
-														<h:outputText value="Supprimer Clinique" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Profession"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:350px;height:160px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestProfPriv}" />
-														<h:outputText value="Gérer Professions" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutProfPriv}" />
-														<h:outputText value="Ajouter Profession" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifProfPriv}" />
-														<h:outputText value="Modifier Profession" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supProfPriv}" />
-														<h:outputText value="Supprimer Profession" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Docteur"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:350px;height:160px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestDocPriv}" />
-														<h:outputText value="Gérer Docteurs" />
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutDocPriv}" />
-														<h:outputText value="Ajouter Docteur" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifDocPriv}" />
-														<h:outputText value="Modifier Docteur" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supDocPriv}" />
-														<h:outputText value="Supprimer Docteur" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-										<p:tab title="Horaire"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:450px;height:220px">
-												<div align="left">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestHorairePriv}" />
-														<h:outputText value="Gérer horaire de travail" />
-													</h:panelGrid>
-													<h:panelGrid columns="2">
-														<h:panelGrid style="width:30px"></h:panelGrid>
-														<h:panelGrid columns="2" style="margin-bottom:10px"
-															cellpadding="5">
-															<p:selectBooleanCheckbox
-																value="#{utilisateurBean.gestSaisPriv}" />
-															<h:outputText value="Régler les saisons " />
-														</h:panelGrid>
-													</h:panelGrid>
-												</div>
-												<div align="center">
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifprdSaisPriv}" />
-														<h:outputText value="Modifier périodes saisons" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.ajoutHorTravPriv}" />
-														<h:outputText value="Ajouter horaire de travail" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.modifHorTravPriv}" />
-														<h:outputText value="Modifier horaire de travail" />
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.supHorTravPriv}" />
-														<h:outputText value="Supprimer horaire de travail" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
 										</p:tab>
 										<p:tab title="Jrs Fériérs"
 											titleStyle="font-size:small;font-weight:bold">
@@ -1068,6 +979,91 @@
 											</div>
 
 										</p:tab>
+										<p:tab title="Forme médicament"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:370px;height:180px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestFrmMedPriv}" />
+														<h:outputText value="Gérer Formes Médicament" />
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutFrmMedPriv}" />
+														<h:outputText value="Ajouter Forme Médicament" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifFrmMedPriv}" />
+														<h:outputText value="Modifier Forme Médicament" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supFrmMedPriv}" />
+														<h:outputText value="Supprimer Forme Médicament" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
+										<p:tab title="Horaire"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:450px;height:220px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestHorairePriv}" />
+														<h:outputText value="Gérer horaire de travail" />
+													</h:panelGrid>
+
+													<h:panelGrid columns="2">
+														<h:panelGrid style="width:30px"></h:panelGrid>
+														<h:panelGrid columns="2" style="margin-bottom:10px"
+															cellpadding="5">
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.gestSaisPriv}" />
+															<h:outputText value="Régler les saisons " />
+														</h:panelGrid>
+													</h:panelGrid>
+												</div>
+												<div align="center">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifprdSaisPriv}" />
+														<h:outputText value="Modifier périodes saisons" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.ajoutHorTravPriv}" />
+														<h:outputText value="Ajouter horaire de travail" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.modifHorTravPriv}" />
+														<h:outputText value="Modifier horaire de travail" />
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.supHorTravPriv}" />
+														<h:outputText value="Supprimer horaire de travail" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+
+
+
+										</p:tab>
+										<p:tab title="Cabinet"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:320px;height:80px">
+												<div align="center">
+													<br></br>
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gestCabinetPriv}" />
+														<h:outputText value="Gérer informations de cabinet" />
+													</h:panelGrid>
+												</div>
+											</p:panel>
+										</p:tab>
 										<p:tab title="Consultation"
 											titleStyle="font-size:small;font-weight:bold">
 											<p:panel style="width:370px;height:180px">
@@ -1091,26 +1087,51 @@
 												</div>
 											</p:panel>
 										</p:tab>
-										<p:tab title="Cabinet"
-											titleStyle="font-size:small;font-weight:bold">
-											<p:panel style="width:320px;height:80px">
-												<div align="center">
-													<br></br>
-													<h:panelGrid columns="2" style="margin-bottom:10px"
-														cellpadding="5">
-
-														<p:selectBooleanCheckbox
-															value="#{utilisateurBean.gestCabinetPriv}" />
-														<h:outputText value="Gérer informations de cabinet" />
-													</h:panelGrid>
-												</div>
-											</p:panel>
-										</p:tab>
-
 
 									</p:tabView>
 								</p:tab>
-
+								<p:tab title="Rapports"
+									titleStyle="font-size:small;font-weight:bold">
+									<div align="left">
+										<h:panelGrid columns="2">
+											<p:commandButton value="Tout autorisé"
+												style="width: auto; height: 25px;font-size:60%;background-color:#1FA055;text-align: center "
+												icon="ui-icon-unlocked"
+												actionListener="#{utilisateurBean.touCocherPramRap()}"
+												update=":f1">
+											</p:commandButton>
+											<p:commandButton value="Aucune autorisation"
+												style="width: auto; height: 25px;font-size:60%;background-color:#F7230C;text-align: center"
+												icon="ui-icon-locked"
+												actionListener="#{utilisateurBean.touDecocherPramRap()}"
+												update=":f1">
+											</p:commandButton>
+										</h:panelGrid>
+									</div>
+									<div align="center">
+										<p:panel style="width:300px;height:160px">
+											<div align="left">
+												<h:panelGrid columns="2" style="margin-bottom:10px"
+													cellpadding="5">
+													<p:selectBooleanCheckbox
+														value="#{utilisateurBean.menuRappPriv}" />
+													<h:outputText value="Gérer Rapport" />
+												</h:panelGrid>
+											</div>
+											<div align="center">
+												<h:panelGrid columns="2" style="margin-bottom:10px"
+													cellpadding="5">
+													<p:selectBooleanCheckbox
+														value="#{utilisateurBean.rappCertifPriv}" />
+													<h:outputText value="Certificats" />
+													<p:selectBooleanCheckbox
+														value="#{utilisateurBean.rappLettrePriv}" />
+													<h:outputText value="Lettres" />
+												</h:panelGrid>
+											</div>
+										</p:panel>
+									</div>
+								</p:tab>
 								<p:tab title="Consultations"
 									titleStyle="font-size:small;font-weight:bold">
 									<p:tabView id="tvCons">
@@ -1401,6 +1422,7 @@
 												</p:panel>
 											</div>
 										</p:tab>
+
 										<p:tab title="Obsterique"
 											titleStyle="font-size:small;font-weight:bold">
 											<div align="left">
@@ -1454,6 +1476,7 @@
 												</p:panel>
 											</div>
 										</p:tab>
+
 										<p:tab title="Infertilité"
 											titleStyle="font-size:small;font-weight:bold">
 											<div align="left">
@@ -1517,6 +1540,72 @@
 											</p:panel>
 
 										</p:tab>
+										<p:tab title="Analyse"
+											titleStyle="font-size:small;font-weight:bold">
+
+											<p:panel style="width:400px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:5px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gynAnaPriv}" />
+														<h:outputText value="Consulter Demande Analyse" />
+													</h:panelGrid>
+												</div>
+												<h:panelGrid columns="3" style="margin-bottom:10px"
+													cellpadding="5">
+													<p:spacer width="50"></p:spacer>
+													<p:selectBooleanCheckbox
+														value="#{utilisateurBean.consultDetAnalPriv}" />
+													<h:outputText value="Ajouter/Modifier analyse" />
+												</h:panelGrid>
+
+											</p:panel>
+										</p:tab>
+										<p:tab title="Radio"
+											titleStyle="font-size:small;font-weight:bold">
+
+											<p:panel style="width:400px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gynRadioPriv}" />
+														<h:outputText value="Consulter Demande Radio" />
+													</h:panelGrid>
+												</div>
+												<h:panelGrid columns="3" style="margin-bottom:10px"
+													cellpadding="5">
+													<p:spacer width="50"></p:spacer>
+													<p:selectBooleanCheckbox
+														value="#{utilisateurBean.consultDetRadPriv}" />
+													<h:outputText value="Ajouter/Modifier radio" />
+												</h:panelGrid>
+											</p:panel>
+
+										</p:tab>
+										<p:tab title="Ordonance"
+											titleStyle="font-size:small;font-weight:bold">
+											<p:panel style="width:400px;height:160px">
+												<div align="left">
+													<h:panelGrid columns="2" style="margin-bottom:10px"
+														cellpadding="5">
+														<p:selectBooleanCheckbox
+															value="#{utilisateurBean.gynOrdPriv}" />
+														<h:outputText value="Consulter Ordonnance" />
+
+													</h:panelGrid>
+												</div>
+												<h:panelGrid columns="3" style="margin-bottom:10px"
+													cellpadding="5">
+													<p:spacer width="50"></p:spacer>
+													<p:selectBooleanCheckbox
+														value="#{utilisateurBean.consultDetOrdPriv}" />
+													<h:outputText value="Ajouter/Modifier ordonnance" />
+												</h:panelGrid>
+											</p:panel>
+										</p:tab>
+
 									</p:tabView>
 								</p:tab>
 								<p:tab title="Doc médicaux"
@@ -1637,16 +1726,6 @@
 												</h:panelGrid>
 											</div>
 											<div align="center">
-												<p:panel style="width:450px;height:170px ">
-													<div align="left">
-														<h:panelGrid columns="2" style="margin-bottom:10px"
-															cellpadding="5">
-															<p:selectBooleanCheckbox
-																value="#{utilisateurBean.analyseFichePriv}" />
-															<h:outputText value="Gérer historique des analyses" />
-														</h:panelGrid>
-													</div>
-													<div align="center">
 														<p:panel
 															style="width:450px;height:170px">
 															<div align="left">
@@ -1679,8 +1758,6 @@
 															</div>
 														</p:panel>
 													</div>
-												</p:panel>
-											</div>
 										</p:tab>
 										<p:tab title="Radios"
 											titleStyle="font-size:small;font-weight:bold">
@@ -1701,36 +1778,35 @@
 												</h:panelGrid>
 											</div>
 											<div align="center">
-														<p:panel
-															style="width:450px;height:160px">
-															<div align="left">
-																<h:panelGrid columns="2" style="margin-bottom:10px"
-																	cellpadding="5">
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.radioFichePriv}" />
-																	<h:outputText value="Consulter Liste des Radios" />
-																</h:panelGrid>
-															</div>
-															<div align="center">
-																<h:panelGrid columns="4" style="margin-bottom:10px"
-																	cellpadding="5">
-																	<p:selectBooleanCheckbox
-																value="#{utilisateurBean.ajoutDemandRadPriv}" />
-															    <h:outputText value="Ajouter radio " />
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.modifHistoRadPriv}" />
-																	<h:outputText value="Modifier radio " />
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.supHistoRadPriv}" />
-																	<h:outputText value="Supprimer radio" />
-																	<p:selectBooleanCheckbox
+												<p:panel style="width:450px;height:160px">
+													<div align="left">
+														<h:panelGrid columns="2" style="margin-bottom:10px"
+															cellpadding="5">
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.radioFichePriv}" />
+															<h:outputText value="Gérer historique des radios" />
+														</h:panelGrid>
+													</div>
+													<div align="center">
+														<h:panelGrid columns="4" style="margin-bottom:10px"
+															cellpadding="5">
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.modifHistoRadPriv}" />
+															<h:outputText value="Modifier radio " />
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.consultHistoRadPriv}" />
+															<h:outputText value="Consulter radio " />
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.supHistoRadPriv}" />
+															<h:outputText value="Supprimer radio" />
+															<p:selectBooleanCheckbox
 																value="#{utilisateurBean.imprRadioPriv}" />
 															<h:outputText value="Imprimer radio" />
 
-																</h:panelGrid>
-															</div>
-														</p:panel>
+														</h:panelGrid>
 													</div>
+												</p:panel>
+											</div>
 										</p:tab>
 										<p:tab title="Ordonnances"
 											titleStyle="font-size:small;font-weight:bold">
@@ -1751,41 +1827,37 @@
 												</h:panelGrid>
 											</div>
 											<div align="center">
-														<p:panel
-															style="width:700px;height:180px">
-															<div align="left">
-																<h:panelGrid columns="2" style="margin-bottom:10px"
-																	cellpadding="5">
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.ordonceFichePriv}" />
-																	<h:outputText value="consulter Liste des Ordonnances" />
-																</h:panelGrid>
-															</div>
-															<div align="center">
-																<h:panelGrid columns="4" style="margin-bottom:10px"
-																	cellpadding="5">
-      
-                                                                    <p:selectBooleanCheckbox
-																		value="#{utilisateurBean.ajoutDemandOrdPriv}" />
-																	<h:outputText value="Ajouter ordonnance" />
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.imprOrdPriv}" />
-																	<h:outputText value="Imprimer ordonnance" />
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.supHistoOrdPriv}" />
-																	<h:outputText value="Supprimer ordonnance" />
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.rechercheOrdPriv}" />
-																	<h:outputText value="Rechercher ordonnance" />
-																	<p:selectBooleanCheckbox
-																		value="#{utilisateurBean.modifHistoOrdPriv}" />
-																	<h:outputText value="Modifier ordonnance " />
-
-
-																</h:panelGrid>
-															</div>
-														</p:panel>
+												<p:panel style="width:700px;height:180px">
+													<div align="left">
+														<h:panelGrid columns="2" style="margin-bottom:10px"
+															cellpadding="5">
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.ordonceFichePriv}" />
+															<h:outputText value="Gérer historique des Ordonnances" />
+														</h:panelGrid>
 													</div>
+													<div align="center">
+														<h:panelGrid columns="4" style="margin-bottom:10px"
+															cellpadding="5">
+
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.imprOrdPriv}" />
+															<h:outputText value="Imprimer ordonnance" />
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.supHistoOrdPriv}" />
+															<h:outputText value="Supprimer ordonnance" />
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.rechercheOrdPriv}" />
+															<h:outputText value="Rechercher ordonnance" />
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.modifHistoOrdPriv}" />
+															<h:outputText value="Modifier ordonnance " />
+
+
+														</h:panelGrid>
+													</div>
+												</p:panel>
+											</div>
 										</p:tab>
 
 										<p:tab title="Ordonnance Libre "
