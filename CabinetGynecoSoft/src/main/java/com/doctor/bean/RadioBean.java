@@ -489,14 +489,13 @@ public class RadioBean implements java.io.Serializable {
 		Radio r = new Radio();
 		String dateRadioS = formatter.format(dateRadios);
 		if (Module.dateDepassee(dateRadioS))
-			face.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"La date saisie a dépassé la date de jour", ""));
-		if( Module.dateTresAncien(dateRadioS))
-			face.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"La date saisie est très ancienne", ""));;
-			r.setDateRadios(dateRadios);
+		if (Module.dateTresAncien(dateRadioS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie est très ancienne", ""));
+		
+		r.setDateRadios(dateRadios);
 		r.setExamenComplementaire(examenComplementaire);
 		r.setPossesseur(proprietaire);
 		r.setProprietaire(nomProprietaire);
@@ -519,7 +518,6 @@ public class RadioBean implements java.io.Serializable {
 				r.setPatient(cfclient);
 		}
 
-		
 		r.setConsultationDetail(consultationDetail);
 		if (face.getMessageList().size() == 0) {
 			if (action != null && action.equals("ajout")) {
@@ -564,10 +562,9 @@ public class RadioBean implements java.io.Serializable {
 			nomProprietaire = null;
 			action = null;
 			viewImprim = false;
-		}
-		else
-			blocage=true;
-		
+		} else
+			blocage = true;
+
 	}
 
 	public void validerHisto() {

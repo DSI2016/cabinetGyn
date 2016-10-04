@@ -71,6 +71,15 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	private Date dateAna;
 	
 	private boolean consultation;
+	private boolean viewImprim = false;
+	
+	public boolean isViewImprim() {
+		return viewImprim;
+	}
+
+	public void setViewImprim(boolean viewImprim) {
+		this.viewImprim = viewImprim;
+	}
 
 	public boolean isConsultation() {
 		if (action == null)
@@ -228,12 +237,14 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		dateAna=null;
 		desibledImpr=false;
 		impress=true;
+		viewImprim = true;
 		
 	}
 	
 	public void initApresValidation(){
 		desibledImpr=false;
 		initialisationAnalysea();
+		viewImprim = false;
 		redirect();
 		
 	}
@@ -376,6 +387,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	public void ajoutAna() {
 		action = "ajout";
 		initialisationAnalyse();
+		viewImprim = true;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -415,6 +427,16 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		ana.setFrottis(frottis);
 		ana.setProprietaire(nomProprietaire);
 		ana.setPossesseur(proprietaire);
+		
+		String dateAnaS = formatter.format(dateAna);
+		if (Module.dateDepassee(dateAnaS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie a dépassé la date de jour", ""));
+		if (Module.dateTresAncien(dateAnaS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie est très ancienne", ""));
+		
+		
 		ana.setDateAnalyse(dateAna);
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -429,7 +451,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		if (consultationDetail != null)
 			ana.setConsultationDetail(consultationDetail);
 		
-		
+		if(face.getMessageList().size()==0){
 		if (action != null && action.equals("ajout")) {
 			
 			ser.ajoutAnalyseDemandee(ana);
@@ -447,7 +469,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
 			
-			
+			viewImprim = false;
 			desibledImpr = true;
 			selectedAnalyse = ana;
 			initApresValidation();
@@ -462,11 +484,10 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			clt.setTpha(tpha);
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
+			viewImprim = false;
 			initApresValidation();
 		}
-
-		
-		
+		}
 	}
 	
 	public void redirect(){
@@ -589,6 +610,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		glycemie = ana.getGlycemie();
 		frottis = ana.getFrottis();
 		action = "Modif";
+		viewImprim = true;
 
 	}
 
@@ -954,8 +976,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		action = "consulter";
 		AnalyseDemandee analysee = (AnalyseDemandee) event.getObject();
 		
-		
-		
 		idanalyseDemandee = analysee.getIdanalyseDemandee();
 		proprietaire = analysee.getPossesseur();
 		nomProprietaire = analysee.getProprietaire();
@@ -968,6 +988,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		frottis = analysee.getFrottis();
 		dateAna = analysee.getDateAnalyse();
 		desibledImpr = true;
+		viewImprim = false;
 
 	}
 

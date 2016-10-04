@@ -27,7 +27,7 @@
 									actionListener="#{analyseDemandeeBean.retour()}">
 									<p:graphicImage value="/images/retour.png"></p:graphicImage>
 								</p:commandLink></td>
-							
+
 						</tr>
 					</table>
 
@@ -47,19 +47,17 @@
 								<table border="0" align="center" width="90%">
 									<tr>
 										<td><h:outputText value="Date:"
-												style="font-size:12pt;font-weight:bold" /> 
-											<p:calendar
+												style="font-size:12pt;font-weight:bold" /> <p:calendar
 												id="button" value="#{analyseDemandeeBean.dateAna}"
 												disabled="#{analyseDemandeeBean.consultation}"
 												converterMessage="Veuillez vérifier la date que vous avez saisi"
-												showOn="button" size="7" pattern="dd/MM/yyyy" >
-												<p:ajax  listener="#{analyseDemandeeBean.dateChange2}"
-												update="button,:f1:growl"></p:ajax>
-											<p:ajax event="dateSelect" listener="#{analyseDemandeeBean.dateChange}"
-												update="button,:f1:growl"></p:ajax>
-												</p:calendar>
-												
-												</td>
+												 size="7" pattern="dd/MM/yyyy">
+												<p:ajax listener="#{analyseDemandeeBean.dateChange2}"
+													update="button,:f1:growl"></p:ajax>
+												<p:ajax event="dateSelect"
+													listener="#{analyseDemandeeBean.dateChange}"
+													update="button,:f1:growl"></p:ajax>
+											</p:calendar></td>
 										<td align="right"><h:panelGrid columns="3">
 												<h:outputText value="Analyse pour : "
 													style="font-size:13pt;font-weight:bold" />
@@ -121,30 +119,31 @@
 											<td><h:panelGrid columns="3">
 
 													<h:panelGrid columns="2">
-														<h:outputText   value="Toxo :"
+														<h:outputText value="Toxo :"
 															style="font-size:12pt;font-weight:bold" />
 														<h:inputText id="to" value="#{analyseDemandeeBean.toxo}"
 															disabled="#{analyseDemandeeBean.consultation}"
 															style="font-size:12pt;font-weight:bold"
-															readonly="#{connectionBean.consultDetAnal}" >
-															<p:ajax event="blur" listener="#{analyseDemandeeBean.toxoChange}" update="to"></p:ajax>
-															</h:inputText>
+															readonly="#{connectionBean.consultDetAnal}">
+															<p:ajax event="blur"
+																listener="#{analyseDemandeeBean.toxoChange}" update="to"></p:ajax>
+														</h:inputText>
 
 														<h:outputText value="TPHA :"
 															style="font-size:12pt;font-weight:bold" />
-														<h:inputText  id="tp" value="#{analyseDemandeeBean.tpha}"
+														<h:inputText id="tp" value="#{analyseDemandeeBean.tpha}"
 															disabled="#{analyseDemandeeBean.consultation}"
 															style="font-size:12pt;font-weight:bold"
 															readonly="#{connectionBean.consultDetAnal}">
 															<p:ajax event="blur"
-																listener="#{analyseDemandeeBean.tphaChange}"
-																update="tp"></p:ajax>
+																listener="#{analyseDemandeeBean.tphaChange}" update="tp"></p:ajax>
 														</h:inputText>
 
 
-														<h:outputText  value="Rubéole :"
+														<h:outputText value="Rubéole :"
 															style="font-size:12pt;font-weight:bold" />
-														<h:inputText id="rub" value="#{analyseDemandeeBean.rubeole}"
+														<h:inputText id="rub"
+															value="#{analyseDemandeeBean.rubeole}"
 															disabled="#{analyseDemandeeBean.consultation}"
 															style="font-size:12pt;font-weight:bold"
 															readonly="#{connectionBean.consultDetAnal}">
@@ -152,7 +151,7 @@
 																listener="#{analyseDemandeeBean.rubeoleChange}"
 																update="rub"></p:ajax>
 														</h:inputText>
-														
+
 														<h:outputText value="AgHbs :"
 															style="font-size:12pt;font-weight:bold" />
 														<h:inputText id="ag" value="#{analyseDemandeeBean.agHbs}"
@@ -198,27 +197,27 @@
 								</p:panel>
 
 
-								<table border="1">
+								<table border="0">
 									<tr>
 										<td></td>
 										<td><p:commandButton value="Valider"
 												disabled="#{analyseDemandeeBean.consultation}"
-												rendered="#{!connectionBean.consultDetAnal}" 
+												rendered="#{!connectionBean.consultDetAnal}"
 												actionListener="#{analyseDemandeeBean.valider}"
-												style="font-size:12pt;font-weight:bold">
+												style="font-size:12pt;font-weight:bold"
+												update=":f1:growl,:f1">
 											</p:commandButton></td>
 										<td><p:commandButton value="Annuler"
 												rendered="#{!connectionBean.consultDetAnal}"
 												style="font-size:12pt;font-weight:bold">
 												<p:ajax listener="#{analyseDemandeeBean.annulation()}" />
 											</p:commandButton></td>
-										<td>
-										<p:commandButton value="Imprimer"
-											actionListener="#{analyseDemandeeBean.selectAnalyse}" icon="ui-icon-print"
-											disabled="#{radioBean.viewImprim}"
-											style="font-size:12pt;font-weight:bold">
-										</p:commandButton>
-										</td>
+										<td><p:commandButton value="Imprimer" ajax="false"
+												actionListener="#{analyseDemandeeBean.selectAnalyse}"
+												icon="ui-icon-print"
+												disabled="#{analyseDemandeeBean.viewImprim}"
+												style="font-size:12pt;font-weight:bold">
+											</p:commandButton></td>
 									</tr>
 								</table>
 							</p:panel>
