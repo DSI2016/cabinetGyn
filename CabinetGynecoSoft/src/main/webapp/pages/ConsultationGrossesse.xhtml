@@ -59,30 +59,25 @@
 											disabled="#{consultationDetailBean.desibledOrd}"
 											actionListener="#{consultationDetailBean.demandeOrdonnanceObs}"
 											id="nouvelleordonnace">
-
-											
-												
 											<p:graphicImage value="/images/ordonnance.png"
-												rendered="#{connectionBean.consulGrosstOrd}"></p:graphicImage>
-
+												rendered="#{connectionBean.ordnanceFiche}"></p:graphicImage>
 										</p:commandLink>
-
 										<p:commandLink
 											disabled="#{consultationDetailBean.desibledRadio}"
 											action="#{consultationDetailBean.notblocagenotification()}"
 											actionListener="#{consultationDetailBean.demandeRadio}"
 											id="Radio">
 											<p:graphicImage value="/images/radio.png"
-												rendered="#{connectionBean.radioGyn}">
+												rendered="#{connectionBean.radioFiche}">
 											</p:graphicImage>
 										</p:commandLink>
-
 										<p:commandLink
 											action="#{consultationDetailBean.notblocagenotification()}"
 											disabled="#{consultationDetailBean.desibledAnalyse}"
 											actionListener="#{consultationDetailBean.demandeAnalyse}"
-											rendered="#{connectionBean.analGyn}" id="analyse">
-											<p:graphicImage value="/images/analyse.png"></p:graphicImage>
+											 id="analyse">
+											<p:graphicImage value="/images/analyse.png"
+											  rendered="#{connectionBean.analyseFiche}" ></p:graphicImage>
 										</p:commandLink>
 
 									</h:panelGrid></td>

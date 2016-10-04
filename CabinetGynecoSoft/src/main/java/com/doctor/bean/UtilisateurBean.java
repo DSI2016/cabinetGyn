@@ -374,6 +374,8 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean modifHistoAnalPriv;
 	private boolean consultHistoAnalPriv;
 	private boolean supHistoAnalPriv;
+	private boolean ajoutDemandAnalPriv;
+	
 
 	private boolean rapportFichePriv;
 
@@ -381,13 +383,15 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean modifHistoRadPriv;
 	private boolean consultHistoRadPriv;
 	private boolean supHistoRadPriv;
-
+	private boolean ajoutDemandRadPriv;
+	
 	private boolean ordonceFichePriv;
 	private boolean consultOrdLibrePriv;
 	private boolean modifHistoOrdPriv;
 	private boolean supHistoOrdPriv;
 	private boolean rechercheOrdPriv;
 	private boolean imprOrdPriv;
+	private boolean ajoutDemandOrdPriv;
 
 	private boolean ordonceLbreFichePriv;
 	private boolean ajoutModeleordPriv;
@@ -414,6 +418,35 @@ public class UtilisateurBean implements java.io.Serializable {
 	private List<Modelutl> modeleUtls = new ArrayList<Modelutl>();
 
 	private boolean consultAnalActiv = true;
+	
+	
+	
+
+	public boolean isAjoutDemandAnalPriv() {
+		return ajoutDemandAnalPriv;
+	}
+
+	public void setAjoutDemandAnalPriv(boolean ajoutDemandAnalPriv) {
+		this.ajoutDemandAnalPriv = ajoutDemandAnalPriv;
+	}
+
+	public boolean isAjoutDemandRadPriv() {
+		return ajoutDemandRadPriv;
+	}
+
+	public void setAjoutDemandRadPriv(boolean ajoutDemandRadPriv) {
+		this.ajoutDemandRadPriv = ajoutDemandRadPriv;
+	}
+
+	
+
+	public boolean isAjoutDemandOrdPriv() {
+		return ajoutDemandOrdPriv;
+	}
+
+	public void setAjoutDemandOrdPriv(boolean ajoutDemandOrdPriv) {
+		this.ajoutDemandOrdPriv = ajoutDemandOrdPriv;
+	}
 
 	public String getNouvPatSal() {
 		return nouvPatSal;
@@ -2738,7 +2771,22 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupAnalyse(false);
 			}
-
+			if (ajoutDemandAnalPriv) {
+				u.setAjoutDemandeAnal(true);
+			} else {
+				u.setAjoutDemandeAnal(false);
+			}
+			if (ajoutDemandRadPriv) {
+				u.setAjoutDemandeRad(true);
+			} else {
+				u.setAjoutDemandeRad(false);
+			}
+			if (ajoutDemandOrdPriv) {
+				u.setAjoutDemandeOrd(true);
+			} else {
+				u.setAjoutDemandeOrd(false);
+			}
+			
 			if (radioFichePriv) {
 				u.setRadioFiche("1");
 			} else {
@@ -4043,6 +4091,21 @@ public class UtilisateurBean implements java.io.Serializable {
 					u.setSupAnalyse(true);
 				} else {
 					u.setSupAnalyse(false);
+				}
+				if (ajoutDemandAnalPriv) {
+					u.setAjoutDemandeAnal(true);
+				} else {
+					u.setAjoutDemandeAnal(false);
+				}
+				if (ajoutDemandRadPriv) {
+					u.setAjoutDemandeRad(true);
+				} else {
+					u.setAjoutDemandeRad(false);
+				}
+				if (ajoutDemandOrdPriv) {
+					u.setAjoutDemandeOrd(true);
+				} else {
+					u.setAjoutDemandeOrd(false);
 				}
 
 				if (radioFichePriv) {
@@ -5359,6 +5422,23 @@ public class UtilisateurBean implements java.io.Serializable {
 		} else {
 			supHistoAnalPriv = false;
 		}
+		if (u.isAjoutDemandeAnal()) {
+			ajoutDemandAnalPriv= true;
+		} else {
+			ajoutDemandAnalPriv = false;
+		}
+		if (u.isAjoutDemandeRad()) {
+			ajoutDemandRadPriv= true;
+		} else {
+			ajoutDemandRadPriv = false;
+		}
+		if (u.isAjoutDemandeOrd()) {
+			ajoutDemandOrdPriv= true;
+		} else {
+			ajoutDemandOrdPriv = false;
+		}
+		
+		
 
 		if (radioFiche.equals("1")) {
 			radioFichePriv = true;
@@ -6434,6 +6514,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		modifHistoAnalPriv = false;
 		consultHistoAnalPriv = false;
 		supHistoAnalPriv = false;
+		ajoutDemandAnalPriv=false;
 
 		radioFichePriv = false;
 		modifHistoRadPriv = false;
@@ -6441,6 +6522,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoRadPriv = false;
 		imprAnalPriv = false;
 		imprRadioPriv = false;
+		ajoutDemandRadPriv=false;
 
 		rapportFichePriv = false;
 
@@ -6450,6 +6532,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = false;
 		rechercheOrdPriv = false;
 		imprOrdPriv = false;
+		ajoutDemandOrdPriv=false;
 
 		ajoutModeleordPriv = false;
 		selectModeleordPriv = false;
@@ -6703,6 +6786,11 @@ public class UtilisateurBean implements java.io.Serializable {
 		gestSaisPriv = true;
 
 		gestCabinetPriv = true;
+		menuRappPriv = true;
+		rappCertifPriv = true;
+		rappLettrePriv = true;
+		
+		
 
 	}
 
@@ -6818,6 +6906,10 @@ public class UtilisateurBean implements java.io.Serializable {
 		gestSaisPriv = false;
 
 		gestCabinetPriv = false;
+		
+		menuRappPriv = false;
+		rappCertifPriv = false;
+		rappLettrePriv = false;
 
 	}
 
@@ -7017,9 +7109,10 @@ public class UtilisateurBean implements java.io.Serializable {
 
 		analyseFichePriv = true;
 		modifHistoAnalPriv = true;
-		consultHistoAnalPriv = true;
+		//consultHistoAnalPriv = true;
 		supHistoAnalPriv = true;
 		imprAnalPriv = true;
+		ajoutDemandAnalPriv=true;
 	}
 
 	public void touDecocherAnalFich() {
@@ -7028,6 +7121,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		consultHistoAnalPriv = false;
 		supHistoAnalPriv = false;
 		imprAnalPriv = false;
+		ajoutDemandAnalPriv=false;
 
 	}
 
@@ -7038,6 +7132,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoRadPriv = true;
 		imprAnalPriv = true;
 		imprRadioPriv = true;
+		ajoutDemandRadPriv=true;
 
 	}
 
@@ -7048,6 +7143,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoRadPriv = false;
 		imprRadioPriv = false;
 		imprAnalPriv = false;
+		ajoutDemandRadPriv=false;
 	}
 
 	public void touCocherOrdFich() {
@@ -7057,6 +7153,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = true;
 		rechercheOrdPriv = true;
 		imprOrdPriv = true;
+		ajoutDemandRadPriv=true;
 
 	}
 
@@ -7066,6 +7163,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = false;
 		rechercheOrdPriv = false;
 		imprOrdPriv = false;
+		ajoutDemandOrdPriv=false;
 	}
 
 	public void touCocherOrdLbreFich() {
@@ -7576,6 +7674,22 @@ public class UtilisateurBean implements java.io.Serializable {
 				u.setSupAnalyse(true);
 			} else {
 				u.setSupAnalyse(false);
+			}
+			
+			if (ajoutDemandAnalPriv) {
+				u.setAjoutDemandeAnal(true);
+			} else {
+				u.setAjoutDemandeAnal(false);
+			}
+			if (ajoutDemandRadPriv) {
+				u.setAjoutDemandeRad(true);
+			} else {
+				u.setAjoutDemandeRad(false);
+			}
+			if (ajoutDemandOrdPriv) {
+				u.setAjoutDemandeOrd(true);
+			} else {
+				u.setAjoutDemandeOrd(false);
 			}
 
 			if (radioFichePriv) {
@@ -8859,6 +8973,21 @@ public class UtilisateurBean implements java.io.Serializable {
 				supHistoAnalPriv = true;
 			} else {
 				supHistoAnalPriv = false;
+			}
+			if (u.isAjoutDemandeAnal()) {
+				ajoutDemandAnalPriv= true;
+			} else {
+				ajoutDemandAnalPriv = false;
+			}
+			if (u.isAjoutDemandeRad()) {
+				ajoutDemandRadPriv= true;
+			} else {
+				ajoutDemandRadPriv = false;
+			}
+			if (u.isAjoutDemandeOrd()) {
+				ajoutDemandOrdPriv= true;
+			} else {
+				ajoutDemandOrdPriv = false;
 			}
 
 			if (radioFiche.equals("1")) {

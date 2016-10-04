@@ -53,6 +53,7 @@ Historique Analyses</ui:define>
 									style="font-size:15pt;font-weight:bold" /></td>
 							<td align="right">
 							<p:commandButton value="Imprimer" disabled="#{analyseDemandeeBean.impress}"
+							         rendered="#{connectionBean.imprAnal}"
 									style="font-size:small;font-weight:bold" icon="ui-icon-print"
 									ajax="false" actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"></p:commandButton>
 							</td>
@@ -133,7 +134,6 @@ Historique Analyses</ui:define>
 								oncomplete="PF('modifAnalyse').show();" update=":f1:ma" />
 
 							<p:commandButton icon="ui-icon-search" title="Detail Analyse"
-								rendered="#{connectionBean.detAnal}"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.idanalyseDemandee)}"
 								oncomplete="PF('detailAnalyse').show();" update=":f1:madetail" />

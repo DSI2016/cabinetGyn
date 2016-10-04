@@ -253,6 +253,8 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean ajoutModeleord;
 	private boolean suppModeleOrd;
 	private boolean imprOrd;
+	private boolean imprAnal;
+	private boolean imprRad;
 	private boolean suppOrd;
 	private boolean nouvCertif;
 	private boolean modifCertif;
@@ -287,10 +289,54 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean tabAnulSal;
 	private boolean tabTelSal;
 	
+	private boolean ajoutDemandeOrd;
+	private boolean ajoutDemandeRad;
+	private boolean ajoutDemandeAnal;
+	
 	private String valOnlic;
 	
 	
 	
+	public boolean isImprAnal() {
+		return imprAnal;
+	}
+
+	public void setImprAnal(boolean imprAnal) {
+		this.imprAnal = imprAnal;
+	}
+
+	public boolean isImprRad() {
+		return imprRad;
+	}
+
+	public void setImprRad(boolean imprRad) {
+		this.imprRad = imprRad;
+	}
+
+	public boolean isAjoutDemandeOrd() {
+		return ajoutDemandeOrd;
+	}
+
+	public void setAjoutDemandeOrd(boolean ajoutDemandeOrd) {
+		this.ajoutDemandeOrd = ajoutDemandeOrd;
+	}
+
+	public boolean isAjoutDemandeRad() {
+		return ajoutDemandeRad;
+	}
+
+	public void setAjoutDemandeRad(boolean ajoutDemandeRad) {
+		this.ajoutDemandeRad = ajoutDemandeRad;
+	}
+
+	public boolean isAjoutDemandeAnal() {
+		return ajoutDemandeAnal;
+	}
+
+	public void setAjoutDemandeAnal(boolean ajoutDemandeAnal) {
+		this.ajoutDemandeAnal = ajoutDemandeAnal;
+	}
+
 	public boolean isSupAnulSal() {
 		return supAnulSal;
 	}
@@ -1808,12 +1854,15 @@ public class ConnectionBean implements java.io.Serializable {
 
 					modifAnalyse = true;
 					supAnalyse = true;
+					ajoutDemandeAnal=true;
 					detAnal=true;
 					modifRadio = true;
 					supRadio = true;
+					ajoutDemandeRad=true;
 					detRad=true;
 					modifOrdnce = true;
 					supOrdnce = true;
+					ajoutDemandeOrd=true;
 					supprimerDocteur = true;
 					gestionUterus = false;
 					ModifGyneco = true;
@@ -1878,6 +1927,8 @@ public class ConnectionBean implements java.io.Serializable {
 					ajoutModeleord = true;
 					suppModeleOrd = true;
 					imprOrd = true;
+					imprAnal=true;
+					imprRad=true;
 					suppOrd = true;
 					nouvCertif = false;
 					modifCertif = true;
@@ -2330,12 +2381,15 @@ public class ConnectionBean implements java.io.Serializable {
 
 						modifAnalyse = u.isModifAnalyse();
 						supAnalyse = u.isSupAnalyse();
+						ajoutDemandeAnal=u.isAjoutDemandeAnal();
 						detAnal=u.isDetHistoAnal();
 						modifRadio = u.isModifRadio();
 						supRadio = u.isSupRadio();
+						ajoutDemandeOrd=u.isAjoutDemandeRad();
 						detRad=u.isDetHistoRad();
 						modifOrdnce = u.isModifOrdnce();
 						supOrdnce = u.isSupOrdnce();
+						ajoutDemandeOrd=u.isAjoutDemandeOrd();
 						ajoutUterus = u.isAjoutUt();
 						modifUterus = u.isModifUt();
 						supUterus = u.isSupUt();
@@ -2398,6 +2452,8 @@ public class ConnectionBean implements java.io.Serializable {
 						ajoutModeleord = u.isAjoutModeleord();
 						suppModeleOrd = u.isSuppModeleOrd();
 						imprOrd = u.isImprOrd();
+						imprAnal=u.isImprmAnal();
+						imprRad=u.isImprRadio();
 						suppOrd = u.isSuppOrd();
 						nouvCertif = !(u.isNouvCertif());
 						modifCertif = u.isModifCertif();

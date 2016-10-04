@@ -40,6 +40,7 @@
 								<br />
 								<p:commandButton icon="ui-icon-plus" value="Nouveau"
 									style="font-size:small;font-weight:bold" update=":f1"
+									rendered="#{connectionBean.ajoutDemandeAnal}"
 									actionListener="#{analyseDemandeeBean.ajoutAna()}"></p:commandButton>
 
 							</div>
@@ -248,6 +249,7 @@
 											<p:column style="text-align: center" width="10%">
 
 												<p:commandButton icon="ui-icon-pencil"
+												    rendered="#{connectionBean.modifAnalyse}"
 													title="Modification Analyse" update=":f1:p1"
 													actionListener="#{analyseDemandeeBean.modifierAnalyse(ana)}"
 													style="font-size:small;font-weight:bold" />

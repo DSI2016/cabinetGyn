@@ -1366,7 +1366,7 @@
 											</p:panel>
 											</div>
 										</p:tab>												
-										<p:tab title="Obsterique"
+										        <p:tab title="Obsterique"
 											titleStyle="font-size:small;font-weight:bold">
 											<div align="left">
 												<h:panelGrid columns="2">
@@ -1472,66 +1472,9 @@
 													</p:panel>
 
 												</p:tab>
-											    <p:tab title="Analyse"  titleStyle="font-size:small;font-weight:bold">
-									        
-									        <p:panel style="width:400px;height:160px">
-									              <div align="left">
-												  <h:panelGrid columns="2" style="margin-bottom:5px"
-																	cellpadding="5">
-														<p:selectBooleanCheckbox 
-																	value="#{utilisateurBean.gynAnaPriv}" />  
-														<h:outputText value="Consulter Demande Analyse" />
-													</h:panelGrid>
-													</div>		
-													<h:panelGrid columns="3" style="margin-bottom:10px"
-																cellpadding="5">
-																<p:spacer width="50"></p:spacer>
-																<p:selectBooleanCheckbox 
-																	value="#{utilisateurBean.consultDetAnalPriv}" />
-																<h:outputText value="Ajouter/Modifier analyse" />
-													</h:panelGrid>
-															
-											</p:panel>
-									    </p:tab>
-									    <p:tab title="Radio" titleStyle="font-size:small;font-weight:bold">
-									    
-									    <p:panel style="width:400px;height:160px">
-															<div align="left">
-														    <h:panelGrid columns="2" style="margin-bottom:10px"
-																cellpadding="5">
-																<p:selectBooleanCheckbox
-																	value="#{utilisateurBean.gynRadioPriv}" />
-																<h:outputText value="Consulter Demande Radio" />
-														    </h:panelGrid>
-														    </div>
-														    <h:panelGrid columns="3" style="margin-bottom:10px"
-																cellpadding="5">
-																<p:spacer width="50"></p:spacer>
-																<p:selectBooleanCheckbox value="#{utilisateurBean.consultDetRadPriv}" />
-																<h:outputText value="Ajouter/Modifier radio" />
-															</h:panelGrid>
-														    </p:panel>
-									    
-									    </p:tab>
-									   <p:tab title="Ordonance"  titleStyle="font-size:small;font-weight:bold">
-									      <p:panel style="width:400px;height:160px">
-									           <div align="left">
-											     <h:panelGrid columns="2" style="margin-bottom:10px"
-																cellpadding="5">
-																<p:selectBooleanCheckbox
-																	value="#{utilisateurBean.gynOrdPriv}" />
-																<h:outputText value="Consulter Ordonnance" />
-																
-												</h:panelGrid>
-												</div>
-											    <h:panelGrid columns="3" style="margin-bottom:10px"
-																cellpadding="5">
-													<p:spacer width="50"></p:spacer>
-											  		<p:selectBooleanCheckbox value="#{utilisateurBean.consultDetOrdPriv}" />
-													<h:outputText value="Ajouter/Modifier ordonnance" />
-												</h:panelGrid>
-										</p:panel>
-									  </p:tab>
+											    
+									            
+									            
 											</p:tabView>
 										</p:tab>
 										<p:tab title="Doc médicaux"
@@ -1607,7 +1550,6 @@
 												</p:tab>
 												<p:tab title="Analyses"
 													titleStyle="font-size:small;font-weight:bold">
-
 													<div align="center">
 														<p:panel
 															style="width:450px;height:170px">
@@ -1616,18 +1558,20 @@
 																	cellpadding="5">
 																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.analyseFichePriv}" />
-																	<h:outputText value="Gérer historique des analyses" />
+																	<h:outputText value="Consulter Liste des Analyses" />
+																
 																</h:panelGrid>
 															</div>
 															<div align="center">
 																<h:panelGrid columns="4" style="margin-bottom:10px"
 																	cellpadding="5">
 																	<p:selectBooleanCheckbox
+																value="#{utilisateurBean.ajoutDemandAnalPriv}" />
+															<h:outputText value="Ajouter analyse " />
+																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.modifHistoAnalPriv}" />
 																	<h:outputText value="Modifier analyse " />
-																	<p:selectBooleanCheckbox
-																value="#{utilisateurBean.consultHistoAnalPriv}" />
-															<h:outputText value="Consulter analyse " />
+																	
 																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.supHistoAnalPriv}" />
 																	<h:outputText value="Supprimer analyse" />
@@ -1651,18 +1595,18 @@
 																	cellpadding="5">
 																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.radioFichePriv}" />
-																	<h:outputText value="Gérer historique des radios" />
+																	<h:outputText value="Consulter Liste des Radios" />
 																</h:panelGrid>
 															</div>
 															<div align="center">
 																<h:panelGrid columns="4" style="margin-bottom:10px"
 																	cellpadding="5">
 																	<p:selectBooleanCheckbox
+																value="#{utilisateurBean.ajoutDemandRadPriv}" />
+															    <h:outputText value="Ajouter radio " />
+																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.modifHistoRadPriv}" />
 																	<h:outputText value="Modifier radio " />
-																	<p:selectBooleanCheckbox
-																value="#{utilisateurBean.consultHistoRadPriv}" />
-															    <h:outputText value="Consulter radio " />
 																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.supHistoRadPriv}" />
 																	<h:outputText value="Supprimer radio" />
@@ -1686,13 +1630,16 @@
 																	cellpadding="5">
 																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.ordonceFichePriv}" />
-																	<h:outputText value="Gérer historique des Ordonnances" />
+																	<h:outputText value="consulter Liste des Ordonnances" />
 																</h:panelGrid>
 															</div>
 															<div align="center">
 																<h:panelGrid columns="4" style="margin-bottom:10px"
 																	cellpadding="5">
-
+      
+                                                                    <p:selectBooleanCheckbox
+																		value="#{utilisateurBean.ajoutDemandOrdPriv}" />
+																	<h:outputText value="Ajouter ordonnance" />
 																	<p:selectBooleanCheckbox
 																		value="#{utilisateurBean.imprOrdPriv}" />
 																	<h:outputText value="Imprimer ordonnance" />
