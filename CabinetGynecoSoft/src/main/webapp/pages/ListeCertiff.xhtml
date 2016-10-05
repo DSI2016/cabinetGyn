@@ -47,7 +47,7 @@
 			<p:panel id="pnll">
 				<table>
 					<tr>
-						<td width="460"><p:splitButton value="Certificats"
+						<td width="460"><p:splitButton value="Nouveau"
 								disabled="#{connectionBean.nouvCertif}"
 								icon="ui-icon-folder-open">
 								<p:menuitem value="Certificat de présence"
@@ -130,7 +130,7 @@
 							</p:splitButton></td>
 						<td><h:commandLink
 								actionListener="#{historiqueCertifBean.viewHistoriqueselect}"
-								rendered="#{connectionBean.imprCertif}" target="_blanc">
+								rendered="true" target="_blanc">
 								<p:graphicImage value="/imagesMenu/imprimente10.png">
 								</p:graphicImage>
 							</h:commandLink></td>
@@ -150,7 +150,7 @@
 								selection="#{historiqueCertifBean.selectedCertif}">
 								<p:ajax event="rowSelect"
 									listener="#{historiqueCertifBean.onRowSelectcertif}"
-									update=":f1:carDetail"></p:ajax>
+									update=":f1:carDetail,:f1"></p:ajax>
 
 
 								<p:column headerText="Date"
@@ -208,12 +208,14 @@
 									<p:outputLabel value="Text"></p:outputLabel>
 									<p:scrollPanel mode="native" style="width:630px;height:250px">
 										<h:outputText value="#{historiqueCertifBean.remarque}"
-											escape="false" disabled="true">
-										</h:outputText>
+											escape="false" disabled="true">										</h:outputText>
 									</p:scrollPanel>
 								</h:panelGrid>
 
-							</p:panel></td>
+							</p:panel>
+							
+							<p:commandButton value="Imprimer" rendered="#{connectionBean.imprCertif}" immediate="true" ajax="false" actionListener="#{historiqueCertifBean.viewHistoriqueselect}" disabled="#{historiqueCertifBean.afficheImp}" ></p:commandButton>
+							</td>
 					</tr>
 				</table>
 			</p:panel>
@@ -243,15 +245,30 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+				
+				
+					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifPresence()}"
 						value="Valider" 
-						immediate="true" ajax="false">
+						oncomplete="handleLoginRequestcertPres(xhr, status, args)"
+						>
 					</p:commandButton>
-					<p:commandButton value="Fermer"
+					<p:commandButton value="Annuler"
 						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
 						oncomplete="PF('certPres').hide();"></p:commandButton>
 				</div>
+				<script type="text/javascript">
+					function handleLoginRequestcertPres(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certPres').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certPres').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 			</h:form>
 		</p:dialog>
 
@@ -266,7 +283,7 @@
 
 					<h:outputText value="Le : " />
 
-					<p:inputMask mask="99/99/9999" id="cal2"
+					<p:inputMask id="cal2"
 						value="#{historiqueCertifBean.dateCertif}" size="8">
 						<p:ajax event="blur"
 							listener="#{historiqueCertifBean.verifierDate()}"
@@ -289,15 +306,28 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1,:f1:carDetail"
 						actionListener="#{historiqueCertifBean.ajoutCertifPresenceAcompgnement()}"
 						value="Valider" 
-						immediate="true" ajax="false">
+						oncomplete="handleLoginRequestcertPresAcomm(xhr, status, args)"
+						>
 					</p:commandButton>
-					<p:commandButton value="Fermer"
+					<p:commandButton value="Annuller"
 						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
 						oncomplete="PF('certPresAcomm').hide();"></p:commandButton>
 				</div>
+				<script type="text/javascript">
+					function handleLoginRequestcertPresAcomm(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certPresAcomm').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certPresAcomm').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 			</h:form>
 		</p:dialog>
 
@@ -327,18 +357,18 @@
 							<td width="250"><h:panelGrid columns="2">
 
 									<h:outputText value="CIN : " />
-									<p:inputMask mask="99999999"
+									<p:inputText  placeholder="99999999"
 										value="#{historiqueCertifBean.cin}" size="10" id="cin">
 
 
 										<p:ajax event="blur"
 											listener="#{historiqueCertifBean.cinChange()}"
-											update=":f1:growl,cin">
+											update=":f1:growl">
 										</p:ajax>
-									</p:inputMask>
+									</p:inputText>
 									<h:outputText value="Livré le  : " />
 									<p:inputMask mask="99/99/9999" id="livrel"
-										value="#{historiqueCertifBean.livreele}" size="10">
+										value="#{historiqueCertifBean.livreele}" size="10" placeholder="99/99/9999">
 
 										<p:ajax event="blur"
 											listener="#{historiqueCertifBean.verifierDateLivrele()}"
@@ -346,7 +376,7 @@
 										</p:ajax>
 									</p:inputMask>
 									<h:outputText value="à: " />
-									<p:inputText value="#{historiqueCertifBean.a}" size="10">
+									<p:inputText value="#{historiqueCertifBean.a}" placeholder="Lieu" size="10">
 										<p:ajax event="blur"
 											listener="#{historiqueCertifBean.aChange()}">
 										</p:ajax>
@@ -354,7 +384,7 @@
 								</h:panelGrid></td>
 
 							<td><h:outputText value="Remarques" /></td>
-							<td><p:inputTextarea
+							<td><p:inputTextarea placeholder="Remarque"
 									value="#{historiqueCertifBean.remarques}"
 									style="font-weight:bold;font-size:small;height : 90px; width : 350px;">
 									<p:ajax event="blur"
@@ -370,16 +400,30 @@
 				<br></br>
 				<div align="center">
 
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1,:f1:carDetail"
 						actionListener="#{historiqueCertifBean.ajoutCertifMariage()}"
+						oncomplete="handleLoginRequestcertMar(xhr, status, args)"
 						 value="Valider"
-						immediate="true">
+						>
 					</p:commandButton>
-					<p:commandButton value="Fermer"
+					<p:commandButton value="Annuler"
 						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
 						oncomplete="PF('certMar').hide();"></p:commandButton>
 
 				</div>
+				
+				<script type="text/javascript">
+					function handleLoginRequestcertMar(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certMar').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certMar').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 			</h:form>
 		</p:dialog>
 
@@ -443,16 +487,32 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1"
+					icon="ui-icon-check"
 						actionListener="#{historiqueCertifBean.ajoutCertifRepos}"
+						oncomplete="handleLoginRequestcertRepos(xhr, status, args)"
 						value="Valider" 
-						immediate="true" ajax="false">
+					>
 					</p:commandButton>
-					<p:commandButton value="Fermer" update=":f1"
+					<p:commandButton value="Annuler" update=":f1"
+					icon="ui-icon-arrowreturnthick-1-s"
 						actionListener="#{historiqueCertifBean.refresh()}"
 						oncomplete="PF('certRepos').hide();"></p:commandButton>
 
 				</div>
+				
+				<script type="text/javascript">
+					function handleLoginRequestcertRepos(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certRepos').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certRepos').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 			</h:form>
 		</p:dialog>
 
@@ -527,16 +587,30 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifReposAccomp()}"
+						oncomplete="handleLoginRequestcertReposAccompagnant(xhr, status, args)"
+						
 						value="Valider" 
-						immediate="true" ajax="false">
+						>
 					</p:commandButton>
-					<p:commandButton value="Fermer" update=":f1"
+					<p:commandButton value="Annuler" update=":f1"
 						actionListener="#{historiqueCertifBean.refresh()}"
 						oncomplete="PF('certReposAccompagnant').hide();"></p:commandButton>
 
 				</div>
+				<script type="text/javascript">
+					function handleLoginRequestcertReposAccompagnant(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certReposAccompagnant').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certReposAccompagnant').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 			</h:form>
 		</p:dialog>
 
@@ -582,10 +656,10 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifGuerision()}"
 						value="Valider" 
-						immediate="true" ajax="false">
+						oncomplete="handleLoginRequestcertguerison(xhr, status, args)">
 					</p:commandButton>
 					<p:commandButton value="Fermer" update=":f1"
 						actionListener="#{historiqueCertifBean.refresh()}"
@@ -593,6 +667,21 @@
 				</div>
 
 			</h:form>
+			
+			
+			<script type="text/javascript">
+					function handleLoginRequestcertguerison(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certguerison').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certguerison').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+					</script>
+					
 		</p:dialog>
 
 		<p:dialog id="idDialogCoups" widgetVar="certcoups" modal="true"
@@ -708,17 +797,36 @@
 					<br></br>
 
 					<div align="center">
-						<p:commandButton update=":f1:growl"
+						<p:commandButton 
+						icon="ui-icon-check"
 							actionListener="#{historiqueCertifBean.ajoutCertifCoups()}"
-							value="Valider" 
-							immediate="true">
+							oncomplete="handleLoginRequestcertcoups(xhr, status, args)"
+							value="Valider"  update=":f1:growl,:f1"
+						>
 						</p:commandButton>
-						<p:commandButton value="Fermer" update=":f1"
+						<p:commandButton value="Annuler" update=":f1"
+						icon="ui-icon-arrowreturnthick-1-s"
 							actionListener="#{historiqueCertifBean.refresh()}"
 							oncomplete="PF('certcoups').hide();"></p:commandButton>
 
 					</div>
 				</p:panel>
+				
+				
+				
+				
+				<script type="text/javascript">
+					function handleLoginRequestcertcoups(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certcoups').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certcoups').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 			</h:form>
 		</p:dialog>
 
@@ -753,15 +861,28 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifAptitude()}"
 						value="Valider" 
-						immediate="true" ajax="false">
+						oncomplete="handleLoginRequestcertaptitude(xhr, status, args)">
 					</p:commandButton>
 					<p:commandButton value="Fermer" update=":f1"
 						actionListener="#{historiqueCertifBean.refresh()}"
 						oncomplete="PF('certaptitude').hide();"></p:commandButton>
 				</div>
+				<script type="text/javascript">
+					function handleLoginRequestcertaptitude(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certaptitude').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certaptitude').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+					</script>
+					
 			</h:form>
 		</p:dialog>
 
@@ -802,15 +923,28 @@
 				</p:panel>
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl"
+					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifInaptitude()}"
 						value="Valider" 
-						immediate="true" ajax="false">
+						oncomplete="handleLoginRequestcertinaptitude(xhr, status, args)"
+						>
 					</p:commandButton>
 					<p:commandButton value="Fermer" update=":f1"
 						actionListener="#{historiqueCertifBean.refresh()}"
 						oncomplete="PF('certinaptitude').hide();"></p:commandButton>
 				</div>
+				<script type="text/javascript">
+					function handleLoginRequestcertinaptitude(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('certinaptitude').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('certinaptitude').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+					</script>
 			</h:form>
 		</p:dialog>
 

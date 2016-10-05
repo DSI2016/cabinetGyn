@@ -1,5 +1,4 @@
 package com.doctor.bean;
-
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,13 +8,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
-
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.jasperreports.engine.JasperRunManager;
-
 import com.doctor.dao.HibernateUtil;
 import com.mysql.jdbc.Connection;
 
@@ -24,7 +20,6 @@ public class Module {
 	static String patientEnConsultation;
 	static String connecte = "";
 	static String consultation = "";
-
 	static String rechercheProf = "";
 	static String rechercheClinique = "";
 	static String rechercheVille = "";
@@ -51,7 +46,8 @@ public class Module {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar today = new GregorianCalendar();// contient le date system
 		Calendar userDate = new GregorianCalendar();
-				try {
+
+		try {
 			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
 														// en date
 			if (userDate.after(today))// le fonction after pour tester le date
@@ -61,11 +57,10 @@ public class Module {
 		} catch (ParseException e) {
 			userDate = null;
 		}
+		// succes =true ==> date est dépassé
 		return (success);
 	}
-//cette methode pour detectéé si ce date est tres ancien
-	
-	
+
 	static boolean dateTresAncien(String date) { // pour verifier que le date ne
 
 		boolean success = false;
@@ -80,8 +75,7 @@ public class Module {
 			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
 			// en date
 			if (userDate.before(hier))// le fonction after pour tester le date
-			// depassee date system
-
+				// depassee date system
 				success = true;
 		} catch (ParseException e) {
 			userDate = null;
@@ -347,7 +341,7 @@ public class Module {
 
 		if (isValid(date, format) == false)
 
-			msg = "Format Date Invalide (il faut que dd/mm/yyyy)";
+			msg = "Format Date Invalide";
 
 		else {
 			try {
@@ -426,30 +420,21 @@ public class Module {
 		return 0;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static int calculAgeEnAnsParRapportDateRapport(String dateNaiss,
 			String DateRapport) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-		// let.setDatelettre(sdf.parse(dateLet));
+if((verifierDate(dateNaiss).equals(""))&&(verifierDate(dateNaiss).equals("")))
+{	
 		if (dateNaiss != null && dateNaiss.length() > 0) {
 			int i = dateNaiss.lastIndexOf("/");
 			int j = Integer.parseInt(dateNaiss.substring(i + 1));
-			// Calendar c = Calendar.getInstance();
-			Date c;
-			try {
-				c = sdf.parse(DateRapport);
-				System.out.println("date c" + c);
-				int year = c.getYear();
-				System.out.println("year" + year);
-				return (year - j);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			if (DateRapport != null && DateRapport.length() > 0) {
+			int year = Integer.parseInt(DateRapport.substring(i + 1));
+			return (year - j);
+				
+		
 		}
-
+		}
+}
 		return 0;
 	}
 
@@ -616,7 +601,6 @@ public class Module {
 	static String radioFiche;
 	static String rapportFiche;
 	static String ordnanceFiche;
-
 	static boolean actif;
 	static boolean passif;
 	static String action;
