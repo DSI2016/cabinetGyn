@@ -327,6 +327,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean steriliteModifPriv;
 	private boolean tabAntecedentPriv;
 	private boolean modifAntPriv;
+	private boolean nouvAntPriv;
 	private boolean suppAntPriv;
 	private boolean modifGynObsPriv;
 
@@ -1772,6 +1773,16 @@ public class UtilisateurBean implements java.io.Serializable {
 
 	public void setModifAntPriv(boolean modifAntPriv) {
 		this.modifAntPriv = modifAntPriv;
+	}
+	
+	
+
+	public boolean isNouvAntPriv() {
+		return nouvAntPriv;
+	}
+
+	public void setNouvAntPriv(boolean nouvAntPriv) {
+		this.nouvAntPriv = nouvAntPriv;
 	}
 
 	public boolean isSuppAntPriv() {
@@ -3477,13 +3488,11 @@ public class UtilisateurBean implements java.io.Serializable {
 
 			if (modifGynObsPriv) {
 				u.setModifGynObs(true);
-				;
 			} else {
 				u.setModifGynObs(false);
 			}
 			if (modifAntPriv) {
 				u.setModifAnt(true);
-				;
 			} else {
 				u.setModifAnt(false);
 			}
@@ -3492,6 +3501,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSuppAnt(false);
 			}
+			if (nouvAntPriv) {
+				u.setSelectAntecedent(true);
+			} else {
+				u.setSelectAntecedent(false);
+			}
+			
 
 			if (tabGynecoObsPriv) {
 				u.setTabGynecoObs("1");
@@ -4779,13 +4794,11 @@ public class UtilisateurBean implements java.io.Serializable {
 
 				if (modifGynObsPriv) {
 					u.setModifGynObs(true);
-					;
 				} else {
 					u.setModifGynObs(false);
 				}
 				if (modifAntPriv) {
 					u.setModifAnt(true);
-					;
 				} else {
 					u.setModifAnt(false);
 				}
@@ -4794,6 +4807,12 @@ public class UtilisateurBean implements java.io.Serializable {
 				} else {
 					u.setSuppAnt(false);
 				}
+				if (nouvAntPriv) {
+					u.setSelectAntecedent(true);
+				} else {
+					u.setSelectAntecedent(false);
+				}
+				
 				if (tabGynecoObsPriv) {
 					u.setTabGynecoObs("1");
 				} else {
@@ -6131,6 +6150,11 @@ public class UtilisateurBean implements java.io.Serializable {
 		} else {
 			suppAntPriv = false;
 		}
+		if (u.isSelectAntecedent()) {
+			nouvAntPriv = true;
+		} else {
+			nouvAntPriv = false;
+		}
 
 		if (tabGynecoObs.equals("1")) {
 			tabGynecoObsPriv = true;
@@ -6470,6 +6494,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabAntecedentPriv = false;
 		modifGynObsPriv = false;
 		modifAntPriv = false;
+		nouvAntPriv=false;
 		suppAntPriv = false;
 		tabGynecoObsPriv = false;
 		tabHistGrossPriv = false;
@@ -6928,6 +6953,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		modifGynObsPriv = true;
 		modifAntPriv = true;
 		suppAntPriv = true;
+		nouvAntPriv=true;
 
 	}
 
@@ -6947,6 +6973,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		modifGynObsPriv = false;
 		modifAntPriv = false;
 		suppAntPriv = false;
+		nouvAntPriv=false;
 
 	}
 
@@ -8363,13 +8390,11 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 			if (modifGynObsPriv) {
 				u.setModifGynObs(true);
-				;
 			} else {
 				u.setModifGynObs(false);
 			}
 			if (modifAntPriv) {
 				u.setModifAnt(true);
-				;
 			} else {
 				u.setModifAnt(false);
 			}
@@ -8378,6 +8403,11 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSuppAnt(false);
 			}
+			 if (nouvAntPriv) {
+					u.setSelectAntecedent(true);
+				} else {
+					u.setSelectAntecedent(false);
+				}
 
 			if (tabGynecoObsPriv) {
 				u.setTabGynecoObs("1");
@@ -9683,6 +9713,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				suppAntPriv = false;
 			}
+			if (u.isSelectAntecedent()) {
+				nouvAntPriv = true;
+			} else {
+				nouvAntPriv = false;
+			}
+			
 			if (tabGynecoObs.equals("1")) {
 				tabGynecoObsPriv = true;
 			} else {

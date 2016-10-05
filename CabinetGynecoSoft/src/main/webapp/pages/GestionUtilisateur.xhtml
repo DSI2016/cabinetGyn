@@ -1115,7 +1115,7 @@
 										<p:tab title="Consultations"
 											titleStyle="font-size:small;font-weight:bold">
 											<p:tabView>
-												<p:tab title="Antecedent"
+												<p:tab title="Antécédent"
 											titleStyle="font-size:small;font-weight:bold">
 											
 											<div align="center">
@@ -1135,9 +1135,13 @@
 															style="width:250px;height:150px">
 															<h:panelGrid columns="2" style="margin-bottom:10px"
 																cellpadding="5">
+																
 																<p:selectBooleanCheckbox
 																	value="#{utilisateurBean.tabAntecedentPriv}" />
 																<h:outputText value="Consulter Historique Antécedent" />
+																<p:selectBooleanCheckbox
+																	value="#{utilisateurBean.nouvAntPriv}" />
+																<h:outputText value="Ajouter Antécedent" />
 																<p:selectBooleanCheckbox
 																	value="#{utilisateurBean.modifAntPriv}" />
 																<h:outputText value="Modifier Antécedent" />
