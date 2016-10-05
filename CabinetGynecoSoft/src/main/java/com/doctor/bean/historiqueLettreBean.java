@@ -48,9 +48,12 @@ public class historiqueLettreBean implements Serializable {
 	private Lettre lettre;
 
 	private String dateLet;
+	private String dateLettreConf;
+	private String dateLettreAccouchem;
 	private String code;
 	private String toxo;
 	private String tpha;
+	private boolean afficheImpr=true;
 	// private Date dateActe;
 	private Cfclient cfclient;
 	private String nomletrr;
@@ -106,6 +109,7 @@ public class historiqueLettreBean implements Serializable {
 	private String ancientext;
 	private String acte;
 	private String ancienValeurDateCertif;
+	private String dateDelettre;
 private boolean blocage;
 	public String getAncienValeurDateCertif() {
 		return ancienValeurDateCertif;
@@ -137,6 +141,7 @@ private boolean blocage;
 
 
 	public void setDateLet(String dateLet) {
+		System.out.println("dqate lettre"+dateLet);
 		this.dateLet = dateLet;
 	}
 
@@ -618,7 +623,8 @@ private boolean blocage;
 //					.redirect("ListeLettre.xhtml");
 //		} catch (Exception e) {
 //		}
-
+afficheImpr=false;
+selectedhistolettre=c;
 		textLettre = c.getTextLettre();
 		idHistoriquelettre = c.getIdHistoriquelettre();
 		cfclient = c.getCfclient();
@@ -721,7 +727,7 @@ private boolean blocage;
 		else
 			rem = remplaceMot(rem, "$NP", "");
 		if (Module.age(cfclient.getDateNaiss()) != null) {
-			rem = remplaceMot(rem, "$Age", Module.calculAgeEnAnsParRapportDateRapport(cfclient.getDateNaiss(),dateLet)+" Ans");
+			rem = remplaceMot(rem, "$Age", Module.calculAgeEnAnsParRapportDateRapport(cfclient.getDateNaiss(),dateDelettre)+" Ans");
 		} else
 			rem = remplaceMot(rem, "$Age", "");
 
@@ -841,28 +847,17 @@ private boolean blocage;
 				.equals("Lettre de prise en charge"))
 			nomReport = "lettrereponse";
 
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idlettre", selectedhistolettre.getIdHistoriquelettre());
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
-	}
+	Module.imprimer(nomReport, param);	}
+	
 
 	public void ajoutLettreReponseDemande() throws SQLException, Exception {
 		// confidentielle
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		boolean addValid=false;
+		FacesContext face = FacesContext.getCurrentInstance();
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -870,16 +865,81 @@ private boolean blocage;
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		let.setCfclient(cfclient);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+if(dateLettreConf.length()==0)
+	
+	{
+	System.out.println(" is null");
+	blocage=true;
+	face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			"", "veullez saisi le date de lettre"));
+addValid=false;
+}
+if(dateLettreConf.length()>0)
+{
+	if (Module.corigerDate(dateLettreConf) != null) {
+		this.setDateLettreConf(Module.corigerDate(dateLettreConf));
+	}
+	if ((Module.verifierDate(dateLettreConf).equals(""))==false)
 
-		let.setDatelettre(sdf.parse(dateLet));
+	{
+		blocage = true;
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"", Module.verifierDate(dateLettreConf)));
+		addValid = false;
+
+	} else {
+
+		
+			let.setDatelettre(sdf.parse(dateLettreConf));
+		
+	}
+
+	
+}
+
+if(acte.length()==0)
+	
+{
+System.out.println(" is null");
+blocage=true;
+face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+		"", "veullez saisi le date de l'acte "));
+addValid=false;
+System.out.println(addValid);}
+if(acte.length()>0)
+{
+if (Module.corigerDate(acte) != null) {
+	this.setActe(Module.corigerDate(acte));
+}
+if (!(Module.verifierDate(acte).equals("")))
+
+{
+	blocage = true;
+	face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			"", Module.verifierDate(acte)));
+	addValid = false;
+
+} else {
+
+	
 		let.setDateActe(sdf.parse(acte));
+	
+}
+
+
+}
+addValid=false;
+		if(face.getMessageList().size()==0)
+		{
+			addValid=true;
 
 		let.setCode(code);
 		let.setClinique(clinique);
 		let.setDescription(description);
+		System.out.println("nomLettre"+nomLettre);
 		Lettre c = new LettreService()
 				.recherchelettreParLibellelettre(nomLettre);
+		System.out.println("nom apres "+c.getNomLettre());
 		let.setLettre(c);
 		if (c != null)
 			if (c.getTextLettre() != null) {
@@ -889,66 +949,92 @@ private boolean blocage;
 			}
 
 		if (action.equals("Ajout")) {
+			 c = new LettreService()
+			.recherchelettreParLibellelettre(nomLettre);
+	let.setLettre(c);
+			addValid=true;
 			historiqueLettreService serc = new historiqueLettreService();
 			serc.ajoutHistoriqueLettre(let);
-			FacesContext face = FacesContext.getCurrentInstance();
 			blocage=false;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre ajoutée avec succées"));
-
-			// Impression
-			historiqueLettreService ser = new historiqueLettreService();
-			List<historiqueLettre> lettr = ser
-					.rechercheTousHistoriqueLettre(idPatient);
-			if (lettr != null && lettr.size() > 0) {
-				historiqueLettre o = lettr.get(0);
-				selectedhistolettre = o;
-			}
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false;
 		}
 
 		if (action.equals("Modification")) {
+			 c = new LettreService()
+			.recherchelettreParLibellelettre(nomLettre);
+	let.setLettre(c);
 			historiqueLettreService serc = new historiqueLettreService();
 			let.setIdHistoriquelettre(idHistoriquelettre);
 			serc.modifierHistoriqueLettre(let);
 			selectedhistolettre = let;
-			FacesContext face = FacesContext.getCurrentInstance();
 			blocage=false;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre modifiée avec succées"));
-			RequestContext.getCurrentInstance().update("f1:growl");
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
 		}
-		String nomReport = "lettreconfidentielle";
-
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("idlettre", selectedhistolettre.getIdHistoriquelettre());
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+		}
+		
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
+		initialitationDonneesLettre();
 	}
 
 	public void ajoutLettreAccouchement() throws SQLException, Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		boolean addValid=false;
+		FacesContext face = FacesContext.getCurrentInstance();
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
 		historiqueLettre let = new historiqueLettre();
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
+		if(dateLettreAccouchem.length()==0)
+			
+		{
+		System.out.println(" is null");
+		blocage=true;
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"", "veullez saisi le date de lettre"));
+	addValid=false;
+	}
+	if(dateLettreAccouchem.length()!=0)
+	{
+		if (Module.corigerDate(dateLettreAccouchem) != null) {
+			this.setDateLettreAccouchem(Module.corigerDate(dateLettreAccouchem));
+		}
+		if (!(Module.verifierDate(dateLettreAccouchem).equals("")))
+
+		{
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", Module.verifierDate(dateLettreAccouchem)));
+			addValid = false;
+
+		} else {
+
+			
+				addValid = true;
+				let.setDatelettre(sdf.parse(dateLettreAccouchem));
+			
+		}
+
+		
+	}
+
+		if(face.getMessageList().size()==0)
+		{
 		let.setCfclient(cfclient);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		let.setDatelettre(sdf.parse(dateLet));
+		
+		//let.setDatelettre(sdf.parse(dateDelettre));
 		let.setDdr(ddr);
 		let.setDebutGross(debutGross);
 		let.setTermeactuel(termeactuel);
@@ -961,7 +1047,6 @@ private boolean blocage;
 		let.setRh(rh);
 		let.setResultatfrotti(resultatfrotti);
 		let.setAutre(autre);
-
 		Lettre c = new LettreService()
 				.recherchelettreParLibellelettre(nomLettre);
 		let.setLettre(c);
@@ -975,50 +1060,32 @@ private boolean blocage;
 		if (action.equals("Ajout")) {
 			historiqueLettreService serc = new historiqueLettreService();
 			serc.ajoutHistoriqueLettre(let);
-			FacesContext face = FacesContext.getCurrentInstance();
 			blocage=false;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre ajoutée avec succées"));
-			// Impression
-			historiqueLettreService ser = new historiqueLettreService();
-			List<historiqueLettre> lettr = ser
-					.rechercheTousHistoriqueLettre(idPatient);
-			if (lettr != null && lettr.size() > 0) {
-				historiqueLettre o = lettr.get(0);
-				selectedhistolettre = o;
-			}
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
 		}
 		if (action.equals("Modification")) {
 			historiqueLettreService serc = new historiqueLettreService();
 			let.setIdHistoriquelettre(idHistoriquelettre);
 			serc.modifierHistoriqueLettre(let);
 			selectedhistolettre = let;
-			FacesContext face = FacesContext.getCurrentInstance();
 			blocage=false;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre modifiée avec succées"));
-			RequestContext.getCurrentInstance().update("f1:growl");
+			addValid=true;
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
 		}
-		String nomReport = "lettreacouch";
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("idlettre", selectedhistolettre.getIdHistoriquelettre());
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
-
+		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);	
+		initialitationDonneesLettre();
 	}
 
 	public void ajoutLettreReponse() throws SQLException, Exception {
@@ -1078,59 +1145,58 @@ private boolean blocage;
 					"", "Lettre modifiée avec succées"));
 			RequestContext.getCurrentInstance().update("f1:growl");
 		}
-		String nomReport = "lettrereponsedemandedepriseencharge";
-
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("idlettre", selectedhistolettre.getIdHistoriquelettre());
-
-		/*
-		 * String defaultPDFFont = "Arial";
-		 * 
-		 * JRProperties.setProperty("net.sf.jasperreports.awt.ignore.missing.font"
-		 * , "true");
-		 * JRProperties.setProperty("net.sf.jasperreports.default.font.name",
-		 * defaultPDFFont);
-		 * 
-		 * JasperReport jasperReport =
-		 * JasperCompileManager.compileReport(reportSource); JasperPrint
-		 * jasperPrint = JasperFillManager.fillReport(jasperReport, params);
-		 * 
-		 * JasperExportManager.exportReportToPdfFile(jasperPrint,
-		 * outputFileName);
-		 */
-
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
-		initialitationDonneesLettre();
+				initialitationDonneesLettre();
 	}
 	public void ajoutLettrePriseEnCharge() throws SQLException, Exception {
+		System.out.println("twila");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		boolean addValid=false;
+		FacesContext face = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
 		historiqueLettre let = new historiqueLettre();
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
+if(dateDelettre.length()==0)
+			
+		{
+		System.out.println(" is null");
+		blocage=true;
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"", "veullez saisi le date de lettre"));
+	addValid=false;
+	}
+	if(dateDelettre.length()!=0)
+	{
+		if (Module.corigerDate(dateDelettre) != null) {
+			this.setDateDelettre(Module.corigerDate(dateDelettre));
+		}
+		if (!(Module.verifierDate(dateDelettre).equals("")))
+
+		{
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", Module.verifierDate(dateDelettre)));
+			addValid = false;
+
+		} else {
+
+			
+				addValid = true;
+				let.setDatelettre(sdf.parse(dateDelettre));
+			
+		}
+
+		
+	}
+
+		if(face.getMessageList().size()==0)
+		{
+
 		let.setCfclient(cfclient);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date d = sdf.parse(dateLet);
-
-		let.setDatelettre(d);
-		let.setV2(v2SigneClinique);
+				let.setV2(v2SigneClinique);
 		let.setV1(v1Nature);
 
 		Lettre c = new LettreService()
@@ -1147,73 +1213,139 @@ private boolean blocage;
 			historiqueLettreService serc = new historiqueLettreService();
 			serc.ajoutHistoriqueLettre(let);
 
-			FacesContext face = FacesContext.getCurrentInstance();
 			blocage=false;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre Ajoutée Avec succées"));
 
-			// Impression
-			historiqueLettreService ser = new historiqueLettreService();
-			List<historiqueLettre> lettr = ser
-					.rechercheTousHistoriqueLettre(idPatient);
-			if (lettr != null && lettr.size() > 0) {
-				historiqueLettre o = lettr.get(0);
-				selectedhistolettre = o;
-			}
+
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
 		}
 		if (action.equals("Modification")) {
 			historiqueLettreService serc = new historiqueLettreService();
 			let.setIdHistoriquelettre(idHistoriquelettre);
 
 			serc.modifierHistoriqueLettre(let);
-			selectedhistolettre = let;
-			FacesContext face = FacesContext.getCurrentInstance();
 			blocage=false;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre modifiée avec succées"));
-			RequestContext.getCurrentInstance().update("f1:growl");
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
 		}
-		String nomReport = "lettrereponse";
+		addValid=true;
+		}
+				
+				
+				
+				
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.addCallbackParam("addValid", addValid);
+			initialitationDonneesLettre();
+	}
+	public void ajoutLettrereponceaunedemandedePriseEnCharge() throws SQLException, Exception {
+		System.out.println("twila");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		boolean addValid=false;
+		FacesContext face = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		idPatient = (Integer) session.getAttribute("idu");
+		historiqueLettre let = new historiqueLettre();
+		CfclientService se = new CfclientService();
+		cfclient = se.RechercheCfclient(idPatient);
+if(dateDelettre.length()==0)
+			
+		{
+		System.out.println(" is null");
+		blocage=true;
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"", "veullez saisi le date de lettre"));
+	addValid=false;
+	}
+	if(dateDelettre.length()!=0)
+	{
+		if (Module.corigerDate(dateDelettre) != null) {
+			this.setDateDelettre(Module.corigerDate(dateDelettre));
+		}
+		if (!(Module.verifierDate(dateDelettre).equals("")))
 
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("idlettre", selectedhistolettre.getIdHistoriquelettre());
+		{
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", Module.verifierDate(dateDelettre)));
+			addValid = false;
 
-		/*
-		 * String defaultPDFFont = "Arial";
-		 * 
-		 * JRProperties.setProperty("net.sf.jasperreports.awt.ignore.missing.font"
-		 * , "true");
-		 * JRProperties.setProperty("net.sf.jasperreports.default.font.name",
-		 * defaultPDFFont);
-		 * 
-		 * JasperReport jasperReport =
-		 * JasperCompileManager.compileReport(reportSource); JasperPrint
-		 * jasperPrint = JasperFillManager.fillReport(jasperReport, params);
-		 * 
-		 * JasperExportManager.exportReportToPdfFile(jasperPrint,
-		 * outputFileName);
-		 */
+		} else {
 
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
-		initialitationDonneesLettre();
+			
+				addValid = true;
+				let.setDatelettre(sdf.parse(dateDelettre));
+			
+		}
+
+		
 	}
 
-	public void intialiserDateLettre() {
+		if(face.getMessageList().size()==0)
+		{
+
+		let.setCfclient(cfclient);
+let.setDiagnostic(diagnostic);
+
+		Lettre c = new LettreService()
+				.recherchelettreParLibellelettre(nomLettre);
+		let.setLettre(c);
+		if (c != null)
+			if (c.getTextLettre() != null) {
+				String textelettre = c.getTextLettre();
+				textelettre = intialeTextLettre();
+				let.setTextLettre(textelettre);
+			}
+
+		if (action.equals("Ajout")) {
+			historiqueLettreService serc = new historiqueLettreService();
+			serc.ajoutHistoriqueLettre(let);
+
+			blocage=false;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Lettre Ajoutée Avec succées"));
+
+
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
+		}
+		if (action.equals("Modification")) {
+			historiqueLettreService serc = new historiqueLettreService();
+			let.setIdHistoriquelettre(idHistoriquelettre);
+
+			serc.modifierHistoriqueLettre(let);
+			blocage=false;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Lettre modifiée avec succées"));
+			addValid=true;
+			selectedhistolettre=let;
+			textLettre=let.getTextLettre();
+			afficheImpr=false; 
+		}
+		addValid=true;
+		}
+				
+				
+				
+				
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.addCallbackParam("addValid", addValid);
+			initialitationDonneesLettre();
+	}
+
+	public void intialiserDonneLettreConf()
+	{
 		action = "Ajout";
 		Date actuelle = new Date();
 		// * Definition du format utilise pour les dates DateFormat
@@ -1221,9 +1353,52 @@ private boolean blocage;
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
 		String dateLettre = format.format(actuelle);
 		acte = dateLettre;
-		dateLet = dateLettre;
+		dateLettreConf=dateLettre;
+		nomLettre="Lettre Confidentielle";
 		selectedhistolettre = null;
-		ancienValeurDateCertif = format.format(actuelle);
+	}
+	public void intialiserDonteLettreAccouchement() {
+		action = "Ajout";
+		Date actuelle = new Date();
+		// * Definition du format utilise pour les dates DateFormat
+
+		Format format = new SimpleDateFormat("dd/MM/yyyy");
+		String dateLettre = format.format(actuelle);
+		acte = dateLettre;
+		dateLettreAccouchem=dateLettre;
+		selectedhistolettre = null;
+		nomLettre="Lettre d'accouchement";
+		
+	}
+	public void intialiserDonteLettrereponceaunedemande() {
+		action = "Ajout";
+		Date actuelle = new Date();
+		// * Definition du format utilise pour les dates DateFormat
+
+		Format format = new SimpleDateFormat("dd/MM/yyyy");
+		String dateLettre = format.format(actuelle);
+		acte = dateLettre;
+		dateDelettre=dateLettre;
+
+		selectedhistolettre = null;
+		nomLettre="Lettre de prise en charge";
+		
+	}
+	
+	
+	public void intialiserDonteLettrereponceaunedemandedeprise() {
+		action = "Ajout";
+		Date actuelle = new Date();
+		// * Definition du format utilise pour les dates DateFormat
+
+		Format format = new SimpleDateFormat("dd/MM/yyyy");
+		String dateLettre = format.format(actuelle);
+		acte = dateLettre;
+		dateDelettre=dateLettre;
+
+		selectedhistolettre = null;
+		nomLettre="Lettre de réponse a une demande de prise en charge";
+		
 	}
 
 	public void refresh() {
@@ -1259,6 +1434,8 @@ private boolean blocage;
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
 		acte = format.format(actuelle);
 		dateLet = format.format(actuelle);
+		dateDelettre=format.format(actuelle);
+		dateLettreAccouchem=format.format(actuelle);
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -1302,10 +1479,13 @@ private boolean blocage;
 	}
 
 	public void initialitationDonneesLettre() {
-		textLettre = null;
-		idHistoriquelettre = null;
-		nomLettre = null;
-		dateLet = null;
+		//textLettre = null;
+		//idHistoriquelettre = null;
+		nomLettre = "";
+		dateLet = "";
+		dateLettreAccouchem="";
+		dateLettreConf="";
+		dateDelettre="";
 		ddr = null;
 		debutGross = null;
 v2SigneClinique=null;
@@ -1327,7 +1507,7 @@ v1Nature=null;
 		clinique = null;
 		description = null;
 		diagnostic = null;
-		selectedhistolettre = null;
+		//selectedhistolettre = null;
 	}
 
 	public String getNomletrr() {
@@ -1416,43 +1596,12 @@ v1Nature=null;
 	}
 
 	public void verifierDate() {
-		// * Definition du format utilise pour les dates DateFormat
-
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(dateLet) != null) {
-			this.setDateLet(Module.corigerDate(dateLet));
-		}
-		if (!(Module.verifierDate(dateLet).equals("")))
-
-		{
-			blocage=true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateLet)));
-			
-			dateLet = ancienValeurDateCertif;
-		} else {
-			ancienValeurDateCertif = dateLet;
-		}
-
+		setDateDelettre(dateDelettre);
 	}
 	public void verifieractele()
 	{
 		
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(acte) != null) {
-			this.setActe(Module.corigerDate(acte));
-		}
-		if (!(Module.verifierDate(acte).equals("")))
-
-		{
-			blocage=true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(acte)));
-			
-			acte = ancienValeurDateCertif;
-		} else {
-			ancienValeurDateCertif = acte;
-		}
+		setActe(acte);
 		
 	}
 
@@ -1465,7 +1614,7 @@ v1Nature=null;
 
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
 		if (h.getDatelettre() != null)
-			dateLet = format.format(h.getDatelettre());
+			dateDelettre = format.format(h.getDatelettre());
 
 		ddr = h.getDdr();
 		debutGross = h.getDebutGross();
@@ -1535,11 +1684,23 @@ v2SigneClinique=h.getV2();
 	}
 
 	public void initialeRetour() {
+		selectedhistolettre=null;
 		nomLettre = null;
 		textLettre = null;
+		afficheImpr=true;
 		goToRead();
 	}
-
+	public void gotoAcceuil() {
+		afficheImpr=true;
+		selectedhistolettre=null;
+		
+		try {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("Accueil");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	public boolean isBlocage() {
 		return blocage;
 	}
@@ -1547,5 +1708,40 @@ v2SigneClinique=h.getV2();
 	public void setBlocage(boolean blocage) {
 		this.blocage = blocage;
 	}
+
+	public String getDateDelettre() {
+		return dateDelettre;
+	}
+
+	public void setDateDelettre(String dateDelettre) {
+		System.out.println("date de lettre"+dateDelettre);
+		this.dateDelettre = dateDelettre;
+	}
+
+	public boolean isAfficheImpr() {
+		return afficheImpr;
+	}
+
+	public void setAfficheImpr(boolean afficheImpr) {
+		this.afficheImpr = afficheImpr;
+	}
+
+	public String getDateLettreConf() {
+		return dateLettreConf;
+	}
+
+	public void setDateLettreConf(String dateLettreConf) {
+		this.dateLettreConf = dateLettreConf;
+	}
+
+	public String getDateLettreAccouchem() {
+		return dateLettreAccouchem;
+	}
+
+	public void setDateLettreAccouchem(String dateLettreAccouchem) {
+		this.dateLettreAccouchem = dateLettreAccouchem;
+	}
+	
+	
 	
 }

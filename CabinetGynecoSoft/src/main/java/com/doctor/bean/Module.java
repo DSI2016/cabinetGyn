@@ -62,7 +62,7 @@ public class Module {
 		
 
 		try {
-			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
+			userDate.setTime(dateFormat.parse(date));// pour convertir la chaine
 														// en date
 			if (userDate.after(today))// le fonction after pour tester le date
 										// depassee date system
@@ -71,12 +71,13 @@ public class Module {
 		} catch (ParseException e) {
 			userDate = null;
 		}
+		//succes =true ==> date est dépassé 
 		return (success);
 	}
-//cette methode pour detectéé si ce date est tres ancien
+
 	
 	
-	static boolean dateTresAncien(String date) { // pour verifier que le date ne
+	static boolean dateTresAncien(String date) { //cette methode pour detectéé si ce date est tres ancien ct'adire <1900
 		
 boolean success = false;
 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -362,7 +363,7 @@ return (success);
 
 		if (isValid(date, format) == false)
 
-			msg = "Format Date Invalide (il faut que dd/mm/yyyy)";
+			msg = "Format Date Invalide";
 
 		else {
 			try {
@@ -442,29 +443,27 @@ return (success);
 		return 0;
 	}
 	public static int calculAgeEnAnsParRapportDateRapport(String dateNaiss,String DateRapport) {
+		
+		System.out.println("date rapport"+DateRapport);
+		System.out.println("date naissance"+dateNaiss);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-		//let.setDatelettre(sdf.parse(dateLet));
+if((verifierDate(dateNaiss).equals(""))&&(verifierDate(dateNaiss).equals("")))
+{	//let.setDatelettre(sdf.parse(dateLet));
 		if (dateNaiss != null && dateNaiss.length() > 0) {
 			int i = dateNaiss.lastIndexOf("/");
+			System.out.println("i="+i);
 			int j = Integer.parseInt(dateNaiss.substring(i + 1));
-			//Calendar c = Calendar.getInstance();
-			Date c;
-			try {
-				c = sdf.parse(DateRapport);
-				System.out.println("date c"+c);
-				int year = c.getYear();
-				System.out.println("year"+year);
-				return (year - j);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			System.out.println("j="+j);
+			if (DateRapport != null && DateRapport.length() > 0) {
+			int year = Integer.parseInt(DateRapport.substring(i + 1));
+			return (year - j);
 			}
 			
-
+						
+			
 			
 		}
-
+		}
 		return 0;
 	}
 	public static String age(String dateNaiss) {
