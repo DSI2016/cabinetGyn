@@ -908,6 +908,21 @@
 			<column name="modifGynObs" length="1" default="false" />
 		</property>
 		
+		<property name="supAnulSal" type="boolean">
+			<column name="supAnulSal" length="1" default="false" />
+		</property>
+		
+		<property name="ajoutDemandeOrd" type="boolean">
+			<column name="ajoutDemandeOrd" length="1" default="false" />
+		</property>
+		
+		<property name="ajoutDemandeRad" type="boolean">
+			<column name="ajoutDemandeRad" length="1" default="false" />
+		</property>
+		
+		<property name="ajoutDemandeAnal" type="boolean">
+			<column name="ajoutDemandeAnal" length="1" default="false" />
+		</property>
 
 	</class>
 </hibernate-mapping>

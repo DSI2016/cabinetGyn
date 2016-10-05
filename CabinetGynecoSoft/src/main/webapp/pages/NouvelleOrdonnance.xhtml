@@ -86,9 +86,9 @@
 							<td width="300px"><p:outputLabel for="button" value="Date:  " />
 								<p:calendar id="button"
 									disabled="#{ordonnanceBean.consultation}" converterMessage="Veuillez vérifier la date que vous avez saisi"
-									value="#{ordonnanceBean.dateOrd}" showOn="button" size="7" onblur="#{ordonnanceBean.dateChange()}" 
+									value="#{ordonnanceBean.dateOrdon}"  size="7" onchange="#{ordonnanceBean.dateChange()}" 
 									pattern="dd/MM/yyyy">
-									<p:ajax event="blur"  update="button,:f1:growl"></p:ajax>
+									<p:ajax event="change"  update="button,:f1:growl"></p:ajax>
 								</p:calendar></td>
 
 							<td><h:panelGrid columns="3">
@@ -113,7 +113,9 @@
 
 								</h:panelGrid></td>
 							<td align="right"><p:commandButton value="Nouveau"
-									icon="ui-icon-plus" style="font-size:small;font-weight:bold"
+							        rendered="#{connectionBean.ajoutDemandeOrd}"
+									icon="ui-icon-plus" style="font-size:small;font-weight:bold" 
+									disabled="#{not ordonnanceBean.consultation}"
 									actionListener="#{ordonnanceBean.nouvelOrd()}" update=":f1"></p:commandButton>
 							</td>
 						</tr>
@@ -123,7 +125,7 @@
 							<td valign="top" width="45%">
 								<table>
 									<tr>
-										<td><p:panel rendered="#{!connectionBean.consultDetOrd}"
+										<td><p:panel
 												style="height:100%">
 												<h:panelGrid columns="2">
 													<h:outputText value="Médicament: " />
@@ -178,15 +180,7 @@
 									</tr>
 									<tr>
 										<td><br /> <p:panel>
-												<div align="right">
-													<h:commandLink actionListener="#{ordonnanceBean.viewOrd}"
-														id="idimp" 
-														rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledimpOrdHistorique}">
-														<p:graphicImage value="/imagesMenu/imprimente10.png">
-														</p:graphicImage>
-
-													</h:commandLink>
-												</div>
+												
 												<p:dataTable value="#{ordonnanceBean.histoOrdCons}"
 													var="ord" selectionMode="single"
 													selection="#{ordonnanceBean.selectedOrd}"
@@ -302,16 +296,26 @@
 									</h:panelGrid>
 									<br></br>
 									<div align="center">
-										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
-											actionListener="#{ordonnanceBean.validerOrd}" value="Valider"
-											
-											disabled="#{ordonnanceBean.consultation}" immediate="true"
-											ajax="false" rendered="#{!connectionBean.consultDetOrd}">
+										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-check"
+											actionListener="#{ordonnanceBean.validationOrd}" value="Valider"
+											disabled="#{ordonnanceBean.consultation}" 
+											 rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>
 
 										<p:commandButton value="Annuler"
+										    icon="ui-icon-arrowreturnthick-1-s"
 											actionListener="#{ordonnanceBean.annulation()}" update=":f1"
-											rendered="#{!connectionBean.consultDetOrd}"></p:commandButton>
+											rendered="#{!connectionBean.consultDetOrd}">
+										</p:commandButton>
+									
+										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+											actionListener="#{ordonnanceBean.viewOrd}" value="Imprimer"
+											rendered="#{connectionBean.imprOrd}"
+											disabled="#{not ordonnanceBean.consultation}"
+										    immediate="true"
+											ajax="false" >
+										</p:commandButton>	
+										
 									</div>
 								</p:panel></td>
 						</tr>

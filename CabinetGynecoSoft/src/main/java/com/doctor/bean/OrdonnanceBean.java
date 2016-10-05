@@ -1,11 +1,7 @@
 package com.doctor.bean;
 
-import java.io.File;
 import java.io.Serializable;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,16 +18,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import net.sf.jasperreports.engine.JasperRunManager;
-
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-
-import com.doctor.dao.HibernateUtil;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.FormeMedicament;
@@ -46,7 +35,6 @@ import com.doctor.service.MedOrdService;
 import com.doctor.service.MedicamentService;
 import com.doctor.service.ModeleOrdonnanceService;
 import com.doctor.service.OrdonnanceService;
-import com.mysql.jdbc.Connection;
 
 @ManagedBean(name = "ordonnanceBean")
 @SessionScoped
@@ -103,6 +91,10 @@ public class OrdonnanceBean implements Serializable {
 	private boolean consultation;
 
 	public boolean isConsultation() {
+
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		action = (String) session.getAttribute("act");
 		if (action == null)
 			consultation = true;
 		else {
@@ -111,8 +103,7 @@ public class OrdonnanceBean implements Serializable {
 			else
 				consultation = false;
 		}
-		//System.out.println("consult =  "+consultation);
-		
+
 		return consultation;
 	}
 
@@ -120,38 +111,13 @@ public class OrdonnanceBean implements Serializable {
 		this.consultation = consultation;
 	}
 
-	// private boolean libre;
-
-	// private boolean validation;
-
-	// public boolean isLibre() {
-	//
-	// libre = true;
-	// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-	// .getExternalContext().getSession(false);
-	// idOrdonnance = (Integer) session.getAttribute("ido");
-	// System.out.println("idord2   " + idOrdonnance);
-	// if (idOrdonnance != null) {
-	// Ordonnance o = new OrdonnanceService()
-	// .rechercheOrdonnance(idOrdonnance);
-	// if (o != null && o.getType().equals("Libre"))
-	// libre = false;
-	// else
-	// libre = true;
-	// }
-	//
-	// return libre;
-	// }
-	//
-	// public void setLibre(boolean libre) {
-	// this.libre = libre;
-	// }
-
 	public Date getDateOrd() {
+		System.out.println("get   " + dateOrd);
 		return dateOrd;
 	}
 
 	public void setDateOrd(Date dateOrd) {
+		System.out.println("set   " + dateOrd);
 		this.dateOrd = dateOrd;
 	}
 
@@ -199,13 +165,11 @@ public class OrdonnanceBean implements Serializable {
 				.getExternalContext().getSession(false);
 
 		idConsult = (Integer) session.getAttribute("idConsultD");
-	//	System.out.println(idConsult);
 		idPatient = (Integer) session.getAttribute("idu");
 		if (idModeleOrd == null)
 			medOrds.clear();
 		if (histoOrdCons != null)
 			histoOrdCons.clear();
-		// System.out.println("initialisation liste");
 		if (idConsult != null)
 			histoOrdCons = new OrdonnanceService()
 					.rechercheOrdonnanceParConsultation(idConsult);
@@ -213,8 +177,7 @@ public class OrdonnanceBean implements Serializable {
 			histoOrdCons = new OrdonnanceService()
 					.rechercheOrdonnanceLibreParPtient(idPatient, "Libre");
 		// afficher liste des ordonnances libres
-		// 519 955
-		//System.out.println("histo   "+histoOrdCons.size());
+
 		return histoOrdCons;
 	}
 
@@ -266,6 +229,7 @@ public class OrdonnanceBean implements Serializable {
 			}
 		} else
 			proprietaire = "Patiente";
+		impress = true;
 	}
 
 	public Date getDateDebut() {
@@ -304,7 +268,6 @@ public class OrdonnanceBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		action = (String) session.getAttribute("act");
-		System.out.println("get action  " + action);
 		if (action == null)
 			consultation = true;
 		else {
@@ -630,62 +593,6 @@ public class OrdonnanceBean implements Serializable {
 		}
 	}
 
-	// desibledOk = false;
-
-	// medicam = med;
-	// poso = posologie;
-	// mo.setMedicament(med);
-	// mo.setPosologie(posologie);
-	// mo.setQte(qte);
-	// mo.setUnite(unite);
-
-	// if (test == true) {
-	// blocage = true;
-	// face.addMessage(null, new FacesMessage(
-	// FacesMessage.SEVERITY_ERROR, "", msg));
-	// if (idMedicament != null) {
-	// idMedicament = medicam.getIdMedicament();
-	// // posologie = medicam.getPosologie();
-	//
-	// onMedicamentChange();
-	// mo.setMedicament(medicam);
-	// mo.setPosologie(poso);
-	// }
-	// }
-	// if (test == false) {
-	// medOrds.add(mo);
-	// HttpSession session = (HttpSession) FacesContext
-	// .getCurrentInstance().getExternalContext()
-	// .getSession(false);
-	// action = (String) session.getAttribute("act");
-	// if (action.equals("modifier")
-	// || action.equals("modifierHistorique")) {
-	// MedOrdService ser = new MedOrdService();
-	// Ordonnance o = new OrdonnanceService()
-	// .rechercheOrdonnance(idOrdonnance);
-	//
-	// mo.setOrdonnance(o);
-	// ser.ajouterMedOrd(mo);
-	// idMedicament = null;
-	// posologie = null;
-	// qte = 1;
-	// unite = null;
-	// }
-	// idMedicament = null;
-	// posologie = null;
-	// qte = 1;
-	// unite = null;
-	// }
-	// } else {
-	// desibledOk = true;
-	// idMedicament = null;
-	// posologie = null;
-	// qte = 1;
-	// unite = null;
-
-	// }
-	// }
-
 	public void nouvelOrd() {
 
 		action = "Ajout";
@@ -705,13 +612,16 @@ public class OrdonnanceBean implements Serializable {
 			consult = new ConsultationDetailService()
 					.rechercheConsultationDetail(idConsult);
 			if (consult != null)
-				dateOrd = consult.getDateConsultation();
+				dateOrdon = consult.getDateConsultation();
 		} else
-			dateOrd = new Date();
-
+			dateOrdon = new Date();
+		cfclient = new CfclientService().RechercheCfclient(idPatient);
+		if (cfclient != null)
+			nomProprietaire = cfclient.getNom() + cfclient.getPrenom();
+		proprietaire = "Patiente";
 		notes = null;
 		Ordonnance o = new Ordonnance();
-		o.setDateOrd(dateOrd);
+		o.setDateOrd(dateOrdon);
 		// validation = false;
 		new OrdonnanceService().ajoutOrdonnance(o);
 		idOrdonnance = o.getIdOrdonnance();
@@ -790,12 +700,11 @@ public class OrdonnanceBean implements Serializable {
 		idModeleOrd = null;
 		medOrds.clear();
 		idOrdonnance = null;
+		dateOrdon = null;
+		selectedOrd = null;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", null);
-		// Integer idconsultationDetail = (Integer) session
-		// .getAttribute("idConsultD");
-		// idPatient = (Integer) session.getAttribute("idu");
 
 		String destination = (String) session.getAttribute("source");
 		try {
@@ -811,212 +720,7 @@ public class OrdonnanceBean implements Serializable {
 		notes = null;
 	}
 
-	public void ajouterOrdonnance() {
-		FacesContext face = FacesContext.getCurrentInstance();
-		String consultationM = "";
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-
-		Integer idconsultationDetail = (Integer) session
-				.getAttribute("idConsultD");
-		action = (String) session.getAttribute("act");
-
-		if (idconsultationDetail != null) {
-			ConsultationDetailService sr1 = new ConsultationDetailService();
-			ConsultationDetail cons = sr1
-					.rechercheConsultationDetailByConsultationMotiff(idconsultationDetail);
-			String consultationmotif = cons.getConsultation()
-					.getNomConsultation();
-
-			if (consultationmotif.equals("C. Gyneco")) {
-				consultationM = "Consultation-Gynecologue";
-			}
-
-			else if (consultationmotif.equals("C. Obst")) {
-				consultationM = "Consultation_Obstetrique";
-			}
-			idPatient = (Integer) session.getAttribute("idu");
-			if (action.equals("ajouter")) {
-				OrdonnanceService ser = new OrdonnanceService();
-				Ordonnance ord = new Ordonnance();
-
-				ord.setNotes(notes);
-				// ord.setMedOrds(medOrds);
-				if (idPatient != null) {
-					CfclientService serc = new CfclientService();
-					Cfclient c = serc.RechercheCfclient(idPatient);
-					ord.setPatient(c);
-				}
-
-				idConsult = (Integer) session.getAttribute("idConsultD");
-
-				if (idConsult != null) {
-					ConsultationDetailService s = new ConsultationDetailService();
-					consult = s.rechercheConsultationDetail(idConsult);
-					Date date;
-					date = consult.getDateConsultation();
-					ord.setType(consult.getMotifCons());
-					ord.setDateOrd(date);
-					ord.setType(consultationmotif);
-					ord.setConsult(consult);
-					tempsface = 3000;
-				}
-
-				ser.ajoutOrdonnance(ord);
-				tempsface = 3000;
-
-				List<Ordonnance> ords = ser.rechercheTousOrdonnance();
-				Ordonnance o = ords.get(ords.size() - 1);
-
-				Iterator<MedOrd> itr = medOrds.iterator();
-				while (itr.hasNext()) {
-					MedOrd m = itr.next();
-					m.setOrdonnance(o);
-					MedOrdService se = new MedOrdService();
-					se.ajouterMedOrd(m);
-					tempsface = 3000;
-
-				}
-				blocage = false;
-				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_INFO, "",
-						"Ordonnance ajoutée avec succès"));
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.getExternalContext().getFlash().setKeepMessages(true);
-				try {
-
-					context.getExternalContext().redirect(consultationM);
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-			}
-			medOrds.clear();
-
-			Ordonnance o1;
-			OrdonnanceService s = new OrdonnanceService();
-			if (action.equals("modifier")
-					|| action.equals("modifierHistorique")) {
-				// mettre à jour notes de l'ordonnance
-				o1 = s.rechercheOrdonnance(idOrdonnance);
-				if (o1.getType().equals("Libre"))
-					if (proprietaire != null) {
-						CfclientService serc = new CfclientService();
-						Cfclient c = serc.RechercheCfclient(o1.getPatient()
-								.getCode());
-						if (proprietaire.equals("Patiente")) {
-							o1.setProprietaire(c.getPrefix() + " "
-									+ c.getPrenom() + " " + c.getNom());
-
-							o1.setPossesseur("Patiente");
-						}
-						if (proprietaire.equals("Conjoint")) {
-							o1.setPossesseur("Conjoint");
-							String p = "";
-							if (c.getPrenomC() != null
-									&& c.getPrenomC().trim().length() > 0)
-								p += c.getPrenomC().trim();
-
-							if (c.getNomC() != null
-									&& c.getNomC().trim().length() > 0)
-								p = p + " " + c.getNomC().trim();
-
-							o1.setProprietaire(p);
-						}
-					}
-				o1.setNotes(notes);
-				s.modifierOrdonnance(o1);
-				tempsface = 3000;
-				blocage = false;
-				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_INFO, "",
-						"Ordonnance modifiée avec succès"));
-
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.getExternalContext().getFlash().setKeepMessages(true);
-				if (action.equals("modifierHistorique"))
-					try {
-
-						context.getExternalContext().redirect(
-								"HistoriqueOrdonnances");
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				else
-					try {
-
-						context.getExternalContext().redirect(consultationM);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-
-			}
-
-		}
-		if ((action.equals("ajoutOrdLibre"))
-				|| (action.equals("ajoutOrdLibreHistorique"))) {
-			OrdonnanceService se = new OrdonnanceService();
-			Ordonnance ord = new Ordonnance();
-
-			ord.setNotes(notes);
-			// ord.setMedOrds(medOrds);
-			ord.setDateOrd(new Date());
-			ord.setType("Libre");
-			if (idPatient != null) {
-				CfclientService serc = new CfclientService();
-				Cfclient c = serc.RechercheCfclient(idPatient);
-				ord.setPatient(c);
-			}
-			se.ajoutOrdonnance(ord);
-			tempsface = 3000;
-			session.setAttribute("idu", idPatient);
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Ordonnance libre ajoutée avec succès"));
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getFlash().setKeepMessages(true);
-			if (action.equals("ajoutOrdLibre")) {
-				try {
-					session.setAttribute("idu", idPatient);
-					FacesContext.getCurrentInstance().getExternalContext()
-
-					.redirect("FichePatiente");
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-			}
-			if (action.equals("ajoutOrdLibreHistorique")) {
-
-				try {
-					FacesContext.getCurrentInstance().getExternalContext()
-
-					.redirect("HistoriqueOrdonnances");
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}
-			}
-
-			List<Ordonnance> ords = se.rechercheTousOrdonnance();
-			Ordonnance o = ords.get(ords.size() - 1);
-
-			Iterator<MedOrd> itr = medOrds.iterator();
-			while (itr.hasNext()) {
-				MedOrd m = itr.next();
-				m.setOrdonnance(o);
-				MedOrdService s = new MedOrdService();
-				s.ajouterMedOrd(m);
-				m.setIdMedOrd(null);
-			}
-			notes = null;
-			medOrds.clear();
-
-		}
-		action = null;
-		notes = null;
-		medOrds.clear();
-	}
-
 	public void ajouterModeleOrdonnance() {
-		System.out.println("model ord");
 		FacesContext face = FacesContext.getCurrentInstance();
 		// tester si existe un modèle avec le meme nom
 		ModeleOrdonnanceService ser = new ModeleOrdonnanceService();
@@ -1034,7 +738,6 @@ public class OrdonnanceBean implements Serializable {
 		if (face.getMessageList().size() == 0) {
 			ModeleOrdonnance mOrd = new ModeleOrdonnance();
 			mOrd.setNomModele(nomModeleOrd);
-System.out.println("model");
 			ser.ajoutModeleOrdonnance(mOrd);
 
 			List<ModeleOrdonnance> ords = ser.rechercheTousModeleOrdonnance();
@@ -1045,14 +748,12 @@ System.out.println("model");
 			Iterator<MedOrd> itr = medOrds.iterator();
 			while (itr.hasNext()) {
 				MedOrd m = itr.next();
-				MedOrd mod= new MedOrd();
+				MedOrd mod = new MedOrd();
 				mod.setModeleOrdonnance(o);
 				mod.setMedicament(m.getMedicament());
 				mod.setPosologie(m.getPosologie());
 				mod.setQte(m.getQte());
 				mod.setUnite(m.getUnite());
-				//System.out.println(m);
-				//m.setIdMedOrd(null);
 				se.ajouterMedOrd(mod);
 			}
 			blocage = false;
@@ -1101,6 +802,8 @@ System.out.println("model");
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("act", "consulter");
+		selectedOrd = o;
+		impress = false;
 		medOrds.clear();
 		// recherche liste des medicament par idord
 		if (o != null) {
@@ -1128,19 +831,16 @@ System.out.println("model");
 		}
 	}
 
-	public void ajoutModel(){
-		System.out.println("ajout");
+	public void ajoutModel() {
 		RequestContext.getCurrentInstance().update(":f1:f2:p1");
-	
+
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('ajoutModel').show();");
 	}
-	
-	
+
 	public void appliquerModeleOrd() {
-		
+
 		if (idModeleOrd != null) {
-			// ModeleOrdonnanceService ser = new ModeleOrdonnanceService();
 
 			MedOrdService ser = new MedOrdService();
 			List<MedOrd> m = ser.rechercheModeleOrdonnanceAvecJoin(idModeleOrd);
@@ -1152,36 +852,13 @@ System.out.println("model");
 				me.setUnite(m.get(i).getUnite());
 				medOrds.add(me);
 			}
-			System.out.println("model   " + medOrds.size());
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
 				context.getExternalContext().redirect("NouvelleOrdonnance");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			// ModeleOrdonnance mO = ser
-			// .rechercheModeleOrdonnanceAvecJoin(idModeleOrd);
-			// medOrds.clear();
-			// if ((mO != null) && (mO.getMedOrds() != null)) {
-			// Set<MedOrd> x = mO.getMedOrds();
-			// Iterator<MedOrd> itr = x.iterator();
-			// while (itr.hasNext()) {
-			// MedOrd m = itr.next();
-			// MedOrd mo = new MedOrd();
-			// mo.setMedicament(m.getMedicament());
-			// mo.setPosologie(m.getPosologie());
-			// mo.setQte(m.getQte());
-			// mo.setUnite(m.getUnite());
-			//
-			// medOrds.add(mo);
-			// idMedicament = null;
-			// posologie = null;
-			// qte = 0;
-			// unite = null;
-			// }
-			// }
 
-			// medOrds.addAll(mO.getMedOrds());
 		}
 	}
 
@@ -1263,52 +940,95 @@ System.out.println("model");
 
 	}
 
-	// impression ordonnance de la liste
+	// impression ordonnance de la liste(historique ord ou selectionné du
+	// demande)
 	public void viewOrd(ActionEvent actionEvent) throws SQLException, Exception {
+
+		if (selectedOrd != null) {
+			typee = selectedOrd.getType();
+			idOrdSelectionne = selectedOrd.getIdOrdonnance();
+		}
 		String nomReport = "";
 		if (typee.equals("Libre")) {
 			nomReport = "ordonnaceLibre";
 		} else {
 			nomReport = "ord";
 		}
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idOrd", idOrdSelectionne);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+
+		Module.imprimer(nomReport, param);
 	}
 
+	public void validationOrd() {
+		FacesContext faces = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		Ordonnance ord = new Ordonnance();
+
+		idPatient = (Integer) session.getAttribute("idu");
+		idConsult = (Integer) session.getAttribute("idConsultD");
+		idOrdonnance = (Integer) session.getAttribute("ido");
+		ord = new OrdonnanceService().rechercheOrdonnance(idOrdonnance);
+		ord.setNotes(notes);
+		ord.setProprietaire(nomProprietaire);
+		ord.setPossesseur(proprietaire);
+		if (idPatient != null) {
+			CfclientService serc = new CfclientService();
+			Cfclient c = serc.RechercheCfclient(idPatient);
+			ord.setPatient(c);
+		}
+		ord.setDateOrd(dateOrdon);
+		consult = new ConsultationDetailService()
+				.rechercheConsultationDetailAvecJoint(idConsult);
+		if (consult != null) {
+			ord.setType(consult.getConsultation().getNomConsultation());
+			ord.setConsult(consult);
+			tempsface = 3000;
+		} else
+			ord.setType("Libre");
+
+		if (action.equals("Ajout")) {
+			consult.setNbOrd(consult.getNbOrd() + 1);
+			new ConsultationDetailService().modifierConsultationDetail(consult);
+		}
+
+		new OrdonnanceService().modifierOrdonnance(ord);
+		if (action.equals("ajoutOrdLibre"))
+			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Ordonnance ajoutée avec succès"));
+
+		if (action.equals("Modif") || action.equals("ModifLibre"))
+			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Ordonnance modifiée avec succès"));
+
+		idMedicament = null;
+		posologie = null;
+		qte = 1;
+		unite = null;
+		selectedOrd = ord;
+		action = "consulter";
+		session.setAttribute("act", "consulter");
+	}
+
+	// methode non utilisée
 	public void validerOrd(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		String nomReport = "ord";
+		// String nomReport = "ord"
 
 		FacesContext face = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
+		Ordonnance ord = null;
 
 		idPatient = (Integer) session.getAttribute("idu");
-
 		idConsult = (Integer) session.getAttribute("idConsultD");
-		// action = (String) session.getAttribute("act");
 		if (idConsult != null) {
 			if (action != null
 					&& (action.equals("Ajout") || action.equals("Modif") || action
 							.equals("ajoutCons"))) {
 
-				Ordonnance ord = new OrdonnanceService()
-						.rechercheOrdonnance(idOrdonnance);
+				ord = new OrdonnanceService().rechercheOrdonnance(idOrdonnance);
 
 				ord.setNotes(notes);
 				ord.setProprietaire(nomProprietaire);
@@ -1318,7 +1038,7 @@ System.out.println("model");
 					Cfclient c = serc.RechercheCfclient(idPatient);
 					ord.setPatient(c);
 				}
-
+				System.out.println("la date valide  " + dateOrd);
 				ord.setDateOrd(dateOrd);
 				consult = new ConsultationDetailService()
 						.rechercheConsultationDetailAvecJoint(idConsult);
@@ -1337,72 +1057,16 @@ System.out.println("model");
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Ordonnance ajoutée avec succès"));
-					if ((ord.getType() != null)) {
-						if (ord.getType().equals("Libre")) {
-							nomReport = "ordonnaceLibre";
-						} else {
-							nomReport = "ord";
-						}
-					}
 
 					idMedicament = null;
 					posologie = null;
 					qte = 1;
 					unite = null;
 					notes = null;
-					RequestContext.getCurrentInstance().update(":f1");
-					Connection connection = (Connection) DriverManager
-							.getConnection(HibernateUtil.url,
-									HibernateUtil.login, HibernateUtil.pass);
-					Map<String, Object> param = new HashMap<String, Object>();
-					param.put("idOrd", ord.getIdOrdonnance());
-					File jasper = new File(FacesContext.getCurrentInstance()
-							.getExternalContext()
-							.getRealPath("/reports/" + nomReport + ".jasper"));
-					byte[] bytes = JasperRunManager.runReportToPdf(
-							jasper.getPath(), param, connection);
-					HttpServletResponse response = (HttpServletResponse) FacesContext
-							.getCurrentInstance().getExternalContext()
-							.getResponse();
-					//
-					response.setContentLength(bytes.length);
-					ServletOutputStream outStream = response.getOutputStream();
-					outStream.write(bytes, 0, bytes.length);
-					outStream.flush();
-					outStream.close();
-					response.addHeader("Content-disposition",
-							"attachment; filename=ordonnance.pdf");
-					FacesContext.getCurrentInstance().responseComplete();
 				} else
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Ordonnance modifiée avec succès"));
-				if ((ord.getType() != null)) {
-					if (ord.getType().equals("Libre")) {
-						nomReport = "ordonnaceLibre";
-					} else {
-						nomReport = "ord";
-					}
-				}
-				Connection connection = (Connection) DriverManager
-						.getConnection(HibernateUtil.url, HibernateUtil.login,
-								HibernateUtil.pass);
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("idOrd", ord.getIdOrdonnance());
-				File jasper = new File(FacesContext.getCurrentInstance()
-						.getExternalContext()
-						.getRealPath("/reports/" + nomReport + ".jasper"));
-				byte[] bytes = JasperRunManager.runReportToPdf(
-						jasper.getPath(), param, connection);
-				HttpServletResponse response = (HttpServletResponse) FacesContext
-						.getCurrentInstance().getExternalContext()
-						.getResponse();
-				response.setContentLength(bytes.length);
-				ServletOutputStream outStream = response.getOutputStream();
-				outStream.write(bytes, 0, bytes.length);
-				outStream.flush();
-				outStream.close();
-				FacesContext.getCurrentInstance().responseComplete();
 			}
 		} else {
 
@@ -1411,8 +1075,7 @@ System.out.println("model");
 							|| action.equals("ajoutOrdLibreHistorique")
 							|| action.equals("Ajout") || action.equals("Modif") || action
 								.equals("ModifLibre"))) {
-				Ordonnance ord = new OrdonnanceService()
-						.rechercheOrdonnance(idOrdonnance);
+				ord = new OrdonnanceService().rechercheOrdonnance(idOrdonnance);
 
 				ord.setNotes(notes);
 				ord.setProprietaire(nomProprietaire);
@@ -1425,43 +1088,12 @@ System.out.println("model");
 				ord.setDateOrd(dateOrd);
 				ord.setType("Libre");
 				new OrdonnanceService().modifierOrdonnance(ord);
-				if ((ord.getType() != null)) {
-					if (ord.getType().equals("Libre")) {
-						nomReport = "ordonnaceLibre";
-					} else {
-						nomReport = "ord";
-					}
-				}
-				Connection connection = (Connection) DriverManager
-						.getConnection(HibernateUtil.url, HibernateUtil.login,
-								HibernateUtil.pass);
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("idOrd", ord.getIdOrdonnance());
-				File jasper = new File(
-						FacesContext
-								.getCurrentInstance()
-								.getExternalContext()
-								.getRealPath(
-										"/reports/" + "ordonnaceLibre"
-												+ ".jasper"));
-				byte[] bytes = JasperRunManager.runReportToPdf(
-						jasper.getPath(), param, connection);
-				HttpServletResponse response = (HttpServletResponse) FacesContext
-						.getCurrentInstance().getExternalContext()
-						.getResponse();
-				response.setContentLength(bytes.length);
-				ServletOutputStream outStream = response.getOutputStream();
-				outStream.write(bytes, 0, bytes.length);
-				outStream.flush();
-				outStream.close();
-				FacesContext.getCurrentInstance().responseComplete();
 
 			}
 		}
 
 		if (action != null && action.equals("modifierHistorique")) {
-			Ordonnance ord = new OrdonnanceService()
-					.rechercheOrdonnance(idOrdonnance);
+			ord = new OrdonnanceService().rechercheOrdonnance(idOrdonnance);
 
 			ord.setNotes(notes);
 			ord.setProprietaire(nomProprietaire);
@@ -1473,287 +1105,34 @@ System.out.println("model");
 			}
 			ord.setDateOrd(dateOrd);
 			new OrdonnanceService().modifierOrdonnance(ord);
-			if ((ord.getType() != null)) {
-				if (ord.getType().equals("Libre")) {
-					nomReport = "ordonnaceLibre";
-				} else {
-					nomReport = "ord";
-				}
-			}
-			Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idOrd", ord.getIdOrdonnance());
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
 
 		}
 		action = null;
+		selectedOrd = ord;
 		session.setAttribute("act", null);
 
 	}
 
 	public void dateChange() {
-		//System.out.println("dddd");
-		//conertir en string 
-		FacesContext faces = FacesContext.getCurrentInstance();
-		//Format format = new SimpleDateFormat("dd/MM/yyyy");
-		//String dateString = format.format(dateOrd);
-		String dateString = dateOrd+"";
-		if (Module.corigerDate(dateString) != null) {
-			dateString=Module
-					.corigerDate(dateString);
-		}
-		if (!(Module.verifierDate(dateString).equals("")))
-
-		{
-			faces.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-							Module.verifierDate(dateString)));
-			blocage=true;
-			dateOrd=new Date();
-		}
-		else
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				dateOrd=sdf.parse(dateString);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		setDateOrd(dateOrd);
-	}
-
-	// ipression nouvelle ordonnance
-	public void viewNouvOrd(ActionEvent actionEvent) throws SQLException,
-			Exception {
-		String nomReport = "";
-		FacesContext face = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-
-		idPatient = (Integer) session.getAttribute("idu");
-
-		Integer idconsultationDetail = (Integer) session
-				.getAttribute("idConsultD");
-
-		// action = (String) session.getAttribute("act");
-		if (idconsultationDetail != null) {
-			// ConsultationDetailService sr1 = new ConsultationDetailService();
-			// ConsultationDetail cons = sr1
-			// .rechercheConsultationDetailByConsultationMotiff(idconsultationDetail);
-			// String consultationmotif = cons.getConsultation()
-			// .getNomConsultation();
-			if (action != null
-					&& (action.equals("Ajout") || action.equals("Modif"))) {
-				Ordonnance ord = new OrdonnanceService()
-						.rechercheOrdonnance(idOrdonnance);
-
-				ord.setNotes(notes);
-				ord.setProprietaire(nomProprietaire);
-				if (idPatient != null) {
-					CfclientService serc = new CfclientService();
-					Cfclient c = serc.RechercheCfclient(idPatient);
-					ord.setPatient(c);
-				}
-				ord.setDateOrd(dateOrd);
-				idConsult = (Integer) session.getAttribute("idConsultD");
-
-				if (idConsult != null) {
-					ConsultationDetailService s = new ConsultationDetailService();
-					consult = s.rechercheConsultationDetail(idConsult);
-					ord.setType(consult.getMotifCons());
-					ord.setConsult(consult);
-					tempsface = 3000;
-				}
-
-				new OrdonnanceService().modifierOrdonnance(ord);
-				nomReport = "ord";
-			}
-		}
-		action = (String) session.getAttribute("act");
-		// if (action.equals("ajouter")) {
-		// OrdonnanceService ser = new OrdonnanceService();
-		// Ordonnance ord = new Ordonnance();
-		//
-		// ord.setNotes(notes);
-		// // ord.setMedOrds(medOrds);
-		// if (idPatient != null) {
-		// CfclientService serc = new CfclientService();
-		// Cfclient c = serc.RechercheCfclient(idPatient);
-		// ord.setPatient(c);
-		// }
-		//
-		// idConsult = (Integer) session.getAttribute("idConsultD");
-		//
-		// if (idConsult != null) {
-		// ConsultationDetailService s = new ConsultationDetailService();
-		// consult = s.rechercheConsultationDetail(idConsult);
-		// Date date;
-		// date = consult.getDateConsultation();
-		// ord.setType(consult.getMotifCons());
-		// ord.setDateOrd(date);
-		// ord.setType(consultationmotif);
-		// ord.setConsult(consult);
-		// tempsface = 3000;
-		// }
-		//
-		// ser.ajoutOrdonnance(ord);
-		// tempsface = 3000;
-		//
-		// List<Ordonnance> ords = ser.rechercheTousOrdonnance();
-		// Ordonnance o = ords.get(ords.size() - 1);
-		//
-		// Iterator<MedOrd> itr = medOrds.iterator();
-		// while (itr.hasNext()) {
-		//
-		// MedOrd m = itr.next();
-		//
-		// m.setOrdonnance(o);
-		// MedOrdService se = new MedOrdService();
-		// se.ajouterMedOrd(m);
-		// tempsface = 3000;
-		//
-		// }
-		// blocage = false;
-		// face.addMessage(null, new FacesMessage(
-		// FacesMessage.SEVERITY_INFO, "",
-		// "Ordonnance ajoutée avec succès"));
-		// nomReport = "ord";
-		// FacesContext context = FacesContext.getCurrentInstance();
-		// context.getExternalContext().getFlash().setKeepMessages(true);
-		//
-		// }
-		// medOrds.clear();
-		//
-		// Ordonnance o1;
-		// OrdonnanceService s = new OrdonnanceService();
-		// if (action.equals("modifier")
-		// || action.equals("modifierHistorique")) {
-		// // mettre à jour notes de l'ordonnance
-		// o1 = s.rechercheOrdonnance(idOrdonnance);
-		// o1.setNotes(notes);
-		// s.modifierOrdonnance(o1);
-		// tempsface = 3000;
-		// blocage = false;
-		// face.addMessage(null, new FacesMessage(
-		// FacesMessage.SEVERITY_INFO, "",
-		// "Ordonnance modifiée avec succès"));
-		//
-		// FacesContext context = FacesContext.getCurrentInstance();
-		// context.getExternalContext().getFlash().setKeepMessages(true);
-		// if (action.equals("modifierHistorique"))
-		// try {
-		//
-		// context.getExternalContext().redirect(
-		// "HistoriqueOrdonnances");
-		// } catch (Exception e) {
-		// System.out.println(e.getMessage());
-		// }
-		// else {
-		// nomReport = "ord";
-		//
-		// }
-		//
-		// }
-		//
-		// }
-
-		action = (String) session.getAttribute("act");
-
-		if (action != null
-				&& (action.equals("ajoutOrdLibre") || action
-						.equals("ajoutOrdLibreHistorique"))) {
-
-			Ordonnance ord = new OrdonnanceService()
-					.rechercheOrdonnance(idOrdonnance);
-
-			ord.setNotes(notes);
-			ord.setProprietaire(nomProprietaire);
-			if (idPatient != null) {
-				CfclientService serc = new CfclientService();
-				Cfclient c = serc.RechercheCfclient(idPatient);
-				ord.setPatient(c);
-			}
-			ord.setDateOrd(dateOrd);
-			ord.setType("Libre");
-
-			new OrdonnanceService().modifierOrdonnance(ord);
-
-			tempsface = 3000;
-			session.setAttribute("idu", idPatient);
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Ordonnance libre ajouté avec succès"));
-
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getFlash().setKeepMessages(true);
-			nomReport = "ordonnaceLibre";
-
-			if (action.equals("ajoutOrdLibreHistorique")) {
-				nomReport = "ordonnaceLibre";
-
-			}
-		}
-		// action = null;
-		// notes = null;
-		// medOrds.clear();
-
-		OrdonnanceService serOrd = new OrdonnanceService();
-		List<Ordonnance> ordonnancesList = new ArrayList<Ordonnance>();
-		ordonnancesList = serOrd.rechercheTousOrdonnance();
-		Integer idOrd = ordonnancesList.get(ordonnancesList.size() - 1)
-				.getIdOrdonnance();
-
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("idOrd", idOrd);
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
-
+		setDateOrdon(dateOrdon);
 	}
 
 	public void recuperationOrdonnance(Ordonnance o) {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		// validation = false;
 		if (o.getType() != null && o.getType().equals("Libre")) {
+			// c'est une modification d'une ord libre
 			session.setAttribute("act", "ModifLibre");
 			action = "ModifLibre";
 		} else {
+			// c'est une modification d'une ord d'une cons
 			session.setAttribute("act", "Modif");
 			action = "Modif";
 		}
 		idOrdonnance = o.getIdOrdonnance();
-		setDateOrd(o.getDateOrd());
+		dateOrdon = o.getDateOrd();
+		// setDateOrd(o.getDateOrd());
 		medOrds.clear();
 		Ordonnance ord = new OrdonnanceService()
 				.rechercheParIdOrd(idOrdonnance);
@@ -1814,47 +1193,54 @@ System.out.println("model");
 		}
 	}
 
-	public void goToOrdonnanceLibreHistorique() {
-		try {
-			HttpSession session = (HttpSession) FacesContext
-					.getCurrentInstance().getExternalContext()
-					.getSession(false);
-			session.setAttribute("idu", idPatient);
-			session.setAttribute("act", "ajoutOrdLibreHistorique");
-			session.setAttribute("source", "HistoriqueOrdonnances");
-			Ordonnance o = new Ordonnance();
-			new OrdonnanceService().ajoutOrdonnance(o);
-			idOrdonnance = o.getIdOrdonnance();
-			session.setAttribute("ido", idOrdonnance);
+	public void ajouterOrdLibre() {
 
-			// affichenv = true;
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		session.setAttribute("idu", idPatient);
+		session.setAttribute("act", "ajoutOrdLibre");
+		Ordonnance o = new Ordonnance();
+		o.setDateOrd(new Date());
+		dateOrdon = new Date();
+		o.setType("Libre");
+		new OrdonnanceService().ajoutOrdonnance(o);
+		idOrdonnance = o.getIdOrdonnance();
+		CfclientService ser = new CfclientService();
+		System.out.println(idPatient);
+		cfclient = ser.RechercheCfclient(idPatient);
+		if (cfclient != null)
+			nomProprietaire = cfclient.getNom() + cfclient.getPrenom();
+		proprietaire = "Patiente";
+		session.setAttribute("ido", idOrdonnance);
+
+	}
+
+	public void goToOrdonnanceLibreHistorique() {
+		ajouterOrdLibre();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		session.setAttribute("source", "HistoriqueOrdonnances");
+		try {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("NouvelleOrdonnance");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+
 	}
 
 	public void goToOrdonnanceLibre() {
-
+		ajouterOrdLibre();
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		session.setAttribute("source", "FichePatiente");
 		try {
-			HttpSession session = (HttpSession) FacesContext
-					.getCurrentInstance().getExternalContext()
-					.getSession(false);
-			session.setAttribute("idu", idPatient);
-			session.setAttribute("act", "ajoutOrdLibre");
-			session.setAttribute("source", "FichePatiente");
-
-			Ordonnance o = new Ordonnance();
-			new OrdonnanceService().ajoutOrdonnance(o);
-			idOrdonnance = o.getIdOrdonnance();
-			dateOrd = new Date();
-			session.setAttribute("ido", idOrdonnance);
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("NouvelleOrdonnance");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+
 	}
 
 	public String getTypee() {
@@ -1981,15 +1367,13 @@ System.out.println("model");
 			}
 		}
 
-		
-		
 		context.addCallbackParam("addValid", addValid);
 	}
 
 	public void closeDiagMed() {
 		designation = null;
 		idForme = null;
-		posologieMed=null;
+		posologieMed = null;
 		prixString = null;
 		laboratoire = null;
 		tableau = null;
@@ -2138,21 +1522,41 @@ System.out.println("model");
 		this.desibledimpOrdHistorique = desibledimpOrdHistorique;
 	}
 
-	public void initMed(){
+	public void initMed() {
 		designation = null;
 		idForme = null;
-		posologieMed=null;
+		posologieMed = null;
 		prixString = null;
 		laboratoire = null;
 		tableau = null;
 		observation = null;
-		
+
 		forme = null;
-		System.out.println("des "+designation);
-		//ouvrir le dialogue
+		// ouvrir le dialogue
 		RequestContext.getCurrentInstance().update(":f1;fmed:dialog");
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('dialogmedicament').show();");
 
 	}
+
+	private boolean impress;
+
+	public boolean isImpress() {
+		return impress;
+	}
+
+	public void setImpress(boolean impress) {
+		this.impress = impress;
+	}
+
+	private Date dateOrdon;
+
+	public Date getDateOrdon() {
+		return dateOrdon;
+	}
+
+	public void setDateOrdon(Date dateOrdon) {
+		this.dateOrdon = dateOrdon;
+	}
+
 }

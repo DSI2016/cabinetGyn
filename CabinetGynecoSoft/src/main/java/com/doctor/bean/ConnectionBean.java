@@ -29,6 +29,7 @@ import com.doctor.service.UtilisateurService;
 public class ConnectionBean implements java.io.Serializable {
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -53,6 +54,7 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean verConsultation;
 	private boolean consultPat =false;
 	private boolean chargerPatientSal;
+	private boolean supAnulSal;
 	private boolean modifNoteSal;
 	private boolean anulSal;
 	private  boolean consultArchiv;
@@ -251,6 +253,8 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean ajoutModeleord;
 	private boolean suppModeleOrd;
 	private boolean imprOrd;
+	private boolean imprAnal;
+	private boolean imprRad;
 	private boolean suppOrd;
 	private boolean nouvCertif;
 	private boolean modifCertif;
@@ -285,10 +289,62 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean tabAnulSal;
 	private boolean tabTelSal;
 	
+	private boolean ajoutDemandeOrd;
+	private boolean ajoutDemandeRad;
+	private boolean ajoutDemandeAnal;
+	
 	private String valOnlic;
 	
 	
 	
+	public boolean isImprAnal() {
+		return imprAnal;
+	}
+
+	public void setImprAnal(boolean imprAnal) {
+		this.imprAnal = imprAnal;
+	}
+
+	public boolean isImprRad() {
+		return imprRad;
+	}
+
+	public void setImprRad(boolean imprRad) {
+		this.imprRad = imprRad;
+	}
+
+	public boolean isAjoutDemandeOrd() {
+		return ajoutDemandeOrd;
+	}
+
+	public void setAjoutDemandeOrd(boolean ajoutDemandeOrd) {
+		this.ajoutDemandeOrd = ajoutDemandeOrd;
+	}
+
+	public boolean isAjoutDemandeRad() {
+		return ajoutDemandeRad;
+	}
+
+	public void setAjoutDemandeRad(boolean ajoutDemandeRad) {
+		this.ajoutDemandeRad = ajoutDemandeRad;
+	}
+
+	public boolean isAjoutDemandeAnal() {
+		return ajoutDemandeAnal;
+	}
+
+	public void setAjoutDemandeAnal(boolean ajoutDemandeAnal) {
+		this.ajoutDemandeAnal = ajoutDemandeAnal;
+	}
+
+	public boolean isSupAnulSal() {
+		return supAnulSal;
+	}
+
+	public void setSupAnulSal(boolean supAnulSal) {
+		this.supAnulSal = supAnulSal;
+	}
+
 	//liste des tabSalle active pour récuperer les motifs
 	private List<TabSalle> tabSallesActiv= new ArrayList<TabSalle>();
 	
@@ -1658,6 +1714,7 @@ public class ConnectionBean implements java.io.Serializable {
 					suppressionPatientSal = true;
 					verConsultation = true;
 					chargerPatientSal = true;
+					supAnulSal=true;
 					anulSal=true;
 					modifNoteSal=true;
 					menuSalle = false;
@@ -1797,12 +1854,15 @@ public class ConnectionBean implements java.io.Serializable {
 
 					modifAnalyse = true;
 					supAnalyse = true;
+					ajoutDemandeAnal=true;
 					detAnal=true;
 					modifRadio = true;
 					supRadio = true;
+					ajoutDemandeRad=true;
 					detRad=true;
 					modifOrdnce = true;
 					supOrdnce = true;
+					ajoutDemandeOrd=true;
 					supprimerDocteur = true;
 					gestionUterus = false;
 					ModifGyneco = true;
@@ -1867,6 +1927,8 @@ public class ConnectionBean implements java.io.Serializable {
 					ajoutModeleord = true;
 					suppModeleOrd = true;
 					imprOrd = true;
+					imprAnal=true;
+					imprRad=true;
 					suppOrd = true;
 					nouvCertif = false;
 					modifCertif = true;
@@ -1895,7 +1957,6 @@ public class ConnectionBean implements java.io.Serializable {
 				
 					enLigne.setIdSession(idSessionCourant);
 					ser1.ajoutEnLigne(enLigne);
-				    System.out.println("mpest juste  "+motpass);
 				    //redirection
 //				    try {
 //
@@ -1909,7 +1970,6 @@ public class ConnectionBean implements java.io.Serializable {
 				    
 					return "accepted";
 				}
-				 System.out.println("mpest juste  "+motpass);
 			}
 
 			else if (Test.currentConnect < Test.maxConnect) {
@@ -2201,6 +2261,8 @@ public class ConnectionBean implements java.io.Serializable {
 						
 						anulSal=u.isAnulSal();
 						modifNoteSal=u.isModifNoteSal();
+						
+						supAnulSal=u.isSupAnulSal();
 
 						if (u.getAjoutVil().equals("0"))
 							ajoutVille = false;
@@ -2319,12 +2381,15 @@ public class ConnectionBean implements java.io.Serializable {
 
 						modifAnalyse = u.isModifAnalyse();
 						supAnalyse = u.isSupAnalyse();
+						ajoutDemandeAnal=u.isAjoutDemandeAnal();
 						detAnal=u.isDetHistoAnal();
 						modifRadio = u.isModifRadio();
 						supRadio = u.isSupRadio();
+						ajoutDemandeOrd=u.isAjoutDemandeRad();
 						detRad=u.isDetHistoRad();
 						modifOrdnce = u.isModifOrdnce();
 						supOrdnce = u.isSupOrdnce();
+						ajoutDemandeOrd=u.isAjoutDemandeOrd();
 						ajoutUterus = u.isAjoutUt();
 						modifUterus = u.isModifUt();
 						supUterus = u.isSupUt();
@@ -2387,6 +2452,8 @@ public class ConnectionBean implements java.io.Serializable {
 						ajoutModeleord = u.isAjoutModeleord();
 						suppModeleOrd = u.isSuppModeleOrd();
 						imprOrd = u.isImprOrd();
+						imprAnal=u.isImprmAnal();
+						imprRad=u.isImprRadio();
 						suppOrd = u.isSuppOrd();
 						nouvCertif = !(u.isNouvCertif());
 						modifCertif = u.isModifCertif();
@@ -2404,7 +2471,7 @@ public class ConnectionBean implements java.io.Serializable {
 						
 						tabAnulSal=u.isTabAnulSal();
 						tabTelSal=u.isTabTelSal();
-
+						
 						ajoutAntecedentListe = u.isAjoutAntecedentListe();
 						/*nouvelleContraceptionAntecedent = u
 								.isNouvelleContraceptionAntecedent();
@@ -2413,8 +2480,15 @@ public class ConnectionBean implements java.io.Serializable {
 								.isNouvelleGrossesseAntecedent();
 						System.out.println("nouvelleGrossesseAntecedent=="+nouvelleGrossesseAntecedent);*/
 						
+						
+						
 						modifCab = u.isModifCab();
 
+						if(u.getConsultGrossOrd().equals("0"))
+							consulGrosstOrd = false;
+						else
+							consulGrosstOrd = true;
+						
 						if (u.getAntecedent().equals("0"))
 							antecedent = false;
 						else
@@ -2544,8 +2618,9 @@ public class ConnectionBean implements java.io.Serializable {
 							analGyn = false;
 						else
 							analGyn = true;
-
-						if (u.getConsultGrossOrd().equals("0"))
+						
+						if (u.getGynOrd().equals("0"))
+						
 							consulGrosstOrd = false;
 						else
 							consulGrosstOrd = true;

@@ -70,22 +70,15 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	private String proprietaire;
 	private Date dateAna;
 	
-	private Date dateAnal;
 	private boolean consultation;
-
+	private boolean viewImprim = false;
 	
-	
-	
-	
-	
-	public Date getDateAnal() {
-		System.out.println("val de  anal dan le get=========== "+dateAnal);
-		return dateAnal;
+	public boolean isViewImprim() {
+		return viewImprim;
 	}
 
-	public void setDateAnal(Date dateAnal) {
-		System.out.println("val de anal dan le set=========  "+dateAnal);
-		this.dateAnal = dateAnal;
+	public void setViewImprim(boolean viewImprim) {
+		this.viewImprim = viewImprim;
 	}
 
 	public boolean isConsultation() {
@@ -103,12 +96,10 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	}
 
 	public Date getDateAna() {
-		System.out.println("val de dateAna dans get== "+dateAna);
 		return dateAna;
 	}
 
 	public void setDateAna(Date dateAna) {
-		System.out.println("val de dateAna dans set== "+dateAna);
 		this.dateAna = dateAna;
 	}
 
@@ -183,7 +174,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		AnalyseDemandeeService ser = new AnalyseDemandeeService();
 		analysesParPatient = ser.rechercheAnalyseDemandeeParPatient(idPatient);
 
@@ -230,9 +220,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
-
 		toxo = null;
 		tpha = null;
 		rubeole = null;
@@ -241,52 +229,29 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		analyseDemandee=null;
 		desibledImpr = false;
 		consultation=false;
-
 		agHbs = null;
-
 		glycemie = null;
 		frottis = null;
+		proprietaire=null;
+		nomProprietaire=null;
+		dateAna=null;
+		desibledImpr=false;
+		impress=true;
+		viewImprim = true;
+		
 	}
+	
+	public void initApresValidation(){
+		desibledImpr=false;
+		initialisationAnalysea();
+		viewImprim = false;
+		redirect();
+		
+	}
+	
 
 	public ConsultationDetail getConsultationDetail() {
-		// initialisationAnalysea();
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);
-		// idPatient = (Integer) session.getAttribute("idu");
-		// // idPatient = Module.idpatient;
-		// idConsultationDetail = (Integer) session.getAttribute("idConsultD");
-		//
-		// ConsultationDetailService sr = new ConsultationDetailService();
-		//
-		// if (idConsultationDetail != null) {
-		// consultationDetail = sr
-		// .rechercheConsultationDetail(idConsultationDetail);
-		// dateAnalyse = formatter.format(consultationDetail
-		// .getDateConsultation());
-		// // recherche analyse lié à cette consultation si existe si non c'est
-		// // une nouvelle analyse
-		// AnalyseDemandeeService ser = new AnalyseDemandeeService();
-		// List<AnalyseDemandee> a = ser
-		// .rechercheAnalyseParConsultation(idConsultationDetail);
-		// if (a.size() > 0) {
-		// AnalyseDemandee analy = a.get(0);
-		// idanalyseDemandee = analy.getIdanalyseDemandee();
-		// analyseDemandees = analy.getAnalyses();
-		// toxo = analy.getToxo();
-		// tpha = analy.getTpha();
-		// agHbs = analy.getAgHbs();
-		// rubeole = analy.getRubeole();
-		// glycemie = analy.getGlycemie();
-		// frottis = analy.getFrottis();
-		// action = "modification";
-		// } else {
-		// action = "ajout";
-		// }
-		// } else {
-		// Date date = new Date();
-		// DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		// dateAnalyse = dateFormat.format(date);
-		// }
+	
 		return consultationDetail;
 	}
 
@@ -303,41 +268,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	}
 
 	public String getDateAnalyse() {
-		// initialisationAnalysea();
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);
-		// idPatient = (Integer) session.getAttribute("idu");
-		// // idPatient = Module.idpatient;
-		// idConsultationDetail = (Integer) session.getAttribute("idConsultD");
-		//
-		// ConsultationDetailService sr = new ConsultationDetailService();
-		//
-		// if (idConsultationDetail != null) {
-		// consultationDetail = sr
-		// .rechercheConsultationDetail(idConsultationDetail);
-		// // dateAnalyse = consultationDetail.getDateConsultation();
-		// AnalyseDemandeeService ser = new AnalyseDemandeeService();
-		// List<AnalyseDemandee> a = ser
-		// .rechercheAnalyseParConsultation(idConsultationDetail);
-		// if (a.size() > 0) {
-		// AnalyseDemandee analy = a.get(0);
-		// idanalyseDemandee = analy.getIdanalyseDemandee();
-		// analyseDemandees = analy.getAnalyses();
-		// toxo = analy.getToxo();
-		// tpha = analy.getTpha();
-		// agHbs = analy.getAgHbs();
-		// rubeole = analy.getRubeole();
-		// glycemie = analy.getGlycemie();
-		// frottis = analy.getFrottis();
-		// action = "modification";
-		// } else {
-		// action = "ajout";
-		// }
-		// } else {
-		// Date date = new Date();
-		// DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		// dateAnalyse = dateFormat.format(date);
-		// }
+		
 
 		return dateAnalyse;
 	}
@@ -351,7 +282,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		return idPatient;
 	}
 
@@ -364,7 +294,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient = Module.idpatient;
 		cfclient = ser.RechercheCfclient(idPatient);
 		return cfclient;
 	}
@@ -458,6 +387,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	public void ajoutAna() {
 		action = "ajout";
 		initialisationAnalyse();
+		viewImprim = true;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -473,13 +403,13 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	}
 	
 	public void  changerDate(){
-		System.out.println("get in changer date et l val de dateAnal===== "+dateAnal);
-		setDateAna(dateAnal);
+		setDateAna(dateAna);
 		
 	}
 
 	public void valider(ActionEvent actionEvent) throws SQLException, Exception {
 		
+		//changerDate();
 		FacesContext face = FacesContext.getCurrentInstance();
 		AnalyseDemandeeService ser = new AnalyseDemandeeService();
 		AnalyseDemandee ana = new AnalyseDemandee();
@@ -497,7 +427,16 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		ana.setFrottis(frottis);
 		ana.setProprietaire(nomProprietaire);
 		ana.setPossesseur(proprietaire);
-		System.out.println("data analyse== "+dateAna);
+		
+		String dateAnaS = formatter.format(dateAna);
+		if (Module.dateDepassee(dateAnaS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie a dépassé la date de jour", ""));
+		if (Module.dateTresAncien(dateAnaS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie est très ancienne", ""));
+		
+		
 		ana.setDateAnalyse(dateAna);
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -512,43 +451,15 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		if (consultationDetail != null)
 			ana.setConsultationDetail(consultationDetail);
 		
-		
+		if(face.getMessageList().size()==0){
 		if (action != null && action.equals("ajout")) {
 			
-			System.out.println("action == "+ action);
 			ser.ajoutAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse ajoutée avec succés"));
-			String nomReport = "demandeAnalyse";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			
-			/*Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idAnalyse", ana.getIdanalyseDemandee());
-			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();*/
-			//initialisationAnalyse();
-			// FacesContext context = FacesContext.getCurrentInstance();
-			// context.getExternalContext().getFlash().setKeepMessages(true);
+					"Demande analyse ajoutée avec succés", ""));
 			
 			
-			// ecrire analyse dans la ligne de consultationDetail
+			
 			consultationDetail
 					.setNbAnalyse(consultationDetail.getNbAnalyse() + 1);
 			new ConsultationDetailService()
@@ -558,78 +469,33 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
 			
-			initialisationAnalysea();
-			//initialisationAnalyse();
-			
-//			 try {
-//			   System.out.println("get in redirect");
-//			 FacesContext.getCurrentInstance().getExternalContext()
-//			 .redirect("DemandeAnalyse");
-//			 } catch (Exception e) {
-//			 System.out.println(e.getMessage());
-//			 }
-			 
-			 
-
+			viewImprim = false;
+			desibledImpr = true;
+			selectedAnalyse = ana;
+			initApresValidation();
 		}
 		if (action != null && action.equals("Modif")) {
 			ana.setIdanalyseDemandee(idanalyseDemandee);
 			ser.modifierAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse modifiée avec succés"));
-			String nomReport = "demandeAnalyse";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
+					"Demande analyse modifiée avec succés", ""));
 			
-			
-			/*Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idAnalyse", ana.getIdanalyseDemandee());
-			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();*/
-
-			// FacesContext context = FacesContext.getCurrentInstance();
-			// context.getExternalContext().getFlash().setKeepMessages(true);
 			clt.setToxo(toxo);
 			clt.setTpha(tpha);
 			clt.setRubeole(rubeole);
 			new CfclientService().modifierPatient(clt);
+			viewImprim = false;
+			initApresValidation();
 		}
-
-		
-		// try {
-		//
-		// FacesContext.getCurrentInstance().getExternalContext()
-		// .redirect("DemandeAnalyse");
-		// } catch (Exception e) {
-		// System.out.println(e.getMessage());
-		// }
-		// retour();
+		}
 	}
 	
 	public void redirect(){
 		
 		try {
-			System.out.println("get in redirect");
 			 FacesContext.getCurrentInstance().getExternalContext()
 			 .redirect("DemandeAnalyse");
 			 } catch (Exception e) {
-			 System.out.println(e.getMessage());
 			}
 	}
 
@@ -685,7 +551,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("HistoriqueAnalyses");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 		}
 		initialisationAnalyse();
 	}
@@ -697,6 +562,8 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		if (analy != null) {
 			idanalyseDemandee = analy.getIdanalyseDemandee();
 			dateAna = analy.getDateAnalyse();
+			
+			dateAnalyse=formatter.format(dateAna);
 			analyseDemandees = analy.getAnalyses();
 			toxo = analy.getToxo();
 			tpha = analy.getTpha();
@@ -743,6 +610,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		glycemie = ana.getGlycemie();
 		frottis = ana.getFrottis();
 		action = "Modif";
+		viewImprim = true;
 
 	}
 
@@ -828,12 +696,28 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		}
 
 	}
+	
+	public void annulation() {
+		initialisationAnalysea();
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+
+			context.getExternalContext().redirect("DemandeAnalyse");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 
 	public void verifierDate() {
 		FacesContext face = FacesContext.getCurrentInstance();
+		
 		if (Module.corigerDate(dateAnalyse) != null) {
 			this.setDateAnalyse(Module.corigerDate(dateAnalyse));
 		}
+		
+		
 		if (!(Module.verifierDate(dateAnalyse).equals("")))
 
 		{
@@ -843,7 +727,6 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 					.getCurrentInstance().getExternalContext()
 					.getSession(false);
 			idPatient = (Integer) session.getAttribute("idu");
-			// idPatient = Module.idpatient;
 			idConsultationDetail = (Integer) session.getAttribute("idConsultD");
 
 			ConsultationDetailService sr = new ConsultationDetailService();
@@ -958,30 +841,34 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
+		String age1;
+		String age;
 		if (selectedAnalyse != null) {
 			String nomReport = "demandeAnalyse";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
+					if(proprietaire.equals("Patiente")){
+						 if(clt.getDateNaiss()!=null)
+					      age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+						 else
+							 age1="";
+					}else{
+						if(clt.getDateNaissC()!=null)
+						 age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+						else
+							age1="";	
+					}
+			
+				if(age1.equals("")){
+					age=age1;
+				}else{
+					age="( "+age1+" )"+" Ans";
+				}
+			
+			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idAnalyse", selectedAnalyse.getIdanalyseDemandee());
 			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();
+			Module.imprimer(nomReport, param);
+			
 
 		}
 	}
@@ -1077,19 +964,17 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 	public void onRowSelectAnalyse(SelectEvent event) {
 		desibledImpr = true;
-		selectedAnalyse = null;
+		impress=false;
 		idanalyseDemandee = null;
 
 		AnalyseDemandee analysee = (AnalyseDemandee) event.getObject();
 		idanalyseDemandee = analysee.getIdanalyseDemandee();
-
+		selectedAnalyse = analysee;
 	}
 
 	public void consulerAnalyse(SelectEvent event) {
 		action = "consulter";
 		AnalyseDemandee analysee = (AnalyseDemandee) event.getObject();
-		
-		
 		
 		idanalyseDemandee = analysee.getIdanalyseDemandee();
 		proprietaire = analysee.getPossesseur();
@@ -1103,6 +988,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		frottis = analysee.getFrottis();
 		dateAna = analysee.getDateAnalyse();
 		desibledImpr = true;
+		viewImprim = false;
 
 	}
 
@@ -1116,27 +1002,14 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		String nomReport = "demandeAnalyse";
 		String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 		String age = "(" + age1 + ")";
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
+		
 		Map<String, Object> param = new HashMap<String, Object>();
 		
 		param.put("idAnalyse", selectedAnalyse.getIdanalyseDemandee());
 		param.put("age", age);
 
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+	
+		Module.imprimer(nomReport, param);
 	}
 
 	public Boolean getDesibledImpr() {
@@ -1169,5 +1042,34 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 	public void glycemieChange() {
 		setGlycemie(glycemie);
+	}
+	
+	private boolean impress;
+	
+	public boolean isImpress() {
+		return impress;
+	}
+
+	public void setImpress(boolean impress) {
+		this.impress = impress;
+	}
+
+	public void closedialog(){
+		try {
+			 FacesContext.getCurrentInstance().getExternalContext()
+			 .redirect("HistoriqueAnalyses");
+			 } catch (Exception e) {
+			}
+	}
+	
+	public void dateChange(SelectEvent event) {
+
+		setDateAna((Date) event.getObject());
+		setDateAna(dateAna);
+	}
+
+	public void dateChange2() {
+
+		setDateAna(dateAna);
 	}
 }

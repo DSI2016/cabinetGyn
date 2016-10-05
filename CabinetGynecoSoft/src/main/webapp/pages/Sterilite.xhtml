@@ -9,7 +9,7 @@
 
 <ui:composition template="../templates/templateGyneco.xhtml">
 	<ui:define name="title">
-Consultations Infertiluté</ui:define>
+      Consultations Infertiluté</ui:define>
 	<ui:define name="body">
 
 		<div align="center">
@@ -180,7 +180,8 @@ Consultations Infertiluté</ui:define>
 										</h:inputText>
 										<h:panelGrid columns="2">
 										<p:selectBooleanCheckbox value="#{sterileBean.spanio}"
-												style="font-size:small;font-weight:bold">
+												style="font-size:small;font-weight:bold"
+												disabled="#{connectionBean.modifSterilite}">
 												<p:ajax envent="change"
 													listener="#{sterileBean.spanioChange}"></p:ajax>
 											</p:selectBooleanCheckbox>

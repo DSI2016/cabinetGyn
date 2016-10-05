@@ -24,7 +24,7 @@ Historique Radios</ui:define>
 							</h:commandLink> <h:commandLink actionListener="#{radioBean.retourliste()}">
 								<p:graphicImage value="/images/retour.png"></p:graphicImage>
 							</h:commandLink></td>
-						<td><h:commandLink rendered="#{radioBean.desibledImpr}"
+						<td><h:commandLink rendered="#{radioBean.desibledImpr}and false"
 								actionListener="#{radioBean.viewHistoriqueRadio}"
 								target="_blanc">
 								<p:graphicImage value="/imagesMenu/imprimente10.png">
@@ -42,11 +42,23 @@ Historique Radios</ui:define>
 							</h:panelGrid></td>
 					</tr>
 				</table>
+				
 				<p:panel style="height:450px">
-					<div align="center">
-						<h:outputText
+					<table border="0" width="100%">
+						<tr> 
+							<td width="60%" align="right"><h:outputText
 							value="Patiente : #{radioBean.cfclient.prenom} #{radioBean.cfclient.nom} "
-							style="font-size:15pt;font-weight:bold" />
+							style="font-size:15pt;font-weight:bold" /></td>
+							<td align="right">
+							<p:commandButton value="Imprimer" disabled="#{radioBean.impress}"
+							        rendered="#{connectionBean.imprRad}"
+									style="font-size:small;font-weight:bold" icon="ui-icon-print"
+									ajax="false" actionListener="#{radioBean.viewHistoriqueRadio}"></p:commandButton>
+							</td>
+						</tr>
+					</table>
+					<div align="center">
+						
 					</div>
 
 					<p:dataTable id="patiente" var="rad"
@@ -98,7 +110,6 @@ Historique Radios</ui:define>
 								oncomplete="PF('modifRadios').show();" update=":f1:ma" />
 
 							<p:commandButton icon="ui-icon-search" title="Détail Radio"
-								rendered="#{connectionBean.detRad}"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{radioBean.modifRadio(rad.idradio)}"
 								oncomplete="PF('modifRadiosdetail').show();"
@@ -146,9 +157,10 @@ Historique Radios</ui:define>
 								<tr>
 									<td><h:outputText value="Date:"
 											style="font-size:12pt;font-weight:bold" /> <p:calendar
-											id="button" value="#{radioBean.dateRadios}"
+											id="button" value="#{radioBean.datRadios}"
 											disabled="#{radioBean.consultation}" showOn="button"
-											size="7" pattern="dd/MM/yyyy" /></td>
+											size="7" pattern="dd/MM/yyyy" >
+											</p:calendar></td>
 									<td align="right"><h:panelGrid columns="3">
 											<h:outputText value="Radio pour : "
 												style="font-size:13pt;font-weight:bold" />

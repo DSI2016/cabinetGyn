@@ -231,7 +231,8 @@
 									value="#{historiqueCertifBean.cfclient.prenom}  #{historiqueCertifBean.cfclient.nom}"></h:outputLabel>
 
 							</td>
-							<td><h:outputText value="Le : " /> <p:inputMask
+							<td><h:outputText value="Le : " /> 
+							<p:inputMask
 									mask="99/99/9999" id="cal"
 									value="#{historiqueCertifBean.dateCertif}" size="8">
 									<p:ajax event="blur"

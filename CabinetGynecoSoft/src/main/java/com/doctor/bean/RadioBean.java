@@ -1,11 +1,7 @@
 package com.doctor.bean;
 
-import java.io.File;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,15 +15,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.SelectEvent;
-
-import net.sf.jasperreports.engine.JasperRunManager;
-
-import com.doctor.dao.HibernateUtil;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.ExamenComplementaire;
@@ -36,7 +26,6 @@ import com.doctor.service.CfclientService;
 import com.doctor.service.ConsultationDetailService;
 import com.doctor.service.ExamenComplementaireService;
 import com.doctor.service.RadioService;
-import com.mysql.jdbc.Connection;
 
 @ManagedBean(name = "radioBean")
 @SessionScoped
@@ -53,7 +42,7 @@ public class RadioBean implements java.io.Serializable {
 	private ConsultationDetail consultationDetail;
 	private Integer idconsultationDetail;
 	private String exam;
-	private String dateRadio;
+	// private String dateRadio;
 	private Radio consultRadio;
 	private String action = "";
 	private Cfclient cfclient;
@@ -69,6 +58,16 @@ public class RadioBean implements java.io.Serializable {
 	private String proprietaire;
 	private Date dateRadios;
 	private boolean consultation;
+	private boolean viewImprim = false;
+
+	public boolean isViewImprim() {
+
+		return viewImprim;
+	}
+
+	public void setViewImprim(boolean viewImprim) {
+		this.viewImprim = viewImprim;
+	}
 
 	public boolean isConsultation() {
 		if (action == null)
@@ -103,6 +102,10 @@ public class RadioBean implements java.io.Serializable {
 
 	public void setDateRadios(Date dateRadios) {
 		this.dateRadios = dateRadios;
+	}
+
+	public void changerDate() {
+		setDateRadios(dateRadios);
 	}
 
 	public String getNomProprietaire() {
@@ -161,7 +164,6 @@ public class RadioBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
-		// idPatient=Module.idpatient;
 		RadioService ser = new RadioService();
 		radiosParPatient = ser.rechercheRadioParPatient(idPatient);
 
@@ -174,22 +176,28 @@ public class RadioBean implements java.io.Serializable {
 
 	public void consulterRadio(SelectEvent event) {
 		action = "consulter";
+		viewImprim = false;
 		Radio r = (Radio) event.getObject();
-		
+
 		consultRadio = selectedRAdio;
 		desibledImpr = true;
 		examenComplementaire = r.getExamenComplementaire();
 		resultat = r.getResultat();
 		renseignementClinique = r.getRenseignementClinique();
 		dateRadios = r.getDateRadios();
+
+		// SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		// dateRadio = formatter.format(dateRadios);
+
 		proprietaire = r.getPossesseur();
 		nomProprietaire = r.getProprietaire();
 
 	}
 
 	public void ajoutRad() {
-		selectedRAdio=null;
-		desibledImpr=false;
+		selectedRAdio = null;
+		viewImprim = true;
+		desibledImpr = false;
 		action = "ajout";
 		exam = null;
 		examenComplementaire = null;
@@ -202,62 +210,43 @@ public class RadioBean implements java.io.Serializable {
 
 		consultationDetail = new ConsultationDetailService()
 				.rechercheConsultationDetail(idconsultationDetail);
-		if (consultationDetail != null)
+		if (consultationDetail != null) {
 			dateRadios = consultationDetail.getDateConsultation();
-		else
+			// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			// try {
+			//
+			// dateRadio = sdf.format(dateRadios);
+			// dateRadios = sdf.parse(dateRadio);
+			//
+			// } catch (ParseException e) {
+			//
+			// e.printStackTrace();
+			// }
+
+		} else {
 			dateRadios = new Date();
+			// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			// try {
+			// dateRadio = sdf.format(dateRadios);
+			// dateRadios = sdf.parse(sdf.format(dateRadios));
+			// } catch (ParseException e) {
+			//
+			// e.printStackTrace();
+			// }
+
+		}
 		proprietaire = "Patiente";
 	}
 
-	public String getDateRadio() {
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);init
-
-		// idPatient = (Integer) session.getAttribute("idu");
-		//
-		// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-		// ConsultationDetailService sr = new ConsultationDetailService();
-		//
-		// if (idconsultationDetail != null) {
-		// consultationDetail = sr
-		// .rechercheConsultationDetail(idconsultationDetail);
-		// dateRadio = consultationDetail.getDateConsultation();
-		//
-		// // recherche radio lié à cette consultation si existe si non c'est
-		// // un nouveau radio
-		// RadioService ser = new RadioService();
-		//
-		// List<Radio> a =
-		// ser.rechercheRadioParConsultation(idconsultationDetail);
-		// if (a.size() > 0) {
-		// Radio r = a.get(0);
-		// idradio = r.getIdradio();
-		//
-		// action = "modification";
-		//
-		//
-		// modifRadio(idconsultationDetail);
-		// idradio = r.getIdradio();
-		// examenComplementaire = r.getExamenComplementaire();
-		// renseignementClinique = r.getRenseignementClinique();
-		// resultat = r.getResultat();
-		// action = "modification";
-		// }
-		//
-		//
-		// } else {
-		// action = "ajout";
-		// }
-		//
-		//
-
-		return dateRadio;
-	}
-
-	public void setDateRadio(String dateRadio) {
-
-		this.dateRadio = dateRadio;
-	}
+	// public String getDateRadio() {
+	//
+	// return dateRadio;
+	// }
+	//
+	// public void setDateRadio(String dateRadio) {
+	//
+	// this.dateRadio = dateRadio;
+	// }
 
 	public String getAction() {
 		return action;
@@ -300,25 +289,6 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public String getResultat() {
-		// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		// .getExternalContext().getSession(false);
-		//
-		// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-		// if (idconsultationDetail != null) {
-		// RadioService ser = new RadioService();
-		// Radio r = new Radio();
-		//
-		// List<Radio> a = ser
-		// .rechercheRadioParConsultation(idconsultationDetail);
-		// if (a.size() > 0) {
-		// r = a.get(0);
-		// resultat = r.getResultat();
-		//
-		// action = "modification";
-		// } else {
-		// action = "ajout";
-		// }
-		// }
 		return resultat;
 	}
 
@@ -356,7 +326,6 @@ public class RadioBean implements java.io.Serializable {
 
 		idconsultationDetail = (Integer) session.getAttribute("idConsultD");
 		if (idconsultationDetail != null) {
-			// ConsultationDetailService sr = new ConsultationDetailService();
 			RadioService ser = new RadioService();
 			Radio r = new Radio();
 
@@ -374,93 +343,58 @@ public class RadioBean implements java.io.Serializable {
 
 		return idradio;
 	}
-private boolean blocage;
+
+	private boolean blocage;
 
 	public boolean isBlocage() {
-	return blocage;
-}
-
-public void setBlocage(boolean blocage) {
-	this.blocage = blocage;
-}
-
-	public void dateChange() {
-		//dateRadios=(Date) event.getObject();
-		System.out.println("dddd"+dateRadios);
-		String dateString="";
-		//conertir en string 
-		if(dateRadios!= null){
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		 dateString = df.format(dateRadios);
-		System.out.println("date après conv  "+dateString);
-		}
-		
-		FacesContext faces = FacesContext.getCurrentInstance();
-		//Format format = new SimpleDateFormat("dd/MM/yyyy");
-		//String dateString = format.format(dateRadios);
-		//String dateString = dateRadios+"";
-		if (Module.corigerDate(dateString) != null) {
-			dateString=Module
-					.corigerDate(dateString);
-		}
-		if (!(Module.verifierDate(dateString).equals("")))
-
-		{System.out.println("dddd"+Module.verifierDate(dateString));
-			faces.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-							Module.verifierDate(dateString)));
-			blocage=true;
-			dateRadios=new Date();
-		}
-		else
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			try {
-				dateRadios=sdf.parse(dateString);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		setDateRadios(dateRadios);
+		return blocage;
 	}
-	
+
+	public void setBlocage(boolean blocage) {
+		this.blocage = blocage;
+	}
+
+	// public void verifierDateRadio() {
+	// setDateRadio(dateRadio);
+	// FacesContext face = FacesContext.getCurrentInstance();
+	//
+	// if ((dateRadio == null) || (dateRadio.equals(""))) {
+	// blocage = true;
+	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	// "Veuillez saisi le date de radio", ""));
+	//
+	// }
+	//
+	// if ((dateRadio != null) && (dateRadio.length() != 0)) {
+	//
+	// if (Module.corigerDate(dateRadio) != null) {
+	// this.setDateRadio(Module.corigerDate(dateRadio));
+	// }
+	// if (!(Module.verifierDate(dateRadio).equals("")))
+	//
+	// {
+	// blocage = true;
+	// face.addMessage(
+	// null,
+	// new FacesMessage(FacesMessage.SEVERITY_ERROR, Module
+	// .verifierDate(dateRadio), ""));
+	//
+	// } else {
+	//
+	// try {
+	// dateRadios = formatter.parse(dateRadio);
+	// } catch (ParseException e) {
+	//
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	//
+	// }
+
 	public void setIdradio(Integer idradio) {
 		this.idradio = idradio;
 	}
-
-	// @PostConstruct
-	// public void intr(){
-	// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-	// .getExternalContext().getSession(false);
-	//
-	// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-	// if (idconsultationDetail != null) {
-	// // ConsultationDetailService sr = new ConsultationDetailService();
-	// RadioService ser = new RadioService();
-	// Radio r = new Radio();
-	//
-	// List<Radio> a = ser
-	// .rechercheRadioParConsultation(idconsultationDetail);
-	// if (a.size() > 0) {
-	// r = a.get(0);
-	// examenComplementaire = r.getExamenComplementaire();
-	//
-	// action = "modification";
-	// } else {
-	// action = "ajout";
-	// }
-	// if(action.equals("modification"))
-	// {
-	// modifRadio(idconsultationDetail);
-	// }
-	//
-	//
-	// }
-	// System.out.println("_______examen get  "+examenComplementaire+"__________");
-	//
-	// }
 
 	public String getExamenComplementaire() {
 		return examenComplementaire;
@@ -498,27 +432,6 @@ public void setBlocage(boolean blocage) {
 		this.idconsultationDetail = idconsultationDetail;
 	}
 
-	// @PostConstruct
-	// public void init() {
-	// HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-	// .getExternalContext().getSession(false);
-	// idPatient = (Integer) session.getAttribute("idu");
-	// // idPatient = Module.idpatient;
-	// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-	//
-	// ConsultationDetailService sr = new ConsultationDetailService();
-	//
-	// if (idconsultationDetail != null) {
-	// consultationDetail = sr
-	// .rechercheConsultationDetail(idconsultationDetail);
-	// dateRadio = consultationDetail.getDateConsultation();
-	//
-	// // this.dateAnalyse = ancienValeur;
-	// }
-	// initialeRadio();
-	// }
-
-	//
 	@PostConstruct
 	public void init() {
 		action = null;
@@ -528,14 +441,17 @@ public void setBlocage(boolean blocage) {
 		desibledImpr = false;
 		consultRadio = null;
 		dateRadios = null;
+		// dateRadio = null;
 		proprietaire = null;
 		nomProprietaire = null;
+		consultation = true;
+		viewImprim = true;
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
 
 		idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-
+		impress = true;
 	}
 
 	public void annulation() {
@@ -566,21 +482,26 @@ public void setBlocage(boolean blocage) {
 			setExamenComplementaire(test);
 
 		}
-		// RequestContext.getCurrentInstance().update("f1");
-		// setExamenComplementaire(examenComplementaire);
 	}
 
 	public void valider() {
-     System.out.println(dateRadios);
+		FacesContext face = FacesContext.getCurrentInstance();
 		Radio r = new Radio();
+		String dateRadioS = formatter.format(dateRadios);
+		if (Module.dateDepassee(dateRadioS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie a dépassé la date de jour", ""));
+		if (Module.dateTresAncien(dateRadioS))
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"La date saisie est très ancienne", ""));
+		
 		r.setDateRadios(dateRadios);
 		r.setExamenComplementaire(examenComplementaire);
 		r.setPossesseur(proprietaire);
 		r.setProprietaire(nomProprietaire);
 		r.setRenseignementClinique(renseignementClinique);
 		r.setResultat(resultat);
-		//System.out.println(r);
-		// String consultationM = "";
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 
@@ -597,119 +518,64 @@ public void setBlocage(boolean blocage) {
 				r.setPatient(cfclient);
 		}
 
-		FacesContext face = FacesContext.getCurrentInstance();
 		r.setConsultationDetail(consultationDetail);
+		if (face.getMessageList().size() == 0) {
+			if (action != null && action.equals("ajout")) {
 
-		if (action != null && action.equals("ajout")) {
-			new RadioService().ajoutRadio(r);
-			if (consultationDetail != null)
-				consultationDetail
-						.setNbRadio(consultationDetail.getNbRadio() + 1);
-			new ConsultationDetailService()
-					.modifierConsultationDetail(consultationDetail);
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande radio ajoutée avec succés"));
-			CfclientService serclt = new CfclientService();
-			Cfclient clt = serclt.RechercheCfclient(idPatient);
+				new RadioService().ajoutRadio(r);
+				if (consultationDetail != null)
+					consultationDetail.setNbRadio(consultationDetail
+							.getNbRadio() + 1);
+				new ConsultationDetailService()
+						.modifierConsultationDetail(consultationDetail);
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO,
+						"Demande radio ajoutée avec succés", ""));
 
-			String nomReport = "demandeRadio";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			FacesContext context = FacesContext.getCurrentInstance();
-			 try {
-					
-					 context.getExternalContext().redirect("DemandeRadio");
-					} catch (Exception e) {
-					 System.out.println(e.getMessage());
-					 }
-			selectedRAdio=r;
-			consultRadio=r;
-			desibledImpr=true;
-			
-			/*Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idrad", r.getIdradio());
-			param.put("age", age);
+				FacesContext context = FacesContext.getCurrentInstance();
+				try {
 
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();*/
+					context.getExternalContext().redirect("DemandeRadio");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				selectedRAdio = r;
+				consultRadio = r;
+				desibledImpr = true;
 
-			//
-			// FacesContext context = FacesContext.getCurrentInstance();
-			// context.getExternalContext().getFlash().setKeepMessages(true);
+			}
+			if (action != null && action.equals("modification")) {
+				r.setIdradio(idradio);
+				new RadioService().modifierRadio(r);
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Demande radio modifiée avec succès"));
 
-		}
-		if (action != null && action.equals("modification")) {
-			r.setIdradio(idradio);
-			new RadioService().modifierRadio(r);
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande radio modifiée avec succès"));
-			CfclientService serclt = new CfclientService();
-			Cfclient clt = serclt.RechercheCfclient(idPatient);
+			}
+			exam = null;
+			examenComplementaire = null;
+			resultat = null;
+			renseignementClinique = null;
+			dateRadios = null;
+			// dateRadio = null;
+			proprietaire = null;
+			nomProprietaire = null;
+			action = null;
+			viewImprim = false;
+		} else
+			blocage = true;
 
-			String nomReport = "demandeRadio";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
-			/*Connection connection = (Connection) DriverManager.getConnection(
-					HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-			File jasper = new File(FacesContext.getCurrentInstance()
-					.getExternalContext()
-					.getRealPath("/reports/" + nomReport + ".jasper"));
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("idrad", r.getIdradio());
-			param.put("age", age);
-
-			byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-					param, connection);
-			HttpServletResponse response = (HttpServletResponse) FacesContext
-					.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength(bytes.length);
-			ServletOutputStream outStream = response.getOutputStream();
-			outStream.write(bytes, 0, bytes.length);
-			outStream.flush();
-			outStream.close();
-			FacesContext.getCurrentInstance().responseComplete();*/
-
-		}
-
-		exam = null;
-		examenComplementaire = null;
-		resultat = null;
-		renseignementClinique = null;
-		dateRadios = null;
-		proprietaire = null;
-		nomProprietaire = null;
-		action = null;
-		// try {
-		//
-		// context.getExternalContext().redirect("DemandeRadio");
-		// } catch (Exception e) {
-		// System.out.println(e.getMessage());
-		// }
 	}
 
 	public void validerHisto() {
 		Radio r = new Radio();
-		r.setDateRadios(dateRadios);
+		r.setDateRadios(datRadios);
 		r.setExamenComplementaire(examenComplementaire);
 		r.setPossesseur(proprietaire);
 		r.setProprietaire(nomProprietaire);
 		r.setRenseignementClinique(renseignementClinique);
 		r.setResultat(resultat);
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -748,52 +614,52 @@ public void setBlocage(boolean blocage) {
 		setExamenComplementaire(examenComplementaire);
 	}
 
-	public void verifierDate() {
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(dateRadio) != null) {
-			this.setDateRadio(Module.corigerDate(dateRadio));
-		}
-		if (!(Module.verifierDate(dateRadio).equals("")))
+	// public void verifierDate() {
+	// FacesContext face = FacesContext.getCurrentInstance();
+	// if (Module.corigerDate(dateRadio) != null) {
+	// this.setDateRadio(Module.corigerDate(dateRadio));
+	// }
+	// if (!(Module.verifierDate(dateRadio).equals("")))
+	//
+	// {
+	// // blocage = true;
+	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	// "", Module.verifierDate(dateRadio)));
+	// HttpSession session = (HttpSession) FacesContext
+	// .getCurrentInstance().getExternalContext()
+	// .getSession(false);
+	// idPatient = (Integer) session.getAttribute("idu");
+	//
+	// idconsultationDetail = (Integer) session.getAttribute("idConsultD");
+	// ConsultationDetailService sr = new ConsultationDetailService();
+	//
+	// if (idconsultationDetail != null) {
+	// consultationDetail = sr
+	// .rechercheConsultationDetail(idconsultationDetail);
+	// dateRadio = formatter.format(consultationDetail
+	// .getDateConsultation());
+	// }
+	//
+	// }
+	//
+	// }
 
-		{
-			// blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateRadio)));
-			HttpSession session = (HttpSession) FacesContext
-					.getCurrentInstance().getExternalContext()
-					.getSession(false);
-			idPatient = (Integer) session.getAttribute("idu");
-
-			idconsultationDetail = (Integer) session.getAttribute("idConsultD");
-			ConsultationDetailService sr = new ConsultationDetailService();
-
-			if (idconsultationDetail != null) {
-				consultationDetail = sr
-						.rechercheConsultationDetail(idconsultationDetail);
-				dateRadio = formatter.format(consultationDetail
-						.getDateConsultation());
-			}
-
-		}
-
-	}
-
-	public void verifierDate1() {
-		FacesContext face = FacesContext.getCurrentInstance();
-		if (Module.corigerDate(dateRadio) != null) {
-			this.setDateRadio(Module.corigerDate(dateRadio));
-		}
-		if (!(Module.verifierDate(dateRadio).equals("")))
-
-		{
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateRadio)));
-
-			this.dateRadio = ancienValeur;
-
-		} else
-			this.dateRadio = ancienValeur;
-	}
+	// public void verifierDate1() {
+	// FacesContext face = FacesContext.getCurrentInstance();
+	// if (Module.corigerDate(dateRadio) != null) {
+	// this.setDateRadio(Module.corigerDate(dateRadio));
+	// }
+	// if (!(Module.verifierDate(dateRadio).equals("")))
+	//
+	// {
+	// face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	// "", Module.verifierDate(dateRadio)));
+	//
+	// this.dateRadio = ancienValeur;
+	//
+	// } else
+	// this.dateRadio = ancienValeur;
+	// }
 
 	public String getAncienValeur() {
 		return ancienValeur;
@@ -812,8 +678,9 @@ public void setBlocage(boolean blocage) {
 			ConsultationDetailService sr = new ConsultationDetailService();
 			consultationDetail = sr
 					.rechercheConsultationDetail(idconsultationDetail);
-			dateRadio = formatter.format(consultationDetail
-					.getDateConsultation());
+			dateRadios = consultationDetail.getDateConsultation();
+			// dateRadio = formatter.format(consultationDetail
+			// .getDateConsultation());
 		}
 	}
 
@@ -825,9 +692,9 @@ public void setBlocage(boolean blocage) {
 		setRenseignementClinique(renseignementClinique);
 	}
 
-	public void onchangedateRadio() {
-		setRenseignementClinique(dateRadio);
-	}
+	// public void onchangedateRadio() {
+	// setRenseignementClinique(dateRadio);
+	// }
 
 	public void onchangeresultat() {
 		setResultat(resultat);
@@ -975,7 +842,6 @@ public void setBlocage(boolean blocage) {
 		action = "modification";
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		// HttpSession session= new Session();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 
@@ -990,11 +856,11 @@ public void setBlocage(boolean blocage) {
 		}
 
 		if (idconsultationDetail != null) {
-			// Integer idConsultationDetail = idConsult;
 			consultationDetail = sr
 					.rechercheConsultationDetail(idconsultationDetail);
-			dateRadio = formatter.format(consultationDetail
-					.getDateConsultation());
+			dateRadios = consultationDetail.getDateConsultation();
+			// dateRadio = formatter.format(consultationDetail
+			// .getDateConsultation());
 			// recherche analyse lié à cette consultation si existe si non c'est
 			// une nouvelle analyse
 			RadioService ser = new RadioService();
@@ -1026,6 +892,7 @@ public void setBlocage(boolean blocage) {
 				session.setAttribute("idu", idPatient);
 			}
 			idradio = radi.getIdradio();
+			datRadios = radi.getDateRadios();
 			dateRadios = radi.getDateRadios();
 			examenComplementaire = radi.getExamenComplementaire();
 			renseignementClinique = radi.getRenseignementClinique();
@@ -1050,8 +917,8 @@ public void setBlocage(boolean blocage) {
 		new RadioService().supprimerRadio(idradio);
 
 		FacesContext face = FacesContext.getCurrentInstance();
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
-				"Demande de radio supprimée avec succés"));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Demande de radio supprimée avec succés", ""));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -1075,16 +942,13 @@ public void setBlocage(boolean blocage) {
 					.rechercheConsultationDetail(idcons);
 			if (consultationDetail != null) {
 				ConsultationDetailService se = new ConsultationDetailService();
-				System.out.println("supp rad");
 				consultationDetail
 						.setNbRadio(consultationDetail.getNbRadio() - 1);
 				se.modifierConsultationDetail(consultationDetail);
 			}
 			FacesContext face = FacesContext.getCurrentInstance();
-			// RadioService ser = new RadioService();
-			// ser.supprimerRadio(idradio);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Radio supprimée avec succés"));
+					"Radio supprimée avec succés", ""));
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
@@ -1099,20 +963,39 @@ public void setBlocage(boolean blocage) {
 
 	public void corection() {
 		FacesContext face = FacesContext.getCurrentInstance();
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
-				"Radio supprimée avec succés"));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Radio supprimée avec succés", ""));
 	}
 
 	public void viewRadio(ActionEvent actionEvent) throws SQLException,
 			Exception {
-		System.out.println("consultRadio=="+consultRadio);
+		CfclientService serclt = new CfclientService();
+		Cfclient clt = serclt.RechercheCfclient(idPatient);
+		String age1;
+		String age;
 		if (consultRadio != null) {
-			CfclientService serclt = new CfclientService();
-			Cfclient clt = serclt.RechercheCfclient(idPatient);
+
+			if (proprietaire.equals("Patiente")) {
+				if (clt.getDateNaiss() != null)
+					age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+				else
+					age1 = "";
+
+			} else {
+				if (clt.getDateNaissC() != null)
+					age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+				else
+					age1 = "";
+			}
+
+			if (age1.equals("")) {
+				age = age1;
+			} else {
+				age = "( " + age1 + " )" + " Ans";
+			}
 
 			String nomReport = "demandeRadio";
-			String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-			String age = "(" + age1 + ")";
+
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("idrad", consultRadio.getIdradio());
 			param.put("age", age);
@@ -1131,26 +1014,12 @@ public void setBlocage(boolean blocage) {
 		String nomReport = "demandeRadio";
 		String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
 		String age = "(" + age1 + ")";
-		Connection connection = (Connection) DriverManager.getConnection(
-				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-		File jasper = new File(FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getRealPath("/reports/" + nomReport + ".jasper"));
+
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("idrad", selectedRAdio.getIdradio());
 		param.put("age", age);
 
-		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
-				connection);
-		HttpServletResponse response = (HttpServletResponse) FacesContext
-				.getCurrentInstance().getExternalContext().getResponse();
-		response.setContentType("application/pdf");
-		response.setContentLength(bytes.length);
-		ServletOutputStream outStream = response.getOutputStream();
-		outStream.write(bytes, 0, bytes.length);
-		outStream.flush();
-		outStream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+		Module.imprimer(nomReport, param);
 	}
 
 	public Radio getSelectedRAdio() {
@@ -1166,7 +1035,8 @@ public void setBlocage(boolean blocage) {
 	{
 		Radio r = (Radio) event.getObject();
 		idradio = r.getIdradio();
-
+		selectedRAdio = r;
+		impress = false;
 		desibledImpr = true;
 	}
 
@@ -1188,5 +1058,36 @@ public void setBlocage(boolean blocage) {
 
 	public void proprietaireChange() {
 		setNomProprietaire(nomProprietaire);
+	}
+
+	public Date datRadios;
+
+	public Date getDatRadios() {
+		return datRadios;
+	}
+
+	public void setDatRadios(Date datRadios) {
+		this.datRadios = datRadios;
+	}
+
+	private boolean impress;
+
+	public boolean isImpress() {
+		return impress;
+	}
+
+	public void setImpress(boolean impress) {
+		this.impress = impress;
+	}
+
+	public void dateChange(SelectEvent event) {
+
+		setDateRadios((Date) event.getObject());
+		setDateRadios(dateRadios);
+	}
+
+	public void dateChange2() {
+
+		setDateRadios(dateRadios);
 	}
 }

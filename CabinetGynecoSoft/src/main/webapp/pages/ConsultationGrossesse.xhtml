@@ -16,18 +16,25 @@
 		<h:form id="f1">
 			<table width="100%">
 				<tr>
-					<td width="95%"><h:commandLink
-							actionListener="#{consultationDetailBean.gotoAcceuil()}">
+					<td width="95%"><h:commandLink actionListener="#{consultationDetailBean.gotoAcceuil()}">
 							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
 						</h:commandLink> <h:commandLink
 							actionListener="#{consultationDetailBean.changeRead()}">
 							<p:graphicImage value="/images/retour.png"></p:graphicImage>
 						</h:commandLink></td>
-					<td align="left"><h:commandLink
-							rendered="#{connectionBean.imprGross}">
-							<p:graphicImage value="/imagesMenu/imprimente10.png"></p:graphicImage>
-						</h:commandLink></td>
-				</tr>
+						<td align="right" >
+							<h:panelGrid columns="3">
+								
+								<h:outputText value="#{connectionBean.utilisateur}"
+									style="font-size:19px;font-weight:bold;font-style: italic" />
+							
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="25px" />
+							</h:commandLink>
+							
+                        </h:panelGrid>
+					</td>
+					</tr>
 			</table>
 			<p:growl id="growl" showDetail="true"
 				sticky="#{consultationDetailBean.blocage}"
@@ -52,32 +59,25 @@
 											disabled="#{consultationDetailBean.desibledOrd}"
 											actionListener="#{consultationDetailBean.demandeOrdonnanceObs}"
 											id="nouvelleordonnace">
-
-											<f:setPropertyActionListener
-												target="#{ordonnanceBean.idPatient}"
-												value="#{consultationDetailBean.idPatient}"></f:setPropertyActionListener>
-												
 											<p:graphicImage value="/images/ordonnance.png"
-												rendered="#{connectionBean.consulGrosstOrd}"></p:graphicImage>
-
+												rendered="#{connectionBean.ordnanceFiche}"></p:graphicImage>
 										</p:commandLink>
-
 										<p:commandLink
 											disabled="#{consultationDetailBean.desibledRadio}"
 											action="#{consultationDetailBean.notblocagenotification()}"
 											actionListener="#{consultationDetailBean.demandeRadio}"
 											id="Radio">
 											<p:graphicImage value="/images/radio.png"
-												rendered="#{connectionBean.radioGyn}">
+												rendered="#{connectionBean.radioFiche}">
 											</p:graphicImage>
 										</p:commandLink>
-
 										<p:commandLink
 											action="#{consultationDetailBean.notblocagenotification()}"
 											disabled="#{consultationDetailBean.desibledAnalyse}"
 											actionListener="#{consultationDetailBean.demandeAnalyse}"
-											rendered="#{connectionBean.analGyn}" id="analyse">
-											<p:graphicImage value="/images/analyse.png"></p:graphicImage>
+											 id="analyse">
+											<p:graphicImage value="/images/analyse.png"
+											  rendered="#{connectionBean.analyseFiche}" ></p:graphicImage>
 										</p:commandLink>
 
 									</h:panelGrid></td>

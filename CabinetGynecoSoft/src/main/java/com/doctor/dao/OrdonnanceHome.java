@@ -191,6 +191,7 @@ public class OrdonnanceHome {
 	public List<Ordonnance> findByConsultation(Integer cl) {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(Ordonnance.class)
+				.addOrder(Property.forName("idOrdonnance").desc())
 				//.setFetchMode("medOrds", FetchMode.JOIN)
 				.setFetchMode("consult", FetchMode.JOIN)
 				.createCriteria("consult")
@@ -224,6 +225,7 @@ public class OrdonnanceHome {
 	public List<Ordonnance> findLibreByPatient(Integer idPatient, String type) {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(Ordonnance.class)
+				.addOrder(Property.forName("idOrdonnance").desc())
 				.add(Restrictions.eq("type", type))
 				.setFetchMode("patient", FetchMode.JOIN)
 				.createCriteria("patient")

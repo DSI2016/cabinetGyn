@@ -1,5 +1,4 @@
 package com.doctor.bean;
-
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,45 +7,36 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Map;
-
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.jasperreports.engine.JasperRunManager;
-
 import com.doctor.dao.HibernateUtil;
-import com.doctor.persistance.Cfclient;
-import com.doctor.service.CfclientService;
 import com.mysql.jdbc.Connection;
 
 public class Module {
-	// static Integer idpatient;
+
 	static String patientEnConsultation;
 	static String connecte = "";
 	static String consultation = "";
-	
-	static String rechercheProf="";
-	static String rechercheClinique="";
-	static String rechercheVille="";
-	static String rechercheDocteur="";
-	static String rechercheEtatGross="";
-	static String rechercheEtatBebe="";
-	static String rechercheAnalyse="";
-	static String rechercheExamen="";
-	static String rechercheContracept="";
-	static String recherchediagnos="";
-	static String recherchesympt="";
-	static String rechercheExamenComp="";
-	static String rechercheFormMed="";
-	static String recherchePatient="";
-	static String rechercheUterus="";
-	static String rechercheMedicament="";
-	static String rechercheAntecedent="";
-	// static Integer idConsultD;
+	static String rechercheProf = "";
+	static String rechercheClinique = "";
+	static String rechercheVille = "";
+	static String rechercheDocteur = "";
+	static String rechercheEtatGross = "";
+	static String rechercheEtatBebe = "";
+	static String rechercheAnalyse = "";
+	static String rechercheExamen = "";
+	static String rechercheContracept = "";
+	static String recherchediagnos = "";
+	static String recherchesympt = "";
+	static String rechercheExamenComp = "";
+	static String rechercheFormMed = "";
+	static String recherchePatient = "";
+	static String rechercheUterus = "";
+	static String rechercheMedicament = "";
+	static String rechercheAntecedent = "";
 	public static int[] nbJourMois = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
 			30, 31 };
 
@@ -56,13 +46,9 @@ public class Module {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar today = new GregorianCalendar();// contient le date system
 		Calendar userDate = new GregorianCalendar();
-		
-
-		
-		
 
 		try {
-			userDate.setTime(dateFormat.parse(date));// pour convertir la chaine
+			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
 														// en date
 			if (userDate.after(today))// le fonction after pour tester le date
 										// depassee date system
@@ -71,54 +57,46 @@ public class Module {
 		} catch (ParseException e) {
 			userDate = null;
 		}
-		//succes =true ==> date est dépassé 
+		// succes =true ==> date est dépassé
 		return (success);
 	}
 
-	
-	
-	static boolean dateTresAncien(String date) { //cette methode pour detectéé si ce date est tres ancien ct'adire <1900
-		
-boolean success = false;
-SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-Calendar userDate = new GregorianCalendar();
-Calendar hier = new GregorianCalendar();
-hier.set(GregorianCalendar.YEAR, 1900);
-hier.set(GregorianCalendar.MONTH, 1);
-hier.set(GregorianCalendar.DATE, 1);
+	static boolean dateTresAncien(String date) { // pour verifier que le date ne
 
+		boolean success = false;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar userDate = new GregorianCalendar();
+		Calendar hier = new GregorianCalendar();
+		hier.set(GregorianCalendar.YEAR, 1900);
+		hier.set(GregorianCalendar.MONTH, 1);
+		hier.set(GregorianCalendar.DATE, 1);
 
-
-
-try {
-userDate.setTime(dateFormat.parse(date));// pour converser la chaine
-				// en date
-if (userDate.before(hier))// le fonction after pour tester le date
-// depassee date system
-
-success = true;
-} catch (ParseException e) {
-userDate = null;
-}
-return (success);
-}
-
-	//retourner les deucx premier entier de la chaine 
-	public static Integer NumericTermeGrossese(String terme)
-	{
-		if(isNumeric(terme.substring(0, 2))==true)
-			return(Integer.parseInt(terme.substring(0, 2)));
-		else
-			if(isNumeric(terme.substring(0, 1))==true)
-				{return(Integer.parseInt(terme.substring(0, 1)));}
-			else
-			
-		return null;
-		
+		try {
+			userDate.setTime(dateFormat.parse(date));// pour converser la chaine
+			// en date
+			if (userDate.before(hier))// le fonction after pour tester le date
+				// depassee date system
+				success = true;
+		} catch (ParseException e) {
+			userDate = null;
+		}
+		return (success);
 	}
-	
-	//verifier le chaine numeric ou non
-	
+
+	// retourner les deucx premier entier de la chaine
+	public static Integer NumericTermeGrossese(String terme) {
+		if (isNumeric(terme.substring(0, 2)) == true)
+			return (Integer.parseInt(terme.substring(0, 2)));
+		else if (isNumeric(terme.substring(0, 1)) == true) {
+			return (Integer.parseInt(terme.substring(0, 1)));
+		} else
+
+			return null;
+
+	}
+
+	// verifier le chaine numeric ou non
+
 	public static boolean isNumeric(String str) {
 		try {
 			Double.parseDouble(str);
@@ -281,7 +259,7 @@ return (success);
 		case 2: {
 			if (testBissextile(annee) == true) {
 				res = 29;
-			}else {
+			} else {
 				res = 28;
 			}
 		}
@@ -409,15 +387,14 @@ return (success);
 							}
 						}
 					}
-					if(annee>3000)
+					if (annee > 3000)
 						msg = msg + "!Date Invalide!";
-					else
-					if (dateDepassee(date) == true) {
+					else if (dateDepassee(date) == true) {
 
 						msg = msg + "!Date Dépassé!";
 
 					}
-									} catch (NumberFormatException e) {
+				} catch (NumberFormatException e) {
 					msg = "Date Invalide";
 				}
 
@@ -442,30 +419,25 @@ return (success);
 
 		return 0;
 	}
-	public static int calculAgeEnAnsParRapportDateRapport(String dateNaiss,String DateRapport) {
-		
-		System.out.println("date rapport"+DateRapport);
-		System.out.println("date naissance"+dateNaiss);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	public static int calculAgeEnAnsParRapportDateRapport(String dateNaiss,
+			String DateRapport) {
 if((verifierDate(dateNaiss).equals(""))&&(verifierDate(dateNaiss).equals("")))
-{	//let.setDatelettre(sdf.parse(dateLet));
+{	
 		if (dateNaiss != null && dateNaiss.length() > 0) {
 			int i = dateNaiss.lastIndexOf("/");
-			System.out.println("i="+i);
 			int j = Integer.parseInt(dateNaiss.substring(i + 1));
-			System.out.println("j="+j);
 			if (DateRapport != null && DateRapport.length() > 0) {
 			int year = Integer.parseInt(DateRapport.substring(i + 1));
 			return (year - j);
-			}
-			
-						
-			
-			
+				
+		
 		}
 		}
+}
 		return 0;
 	}
+
 	public static String age(String dateNaiss) {
 		Date toDay = new Date();
 		int jnaiss;
@@ -530,32 +502,29 @@ if((verifierDate(dateNaiss).equals(""))&&(verifierDate(dateNaiss).equals("")))
 		} else
 			return "0";
 	}
-	
-	
-	static void imprimer(String nomReport,Map<String, Object> param) throws SQLException,Exception {
 
-	
-	Connection connection = (Connection) DriverManager.getConnection(
-			HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
-	File jasper = new File(FacesContext.getCurrentInstance()
-			.getExternalContext()
-			.getRealPath("/reports/" + nomReport + ".jasper"));
-   
-	
+	static void imprimer(String nomReport, Map<String, Object> param)
+			throws SQLException, Exception {
 
-	byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(),
-			param, connection);
-	HttpServletResponse response = (HttpServletResponse) FacesContext
-			.getCurrentInstance().getExternalContext().getResponse();
-	response.setContentType("application/pdf");
-	response.setContentLength(bytes.length);
-	ServletOutputStream outStream = response.getOutputStream();
-	outStream.write(bytes, 0, bytes.length);
-	outStream.flush();
-	outStream.close();
-	FacesContext.getCurrentInstance().responseComplete();
+		Connection connection = (Connection) DriverManager.getConnection(
+				HibernateUtil.url, HibernateUtil.login, HibernateUtil.pass);
+		File jasper = new File(FacesContext.getCurrentInstance()
+				.getExternalContext()
+				.getRealPath("/reports/" + nomReport + ".jasper"));
 
-}
+		byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), param,
+				connection);
+		HttpServletResponse response = (HttpServletResponse) FacesContext
+				.getCurrentInstance().getExternalContext().getResponse();
+		response.setContentType("application/pdf");
+		response.setContentLength(bytes.length);
+		ServletOutputStream outStream = response.getOutputStream();
+		outStream.write(bytes, 0, bytes.length);
+		outStream.flush();
+		outStream.close();
+		FacesContext.getCurrentInstance().responseComplete();
+
+	}
 
 	static String menuSal;
 	static String menuGestPat;
@@ -632,7 +601,6 @@ if((verifierDate(dateNaiss).equals(""))&&(verifierDate(dateNaiss).equals("")))
 	static String radioFiche;
 	static String rapportFiche;
 	static String ordnanceFiche;
-
 	static boolean actif;
 	static boolean passif;
 	static String action;

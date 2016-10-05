@@ -28,7 +28,7 @@ Historique Analyses</ui:define>
 							</h:commandLink></td>
 						<td><h:commandLink
 								actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"
-								target="_blanc" rendered="#{analyseDemandeeBean.desibledImpr}">
+								target="_blanc" rendered="#{analyseDemandeeBean.desibledImpr}and false">
 								<p:graphicImage value="/imagesMenu/imprimente10.png">
 								</p:graphicImage>
 							</h:commandLink></td>
@@ -46,12 +46,20 @@ Historique Analyses</ui:define>
 				</table>
 
 				<p:panel style="height:450px">
-					<div align="center">
-
-						<h:outputText
-							value="Patiente : #{analyseDemandeeBean.cfclient.prenom} #{analyseDemandeeBean.cfclient.nom} "
-							style="font-size:15pt;font-weight:bold" />
-					</div>
+					<table border="0" width="100%">
+						<tr> 
+							<td width="60%" align="right"><h:outputText
+									value="Patiente : #{analyseDemandeeBean.cfclient.prenom} #{analyseDemandeeBean.cfclient.nom} "
+									style="font-size:15pt;font-weight:bold" /></td>
+							<td align="right">
+							<p:commandButton value="Imprimer" disabled="#{analyseDemandeeBean.impress}"
+							         rendered="#{connectionBean.imprAnal}"
+									style="font-size:small;font-weight:bold" icon="ui-icon-print"
+									ajax="false" actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"></p:commandButton>
+							</td>
+						</tr>
+					</table>
+					
 					<p:dataTable id="patiente" var="ana"
 						style="font-size:small;font-weight:bold"
 						value="#{analyseDemandeeBean.analysesParPatient}"
@@ -63,7 +71,7 @@ Historique Analyses</ui:define>
 						selection="#{analyseDemandeeBean.selectedAnalyse}">
 						<p:ajax event="rowSelect"
 							listener="#{analyseDemandeeBean.onRowSelectAnalyse}"
-							update=":f1:patiente"></p:ajax>
+							update=":f1:patiente,:f1"></p:ajax>
 
 						<p:column headerText="Date" width="7%"
 							style="font-size:small;font-weight:bold">
@@ -126,9 +134,8 @@ Historique Analyses</ui:define>
 								oncomplete="PF('modifAnalyse').show();" update=":f1:ma" />
 
 							<p:commandButton icon="ui-icon-search" title="Detail Analyse"
-								rendered="#{connectionBean.detAnal}"
 								style="font-size:small;font-weight:bold"
-								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.consultationDetail.idConsultationDetail)}"
+								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.idanalyseDemandee)}"
 								oncomplete="PF('detailAnalyse').show();" update=":f1:madetail" />
 
 							<p:commandButton update=":f1"
@@ -160,7 +167,7 @@ Historique Analyses</ui:define>
 							<table border="0" style="width: 100%; heigth: 2cm">
 								<tr>
 									<td align="center"><p:graphicImage
-											value="/images/demandeanalyse.png" width="100%" ></p:graphicImage></td>
+											value="/images/demandeanalyse.png" width="100%"></p:graphicImage></td>
 								</tr>
 							</table>
 
@@ -390,9 +397,8 @@ Historique Analyses</ui:define>
 
 							<div align="center">
 
-
-
 								<p:commandButton value="OK"
+									actionListener="#{analyseDemandeeBean.closedialog}"
 									oncomplete="PF('modifAnalysedetail').hide();" update=":f1"
 									style="font-size:small;font-weight:bold"></p:commandButton>
 

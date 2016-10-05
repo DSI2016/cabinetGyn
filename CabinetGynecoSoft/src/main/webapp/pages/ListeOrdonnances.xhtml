@@ -24,9 +24,9 @@ Historique Ordonnances</ui:define>
 								<p:graphicImage value="/images/retour.png"></p:graphicImage>
 							</h:commandLink></td>
 						<td><h:commandLink actionListener="#{ordonnanceBean.viewOrd}"
-								id="idimp" target="_blanc" rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledImp}"
-							>
-								<p:graphicImage value="/imagesMenu/imprimente10.png" 	>
+								id="idimp" target="_blanc"
+								rendered="#{connectionBean.imprOrd and not ordonnanceBean.desibledImp} and false">
+								<p:graphicImage value="/imagesMenu/imprimente10.png">
 								</p:graphicImage>
 
 							</h:commandLink></td>
@@ -126,13 +126,15 @@ Historique Ordonnances</ui:define>
 									currentPageReportTemplate="{currentPage} / {totalPages}"
 									rows="10">
 									<p:ajax event="rowSelect"
-										listener="#{ordonnanceBean.onRowSelect}" update=":f3,:f1:list,:f1" />
+										listener="#{ordonnanceBean.onRowSelect}"
+										update=":f3,:f1:list,:f1" />
 
 									<p:column headerText="Date" width="10%"
 										style="font-size:small;font-weight:bold">
 										<h:outputText value="#{ord.dateOrd}"
 											style="font-size:small;font-weight:bold">
-											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Paris" />
+											<f:convertDateTime pattern="dd/MM/yyyy"
+												timeZone="Europe/Paris" />
 										</h:outputText>
 									</p:column>
 
@@ -177,8 +179,16 @@ Historique Ordonnances</ui:define>
 									<p:commandButton value="Non" type="button"
 										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 								</p:confirmDialog></td>
-							<td valign="top"><p:dataTable
-									value="#{ordonnanceBean.medOrds}" var="m" id="list"
+							<td valign="top">
+								<div align="right">
+									<p:commandButton value="Imprimer"
+									    rendered="#{connectionBean.imprOrd}"
+										disabled="#{ordonnanceBean.impress}"
+										style="font-size:small;font-weight:bold" icon="ui-icon-print"
+										ajax="false"
+										actionListener="#{ordonnanceBean.viewOrd}"></p:commandButton>
+								</div> <p:dataTable value="#{ordonnanceBean.medOrds}" var="m"
+									id="list"
 									emptyMessage="Pas des medicaments dans cette ordonnance !">
 									<p:column headerText="Medicament"
 										style="font-size:small;font-weight:bold">
@@ -196,7 +206,8 @@ Historique Ordonnances</ui:define>
 										<h:outputText value="#{m.qte}  #{m.unite}"
 											style="font-size:small;font-weight:bold;width:30%" />
 									</p:column>
-								</p:dataTable></td>
+								</p:dataTable>
+							</td>
 						</tr>
 					</table>
 

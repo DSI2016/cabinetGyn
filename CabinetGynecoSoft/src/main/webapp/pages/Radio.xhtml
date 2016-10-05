@@ -15,7 +15,8 @@
 		<br />
 		<div align="left">
 			<h:form id="f1">
-				<p:growl id="growl" showDetail="true" life="3000" sticky="#{radioBean.blocage}" />
+				<p:growl id="growl" showDetail="false" life="3000"
+					sticky="#{radioBean.blocage}" />
 				<table>
 					<tr>
 						<td><h:commandLink
@@ -38,6 +39,7 @@
 						<div align="right">
 							<br />
 							<p:commandButton icon="ui-icon-plus" value="Nouveau"
+							    rendered="#{connectionBean.ajoutDemandeRad}"
 								style="font-size:small;font-weight:bold" update=":f1:p1"
 								actionListener="#{radioBean.ajoutRad()}"></p:commandButton>
 						</div>
@@ -45,11 +47,15 @@
 							<table border="0" align="center" width="90%">
 								<tr>
 									<td><h:outputText value="Date:"
-											style="font-size:12pt;font-weight:bold" /> 
-										<p:calendar
-											id="button" value="#{radioBean.dateRadios}"
-											disabled="#{radioBean.consultation}" size="7" mask="true"
-											pattern="dd/MM/yyyy" >
+											style="font-size:12pt;font-weight:bold" /> <p:calendar
+											id="button" disabled="#{radioBean.consultation}"
+											converterMessage="Veuillez vérifier la date que vous avez saisi"
+											value="#{radioBean.dateRadios}" size="7"
+											 pattern="dd/MM/yyyy">
+											<p:ajax  listener="#{radioBean.dateChange2}"
+												update="button,:f1:growl"></p:ajax>
+											<p:ajax event="dateSelect" listener="#{radioBean.dateChange}"
+												update="button,:f1:growl"></p:ajax>
 										</p:calendar></td>
 									<td align="right"><h:panelGrid columns="3">
 											<h:outputText value="Radio pour : "
@@ -136,25 +142,28 @@
 									</h:panelGrid>
 								</h:panelGrid>
 							</p:panel>
-							<table>
+							<table border="0">
 								<tr>
 									<td width="500px"></td>
 									<td><p:commandButton value="Valider"
 											actionListener="#{radioBean.valider}" update=":f1:growl,:f1"
-											immediate="true" ajax="false"
-											
+											immediate="true" disabled="#{radioBean.consultation}"
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
-									<td width="500px"><p:commandButton value="Annuler"
+									<td><p:commandButton value="Annuler"
 											rendered="#{!connectionBean.consultDetRad}"
 											style="font-size:12pt;font-weight:bold">
 											<p:ajax listener="#{radioBean.annulation()}" />
 										</p:commandButton></td>
-									<td><h:commandLink actionListener="#{radioBean.viewRadio}"
-											 rendered="#{radioBean.desibledImpr}">
-											<p:graphicImage value="/imagesMenu/imprimente10.png">
-											</p:graphicImage>
-										</h:commandLink></td>
+									<td width="500px"><p:commandButton value="Imprimer"
+                                            rendered="#{connectionBean.imprRad}"  
+									        ajax="false"
+											actionListener="#{radioBean.viewRadio}" 
+											icon="ui-icon-print"
+											disabled="#{radioBean.viewImprim}"
+											style="font-size:12pt;font-weight:bold">
+										</p:commandButton></td>
+
 								</tr>
 							</table>
 						</p:panel>
@@ -189,10 +198,12 @@
 							<p:column style="text-align: center" width="10%">
 
 								<p:commandButton icon="ui-icon-pencil"
+								    rendered="#{connectionBean.modifRadio}"
 									title="Modification Radio"
 									style="font-size:small;font-weight:bold"
 									actionListener="#{radioBean.modifierRad(rad)}" update=":f1" />
 								<p:commandButton icon="ui-icon-trash" title="supprimer Radio"
+								    rendered="#{connectionBean.supRadio}"
 									style="font-size:small;font-weight:bold"
 									actionListener="#{radioBean.suppressionRadio(rad.idradio)}">
 									<p:confirm header="Suppression radio"

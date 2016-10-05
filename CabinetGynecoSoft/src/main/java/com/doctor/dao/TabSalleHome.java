@@ -8,10 +8,6 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
-
-import com.doctor.persistance.Certificat;
-import com.doctor.persistance.EtatFinGross;
-import com.doctor.persistance.TabSalle;
 import com.doctor.persistance.TabSalle;
 
 public class TabSalleHome {
@@ -29,7 +25,7 @@ public class TabSalleHome {
 					"Could not locate SessionFactory in JNDI");
 		}
 	}
-	
+
 	public void persist(TabSalle transientInstance) {
 		log.debug("persisting tab instance");
 		try {
@@ -40,12 +36,12 @@ public class TabSalleHome {
 			throw re;
 		}
 	}
-	
+
 	public TabSalle merge(TabSalle tabInstance) {
 		log.debug("merging tab instance");
 		try {
-			TabSalle result = (TabSalle) sessionFactory.getCurrentSession().merge(
-					tabInstance);
+			TabSalle result = (TabSalle) sessionFactory.getCurrentSession()
+					.merge(tabInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -53,7 +49,7 @@ public class TabSalleHome {
 			throw re;
 		}
 	}
-	
+
 	public void attachDirty(TabSalle instance) {
 		log.debug("attaching dirty TabSalle instance");
 		try {
@@ -76,7 +72,7 @@ public class TabSalleHome {
 			throw re;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TabSalle> findAll() {
 		Criteria crit = sessionFactory.getCurrentSession()
@@ -85,30 +81,29 @@ public class TabSalleHome {
 				.addOrder(Property.forName("ordre").asc());
 		return (List<TabSalle>) crit.list();
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TabSalle> findbyActive() {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(TabSalle.class)
-				.add(Restrictions.eq("active",true))
+				.add(Restrictions.eq("active", true))
 				.addOrder(Property.forName("ordre").asc());
 		return (List<TabSalle>) crit.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TabSalle> findbyOrdDiff(boolean ordDiff) {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(TabSalle.class)
-				.add(Restrictions.eq("ordreDifferent",ordDiff));
+				.add(Restrictions.eq("ordreDifferent", ordDiff));
 		return (List<TabSalle>) crit.list();
 	}
-	
+
 	public TabSalle findById(java.lang.Integer id) {
-		
+
 		try {
-			TabSalle instance = (TabSalle) sessionFactory
-					.getCurrentSession().get(TabSalle.class, id);
+			TabSalle instance = (TabSalle) sessionFactory.getCurrentSession()
+					.get(TabSalle.class, id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -120,23 +115,22 @@ public class TabSalleHome {
 			throw re;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TabSalle> findbyOrd(Integer ord) {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(TabSalle.class)
-				.add(Restrictions.eq("ordre",ord));
+				.add(Restrictions.eq("ordre", ord));
 		return (List<TabSalle>) crit.list();
 	}
 
-	
 	public TabSalle findByNomTab(String nomTab) {
-		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(TabSalle.class)
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(TabSalle.class)
 				.add(Restrictions.eq("nomTab", nomTab));
-		TabSalle v=(TabSalle) criteria.uniqueResult();
-		
+		TabSalle v = (TabSalle) criteria.uniqueResult();
+
 		return v;
 	}
 
-	
 }

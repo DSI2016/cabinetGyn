@@ -163,6 +163,7 @@ public class AnalyseDemandeeHome {
 		Criteria crit = sessionFactory
 				.getCurrentSession()
 				.createCriteria(AnalyseDemandee.class)
+				.addOrder(Property.forName("idanalyseDemandee").desc())
 				.setFetchMode("consultationDetail", FetchMode.JOIN)
 				.createCriteria("consultationDetail")
 				.add(Restrictions.eq("idConsultationDetail",
