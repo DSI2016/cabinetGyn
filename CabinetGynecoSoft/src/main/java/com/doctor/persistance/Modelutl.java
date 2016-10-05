@@ -264,9 +264,16 @@ public class Modelutl implements Serializable {
     private boolean ajoutDemandeRad;
     private boolean ajoutDemandeAnal;
     
+    private boolean affectEtoile;
     
     
     
+	public boolean isAffectEtoile() {
+		return affectEtoile;
+	}
+	public void setAffectEtoile(boolean affectEtoile) {
+		this.affectEtoile = affectEtoile;
+	}
 	public boolean isAjoutDemandeOrd() {
 		return ajoutDemandeOrd;
 	}
@@ -1687,6 +1694,7 @@ public class Modelutl implements Serializable {
 		int result = 1;
 		result = prime * result + (ModifGyneco ? 1231 : 1237);
 		result = prime * result + (SuppGyneco ? 1231 : 1237);
+		result = prime * result + (affectEtoile ? 1231 : 1237);
 		result = prime * result + (ajoutAnal ? 1231 : 1237);
 		result = prime * result + (ajoutAntecedentListe ? 1231 : 1237);
 		result = prime * result + (ajoutAsym ? 1231 : 1237);
@@ -2019,6 +2027,8 @@ public class Modelutl implements Serializable {
 		if (ModifGyneco != other.ModifGyneco)
 			return false;
 		if (SuppGyneco != other.SuppGyneco)
+			return false;
+		if (affectEtoile != other.affectEtoile)
 			return false;
 		if (ajoutAnal != other.ajoutAnal)
 			return false;
@@ -2886,7 +2896,7 @@ public class Modelutl implements Serializable {
 				+ ", suppAnt=" + suppAnt + ", modifGynObs=" + modifGynObs
 				+ ", ajoutDemandeOrd=" + ajoutDemandeOrd + ", ajoutDemandeRad="
 				+ ajoutDemandeRad + ", ajoutDemandeAnal=" + ajoutDemandeAnal
-				+ "]";
+				+ ", affectEtoile=" + affectEtoile + "]";
 	}
 
 	

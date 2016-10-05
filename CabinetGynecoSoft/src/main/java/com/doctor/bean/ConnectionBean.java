@@ -293,10 +293,20 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean ajoutDemandeRad;
 	private boolean ajoutDemandeAnal;
 	
+	private boolean affectEtoile;
+	
 	private String valOnlic;
 	
 	
 	
+	public boolean isAffectEtoile() {
+		return affectEtoile;
+	}
+
+	public void setAffectEtoile(boolean affectEtoile) {
+		this.affectEtoile = affectEtoile;
+	}
+
 	public boolean isImprAnal() {
 		return imprAnal;
 	}
@@ -1863,6 +1873,7 @@ public class ConnectionBean implements java.io.Serializable {
 					modifOrdnce = true;
 					supOrdnce = true;
 					ajoutDemandeOrd=true;
+					affectEtoile=true;
 					supprimerDocteur = true;
 					gestionUterus = false;
 					ModifGyneco = true;
@@ -2386,10 +2397,10 @@ public class ConnectionBean implements java.io.Serializable {
 						modifRadio = u.isModifRadio();
 						supRadio = u.isSupRadio();
 						ajoutDemandeOrd=u.isAjoutDemandeRad();
+						affectEtoile=u.isAffectEtoile();
 						detRad=u.isDetHistoRad();
 						modifOrdnce = u.isModifOrdnce();
 						supOrdnce = u.isSupOrdnce();
-						ajoutDemandeOrd=u.isAjoutDemandeOrd();
 						ajoutUterus = u.isAjoutUt();
 						modifUterus = u.isModifUt();
 						supUterus = u.isSupUt();

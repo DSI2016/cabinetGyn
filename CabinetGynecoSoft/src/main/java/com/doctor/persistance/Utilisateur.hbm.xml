@@ -923,6 +923,10 @@
 		<property name="ajoutDemandeAnal" type="boolean">
 			<column name="ajoutDemandeAnal" length="1" default="false" />
 		</property>
+		
+		<property name="affectEtoile" type="boolean">
+			<column name="affectEtoile" length="1" default="false" />
+		</property>
 
 	</class>
 </hibernate-mapping>
