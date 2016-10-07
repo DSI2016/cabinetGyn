@@ -46,7 +46,7 @@ public class historiqueLettreBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String textLettre;
 	private Lettre lettre;
-
+private String dateDelettrepriseencharge;
 	private String dateLet;
 	private String dateLettreConf;
 	private String dateLettreAccouchem;
@@ -1158,7 +1158,7 @@ addValid=false;
 		historiqueLettre let = new historiqueLettre();
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-if(dateDelettre.length()==0)
+if(dateDelettrepriseencharge.length()==0)
 			
 		{
 		System.out.println(" is null");
@@ -1167,24 +1167,24 @@ if(dateDelettre.length()==0)
 				"", "veullez saisi le date de lettre"));
 	addValid=false;
 	}
-	if(dateDelettre.length()!=0)
+	if(dateDelettrepriseencharge.length()!=0)
 	{
-		if (Module.corigerDate(dateDelettre) != null) {
-			this.setDateDelettre(Module.corigerDate(dateDelettre));
+		if (Module.corigerDate(dateDelettrepriseencharge) != null) {
+			this.setDateDelettre(Module.corigerDate(dateDelettrepriseencharge));
 		}
-		if (!(Module.verifierDate(dateDelettre).equals("")))
+		if (!(Module.verifierDate(dateDelettrepriseencharge).equals("")))
 
 		{
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(dateDelettre)));
+					"", Module.verifierDate(dateDelettrepriseencharge)));
 			addValid = false;
 
 		} else {
 
 			
 				addValid = true;
-				let.setDatelettre(sdf.parse(dateDelettre));
+				let.setDatelettre(sdf.parse(dateDelettrepriseencharge));
 			
 		}
 
@@ -1378,8 +1378,7 @@ let.setDiagnostic(diagnostic);
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
 		String dateLettre = format.format(actuelle);
 		acte = dateLettre;
-		dateDelettre=dateLettre;
-
+		dateDelettrepriseencharge=dateLettre;
 		selectedhistolettre = null;
 		nomLettre="Lettre de prise en charge";
 		
@@ -1482,6 +1481,7 @@ let.setDiagnostic(diagnostic);
 		//textLettre = null;
 		//idHistoriquelettre = null;
 		nomLettre = "";
+		dateDelettrepriseencharge="";
 		dateLet = "";
 		dateLettreAccouchem="";
 		dateLettreConf="";
@@ -1598,6 +1598,7 @@ v1Nature=null;
 	public void verifierDate() {
 		setDateDelettre(dateDelettre);
 	}
+	
 	public void verifieractele()
 	{
 		
@@ -1605,10 +1606,15 @@ v1Nature=null;
 		
 	}
 
+	public void verifierDateDelettrepriseencharge() {
+		setDateDelettre(dateDelettrepriseencharge);
+	}
+	
 	public void modifierLettre(historiqueLettre h) {
 		action = "Modification";
 		RequestContext context = RequestContext.getCurrentInstance();
-		nomLettre = h.getLettre().getNomLettre();
+		if(h!=null)
+		{nomLettre = h.getLettre().getNomLettre();
 		textLettre = h.getTextLettre();
 		idHistoriquelettre = h.getIdHistoriquelettre();
 
@@ -1659,7 +1665,7 @@ v2SigneClinique=h.getV2();
 		}
 
 		
-		
+		}	
 
 	}
 
@@ -1740,6 +1746,14 @@ v2SigneClinique=h.getV2();
 
 	public void setDateLettreAccouchem(String dateLettreAccouchem) {
 		this.dateLettreAccouchem = dateLettreAccouchem;
+	}
+
+	public String getDateDelettrepriseencharge() {
+		return dateDelettrepriseencharge;
+	}
+
+	public void setDateDelettrepriseencharge(String dateDelettrepriseencharge) {
+		this.dateDelettrepriseencharge = dateDelettrepriseencharge;
 	}
 	
 	

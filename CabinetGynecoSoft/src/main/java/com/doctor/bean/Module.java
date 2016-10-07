@@ -341,7 +341,7 @@ public class Module {
 
 		if (isValid(date, format) == false)
 
-			msg = "Format Date Invalide";
+			msg = "est invalide";
 
 		else {
 			try {
@@ -357,49 +357,49 @@ public class Module {
 
 							|| (mois == 10) || (mois == 12) || (mois == 2))) {
 
-						msg = "Date Invalide.";
+						msg = "invalide!";
 					}
 					if (dateTresAncien(date) == true) {
 
-						msg = msg + "Date Invalide !tres ancien!";
+						msg="est tres ancien!";
 
 					}
 
 					if (jour > 31 || jour < 1)
-						msg = "Date Invalide.";
+						msg = "est invalide!";
 					if (mois > 12 || mois < 1)
-						msg = "Date Invalide.";
+						msg = "est invalide!";
 
 					if (annees.length() > 4 || annees.length() < 4)
-						msg = "Date Invalide.";
+						msg = "est invalide!";
 
 					if (mois == 2) {
 						if (((annee % 4 == 0) && (annee % 100 != 0))
 								|| ((annee % 400 == 0) && (annee % 100 == 0))) {
 
 							if (jour > 29)
-								msg = "Date Invalide !Verifier fevrier!.";
+								msg = "est invalide.";
 						}
 
 						else {
 							if (jour > 28) {
-								msg = "Date Invalide!Verifier fevrier!.";
+								msg = "est invalide!";
 							}
 						}
 					}
 					if (annee > 3000)
-						msg = msg + "!Date Invalide!";
+						msg = "est invalide!";
 					else if (dateDepassee(date) == true) {
 
-						msg = msg + "!Date Dépassé!";
+						msg = msg + "est dépassé!";
 
 					}
 				} catch (NumberFormatException e) {
-					msg = "Date Invalide";
+					msg = "est invalide!";;
 				}
 
 			} catch (java.lang.ArrayIndexOutOfBoundsException e1) {
-				msg = "Date Invalide";
+				msg = "est invalide!";
 			}
 		}
 
