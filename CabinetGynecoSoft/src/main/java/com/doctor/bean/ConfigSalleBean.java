@@ -19,7 +19,7 @@ public class ConfigSalleBean {
 
 	private List<TabSalle> tabSalles = new ArrayList<TabSalle>();
 	private List<Integer> ordres = new ArrayList<Integer>();
-
+	private List<Integer> ordresModif= new ArrayList<Integer>();
 	private Integer idTabSalle;
 	private String nomTab;
 	private Integer index;// order de tab
@@ -79,9 +79,34 @@ public class ConfigSalleBean {
 		ordres.add(i);
 		return ordres;
 	}
+	
+	
 
 	public void setOrdres(List<Integer> ordres) {
 		this.ordres = ordres;
+	}
+	
+	
+	
+	
+
+	public List<Integer> getOrdresModif() {
+		
+		int i;
+		ordresModif.clear();
+		TabSalleService ser = new TabSalleService();
+		List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
+		tabSallesActiv = ser.rechercheParActive();
+		for (i = 1; i <= tabSallesActiv.size(); i++) {
+
+			ordresModif.add(i);
+		}
+
+		return ordresModif;
+	}
+
+	public void setOrdresModif(List<Integer> ordresModif) {
+		this.ordresModif = ordresModif;
 	}
 
 	public String getIndexString() {
@@ -150,8 +175,8 @@ public class ConfigSalleBean {
 					FacesMessage.SEVERITY_ERROR,
 					"Veuillez donner le nom de tab.", null));
 
-		} else // tester si cette tab existe déjà
-		{
+		}  // tester si cette tab existe déjà
+		
 
 			tab.setNomTab(nomTab);
 			TabSalle t2 = ser.rechercheParNomTab(nomTab);
@@ -163,8 +188,9 @@ public class ConfigSalleBean {
 			}
 
 			else {// nom tab n'existe pas
-
-				if (choix == 1) {// cad permuter
+				System.out.println("get in else nom tab n'existe pas ");
+               if(choix != null){  
+				  if (choix == 1) {// cad permuter
 					List<TabSalle> tabSallesParOrdr = new ArrayList<TabSalle>();
 					tabSallesParOrdr = ser.rechercheParOrd(index);
 					TabSalle ts = new TabSalle();// tab à déplacer avec le new
@@ -177,9 +203,8 @@ public class ConfigSalleBean {
 					tab.setActive(true);
 					tab.setOrdre(index);
 					tab.setOrdreDifferent(ordreDiff);
-					ser.modifierTabSalle(tab);
-
-					context.execute("PF('dialogActiv').hide();");
+					//ser.modifierTabSalle(tab);
+					//context.execute("PF('dialogActiv').hide();");
 
 				} else {// cad glisser
 
@@ -193,14 +218,18 @@ public class ConfigSalleBean {
 					tab.setActive(true);
 					tab.setOrdre(index);
 					tab.setOrdreDifferent(ordreDiff);
-					ser.modifierTabSalle(tab);
+					//ser.modifierTabSalle(tab);
 
-					context.execute("PF('dialogActiv').hide();");
+					
 				}
 
 			}
-
+			
 		}
+			
+			ser.modifierTabSalle(tab);
+			context.execute("PF('dialogActiv').hide();");
+		
 
 	}
 
@@ -276,15 +305,98 @@ public class ConfigSalleBean {
 
 	public void recupererDonnees(TabSalle ts) {
 
+		tab=ts;
 		idTabSalle = ts.getIdTabSalle();
 		nomTab = ts.getNomTab();
 		ordreDiff = ts.isOrdreDifferent();
 		index = ts.getOrdre();
-
+		
+		System.out.println("index dans recup donné" + index);
+		
+		System.out.println("recup donn; idTabSalle== "+idTabSalle);
+		
 	}
 
 	public void validationModif() {
+		boolean addValid = false;
+		nomTab = nomTab.replaceAll("\\s+", " ");
+		TabSalleService ser = new TabSalleService();
 
+		List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
+		tabSallesActiv = ser.rechercheParActive();
+		FacesContext faces = FacesContext.getCurrentInstance();
+		RequestContext context = RequestContext.getCurrentInstance();
+		
+		if (nomTab == null || (nomTab.trim().length() == 0)) {
+
+			faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Veuillez donner le nom de tab.", null));
+
+		}else{  
+		
+			tab.setNomTab(nomTab);
+			idTabSalle=tab.getIdTabSalle();
+			TabSalle t2 = ser.rechercheParNomTab(nomTab);
+			if ((t2 != null) && !t2.getIdTabSalle().equals(idTabSalle)) {// tester si cette tab existe déjà
+				faces.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Tab \"" + nomTab
+								+ "\" existe déjà.", null));
+			
+			}else{// nom tab n'existe pas
+				
+				
+				if(choix != null) {  
+				if (choix == 1) {// cad permuter
+					List<TabSalle> tabSallesParOrdr = new ArrayList<TabSalle>();
+					tabSallesParOrdr = ser.rechercheParOrd(index);
+					TabSalle ts = new TabSalle();// tab à déplacer avec le new
+													// tab activé
+					if (tabSallesParOrdr != null)
+						ts = tabSallesParOrdr.get(0);
+					ts.setOrdre(tab.getOrdre());
+					ser.modifierTabSalle(ts);
+
+					tab.setActive(true);
+					tab.setOrdre(index);
+					tab.setOrdreDifferent(ordreDiff);
+					//ser.modifierTabSalle(tab);
+					//context.execute("PF('dialogModif').hide();");
+
+				} else {// cad glisser
+					
+					
+
+					for (int i = tab.getOrdre(); i >= index; i--) {
+						TabSalle t = tabSallesActiv.get(i - 1);
+						t.setOrdre(i + 1);
+						ser.modifierTabSalle(t);
+
+					}
+
+					
+					tab.setOrdre(index);
+					
+				}
+
+			}
+			
+				 tab.setIdTabSalle(idTabSalle);
+					ser.modifierTabSalle(tab);
+					faces.addMessage(null, new FacesMessage("Docteur modifié avec succès."));
+					addValid = true;
+					initialisation();
+					//context.execute("PF('dialogModif').hide();");
+					FacesContext context2 = FacesContext.getCurrentInstance();
+					try {
+						context2.getExternalContext()
+								.redirect("ConfigurationSalleAtt");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+		}
+           
+		}
 	}
 
 	public void initialisation() {
