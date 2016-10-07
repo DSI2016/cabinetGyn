@@ -78,6 +78,7 @@
 								oncomplete="PF('dialogActiv').show()" update=":f1">
 							</p:commandButton>
 							<p:commandButton icon="ui-icon-pencil" title="Modifier"
+							      update=":f2:idDialogModif"
 						          actionListener="#{configSalleBean.recupererDonnees(tabSal)}" 
 						          oncomplete="PF('dialogModif').show()"
 						          />
@@ -134,7 +135,6 @@
 					</div>
 				</p:panel>
 			</p:dialog>
-
 			<p:dialog id="iddlg2" widgetVar="Dlg2" resizable="false"
 				closable="false" modal="true" model="true" 
 				 hideEffect="explode">
@@ -167,19 +167,15 @@
 						<p:outputLabel value="Nom de tab* : " />
 						<p:inputText value="#{configSalleBean.nomTab}" id="pro2" />
 						<p:outputLabel value="order* : " />
-
-
 						<p:selectOneMenu id="ordrid2" value="#{configSalleBean.index}"
 							effect="fade" style="width:220px">
 							<p:ajax event="change" update=":f2:iddlg2"
 								listener="#{configSalleBean.onchageOrdr()}"></p:ajax>
 							<f:selectItem itemLabel="--Selectionner--" itemValue="" />
-							<f:selectItems value="#{configSalleBean.ordres}" var="ord"
+							<f:selectItems value="#{configSalleBean.ordresModif}" var="ord"
 								itemLabel="#{ord}" itemValue="#{ord}" />
-
 						</p:selectOneMenu>
 					</h:panelGrid>
-
 					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
 						<p:outputLabel value="Cet tab a le meme ordre géneral?" />
 						<p:selectOneRadio id="conso4" layout="grid" columns="1"
@@ -191,7 +187,6 @@
 
 					<div align="center">
 						<h:panelGrid columns="2">
-
 							<p:commandButton value="Valider" icon="ui-icon-check"
 								oncomplete="handleLoginRequest(xhr, status, args)"
 								actionListener="#{configSalleBean.validationModif()}"
@@ -214,6 +209,18 @@
 							}, 100);
 						} else {
 							PF('dialogActiv').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+				<script type="text/javascript">
+					function handleLoginRequest(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogModif').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogModif').hide();
 							$('#loginLink').fadeOut();
 						}
 					}

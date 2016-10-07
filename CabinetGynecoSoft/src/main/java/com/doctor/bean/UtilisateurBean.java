@@ -187,6 +187,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean tabContctPatPriv;
 	private boolean tabInfoConjAjtPatPriv;
 	private boolean tabAtreInfAjtPatPriv;
+	private boolean affectEtoilPatPriv;
 	private boolean gestDocPriv;
 	private boolean gestAntecedentParamPriv;
 
@@ -2145,6 +2146,16 @@ public class UtilisateurBean implements java.io.Serializable {
 		this.gestDocPriv = gestDocPriv;
 	}
 
+	
+	
+	public boolean isAffectEtoilPatPriv() {
+		return affectEtoilPatPriv;
+	}
+
+	public void setAffectEtoilPatPriv(boolean affectEtoilPatPriv) {
+		this.affectEtoilPatPriv = affectEtoilPatPriv;
+	}
+
 	public boolean isTabAtreInfAjtPatPriv() {
 		return tabAtreInfAjtPatPriv;
 	}
@@ -3002,6 +3013,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setTabAutreInfAjoutPat("0");
 			}
+			if (affectEtoilPatPriv) {
+				u.setAffectEtoile(true);
+			} else {
+				u.setAffectEtoile(false);;
+			}
+			
 
 			if (gestDocPriv) {
 				u.setGestDoc("1");
@@ -4323,6 +4340,11 @@ public class UtilisateurBean implements java.io.Serializable {
 					u.setTabAutreInfAjoutPat("1");
 				} else {
 					u.setTabAutreInfAjoutPat("0");
+				}
+				if (affectEtoilPatPriv) {
+					u.setAffectEtoile(true);
+				} else {
+					u.setAffectEtoile(false);;
 				}
 
 				if (gestDocPriv) {
@@ -5661,6 +5683,11 @@ public class UtilisateurBean implements java.io.Serializable {
 		} else {
 			tabAtreInfAjtPatPriv = false;
 		}
+		if (u.isAffectEtoile()) {
+			affectEtoilPatPriv = true;
+		} else {
+			affectEtoilPatPriv = false;
+		}
 
 		if (gestDoc.equals("1")) {
 			gestDocPriv = true;
@@ -6399,6 +6426,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabContctPatPriv = false;
 		tabInfoConjAjtPatPriv = false;
 		tabAtreInfAjtPatPriv = false;
+		affectEtoilPatPriv=false;
 		gestDocPriv = false;
 		gestAntecedentParamPriv = false;
 		paramtabAntMedPriv = false;
@@ -6670,6 +6698,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabContctPatPriv = true;
 		tabInfoConjAjtPatPriv = true;
 		tabAtreInfAjtPatPriv = true;
+		affectEtoilPatPriv=true;
 		verSalPriv = true;
 		modifPatPriv = true;
 		detPatPriv = true;
@@ -6689,6 +6718,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabContctPatPriv = false;
 		tabInfoConjAjtPatPriv = false;
 		tabAtreInfAjtPatPriv = false;
+		affectEtoilPatPriv=false;
 		verSalPriv = false;
 		modifPatPriv = false;
 		detPatPriv = false;
@@ -7919,6 +7949,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setTabAutreInfAjoutPat("0");
 			}
+			
+			 if (affectEtoilPatPriv) {
+					u.setAffectEtoile(true);
+				} else {
+					u.setAffectEtoile(false);;
+				}
 
 			if (gestDocPriv) {
 				u.setGestDoc("1");
@@ -9221,6 +9257,12 @@ public class UtilisateurBean implements java.io.Serializable {
 				tabAtreInfAjtPatPriv = true;
 			} else {
 				tabAtreInfAjtPatPriv = false;
+			}
+			
+			if (u.isAffectEtoile()) {
+				affectEtoilPatPriv = true;
+			} else {
+				affectEtoilPatPriv = false;
 			}
 
 			if (gestDoc.equals("1")) {

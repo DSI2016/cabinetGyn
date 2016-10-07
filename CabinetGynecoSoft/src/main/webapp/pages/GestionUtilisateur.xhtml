@@ -302,22 +302,7 @@
 									</div>
 								</p:tab>
 										<p:tab title="Liste Patient" titleStyle="font-size:small;font-weight:bold">
-									<div align="left">
-										<h:panelGrid columns="2">
-											<p:commandButton value="Tout autorisé"
-												style="width: auto; height: 25px;font-size:60%;background-color:#1FA055;text-align: center "
-												icon="ui-icon-unlocked"
-												actionListener="#{utilisateurBean.touCocherPat()}"
-												update=":f1">
-											</p:commandButton>
-											<p:commandButton value="Aucune autorisation"
-												style="width: auto; height: 25px;font-size:60%;background-color:#F7230C;text-align: center"
-												icon="ui-icon-locked"
-												actionListener="#{utilisateurBean.toudeCocherPat()}"
-												update=":f1">
-											</p:commandButton>
-										</h:panelGrid>
-									</div>
+									
 									<div align="center">
 										
 											<h:panelGrid columns="2">
@@ -353,6 +338,9 @@
 																<p:selectBooleanCheckbox
 																	value="#{utilisateurBean.tabAtreInfAjtPatPriv}" />
 																<h:outputText value="Autre Informations Patient" />
+																<p:selectBooleanCheckbox
+																	value="#{utilisateurBean.affectEtoilPatPriv}" />
+																<h:outputText value="Categorie Patient" />
 															</h:panelGrid>
 														</h:panelGrid>
 													</p:panel>

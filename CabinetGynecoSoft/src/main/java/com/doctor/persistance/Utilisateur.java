@@ -279,9 +279,18 @@ public class Utilisateur implements Serializable {
     private boolean ajoutDemandeRad;
     private boolean ajoutDemandeAnal;
     
+    private boolean affectEtoile;
     
     
     
+	public boolean isAffectEtoile() {
+		return affectEtoile;
+	}
+
+	public void setAffectEtoile(boolean affectEtoile) {
+		this.affectEtoile = affectEtoile;
+	}
+
 	public boolean isAjoutDemandeOrd() {
 		return ajoutDemandeOrd;
 	}
@@ -1652,6 +1661,7 @@ public class Utilisateur implements Serializable {
 		result = prime * result + (SuppGyneco ? 1231 : 1237);
 		result = prime * result + (actif ? 1231 : 1237);
 		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
+		result = prime * result + (affectEtoile ? 1231 : 1237);
 		result = prime * result + (ajoutAnal ? 1231 : 1237);
 		result = prime * result + (ajoutAntecedentListe ? 1231 : 1237);
 		result = prime * result + (ajoutAsym ? 1231 : 1237);
@@ -2002,6 +2012,8 @@ public class Utilisateur implements Serializable {
 			if (other.adresse != null)
 				return false;
 		} else if (!adresse.equals(other.adresse))
+			return false;
+		if (affectEtoile != other.affectEtoile)
 			return false;
 		if (ajoutAnal != other.ajoutAnal)
 			return false;
@@ -2913,7 +2925,8 @@ public class Utilisateur implements Serializable {
 				+ ", modifAnt=" + modifAnt + ", suppAnt=" + suppAnt
 				+ ", modifGynObs=" + modifGynObs + ", ajoutDemandeOrd="
 				+ ajoutDemandeOrd + ", ajoutDemandeRad=" + ajoutDemandeRad
-				+ ", ajoutDemandeAnal=" + ajoutDemandeAnal + "]";
+				+ ", ajoutDemandeAnal=" + ajoutDemandeAnal + ", affectEtoile="
+				+ affectEtoile + "]";
 	}
 
 	public boolean isNbrEnfentFiche() {

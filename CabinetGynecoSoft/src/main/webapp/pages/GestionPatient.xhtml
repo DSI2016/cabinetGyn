@@ -12,9 +12,11 @@
 		<p:graphicImage value="/imagesTitre/listPatient2.png" width="100%"></p:graphicImage>
 
 		<h:form id="f1">
-		<p:hotkey bind="ctrl+f3" update=":f1:idRecherche" oncomplete="PF('diagRecherche').show();" />
- <p:hotkey bind="ctrl+f2" update=":f1:idOrdre" oncomplete="PF('diagOrdre').show();" />
- 
+			<p:hotkey bind="ctrl+f3" update=":f1:idRecherche"
+				oncomplete="PF('diagRecherche').show();" />
+			<p:hotkey bind="ctrl+f2" update=":f1:idOrdre"
+				oncomplete="PF('diagOrdre').show();" />
+
 			<p:growl id="growl" showDetail="true"
 				sticky="#{cfclientBean.blocage}" life="#{cfclientBean.tempsface}" />
 			<table width="100%" border="0">
@@ -68,83 +70,97 @@
 
 
 
-<p:dialog id="idRecherche" widgetVar="diagRecherche" modal="true"  
-			showHeader="false" closable="false" resizable="false">
-			
-				<p:panel id="pRecherche" header="Recherche un patient" style="width:500px" >
-				<table>
-				<tr><td width="80%"><p:inputText value="#{cfclientBean.valeurRecherche}" id="valid"
-								style="font-size:small;font-weight:bold;width:300px">
-								<p:ajax event="change"
-									listener="#{cfclientBean.onchagevaleurRecherche()}"></p:ajax>
+			<p:dialog id="idRecherche" widgetVar="diagRecherche" modal="true"
+				showHeader="false" closable="false" resizable="false">
 
-							</p:inputText></td><td><p:selectOneMenu id="recherche" filterMatchMode="startsWith"
-								value="#{cfclientBean.attribut}" filter="true" effect="fade"
-								style="font-size:small;font-weight:bold">
-								<f:selectItems value="#{cfclientBean.listesRecherches}" var="jo"
-									itemLabel="#{jo.toString()}" itemValue="#{jo}" />
+				<p:panel id="pRecherche" header="Recherche un patient"
+					style="width:500px">
+					<table>
+						<tr>
+							<td width="80%"><p:inputText
+									value="#{cfclientBean.valeurRecherche}" id="valid"
+									style="font-size:small;font-weight:bold;width:300px">
+									<p:ajax event="change"
+										listener="#{cfclientBean.onchagevaleurRecherche()}"></p:ajax>
 
-							</p:selectOneMenu>
-							</td></tr>
-							</table>
-							<div align="center"><p:commandButton icon="ui-icon-search" title="Recherche Patient" update=":f1:growl" oncomplete="handleLoginRequestdiagRecherche(xhr, status, args)"
-								actionListener="#{cfclientBean.recherchePatient()}"/></div>
-							
+								</p:inputText></td>
+							<td><p:selectOneMenu id="recherche"
+									filterMatchMode="startsWith" value="#{cfclientBean.attribut}"
+									filter="true" effect="fade"
+									style="font-size:small;font-weight:bold">
+									<f:selectItems value="#{cfclientBean.listesRecherches}"
+										var="jo" itemLabel="#{jo.toString()}" itemValue="#{jo}" />
 
-							
-							
-							
-</p:panel>
-			
-			
-			 </p:dialog>
-			 
-			 <p:dialog id="idOrdre" widgetVar="diagOrdre" modal="true"  
-			showHeader="false" closable="false" resizable="false">
-			
-				<p:panel id="pordre" header="ordonner les patients" style="width:500px" >
-				<table width="100%">
-				<tr>
-					
-					
-					
-					<td><h:outputText value="Ordonner par:"
-							style="font-size:small;font-weight:bold" /></td>
-					<td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
-							value="#{cfclientBean.attributTri}" filter="true" effect="fade"
-							style="font-size:small;font-weight:bold">
-							
-													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
-													<f:selectItem itemLabel="Nom" itemValue="Nom" />
-													<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
-													<f:selectItem itemLabel="Nbr Consultation" itemValue="Nbr Consultation" />
-													<f:selectItem itemLabel="Dernier Consultation" itemValue="Dernier Consultation" />
-							
-					<p:ajax envent="change" listener="#{cfclientBean.triePatient()}"></p:ajax> 
-						</p:selectOneMenu></td>
-					<td><p:commandButton icon="ui-icon-triangle-1-n"
-							title="Croissante" actionListener="#{cfclientBean.croissante()}"
-							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
-					</td>
-					<td><p:commandButton icon="ui-icon-triangle-1-s"
-							title="Décroissante"
-							actionListener="#{cfclientBean.decroissante()}"
-							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
-					</td>
-				</tr>
-											</table>
-							
-							
+								</p:selectOneMenu></td>
+						</tr>
+					</table>
+					<div align="center">
+						<p:commandButton icon="ui-icon-search" title="Recherche Patient"
+							update=":f1:growl"
+							oncomplete="handleLoginRequestdiagRecherche(xhr, status, args)"
+							actionListener="#{cfclientBean.recherchePatient()}" />
+					</div>
 
-							
-							
-							
-</p:panel>
-			
-			
-			 </p:dialog>
-			 
-			 <script type="text/javascript">
+
+
+
+
+				</p:panel>
+
+
+			</p:dialog>
+
+			<p:dialog id="idOrdre" widgetVar="diagOrdre" modal="true"
+				showHeader="false" closable="false" resizable="false">
+
+				<p:panel id="pordre" header="ordonner les patients"
+					style="width:500px">
+					<table width="100%">
+						<tr>
+
+
+
+							<td><h:outputText value="Ordonner par:"
+									style="font-size:small;font-weight:bold" /></td>
+							<td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
+									value="#{cfclientBean.attributTri}" filter="true" effect="fade"
+									style="font-size:small;font-weight:bold">
+
+									<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+									<f:selectItem itemLabel="Nom" itemValue="Nom" />
+									<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
+									<f:selectItem itemLabel="Nbr Consultation"
+										itemValue="Nbr Consultation" />
+									<f:selectItem itemLabel="Dernier Consultation"
+										itemValue="Dernier Consultation" />
+
+									<p:ajax envent="change"
+										listener="#{cfclientBean.triePatient()}"></p:ajax>
+								</p:selectOneMenu></td>
+							<td><p:commandButton icon="ui-icon-triangle-1-n"
+									title="Croissante"
+									actionListener="#{cfclientBean.croissante()}"
+									style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+							</td>
+							<td><p:commandButton icon="ui-icon-triangle-1-s"
+									title="Décroissante"
+									actionListener="#{cfclientBean.decroissante()}"
+									style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+							</td>
+						</tr>
+					</table>
+
+
+
+
+
+
+				</p:panel>
+
+
+			</p:dialog>
+
+			<script type="text/javascript">
 					function handleLoginRequestdiagRecherche(xhr, status, args) {
 						if (args.validationFailed || !args.addValid) {
 							PF('diagRecherche').jq.effect("shake", {
@@ -166,27 +182,40 @@
 				rows="10">
 
 
-	<p:column headerText="" width="4%"
+				<p:column headerText="" width="4%"
 					style="font-size:small;font-weight:bold">
-					<p:graphicImage
-											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredNegative1(Patient)}"></p:graphicImage> <p:graphicImage
-											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredNegative2(Patient)}"></p:graphicImage>
-											<p:graphicImage
-											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredNegative3(Patient)}"></p:graphicImage>
-									 <p:graphicImage
-											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredMoyen(Patient)}"></p:graphicImage> 
-										
-										
-										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredPositive1(Patient)}"></p:graphicImage>
-									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredPositive2(Patient)}"></p:graphicImage>
-									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredPositive3(Patient)}"></p:graphicImage>
-									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredExtra(Patient)}"></p:graphicImage>
-					
+					<p:graphicImage value="/imagesMenu/starRouge.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredNegative1(Patient)}"></p:graphicImage>
+					<p:graphicImage value="/imagesMenu/starRouge.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredNegative2(Patient)}"></p:graphicImage>
+					<p:graphicImage value="/imagesMenu/starRouge.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredNegative3(Patient)}"></p:graphicImage>
+					<p:graphicImage value="/imagesMenu/starVert.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredMoyen(Patient)}"></p:graphicImage>
+
+
+					<p:graphicImage value="/imagesMenu/starJaune.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredPositive1(Patient)}"></p:graphicImage>
+					<p:graphicImage value="/imagesMenu/starJaune.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredPositive2(Patient)}"></p:graphicImage>
+					<p:graphicImage value="/imagesMenu/starJaune.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredPositive3(Patient)}"></p:graphicImage>
+					<p:graphicImage value="/imagesMenu/starOrange.png" width="12px"
+						height="12px"
+						rendered="#{cfclientBean.changerRendredExtra(Patient)}"></p:graphicImage>
+
 				</p:column>
 
 				<p:column headerText="Patiente" width="15%"
 					style="font-size:small;font-weight:bold">
-														
+
 					<h:outputText value="#{Patient.nom} #{Patient.prenom}"
 						style="font-size:small;font-weight:bold" />
 				</p:column>
@@ -250,7 +279,7 @@
 						title="Détails Patient" icon="ui-icon-search"
 						style="font-size:small;width:33pt;font-weight:bold" />
 
-						<p:commandButton icon="ui-icon-help"
+					<p:commandButton icon="ui-icon-help"
 						rendered="#{connectionBean.chargerPat}" title="charger patient"
 						actionListener="#{cfclientBean.lePatient(Patient.code)}"
 						style="font-size:small;width:33pt;font-weight:bold" />
@@ -268,8 +297,7 @@
 					<p:commandButton icon="ui-icon-document" title="Archiver Patient"
 						style="font-size:small;width:33pt;font-weight:bold"
 						actionListener="#{cfclientBean.getPatCode(Patient.code)}"
-						update=":f1:growl"
-						rendered="#{connectionBean.archiverPat}">
+						update=":f1:growl" rendered="#{connectionBean.archiverPat}">
 					</p:commandButton>
 
 					<p:commandButton update=":f1"
@@ -284,7 +312,7 @@
 
 
 			<div align="center">
-				<h:panelGrid columns="8">
+				<h:panelGrid columns="8" rendered="#{connectionBean.archiverPat}">
 					<h:outputText value="Patientes actives: "
 						style="font-size:small;font-weight:bold;color:#045FB4" />
 					<h:outputText value="#{cfclientBean.nbPatientAct()}"
@@ -324,13 +352,12 @@
 								<h:outputText value="#{cfclientBean.heure}" />
 								<h:outputText value="Consultation: " />
 								<p:selectOneMenu value="#{cfclientBean.motif}"
-										style="font-size:small;font-weight:bold;width:300px;"
-										filter="true" filterMatchMode="startsWith" effect="fade">
-							        <f:selectItem itemLabel="--Selectioner--" itemValue=""  />
-							        <f:selectItems value="#{connectionBean.tabSallesActiv}" var="s"
-										itemLabel="#{s.nomTab}"
-										itemValue="#{s.nomTab}" />
-						        </p:selectOneMenu>
+									style="font-size:small;font-weight:bold;width:300px;"
+									filter="true" filterMatchMode="startsWith" effect="fade">
+									<f:selectItem itemLabel="--Selectioner--" itemValue="" />
+									<f:selectItems value="#{connectionBean.tabSallesActiv}" var="s"
+										itemLabel="#{s.nomTab}" itemValue="#{s.nomTab}" />
+								</p:selectOneMenu>
 
 								<h:outputText value="Notes : " />
 								<p:inputTextarea value="#{cfclientBean.notes}"
@@ -573,41 +600,41 @@
 
 								<tr>
 
-									<td width="700">
-									<p:graphicImage
-											value="/imagesMenu/starRouge.png" width="24px" height="24px"></p:graphicImage> <p:graphicImage
+									<td width="700"><p:graphicImage
 											value="/imagesMenu/starRouge.png" width="24px" height="24px"></p:graphicImage>
-											<p:graphicImage
+										<p:graphicImage value="/imagesMenu/starRouge.png" width="24px"
+											height="24px"></p:graphicImage> <p:graphicImage
 											value="/imagesMenu/starRouge.png" width="24px" height="24px"></p:graphicImage>
-									 <p:graphicImage
-											value="/imagesMenu/starVert.png" width="24px" height="24px"></p:graphicImage> 
-										
-										
-										<p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
-									 <p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
-									  <p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
-									   <p:graphicImage value="/imagesMenu/starOrange.png" width="24px" height="24px"></p:graphicImage>
-										
-										</td>
+										<p:graphicImage value="/imagesMenu/starVert.png" width="24px"
+											height="24px"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="24px"
+											height="24px"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
+										<p:graphicImage value="/imagesMenu/starOrange.png"
+											width="24px" height="24px"></p:graphicImage></td>
 									<td width="600"><p:commandButton value="OK"
 											oncomplete="PF('dialogInfo').hide();"></p:commandButton></td>
 
 									<td align="left"><p:inputText
 											value="#{cfclientBean.categorie}" style="width : 80px;"></p:inputText></td>
 								</tr>
-								<tr><td> <p:selectOneRadio  styleClass="container" value="#{cfclientBean.categorieEtoile}" disabled="true">
-            <f:selectItem  itemValue="etoileNegative1"   />
-            <f:selectItem  itemValue="etoileNegative2" />
-             <f:selectItem  itemValue="etoileNegative3" />
-              <f:selectItem  itemValue="etoileMoyen"/>
-               <f:selectItem  itemValue="etoilePositive1" />
-                 <f:selectItem  itemValue="etoilePositive2" />
-            <f:selectItem  itemValue="etoilePositive3" />
-            <f:selectItem  itemValue="etoileExtra" />
-           
-        </p:selectOneRadio></td></tr>
+								<tr>
+									<td><p:selectOneRadio styleClass="container"
+											value="#{cfclientBean.categorieEtoile}" disabled="true">
+											<f:selectItem itemValue="etoileNegative1" />
+											<f:selectItem itemValue="etoileNegative2" />
+											<f:selectItem itemValue="etoileNegative3" />
+											<f:selectItem itemValue="etoileMoyen" />
+											<f:selectItem itemValue="etoilePositive1" />
+											<f:selectItem itemValue="etoilePositive2" />
+											<f:selectItem itemValue="etoilePositive3" />
+											<f:selectItem itemValue="etoileExtra" />
+
+										</p:selectOneRadio></td>
+								</tr>
 							</table>
-							
+
 
 						</p:outputPanel>
 					</p:dialog>
@@ -995,22 +1022,26 @@
 
 								<tr>
 
-									<td width="700">
-									<p:graphicImage
-											value="/imagesMenu/starRouge.png" width="24px" height="24px"></p:graphicImage> <p:graphicImage
-											value="/imagesMenu/starRouge.png" width="24px" height="24px"></p:graphicImage>
-											<p:graphicImage
-											value="/imagesMenu/starRouge.png" width="24px" height="24px"></p:graphicImage>
-									 <p:graphicImage
-											value="/imagesMenu/starVert.png" width="24px" height="24px"></p:graphicImage> 
-										
-										
-										<p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
-									 <p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
-									  <p:graphicImage value="/imagesMenu/starJaune.png" width="24px" height="24px"></p:graphicImage>
-									   <p:graphicImage value="/imagesMenu/starOrange.png" width="24px" height="24px"></p:graphicImage>
-										
-										</td>
+									<td width="700"><p:graphicImage
+											value="/imagesMenu/starRouge.png" width="24px" height="24px"
+											 rendered="#{connectionBean.affectEtoile}"></p:graphicImage>
+										<p:graphicImage value="/imagesMenu/starRouge.png" width="24px"
+										   rendered="#{connectionBean.affectEtoile}"
+											height="24px"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="24px" height="24px"
+											 rendered="#{connectionBean.affectEtoile}"></p:graphicImage>
+										<p:graphicImage value="/imagesMenu/starVert.png" 
+										 rendered="#{connectionBean.affectEtoile}" width="24px"
+											height="24px"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starJaune.png" 
+											  rendered="#{connectionBean.affectEtoile}" width="24px" height="24px"></p:graphicImage>
+										<p:graphicImage value="/imagesMenu/starJaune.png"  rendered="#{connectionBean.affectEtoile}"
+										 width="24px" height="24px"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starJaune.png" width="24px" height="24px"
+											  rendered="#{connectionBean.affectEtoile}"></p:graphicImage>
+										<p:graphicImage value="/imagesMenu/starOrange.png"
+											width="24px" height="24px"
+											 rendered="#{connectionBean.affectEtoile}"></p:graphicImage></td>
 									<td width="600"><p:commandButton value="Valider"
 											id="ajoutp" icon="ui-icon-disk"
 											actionListener="#{cfclientBean.ajouter()}"
@@ -1025,16 +1056,20 @@
 									<td align="left"><p:inputText
 											value="#{cfclientBean.categorie}" style="width : 80px"></p:inputText></td>
 								</tr>
-								<tr><td> <p:selectOneRadio  styleClass="container" value="#{cfclientBean.categorieEtoile}">
-            <f:selectItem  itemValue="etoileNegative1"  />
-            <f:selectItem  itemValue="etoileNegative2" />
-             <f:selectItem  itemValue="etoileNegative3" />
-              <f:selectItem  itemValue="etoileMoyen"/>
-               <f:selectItem  itemValue="etoilePositive1" />
-                 <f:selectItem  itemValue="etoilePositive2" />
-            <f:selectItem  itemValue="etoilePositive3" />
-            <f:selectItem  itemValue="etoileExtra" />
-                  </p:selectOneRadio></td></tr>
+								<tr>
+									<td><p:selectOneRadio styleClass="container"
+									        rendered="#{connectionBean.affectEtoile}"
+											value="#{cfclientBean.categorieEtoile}">
+											<f:selectItem itemValue="etoileNegative1" />
+											<f:selectItem itemValue="etoileNegative2" />
+											<f:selectItem itemValue="etoileNegative3" />
+											<f:selectItem itemValue="etoileMoyen" />
+											<f:selectItem itemValue="etoilePositive1" />
+											<f:selectItem itemValue="etoilePositive2" />
+											<f:selectItem itemValue="etoilePositive3" />
+											<f:selectItem itemValue="etoileExtra" />
+										</p:selectOneRadio></td>
+								</tr>
 							</table>
 						</p:panel>
 					</p:dialog>
@@ -1412,9 +1447,11 @@
 						}
 					}
 				</script>
-<style>.container{
-width:10px!important;
-}</style>
+		<style>
+.container {
+	width: 10px !important;
+}
+</style>
 	</ui:define>
 </ui:composition>
 </html>
