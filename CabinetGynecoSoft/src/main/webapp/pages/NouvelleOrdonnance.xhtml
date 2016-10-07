@@ -113,7 +113,9 @@
 
 								</h:panelGrid></td>
 							<td align="right"><p:commandButton value="Nouveau"
-									icon="ui-icon-plus" style="font-size:small;font-weight:bold" disabled="#{not ordonnanceBean.consultation}"
+							        rendered="#{connectionBean.ajoutDemandeOrd}"
+									icon="ui-icon-plus" style="font-size:small;font-weight:bold" 
+									disabled="#{not ordonnanceBean.consultation}"
 									actionListener="#{ordonnanceBean.nouvelOrd()}" update=":f1"></p:commandButton>
 							</td>
 						</tr>

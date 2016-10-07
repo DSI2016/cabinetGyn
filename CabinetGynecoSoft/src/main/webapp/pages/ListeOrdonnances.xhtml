@@ -182,6 +182,7 @@ Historique Ordonnances</ui:define>
 							<td valign="top">
 								<div align="right">
 									<p:commandButton value="Imprimer"
+									    rendered="#{connectionBean.imprOrd}"
 										disabled="#{ordonnanceBean.impress}"
 										style="font-size:small;font-weight:bold" icon="ui-icon-print"
 										ajax="false"

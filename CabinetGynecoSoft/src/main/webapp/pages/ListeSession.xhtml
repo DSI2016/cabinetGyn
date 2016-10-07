@@ -9,10 +9,16 @@
 <ui:composition template="../templates/templateGyneco.xhtml">
 	<ui:define name="title">Session</ui:define>
 	<ui:define name="body">
-		<p:graphicImage value="/imagesTitre/listeVilles.png"  width="100%"></p:graphicImage>
+		<p:graphicImage value="/imagesTitre/sessions.png"  width="100%"></p:graphicImage>
 		<br />
 
 		<h:form id="f1">
+		<br>
+		</br>
+		
+		<br>
+		</br>
+		
 		<p:dataTable var="sessionListe" id="sessid" value="#{enLigneBean.enLignes}" 
 						border="1" paginator="true" paginatorPosition="bottom"
 						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
@@ -34,7 +40,7 @@
 							<p:commandButton 
 								actionListener="#{enLigneBean.deconnectSession(sessionListe.idSession,sessionListe.idenligne)}"
 								update=":f1" 
-								icon="ui-icon-pencil" title="Désactivé" />
+								icon="ui-icon-circle-close" title="Désactivé" />
 						
 		
 		</p:column>

@@ -51,27 +51,22 @@
 										action="#{consultationDetailBean.notblocagenotification()}"
 										actionListener="#{consultationDetailBean.demandeOrdonnanceGyn}"
 										id="nouvelleordonnace">
-										
 										<p:graphicImage value="/images/ordonnance.png"
-											rendered="#{connectionBean.consulGrosstOrd}"></p:graphicImage>
-
-
+											rendered="#{connectionBean.ordnanceFiche}"></p:graphicImage>
 									</p:commandLink>
 									<p:commandLink ajax="false" id="Radio"
 										disabled="#{consultationDetailBean.desibledRadio}"
 										action="#{consultationDetailBean.notblocagenotification()}"
 										actionListener="#{consultationDetailBean.demandeRadio}" >
-										
 										<p:graphicImage value="/images/radio.png"
-											rendered="#{connectionBean.radioGyn}"></p:graphicImage>
+											rendered="#{connectionBean.radioFiche}"></p:graphicImage>
 									</p:commandLink>
-
 									<p:commandLink ajax="false" id="analyse"
 									action="#{consultationDetailBean.notblocagenotification()}"
 										disabled="#{consultationDetailBean.desibledAnalyse}"
 										actionListener="#{consultationDetailBean.demandeAnalyse}">
 										<p:graphicImage value="/images/analyse.png"
-											rendered="#{connectionBean.analGyn}"></p:graphicImage>
+											rendered="#{connectionBean.analyseFiche}"></p:graphicImage>
 									</p:commandLink>
 
 								</h:panelGrid></td>

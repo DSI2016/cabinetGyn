@@ -39,6 +39,7 @@
 						<div align="right">
 							<br />
 							<p:commandButton icon="ui-icon-plus" value="Nouveau"
+							    rendered="#{connectionBean.ajoutDemandeRad}"
 								style="font-size:small;font-weight:bold" update=":f1:p1"
 								actionListener="#{radioBean.ajoutRad()}"></p:commandButton>
 						</div>
@@ -155,12 +156,10 @@
 											<p:ajax listener="#{radioBean.annulation()}" />
 										</p:commandButton></td>
 									<td width="500px"><p:commandButton value="Imprimer"
-
+                                            rendered="#{connectionBean.imprRad}"  
 									        ajax="false"
 											actionListener="#{radioBean.viewRadio}" 
 											icon="ui-icon-print"
-
-
 											disabled="#{radioBean.viewImprim}"
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
@@ -199,10 +198,12 @@
 							<p:column style="text-align: center" width="10%">
 
 								<p:commandButton icon="ui-icon-pencil"
+								    rendered="#{connectionBean.modifRadio}"
 									title="Modification Radio"
 									style="font-size:small;font-weight:bold"
 									actionListener="#{radioBean.modifierRad(rad)}" update=":f1" />
 								<p:commandButton icon="ui-icon-trash" title="supprimer Radio"
+								    rendered="#{connectionBean.supRadio}"
 									style="font-size:small;font-weight:bold"
 									actionListener="#{radioBean.suppressionRadio(rad.idradio)}">
 									<p:confirm header="Suppression radio"

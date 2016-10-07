@@ -260,7 +260,38 @@ public class Modelutl implements Serializable {
     private boolean modifGynObs;
 	
     
+    private boolean ajoutDemandeOrd;
+    private boolean ajoutDemandeRad;
+    private boolean ajoutDemandeAnal;
     
+    private boolean affectEtoile;
+    
+    
+    
+	public boolean isAffectEtoile() {
+		return affectEtoile;
+	}
+	public void setAffectEtoile(boolean affectEtoile) {
+		this.affectEtoile = affectEtoile;
+	}
+	public boolean isAjoutDemandeOrd() {
+		return ajoutDemandeOrd;
+	}
+	public void setAjoutDemandeOrd(boolean ajoutDemandeOrd) {
+		this.ajoutDemandeOrd = ajoutDemandeOrd;
+	}
+	public boolean isAjoutDemandeRad() {
+		return ajoutDemandeRad;
+	}
+	public void setAjoutDemandeRad(boolean ajoutDemandeRad) {
+		this.ajoutDemandeRad = ajoutDemandeRad;
+	}
+	public boolean isAjoutDemandeAnal() {
+		return ajoutDemandeAnal;
+	}
+	public void setAjoutDemandeAnal(boolean ajoutDemandeAnal) {
+		this.ajoutDemandeAnal = ajoutDemandeAnal;
+	}
 	public boolean isModifGynObs() {
 		return modifGynObs;
 	}
@@ -1663,11 +1694,15 @@ public class Modelutl implements Serializable {
 		int result = 1;
 		result = prime * result + (ModifGyneco ? 1231 : 1237);
 		result = prime * result + (SuppGyneco ? 1231 : 1237);
+		result = prime * result + (affectEtoile ? 1231 : 1237);
 		result = prime * result + (ajoutAnal ? 1231 : 1237);
 		result = prime * result + (ajoutAntecedentListe ? 1231 : 1237);
 		result = prime * result + (ajoutAsym ? 1231 : 1237);
 		result = prime * result
 				+ ((ajoutClin == null) ? 0 : ajoutClin.hashCode());
+		result = prime * result + (ajoutDemandeAnal ? 1231 : 1237);
+		result = prime * result + (ajoutDemandeOrd ? 1231 : 1237);
+		result = prime * result + (ajoutDemandeRad ? 1231 : 1237);
 		result = prime * result + (ajoutDiag ? 1231 : 1237);
 		result = prime * result
 				+ ((ajoutDoc == null) ? 0 : ajoutDoc.hashCode());
@@ -1899,6 +1934,7 @@ public class Modelutl implements Serializable {
 				+ ((sterilite == null) ? 0 : sterilite.hashCode());
 		result = prime * result + (supAnal ? 1231 : 1237);
 		result = prime * result + (supAnalyse ? 1231 : 1237);
+		result = prime * result + (supAnulSal ? 1231 : 1237);
 		result = prime * result + (supAsym ? 1231 : 1237);
 		result = prime * result + ((supClin == null) ? 0 : supClin.hashCode());
 		result = prime
@@ -1992,6 +2028,8 @@ public class Modelutl implements Serializable {
 			return false;
 		if (SuppGyneco != other.SuppGyneco)
 			return false;
+		if (affectEtoile != other.affectEtoile)
+			return false;
 		if (ajoutAnal != other.ajoutAnal)
 			return false;
 		if (ajoutAntecedentListe != other.ajoutAntecedentListe)
@@ -2002,6 +2040,12 @@ public class Modelutl implements Serializable {
 			if (other.ajoutClin != null)
 				return false;
 		} else if (!ajoutClin.equals(other.ajoutClin))
+			return false;
+		if (ajoutDemandeAnal != other.ajoutDemandeAnal)
+			return false;
+		if (ajoutDemandeOrd != other.ajoutDemandeOrd)
+			return false;
+		if (ajoutDemandeRad != other.ajoutDemandeRad)
 			return false;
 		if (ajoutDiag != other.ajoutDiag)
 			return false;
@@ -2540,6 +2584,8 @@ public class Modelutl implements Serializable {
 			return false;
 		if (supAnalyse != other.supAnalyse)
 			return false;
+		if (supAnulSal != other.supAnulSal)
+			return false;
 		if (supAsym != other.supAsym)
 			return false;
 		if (supClin == null) {
@@ -2730,22 +2776,23 @@ public class Modelutl implements Serializable {
 				+ desdrePatSal + ", permutPatSal=" + permutPatSal
 				+ ", premierPatSal=" + premierPatSal + ", dernierPatSal="
 				+ dernierPatSal + ", supPatSal=" + supPatSal + ", chargPatSal="
-				+ chargPatSal + ", ajoutDoc=" + ajoutDoc + ", modifDoc="
-				+ modifDoc + ", supDoc=" + supDoc + ", ajoutProf=" + ajoutProf
-				+ ", modifProf=" + modifProf + ", supProf=" + supProf
-				+ ", ajoutVil=" + ajoutVil + ", modifVil=" + modifVil
-				+ ", supVil=" + supVil + ", ajoutClin=" + ajoutClin
-				+ ", modifClin=" + modifClin + ", supClin=" + supClin
-				+ ", antecedent=" + antecedent + ", echoGyn=" + echoGyn
-				+ ", echoObs=" + echoObs + ", gynecologie=" + gynecologie
-				+ ", consultGros=" + consultGros + ", sterilite=" + sterilite
-				+ ", tabAntecedent=" + tabAntecedent + ", tabGynecoObs="
-				+ tabGynecoObs + ", tabHistGross=" + tabHistGross
-				+ ", tabContraception=" + tabContraception + ", supHistGross="
-				+ supHistGross + ", modifHistGross=" + modifHistGross
-				+ ", supConctraeption=" + supConctraeption
-				+ ", modifContraception=" + modifContraception + ", nouvGross="
-				+ nouvGross + ", nouvContraception=" + nouvContraception
+				+ chargPatSal + ", supAnulSal=" + supAnulSal + ", ajoutDoc="
+				+ ajoutDoc + ", modifDoc=" + modifDoc + ", supDoc=" + supDoc
+				+ ", ajoutProf=" + ajoutProf + ", modifProf=" + modifProf
+				+ ", supProf=" + supProf + ", ajoutVil=" + ajoutVil
+				+ ", modifVil=" + modifVil + ", supVil=" + supVil
+				+ ", ajoutClin=" + ajoutClin + ", modifClin=" + modifClin
+				+ ", supClin=" + supClin + ", antecedent=" + antecedent
+				+ ", echoGyn=" + echoGyn + ", echoObs=" + echoObs
+				+ ", gynecologie=" + gynecologie + ", consultGros="
+				+ consultGros + ", sterilite=" + sterilite + ", tabAntecedent="
+				+ tabAntecedent + ", tabGynecoObs=" + tabGynecoObs
+				+ ", tabHistGross=" + tabHistGross + ", tabContraception="
+				+ tabContraception + ", supHistGross=" + supHistGross
+				+ ", modifHistGross=" + modifHistGross + ", supConctraeption="
+				+ supConctraeption + ", modifContraception="
+				+ modifContraception + ", nouvGross=" + nouvGross
+				+ ", nouvContraception=" + nouvContraception
 				+ ", nouvConsGross=" + nouvConsGross + ", nouvConsGyn="
 				+ nouvConsGyn + ", consultGrossOrd=" + consultGrossOrd
 				+ ", consultGrossAnal=" + consultGrossAnal
@@ -2846,7 +2893,10 @@ public class Modelutl implements Serializable {
 				+ consultArchiv + ", archiverPat=" + archiverPat
 				+ ", tabAnulSal=" + tabAnulSal + ", anulSal=" + anulSal
 				+ ", modifNoteSal=" + modifNoteSal + ", modifAnt=" + modifAnt
-				+ ", suppAnt=" + suppAnt + ", modifGynObs=" + modifGynObs + "]";
+				+ ", suppAnt=" + suppAnt + ", modifGynObs=" + modifGynObs
+				+ ", ajoutDemandeOrd=" + ajoutDemandeOrd + ", ajoutDemandeRad="
+				+ ajoutDemandeRad + ", ajoutDemandeAnal=" + ajoutDemandeAnal
+				+ ", affectEtoile=" + affectEtoile + "]";
 	}
 
 	

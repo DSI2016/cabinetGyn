@@ -24,7 +24,7 @@
 				<tr>
 					<td><div align="left">
 							<h:panelGrid columns="2">
-								<h:commandLink actionListener="#{utilisateurBean.gotoAcceuil()}">
+								<h:commandLink actionListener="#{historiqueLettreBean.gotoAcceuil()}">
 									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
 								</h:commandLink>
 
@@ -55,11 +55,10 @@
 								icon="ui-icon-folder-open">
 								<p:menuitem style="width:400px;" styleClass="ui-menuitem-text"
 									value="Lettre Confidentielle" icon="ui-icon-document"
-									actionListener="#{historiqueLettreBean.intialiserDateLettre()}"
+									actionListener="#{historiqueLettreBean.intialiserDonneLettreConf()}"
 									oncomplete="PF('lettrereponse').show();"
 									update=":fDiag:idLettreReponse">
-									<f:setPropertyActionListener value="Lettre Confidentielle"
-										target="#{historiqueLettreBean.nomLettre}" />
+									
 								</p:menuitem>
 
 								<p:menuitem value="Lettre d'accouchement"
@@ -69,29 +68,32 @@
 									update=":fDiag:idLettreAccouchement">
 									<f:setPropertyActionListener value="Lettre d'accouchement"
 										target="#{historiqueLettreBean.nomLettre}" />
+	
+									
 								</p:menuitem>
 								<p:menuitem value="Lettre de prise en charge"
-									actionListener="#{historiqueLettreBean.intialiserDateLettre()}"
+									actionListener="#{historiqueLettreBean.intialiserDonteLettrereponceaunedemande()}"
 									icon="ui-icon-document"
 									oncomplete="PF('lettrepriseencharge').show();"
 									update=":fDiag:idlettrepriseencharge">
+									
 									<f:setPropertyActionListener value="Lettre de prise en charge"
 										target="#{historiqueLettreBean.nomLettre}" />
 								</p:menuitem>
 								<p:menuitem
 									value="Lettre de réponse a une demande de prise en charge"
-									actionListener="#{historiqueLettreBean.intialiserDateLettre()}"
+									actionListener="#{historiqueLettreBean.intialiserDonteLettrereponceaunedemandedeprise()}"
 									icon="ui-icon-document"
 									oncomplete="PF('lettreReponse2').show();"
 									update=":fDiag:idLettreReponse2">
-									<f:setPropertyActionListener
-										value="Lettre de réponse a une demande de prise en charge"
+									<f:setPropertyActionListener value="Lettre de réponse a une demande de prise en charge"
 										target="#{historiqueLettreBean.nomLettre}" />
+									
 								</p:menuitem>
 							</p:splitButton></td>
 						<td><h:commandLink
 								actionListener="#{historiqueLettreBean.viewLettreselect}"
-								rendered="#{connectionBean.imprLettre}" target="_blanc">
+								rendered="false" target="_blanc">
 								<p:graphicImage value="/imagesMenu/imprimente10.png">
 								</p:graphicImage>
 							</h:commandLink></td>
@@ -187,6 +189,8 @@
 										icon="ui-icon-arrowreturnthick-1-n"
 										actionListener="#{historiqueLettreBean.annulerModification()}"
 										update=":f1" />
+										<p:commandButton value="Imprimer" actionListener="#{historiqueLettreBean.viewLettreselect}" immediate="true" ajax="false" rendered="#{connectionBean.imprLettre}" disabled="#{historiqueLettreBean.afficheImpr}" ></p:commandButton>
+								
 								</div>
 							</p:panel></td>
 					</tr>
@@ -204,26 +208,23 @@
 							<td width="330"><h:outputLabel
 									value=" Patiente : #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}">
 								</h:outputLabel></td>
-							<td><h:outputText value="Le " /> <p:inputText id="oi"
-									value="#{historiqueLettreBean.dateLet}" size="6"
-									pattern="dd/MM/yyyy">
-									<p:ajax event="blur"
-										listener="#{historiqueLettreBean.verifierDate()}"
-										update="oi,:f1:growl">
-									</p:ajax>
-								</p:inputText></td>
+							<td><h:outputText value="Le " /> <p:inputMask mask="99/99/9999" id="oi"
+									value="#{historiqueLettreBean.dateLettreConf}" size="6"></p:inputMask> 
+									
+									
+								</td>
 						</tr>
 					</table>
 					<br></br>
 					<h:panelGrid columns="2">
 						<h:outputText value="Acte le " />
-						<p:inputText id="o" value="#{historiqueLettreBean.acte}" size="6"
-							pattern="dd/MM/yyyy">
+						<p:inputMask id="o" value="#{historiqueLettreBean.acte}" size="6"
+							>
 							<p:ajax event="blur"
 								listener="#{historiqueLettreBean.verifieractele()}"
-								update="o,:f1:growl">
+								update=":f1:growl">
 							</p:ajax>
-						</p:inputText>
+						</p:inputMask>
 						<h:outputText value="Code: "
 							 />
 						<p:inputText value="#{historiqueLettreBean.code}"
@@ -253,18 +254,35 @@
 				<br></br>
 				<div align="center">
 
-					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+					<p:commandButton update=":f1:growl,:f1"   value="Valider"
 						actionListener="#{historiqueLettreBean.ajoutLettreReponseDemande()}"
-						value="Valider" onclick="target='_blank'; return true;"
-						immediate="true">
-					</p:commandButton>
+							oncomplete="handleLoginRequestlettrereponse(xhr, status, args)"
+						>
+					</p:commandButton> 
 
-					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+					<p:commandButton value="Annuler" icon="ui-icon-closethick"
 						actionListener="#{historiqueLettreBean.refresh()}"
-						oncomplete="PF('lettreReponse2').hide();"></p:commandButton>
+						
+						oncomplete="PF('lettrereponse').hide();"></p:commandButton>
 
 				</div>
 			</p:dialog>
+			<script type="text/javascript">
+					function handleLoginRequestlettrereponse(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('lettrereponse').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('lettrereponse').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+
+			
+			
+			
 
 			<p:dialog id="idLettreAccouchement" widgetVar="lettreAccouchement"
 				modal="true" showHeader="false" resizable="false">
@@ -275,11 +293,11 @@
 									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
 							</td>
 							<td width="150"><h:outputText value="Le " /> <p:inputText
-									id="datelel" value="#{historiqueLettreBean.dateLet}" size="6"
+									id="datelel" value="#{historiqueLettreBean.dateLettreAccouchem}" size="6"
 									pattern="dd/MM/yyyy">
 									<p:ajax event="blur"
 										listener="#{historiqueLettreBean.verifierDate()}"
-										update=":f1:growl,datelel">
+										update=":f1:growl">
 									</p:ajax>
 								</p:inputText></td>
 
@@ -408,17 +426,30 @@
 
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
 						actionListener="#{historiqueLettreBean.ajoutLettreAccouchement()}"
-						value="Valider" onclick="target='_blank'; return true;"
-						immediate="true" ajax="false">
+						value="Valider" oncomplete="handleLoginRequestlettreAccouchement(xhr, status, args)">
 					</p:commandButton>
-					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+					<p:commandButton value="Annuler" icon="ui-icon-closethick"
 						actionListener="#{historiqueLettreBean.refresh()}"
-						oncomplete="PF('lettreReponse2').hide();"></p:commandButton>
+						oncomplete="PF('lettreAccouchement').hide();"></p:commandButton>
+			
 
 				</div>
 			</p:dialog>
+			<script type="text/javascript">
+					function handleLoginRequestlettreAccouchement(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('lettreAccouchement').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('lettreAccouchement').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+			
 
 			<p:dialog id="idLettreReponse2" widgetVar="lettreReponse2"
 				modal="true" showHeader="false" resizable="false">
@@ -430,14 +461,14 @@
 							
 									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
 							</td>
-							<td><h:outputText value="Le: " /> <p:inputText
-									value="#{historiqueLettreBean.dateLet}" size="6"
-									pattern="dd/MM/yyyy" id="date1">
+							<td><h:outputText value="Le: " /> <p:inputMask
+									value="#{historiqueLettreBean.dateDelettre}" size="6"
+									 mask="99/99/9999" id="date1">
 									<p:ajax event="blur"
 										listener="#{historiqueLettreBean.verifierDate()}"
-										update="date1,:f1:growl">
+										update=":f1:growl">
 									</p:ajax>
-								</p:inputText></td>
+								</p:inputMask></td>
 						</tr>
 					</table>
 
@@ -458,19 +489,34 @@
 
 				<div align="center">
 
-					<p:commandButton update=":f1:growl" icon="ui-icon-print"
-						actionListener="#{historiqueLettreBean.ajoutLettreReponse()}"
-						value="Valider" onclick="target='_blank'; return true;"
-						immediate="true" ajax="false">
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+						actionListener="#{historiqueLettreBean.ajoutLettrereponceaunedemandedePriseEnCharge()}"
+						value="Valider" oncomplete="handleLoginRequestReponcedemande(xhr, status, args)"
+						>
 					</p:commandButton>
 
-					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+					<p:commandButton value="Annuler" icon="ui-icon-closethick"
 						actionListener="#{historiqueLettreBean.refresh()}"
 						oncomplete="PF('lettreReponse2').hide();"></p:commandButton>
 
 				</div>
+				
 
 			</p:dialog>
+			<script type="text/javascript">
+					function handleLoginRequestReponcedemande(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('lettreReponse2').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('lettreReponse2').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+		
+
 			<p:dialog id="idlettrepriseencharge" widgetVar="lettrepriseencharge"
 				modal="true" showHeader="false" resizable="false">
 				<p:panel id="p44" header="Lettre de prise en charge">
@@ -480,11 +526,11 @@
 									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
 							</td>
 							<td><h:outputText value="Le: " /> <p:inputText
-									value="#{historiqueLettreBean.dateLet}" size="6"
+									value="#{historiqueLettreBean.dateDelettrepriseencharge}" size="6"
 									pattern="dd/MM/yyyy" id="date144">
 									<p:ajax event="blur"
-										listener="#{historiqueLettreBean.verifierDate()}"
-										update="date144,:f1:growl">
+										listener="#{historiqueLettreBean.verifierDateDelettrepriseencharge()}"
+										>
 									</p:ajax>
 								</p:inputText></td>
 						</tr>
@@ -518,19 +564,31 @@
 
 				<div align="center">
 
-					<p:commandButton update=":f1:growl" icon="ui-icon-print"
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
 						actionListener="#{historiqueLettreBean.ajoutLettrePriseEnCharge()}"
-						value="Valider" onclick="target='_blank'; return true;"
-						immediate="true" ajax="false">
+						value="Valider" oncomplete="handleLoginRequestlettrepriseencharge(xhr, status, args)">
 					</p:commandButton>
 
-					<p:commandButton value="Fermer" icon="ui-icon-closethick"
+					<p:commandButton value="Annuler" icon="ui-icon-closethick"
 						actionListener="#{historiqueLettreBean.refresh()}"
 						oncomplete="PF('lettrepriseencharge').hide();"></p:commandButton>
 
 				</div>
+				
 
 			</p:dialog>
+			<script type="text/javascript">
+					function handleLoginRequestlettrepriseencharge(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('lettrepriseencharge').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('lettrepriseencharge').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 
 
 		</h:form>

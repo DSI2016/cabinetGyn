@@ -51,6 +51,7 @@ Historique Radios</ui:define>
 							style="font-size:15pt;font-weight:bold" /></td>
 							<td align="right">
 							<p:commandButton value="Imprimer" disabled="#{radioBean.impress}"
+							        rendered="#{connectionBean.imprRad}"
 									style="font-size:small;font-weight:bold" icon="ui-icon-print"
 									ajax="false" actionListener="#{radioBean.viewHistoriqueRadio}"></p:commandButton>
 							</td>
@@ -109,7 +110,6 @@ Historique Radios</ui:define>
 								oncomplete="PF('modifRadios').show();" update=":f1:ma" />
 
 							<p:commandButton icon="ui-icon-search" title="Détail Radio"
-								rendered="#{connectionBean.detRad}"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{radioBean.modifRadio(rad.idradio)}"
 								oncomplete="PF('modifRadiosdetail').show();"

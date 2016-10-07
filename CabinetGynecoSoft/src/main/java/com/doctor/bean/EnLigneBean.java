@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import com.doctor.filter.SessionCounter;
 import com.doctor.persistance.EnLigne;
 import com.doctor.service.EnLigneService;
 
@@ -31,34 +35,30 @@ public class EnLigneBean {
 		this.idSession = idSession;
 	}
 
-	// public static HttpSession find(String sessionId) {
-	// System.out.println("entree cherche");
-	// return sessions.get(sessionId);
-	//
-	// }
+	
 //s7i7a hathi
-//	public void deconnectSession(String idSession,Integer idenligne) {
-//
-//		EnLigne enLigne = new EnLigne();
-//		HttpSession temp1 = SessionCounter.find(idSession);
-//		enLigne.setIdenligne(idenligne);
-//		HttpSession session5 = (HttpSession) FacesContext
-//				.getCurrentInstance().getExternalContext()
-//				.getSession(true);
-//		System.out.println("idsession courant"+session5.getId());
-//		System.out.println(temp1.getId()+"Ali chenfas5ou");
-//		if (temp1 != null) {
-//			System.out.println("temp1 !=null");
-//			temp1.invalidate();
-//			System.out.println("la session "+temp1.getId()+"invalider aves succes");
-//			EnLigneService ser2 = new EnLigneService();
-//			
-//			ser2.supprimerEnLigne(enLigne);
-//		}
-//		else
-//			System.out.println("temp==null");
-//
-//	}
+	public void deconnectSession(String idSession,Integer idenligne) {
+
+		EnLigne enLigne = new EnLigne();
+		HttpSession temp1 = SessionCounter.find(idSession);
+		enLigne.setIdenligne(idenligne);
+		HttpSession session5 = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext()
+				.getSession(true);
+		System.out.println("idsession courant"+session5.getId());
+		System.out.println(temp1.getId()+"Ali chenfas5ou");
+		if (temp1 != null) {
+			System.out.println("temp1 !=null");
+			temp1.invalidate();
+			System.out.println("la session "+temp1.getId()+"invalider aves succes");
+			EnLigneService ser2 = new EnLigneService();
+			
+			ser2.supprimerEnLigne(enLigne);
+		}
+		else
+			System.out.println("temp==null");
+
+	}
 
 	public List<EnLigne> getEnLignes() {
 		EnLigneService ser1 = new EnLigneService();
