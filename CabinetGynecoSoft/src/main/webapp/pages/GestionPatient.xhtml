@@ -12,6 +12,9 @@
 		<p:graphicImage value="/imagesTitre/listPatient2.png" width="100%"></p:graphicImage>
 
 		<h:form id="f1">
+		<p:hotkey bind="ctrl+f3" update=":f1:idRecherche" oncomplete="PF('diagRecherche').show();" />
+ <p:hotkey bind="ctrl+f2" update=":f1:idOrdre" oncomplete="PF('diagOrdre').show();" />
+ 
 			<p:growl id="growl" showDetail="true"
 				sticky="#{cfclientBean.blocage}" life="#{cfclientBean.tempsface}" />
 			<table width="100%" border="0">
@@ -33,29 +36,7 @@
 							<p:graphicImage value="/images/archive12.png" width="60px"
 								height="50px" rendered="#{!connectionBean.consultArchiv}" />
 						</h:commandLink></td>
-					<td align="left"><h:panelGrid columns="5">
-							<h:outputText value="Recherche: "
-								style="font-size:small;font-weight:bold" />
-							<p:inputText value="#{cfclientBean.valeurRecherche}" id="valid"
-								style="font-size:small;font-weight:bold;width:300px">
-								<p:ajax event="change"
-									listener="#{cfclientBean.onchagevaleurRecherche()}"></p:ajax>
-
-							</p:inputText>
-							<p:selectOneMenu id="recherche" filterMatchMode="startsWith"
-								value="#{cfclientBean.attribut}" filter="true" effect="fade"
-								style="font-size:small;font-weight:bold">
-								<f:selectItems value="#{cfclientBean.listesRecherches}" var="jo"
-									itemLabel="#{jo.toString()}" itemValue="#{jo}" />
-
-							</p:selectOneMenu>
-							<p:commandButton icon="ui-icon-search" title="Recherche Patient"
-								actionListener="#{cfclientBean.recherchePatient()}" />
-							<p:commandButton icon="ui-icon-refresh" title="Actualiser"
-								actionListener="#{cfclientBean.annulerRecherche}"
-								update=":f1:valid" />
-
-						</h:panelGrid></td>
+					<td align="left"></td>
 					<td align="right" width="30%"><h:panelGrid columns="3">
 
 							<h:outputText value="#{connectionBean.utilisateur}"
@@ -74,31 +55,6 @@
 			<table width="100%">
 				<tr>
 					<td width="38%"></td>
-					<td><h:outputText value="Ordonner par:"
-							style="font-size:small;font-weight:bold" /></td>
-					<td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
-							value="#{cfclientBean.attributTri}" filter="true" effect="fade"
-							style="font-size:small;font-weight:bold">
-							<f:selectItem itemLabel="--Colonne--" itemValue="" />
-													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
-													<f:selectItem itemLabel="Nom" itemValue="Nom" />
-													<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
-													<f:selectItem itemLabel="Nbr Consultation" itemValue="Nbr Consultation" />
-													<f:selectItem itemLabel="Dernier Consultation" itemValue="Dernier Consultation" />
-							
-<!-- 							<f:selectItems value="#{cfclientBean.listestris}" var="tr" -->
-<!-- 								itemLabel="#{tr.toString()}" itemValue="#{tr}" /> -->
-							<p:ajax envent="change" listener="#{cfclientBean.triePatient()}"></p:ajax> 
-						</p:selectOneMenu></td>
-					<td><p:commandButton icon="ui-icon-triangle-1-n"
-							title="Croissante" actionListener="#{cfclientBean.croissante()}"
-							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
-					</td>
-					<td><p:commandButton icon="ui-icon-triangle-1-s"
-							title="Décroissante"
-							actionListener="#{cfclientBean.decroissante()}"
-							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
-					</td>
 					<td align="right" width="33%"><p:commandButton value="Nouveau"
 							rendered="#{connectionBean.ajouterPat}" immediate="true"
 							icon="ui-icon-plusthick" title="Ajouter Patient"
@@ -112,6 +68,94 @@
 
 
 
+<p:dialog id="idRecherche" widgetVar="diagRecherche" modal="true"  
+			showHeader="false" closable="false" resizable="false">
+			
+				<p:panel id="pRecherche" header="Recherche un patient" style="width:500px" >
+				<table>
+				<tr><td width="80%"><p:inputText value="#{cfclientBean.valeurRecherche}" id="valid"
+								style="font-size:small;font-weight:bold;width:300px">
+								<p:ajax event="change"
+									listener="#{cfclientBean.onchagevaleurRecherche()}"></p:ajax>
+
+							</p:inputText></td><td><p:selectOneMenu id="recherche" filterMatchMode="startsWith"
+								value="#{cfclientBean.attribut}" filter="true" effect="fade"
+								style="font-size:small;font-weight:bold">
+								<f:selectItems value="#{cfclientBean.listesRecherches}" var="jo"
+									itemLabel="#{jo.toString()}" itemValue="#{jo}" />
+
+							</p:selectOneMenu>
+							</td></tr>
+							</table>
+							<div align="center"><p:commandButton icon="ui-icon-search" title="Recherche Patient" update=":f1:growl" oncomplete="handleLoginRequestdiagRecherche(xhr, status, args)"
+								actionListener="#{cfclientBean.recherchePatient()}"/></div>
+							
+
+							
+							
+							
+</p:panel>
+			
+			
+			 </p:dialog>
+			 
+			 <p:dialog id="idOrdre" widgetVar="diagOrdre" modal="true"  
+			showHeader="false" closable="false" resizable="false">
+			
+				<p:panel id="pordre" header="ordonner les patients" style="width:500px" >
+				<table width="100%">
+				<tr>
+					
+					
+					
+					<td><h:outputText value="Ordonner par:"
+							style="font-size:small;font-weight:bold" /></td>
+					<td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
+							value="#{cfclientBean.attributTri}" filter="true" effect="fade"
+							style="font-size:small;font-weight:bold">
+							
+													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+													<f:selectItem itemLabel="Nom" itemValue="Nom" />
+													<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
+													<f:selectItem itemLabel="Nbr Consultation" itemValue="Nbr Consultation" />
+													<f:selectItem itemLabel="Dernier Consultation" itemValue="Dernier Consultation" />
+							
+					<p:ajax envent="change" listener="#{cfclientBean.triePatient()}"></p:ajax> 
+						</p:selectOneMenu></td>
+					<td><p:commandButton icon="ui-icon-triangle-1-n"
+							title="Croissante" actionListener="#{cfclientBean.croissante()}"
+							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+					</td>
+					<td><p:commandButton icon="ui-icon-triangle-1-s"
+							title="Décroissante"
+							actionListener="#{cfclientBean.decroissante()}"
+							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+					</td>
+				</tr>
+											</table>
+							
+							
+
+							
+							
+							
+</p:panel>
+			
+			
+			 </p:dialog>
+			 
+			 <script type="text/javascript">
+					function handleLoginRequestdiagRecherche(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('diagRecherche').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('diagRecherche').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 
 
 			<p:dataTable id="patiente" var="Patient" widgetVar="tabPatient"
@@ -119,7 +163,7 @@
 				value="#{cfclientBean.patients}" emptyMessage="Pas de Patients !"
 				paginator="true" paginatorPosition="bottom"
 				paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-				rows="16">
+				rows="10">
 
 
 	<p:column headerText="" width="4%"
@@ -1195,6 +1239,8 @@
 					<p:commandButton value="Non" oncomplete="PF('confirmDlg').hide();"></p:commandButton>
 				</div>
 			</p:dialog>
+
+
 
 
 

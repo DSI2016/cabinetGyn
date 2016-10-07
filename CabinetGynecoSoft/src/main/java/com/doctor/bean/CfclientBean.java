@@ -3471,8 +3471,12 @@ public class CfclientBean implements java.io.Serializable {
 	}
 
 	public void recherchePatient() {
+		boolean addValid=false;
+		FacesContext face = FacesContext.getCurrentInstance();
+		System.out.println("entree methode recherche");
 		if ((valeurRecherche != null) && (valeurRecherche.trim().length() > 0)
 				&& (attribut != null)) {
+			addValid=true;
 
 			do {
 				valeurRecherche = valeurRecherche.trim().replaceAll("  ", " ");
@@ -3494,8 +3498,17 @@ public class CfclientBean implements java.io.Serializable {
 			patients = new CfclientService().rechercheFiltre(attribut,
 					valeurRecherche);
 		}
-
+		else
+		{
+			blocage=true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", "veullez saisi le valeur à cherché"));
+		addValid=false;
+		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
 		RequestContext.getCurrentInstance().update("f1:patiente");
+		
 
 	}
 
