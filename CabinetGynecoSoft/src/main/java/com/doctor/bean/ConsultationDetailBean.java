@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,8 +22,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
+
 import com.doctor.persistance.Analyse;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Consultation;
@@ -1542,8 +1546,19 @@ public class ConsultationDetailBean implements Serializable {
 	public void setModeles(List<Modele> modeles) {
 		this.modeles = modeles;
 	}
+	
+	public void  supSelect(ConsultationDetail cons){
+		System.out.println("rrr*********rrr");
+		selectedCons =cons;
+		System.out.println("selectedCons== "+selectedCons);
+		RequestContext.getCurrentInstance().update(":f1:p2,:f1:p3,:f1:p4,:f1,:f1:eventsDT"); 
+		
+		
+	}
 
 	public void supprimerConsultationEchoGyneco(ConsultationDetail cons) {
+		
+		
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetailService ser = new ConsultationDetailService();
 		ser.supprimerConsultationDetail(cons.getIdConsultationDetail());

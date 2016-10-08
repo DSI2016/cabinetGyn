@@ -254,6 +254,7 @@
 				<br></br>
 				<div align="center">
 					<p:commandButton update=":f1:growl,:f1,:f1:carDetail"
+					    icon="ui-icon-check"
 						actionListener="#{historiqueCertifBean.ajoutCertifPresenceAcompgnement()}"
 						value="Valider" 
 						oncomplete="handleLoginRequestcertPresAcomm(xhr, status, args)"
@@ -347,13 +348,15 @@
 				<br></br>
 				<div align="center">
 
-					<p:commandButton update=":f1:growl,:f1,:f1:carDetail"
+					<p:commandButton icon="ui-icon-check"
+					    update=":f1:growl,:f1,:f1:carDetail"
 						actionListener="#{historiqueCertifBean.ajoutCertifMariage()}"
 						oncomplete="handleLoginRequestcertMar(xhr, status, args)"
 						 value="Valider"
 						>
 					</p:commandButton>
 					<p:commandButton value="Annuler"
+					    icon="ui-icon-closethick"
 						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
 						oncomplete="PF('certMar').hide();"></p:commandButton>
 
@@ -404,9 +407,10 @@
 						actionListener="#{historiqueCertifBean.ajoutCertifPresence()}"
 						oncomplete="handleLoginRequestcertCertificatPresence(xhr, status, args)"
 						 value="Valider"
-						>
+						 icon="ui-icon-check">
 					</p:commandButton>
 					<p:commandButton value="Annuler"
+					    icon="ui-icon-closethick"
 						actionListener="#{historiqueCertifBean.refresh()}" update=":f1"
 						oncomplete="PF('cert').hide();"></p:commandButton>
 
@@ -496,7 +500,7 @@
 					>
 					</p:commandButton>
 					<p:commandButton value="Annuler" update=":f1"
-					icon="ui-icon-arrowreturnthick-1-s"
+					    icon="ui-icon-closethick"
 						actionListener="#{historiqueCertifBean.refresh()}"
 						oncomplete="PF('certRepos').hide();"></p:commandButton>
 
@@ -591,11 +595,12 @@
 					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifReposAccomp()}"
 						oncomplete="handleLoginRequestcertReposAccompagnant(xhr, status, args)"
-						
+						icon="ui-icon-check"
 						value="Valider" 
 						>
 					</p:commandButton>
-					<p:commandButton value="Annuler" update=":f1"
+					<p:commandButton value="Annuler" update=":f1" 
+					    icon="ui-icon-closethick"
 						actionListener="#{historiqueCertifBean.refresh()}"
 						oncomplete="PF('certReposAccompagnant').hide();"></p:commandButton>
 
@@ -659,7 +664,8 @@
 				<div align="center">
 					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifGuerision()}"
-						value="Valider" 
+						value="Valider"
+						icon="ui-icon-check" 
 						oncomplete="handleLoginRequestcertguerison(xhr, status, args)">
 					</p:commandButton>
 					<p:commandButton value="Fermer" update=":f1"
@@ -806,7 +812,7 @@
 						>
 						</p:commandButton>
 						<p:commandButton value="Annuler" update=":f1"
-						icon="ui-icon-arrowreturnthick-1-s"
+						    icon="ui-icon-closethick"
 							actionListener="#{historiqueCertifBean.refresh()}"
 							oncomplete="PF('certcoups').hide();"></p:commandButton>
 
@@ -865,6 +871,7 @@
 					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifAptitude()}"
 						value="Valider" 
+						icon="ui-icon-check"
 						oncomplete="handleLoginRequestcertaptitude(xhr, status, args)">
 					</p:commandButton>
 					<p:commandButton value="Fermer" update=":f1"
@@ -927,6 +934,7 @@
 					<p:commandButton update=":f1:growl,:f1"
 						actionListener="#{historiqueCertifBean.ajoutCertifInaptitude()}"
 						value="Valider" 
+						icon="ui-icon-check"
 						oncomplete="handleLoginRequestcertinaptitude(xhr, status, args)"
 						>
 					</p:commandButton>

@@ -1936,7 +1936,7 @@
 						actionListener="#{utilisateurBean.ajouterUtilisateur()}"
 						update=":f1" />
 					<p:commandButton value="Annuler"
-						icon="ui-icon-arrowreturnthick-1-n"
+						icon="ui-icon-closethick"
 						action="#{utilisateurBean.gotoGestionUtl()}"
 						actionListener="#{utilisateurBean.initialisation()}"
 						update=":f1:tabajou" />
@@ -1955,8 +1955,8 @@
 						<div align="center">
 							<p:commandButton value="Valider" update=":f1:tabajou,:f1:growl"
 								actionListener="#{utilisateurBean.ajouterModelUtl()}"
-								icon="ui-icon-plusthick"></p:commandButton>
-							<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+								icon="ui-icon-check"></p:commandButton>
+							<p:commandButton icon="ui-icon-closethick"
 								oncomplete="PF('ajoutModel').hide();" value="Annuler" />
 						</div>
 					</p:panel>

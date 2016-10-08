@@ -449,9 +449,11 @@
 
 										<div align="center">
 											<p:commandButton value="Valider"
+											    icon=" ui-icon-check"
 												actionListener="#{consultationDetailBean.validationConsultationGross()}"
 												update=":f1,:f1:growl"></p:commandButton>
 											<p:commandButton value="Annuler"
+											    icon="ui-icon-closethick"
 												actionListener="#{consultationDetailBean.initialisationAnnuler()}"
 												update=":f1,:f1:nouvelleordonnace,:f1:analyse,:f1:Radio"></p:commandButton>
 										</div>

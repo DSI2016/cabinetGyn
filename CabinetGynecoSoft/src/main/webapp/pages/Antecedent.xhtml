@@ -888,11 +888,13 @@
 						<h:panelGrid columns="2">
 
 							<p:commandButton value="Valider"
+							    icon="ui-icon-check"
 								oncomplete="handleLoginRequestGross(xhr, status, args)">
 								<p:ajax event="click" listener="#{antecedentBean.validerBebe()}"
 									update=":f1:growl"></p:ajax>
 							</p:commandButton>
 							<p:commandButton value="Annuler"
+							    icon="ui-icon-closethick"
 								actionListener="#{antecedentBean.annulation()}"
 								oncomplete="PF('diag2').hide();" update=":f1,fgrossese"></p:commandButton>
 						</h:panelGrid>
@@ -922,9 +924,11 @@
 					<br></br>
 					<div align="center">
 						<p:commandButton
+						   icon="ui-icon-check"
 							actionListener="#{antecedentBean.validerAntMed()}"
 							value="Valider" />
 						<p:commandButton oncomplete="PF('diagAntMed').hide();"
+						    icon="ui-icon-closethick"
 							value="Annuler" />
 					</div>
 
@@ -950,10 +954,12 @@
 					</h:panelGrid>
 					<br></br>
 					<div align="center">
-						<p:commandButton value="Valider">
+						<p:commandButton value="Valider"
+						icon="ui-icon-check">
 							<p:ajax listener="#{antecedentBean.ajouterAntMed()}"></p:ajax>
 						</p:commandButton>
 						<p:commandButton oncomplete="PF('diagAjoutAntMed').hide();"
+						    icon="ui-icon-closethick"
 							value="Annuler" />
 					</div>
 
@@ -1000,10 +1006,12 @@
 				</p:panel>
 				<div align="center">
 					<p:commandButton value="Valider"
+					    icon="ui-icon-check"
 						actionListener="#{antecedentBean.validerContraception}"
 						oncomplete="handleLoginRequest(xhr, status, args)" update=":f1:growl"></p:commandButton>
 
 					<p:commandButton value="Annuler"
+					    icon="ui-icon-closethick"
 						actionListener="#{antecedentBean.initialisation()}"
 						oncomplete="PF('diag3').hide();"></p:commandButton>
 				</div>
@@ -1031,11 +1039,13 @@
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:commandButton value="Valider"
+						   icon="ui-icon-check"
 							oncomplete="handleLoginRequestEG(xhr, status, args)">
 							<p:ajax listener="#{antecedentBean.ajouterEFG()}"
 								update=":idDialogGross,:f1:growl"></p:ajax>
 						</p:commandButton>
 						<p:commandButton
+						    icon="ui-icon-closethick"
 							actionListener="#{antecedentBean.annulationEFG()}"
 							value="Annuler" />
 					</h:panelGrid>
@@ -1044,36 +1054,7 @@
 		</p:dialog>
 
 
-		<p:dialog widgetVar="plusEtatBebe" closable="false" resizable="false">
-			<h:form id="formPlusEtat">
-				<p:panel id="dial">
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Etat Bébé" />
-						<p:inputText value="#{antecedentBean.etBebe}" />
-					</h:panelGrid>
-
-					<h:panelGrid columns="2">
-						<p:outputLabel
-							value="Augmenter le nombre des enfants avec cet état ?" />
-						<p:selectOneRadio layout="grid" columns="1"
-							value="#{antecedentBean.incre}">
-							<f:selectItem itemLabel="Oui" itemValue="true" />
-							<f:selectItem itemLabel="Non" itemValue="false" />
-						</p:selectOneRadio>
-					</h:panelGrid>
-
-					<h:panelGrid columns="2">
-						<p:commandButton value="Valider" icon="ui-icon-check"
-							actionListener="#{antecedentBean.ajoutPlusEtatBebe()}"
-							update=":idDialogGross"
-							oncomplete="handleLoginRequestEB(xhr, status, args)()" />
-
-						<p:commandButton value="Annuler"
-							icon="ui-icon-arrowreturnthick-1-n" />
-					</h:panelGrid>
-				</p:panel>
-			</h:form>
-		</p:dialog>
+		
 
 
 		<h:form id="fgrossese2">
@@ -1100,7 +1081,7 @@
 						<p:commandButton value="Annuler"
 							style="font-size:10pt;font-weight:bold"
 							oncomplete="PF('dialogAnt').hide();"
-							icon="ui-icon-arrowreturnthick-1-n">
+							icon="ui-icon-closethick">
 						</p:commandButton>
 					</div>
 				</p:panel>
@@ -1125,7 +1106,7 @@
 								update=":f1:growl,:fgrossese2:">
 							</p:commandButton>
 							<p:commandButton value="Annuler"
-								icon="ui-icon-arrowreturnthick-1-n"
+								icon="ui-icon-closethick"
 								oncomplete="PF('diagContra').hide();" />
 						</h:panelGrid>
 					</p:panel>

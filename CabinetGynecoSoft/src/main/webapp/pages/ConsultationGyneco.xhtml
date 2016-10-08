@@ -351,11 +351,13 @@
 					</table>
 					<div align="center">
 						<p:commandButton value="Valider"
+						   icon="ui-icon-check"
 							actionListener="#{consultationDetailBean.validerConsultationGyneco()}"
 							update=":f1,:f1:growl">
 						</p:commandButton>
 
 						<p:commandButton value="Annuler"
+						    icon="ui-icon-closethick"
 							actionListener="#{consultationDetailBean.initialisation}"
 							update=":f1,:f1:nouvelleordonnace,:f1:analyse,:f1:Radio"></p:commandButton>
 					</div>

@@ -145,12 +145,13 @@
 							<table border="0">
 								<tr>
 									<td width="500px"></td>
-									<td><p:commandButton value="Valider"
+									<td><p:commandButton icon="ui-icon-check" value="Valider"
 											actionListener="#{radioBean.valider}" update=":f1:growl,:f1"
 											immediate="true" disabled="#{radioBean.consultation}"
 											style="font-size:12pt;font-weight:bold">
 										</p:commandButton></td>
 									<td><p:commandButton value="Annuler"
+									        icon="ui-icon-closethick"
 											rendered="#{!connectionBean.consultDetRad}"
 											style="font-size:12pt;font-weight:bold">
 											<p:ajax listener="#{radioBean.annulation()}" />

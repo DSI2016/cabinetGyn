@@ -246,7 +246,6 @@
 											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 											var="cons" selectionMode="single"
 											selection="#{consultationDetailBean.selectedCons}"
-											
 											rowKey="#{cons.idConsultationDetail}">
 											<p:ajax event="rowSelect"
 												listener="#{consultationDetailBean.onRowSelectEchiGyneco}"
@@ -270,11 +269,12 @@
 													update=":f1:p2,:f1:p3,:f1:p4,:f1"
 													rendered="#{connectionBean.modifechogyneco}" />
 												<p:commandButton icon="ui-icon-trash"
-													action="#{consultationDetailBean.supprimerConsultationEchoGyneco(cons)}"
+													actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco(cons)}"
+													onclick="#{consultationDetailBean.supSelect(cons)}"
 													title="Suppression Consultation"
-													update=":f1:p2,:f1:p3,:f1:p4,:f1,:f1:eventsDT"
+													
 													rendered="#{connectionBean.suppechogyneco}">
-													<p:confirm header="Suppression Consultation"
+												<p:confirm  header="Suppression Consultation"
 														message="Voulez-vous vraiment supprimer cette Consultation ?"
 														icon="ui-icon-alert" />
 												</p:commandButton>
@@ -350,7 +350,7 @@
 								actionListener="#{consultationDetailBean.validerConsEchoGyneco()}"
 								disabled="#{consultationDetailBean.afficheValid}"
 								update=":f1,:f1:growl"></p:commandButton>
-							<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
+							<p:commandButton icon="ui-icon-closethick"
 								value="Annuler"
 								actionListener="#{consultationDetailBean.initialisationechogyneco()}"
 								update=":f1,:f1:growl"></p:commandButton>
@@ -382,11 +382,11 @@
 						<p:inputText value="#{consultationDetailBean.nommodele}" />
 					</h:panelGrid>
 					<div align="center">
-						<p:commandButton icon="ui-icon-plusthick" value="Valider"
+						<p:commandButton icon="ui-icon-check" value="Valider"
 							update=":f1,:f1:growl"
 							actionListener="#{consultationDetailBean.ajouterModele()}"
 							oncomplete="PF('diag2').hide();" />
-						<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+						<p:commandButton icon="ui-icon-closethick"
 							value="Annuler" onclick="PF('diag2').hide();" />
 					</div>
 
