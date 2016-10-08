@@ -82,33 +82,33 @@ public class ConsultationDetail implements Serializable {
 	private String cat;
 	private String notes;
 	private boolean consGrossType;
-private int nbAnalyse;
-private int nbRadio;
-private int nbOrd;
+	private int nbAnalyse;
+	private int nbRadio;
+	private int nbOrd;
 
 	public int getNbAnalyse() {
-	return nbAnalyse;
-}
+		return nbAnalyse;
+	}
 
-public void setNbAnalyse(int nbAnalyse) {
-	this.nbAnalyse = nbAnalyse;
-}
+	public void setNbAnalyse(int nbAnalyse) {
+		this.nbAnalyse = nbAnalyse;
+	}
 
-public int getNbRadio() {
-	return nbRadio;
-}
+	public int getNbRadio() {
+		return nbRadio;
+	}
 
-public void setNbRadio(int nbRadio) {
-	this.nbRadio = nbRadio;
-}
+	public void setNbRadio(int nbRadio) {
+		this.nbRadio = nbRadio;
+	}
 
-public int getNbOrd() {
-	return nbOrd;
-}
+	public int getNbOrd() {
+		return nbOrd;
+	}
 
-public void setNbOrd(int nbOrd) {
-	this.nbOrd = nbOrd;
-}
+	public void setNbOrd(int nbOrd) {
+		this.nbOrd = nbOrd;
+	}
 
 	public String getCat() {
 		return cat;
@@ -185,8 +185,6 @@ public void setNbOrd(int nbOrd) {
 		return dateConsultation;
 	}
 
-	
-
 	public void setDateConsultation(Date dateConsultation) {
 		this.dateConsultation = dateConsultation;
 	}
@@ -222,8 +220,6 @@ public void setNbOrd(int nbOrd) {
 	public void setTermeActuel(String termeActuel) {
 		this.termeActuel = termeActuel;
 	}
-
-	
 
 	public double getHonoraire() {
 		return honoraire;
@@ -661,7 +657,7 @@ public void setNbOrd(int nbOrd) {
 				+ ((conclusion == null) ? 0 : conclusion.hashCode());
 		result = prime * result
 				+ ((conclusionobs == null) ? 0 : conclusionobs.hashCode());
-		
+
 		result = prime * result + (consGrossType ? 1231 : 1237);
 		result = prime * result + (ddgCorigee ? 1231 : 1237);
 		result = prime * result
@@ -930,12 +926,14 @@ public void setNbOrd(int nbOrd) {
 				return false;
 		} else if (!motifCons.equals(other.motifCons))
 			return false;
+		
 		if (nbAnalyse != other.nbAnalyse)
 			return false;
 		if (nbOrd != other.nbOrd)
 			return false;
 		if (nbRadio != other.nbRadio)
 			return false;
+		
 		if (notes == null) {
 			if (other.notes != null)
 				return false;
@@ -1088,7 +1086,5 @@ public void setNbOrd(int nbOrd) {
 	public void setDdgCorigee(boolean ddgCorigee) {
 		this.ddgCorigee = ddgCorigee;
 	}
-	
-	
 
 }

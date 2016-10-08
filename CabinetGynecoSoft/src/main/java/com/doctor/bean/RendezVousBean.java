@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -88,6 +89,52 @@ public class RendezVousBean implements Serializable {
 	private Date selectedDate = new Date();
 	private boolean permenent;
 	private String dateChoisi;
+
+	@PostConstruct
+	public void mettreAJourSaison() {
+		// récuperer la liste de saison;
+		List<Saison> l = new SaisonService().rechercheTousSaison();
+
+		// tester pour chaque saison si date fin < date aujourd'hui
+		for (int i = 0; i < l.size(); i++) {
+			if (l.get(i).getFin().before(new Date())) {
+				
+				Date df = l.get(i).getFin();
+				
+				
+				Calendar calf = Calendar.getInstance();
+				calf.setTime(df);
+				calf.add(Calendar.YEAR, 1);
+				
+				
+				Date dd = l.get(i).getDebut();
+				
+				Calendar cald = Calendar.getInstance();
+				cald.setTime(df);
+				cald.add(Calendar.YEAR, 1);
+				
+				if (l.get(i).getNom().equals("Ramadhan")) {
+					// si c'est ramadhane on ajout 1 ans -12jours
+					
+					calf.add(Calendar.DATE, -12);
+					cald.add(Calendar.DATE, -12);
+				} 
+				
+				df=calf.getTime();
+				l.get(i).setFin(df);
+				
+				dd = cald.getTime();
+				l.get(i).setDebut(dd);
+				
+				//modifier la date de debu et fin du siason
+				
+				new SaisonService().modifierSaison(l.get(i));
+				
+			}
+
+		}
+
+	}
 
 	public String getDateChoisi() {
 		return dateChoisi;
@@ -923,20 +970,14 @@ public class RendezVousBean implements Serializable {
 
 							boolean horsHoraire = true;
 							if (h1 != null)
-								if (hh.getDebut().equals(h1.getDebut()) || (
-										hh.getDebut().after(h1.getDebut())
-										&&
-										hh.getDebut().before(h1.getFin())
-										)
-										)
+								if (hh.getDebut().equals(h1.getDebut())
+										|| (hh.getDebut().after(h1.getDebut()) && hh
+												.getDebut().before(h1.getFin())))
 									horsHoraire = false;
 							if (h2 != null)
-								if (hh.getDebut().equals(h2.getDebut()) || (
-										hh.getDebut().after(h2.getDebut())
-										&&
-										hh.getDebut().before(h2.getFin())
-										)
-										)
+								if (hh.getDebut().equals(h2.getDebut())
+										|| (hh.getDebut().after(h2.getDebut()) && hh
+												.getDebut().before(h2.getFin())))
 									horsHoraire = false;
 							dateChoisi = dateString + ":" + heure;
 							if (!horsHoraire) {
@@ -948,22 +989,22 @@ public class RendezVousBean implements Serializable {
 										":formeGenerale:idAffect");
 								context.execute("PF('menu').show();");
 							} else {
-								//afficher un dialogue qui demande s'il veux
-								//affecter un rdv hors horaire de travail
-								
+								// afficher un dialogue qui demande s'il veux
+								// affecter un rdv hors horaire de travail
+
 								RequestContext.getCurrentInstance().update(
 										":formeGenerale:idHorshoraire");
 								context.execute("PF('horshoraire').show();");
 
-								//								faces.addMessage(
-//										null,
-//										new FacesMessage(
-//												FacesMessage.SEVERITY_FATAL,
-//												"Interdit !",
-//												"\" "
-//														+ heure
-//														+ " est hors horaire de travail ! "));
-//								permenent = true;
+								// faces.addMessage(
+								// null,
+								// new FacesMessage(
+								// FacesMessage.SEVERITY_FATAL,
+								// "Interdit !",
+								// "\" "
+								// + heure
+								// + " est hors horaire de travail ! "));
+								// permenent = true;
 							}
 						} else {
 							faces.addMessage(null, new FacesMessage(
@@ -992,16 +1033,14 @@ public class RendezVousBean implements Serializable {
 		}
 	}
 
-	public void horsHoraire(){
+	public void horsHoraire() {
 		dureeRDV = 1;
 
 		RequestContext context = RequestContext.getCurrentInstance();
-		RequestContext.getCurrentInstance().update(
-				":formeGenerale:idAffect");
+		RequestContext.getCurrentInstance().update(":formeGenerale:idAffect");
 		context.execute("PF('menu').show();");
 	}
-	
-	
+
 	@SuppressWarnings("deprecation")
 	public void affect() throws ParseException {
 		HttpSession session2 = (HttpSession) FacesContext.getCurrentInstance()
@@ -1159,21 +1198,22 @@ public class RendezVousBean implements Serializable {
 						FacesMessage.SEVERITY_FATAL, "Impossible !",
 						"C'est un jour férier ! " + disc));
 				addValid = false;
-				RequestContext.getCurrentInstance().update(":formeGenerale:growl");
+				RequestContext.getCurrentInstance().update(
+						":formeGenerale:growl");
 				permenent = true;
 			} else if (dispo(getHoraire(), date) == false) {
 				faces.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_FATAL, "Impossible !",
 						"Hors horaire de travail !"));
 				permenent = true;
-				RequestContext.getCurrentInstance().update(":formeGenerale:growl");
+				RequestContext.getCurrentInstance().update(
+						":formeGenerale:growl");
 				addValid = false;
 			} else {
 				modif();
 				addValid = true;
 				RequestContext ctxt = RequestContext.getCurrentInstance();
-				ctxt.update(
-						":formeGenerale:gestionRendezVous");
+				ctxt.update(":formeGenerale:gestionRendezVous");
 				ctxt.execute("PF('eventDialog').show();");
 			}
 		} else {
