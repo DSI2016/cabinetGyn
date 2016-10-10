@@ -268,12 +268,12 @@
 													action="#{consultationDetailBean.modiefierConsEchoGyneco(cons)}"
 													update=":f1:p2,:f1:p3,:f1:p4,:f1"
 													rendered="#{connectionBean.modifechogyneco}" />
-												<p:commandButton icon="ui-icon-trash"
+												<p:commandButton 
+												     icon="ui-icon-trash" 
 													actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco(cons)}"
-													onclick="#{consultationDetailBean.supSelect(cons)}"
 													title="Suppression Consultation"
-													
 													rendered="#{connectionBean.suppechogyneco}">
+												
 												<p:confirm  header="Suppression Consultation"
 														message="Voulez-vous vraiment supprimer cette Consultation ?"
 														icon="ui-icon-alert" />
@@ -282,7 +282,7 @@
 											</p:column>
 
 										</p:dataTable>
-										<p:confirmDialog global="true" showEffect="fade"
+										<p:confirmDialog header="Suppression Consultation" message="Voulez-vous vraiment supprimer cette Consultation " global="true" showEffect="fade"
 											hideEffect="explode">
 											<p:commandButton value="Oui" type="button"
 												styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

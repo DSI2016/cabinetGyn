@@ -1612,6 +1612,7 @@ v1Nature=null;
 	
 	public void modifierLettre(historiqueLettre h) {
 		action = "Modification";
+		selectedhistolettre=h;
 		RequestContext context = RequestContext.getCurrentInstance();
 		if(h!=null)
 		{nomLettre = h.getLettre().getNomLettre();

@@ -2938,6 +2938,7 @@ public class ConsultationDetailBean implements Serializable {
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cons.getIdConsultationDetail());
 
+		selectedCons=cons;
 		idConsultationDetail = cons.getIdConsultationDetail();
 		dateConsultation = formatter.format(cons.getDateConsultation());
 		dateFrotti = cons.getDateFrotti();
@@ -4875,7 +4876,7 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cd.getIdConsultationDetail());
-
+        selectedCons=cd;
 		idConsultationDetail = cd.getIdConsultationDetail();
 
 		ddr = cd.getDdr();

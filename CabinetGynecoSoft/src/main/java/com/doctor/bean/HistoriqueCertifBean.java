@@ -2064,6 +2064,7 @@ context.addCallbackParam("addValid", addValid);
 
 	public void modifierCertif(HistoriqueCertif h) {
 		intialecertif() ;
+		selectedCertif=h;
 		action = "Modification";
 		Format formater = new SimpleDateFormat("dd/MM/yyyy");
 		RequestContext context = RequestContext.getCurrentInstance();

@@ -596,6 +596,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
+		selectedAnalyse=ana;
 		idPatient = (Integer) session.getAttribute("idu");
 		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
 		dateAna = ana.getDateAnalyse();
