@@ -2,6 +2,7 @@ package com.doctor.bean;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.groovy.runtime.DateGroovyMethods;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -48,8 +48,8 @@ public class HistoriqueCertifBean implements Serializable {
 	private Integer idCertificat;
 	private String motifCertificat;
 	private String remarque;
-private String dateCertifPrese;
-private String dateCertifPreseAccomp;
+	private String dateCertifPrese;
+	private String dateCertifPreseAccomp;
 
 	private boolean afficheImp = true;
 	private String datereprise;
@@ -138,7 +138,7 @@ private String dateCertifPreseAccomp;
 	}
 
 	public String getDateCertif() {
-		System.out.println("dateceertif get"+dateCertif);
+		System.out.println("dateceertif get" + dateCertif);
 		return dateCertif;
 	}
 
@@ -595,13 +595,39 @@ private String dateCertifPreseAccomp;
 		this.v31 = v31;
 	}
 
-	public void supprimerCertif(Integer id) {
+	private String msg;
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public void supressionCertif(HistoriqueCertif hist) {
+		idHistoriqueCertif = hist.getIdHistoriqueCertif();
+		selectedCertif = hist;
+
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String dateH = "";
+		if (hist.getDateCertif() != null)
+			dateH = "du " + formatter.format(hist.getDateCertif());
+		msg = "Voulez-vous vraiment supprimer la certificat " + dateH + " ?";
+
+		RequestContext.getCurrentInstance().update("f1:sup");
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('suppCert').show();");
+	}
+
+	public void supprimerCertif() {
 		HistoriqueCertifService ser = new HistoriqueCertifService();
-		ser.supprimerHistoriqueCertif(id);
+		ser.supprimerHistoriqueCertif(idHistoriqueCertif);
 		FacesContext face = FacesContext.getCurrentInstance();
 		blocage = false;
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
 				"Certificat Supprimé Avec succées"));
+		intialecertif();
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -715,12 +741,12 @@ private String dateCertifPreseAccomp;
 
 		} else
 			rem = remplaceMot(rem, "$livreele", "");
-if(cfclient!=null)
-		{if ((cfclient.getPrenom() != null) || (cfclient.getNom() != null))
-			rem = remplaceMot(rem, "$NP",
-					cfclient.getPrenom() + " " + cfclient.getNom());
-		else
-			rem = remplaceMot(rem, "$NP", "");
+		if (cfclient != null) {
+			if ((cfclient.getPrenom() != null) || (cfclient.getNom() != null))
+				rem = remplaceMot(rem, "$NP", cfclient.getPrenom() + " "
+						+ cfclient.getNom());
+			else
+				rem = remplaceMot(rem, "$NP", "");
 		}
 		if (cab.getDocteur() != null)
 			rem = remplaceMot(rem, "$Docteur", cab.getDocteur());
@@ -814,7 +840,7 @@ if(cfclient!=null)
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
-		
+
 		if ((dateCertif == null) || (dateCertif.length() == 0)) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -822,52 +848,53 @@ if(cfclient!=null)
 			addValid = false;
 
 		}
-		if((dateCertif!=null)&&(dateCertif.length()!=0))
-		{if (Module.corigerDate(dateCertif) != null) {
-			this.setDateCertif(Module.corigerDate(dateCertif));
-		}
-		
-		
-		if ((Module.verifierDate(dateCertif).equals(""))==false)
-
-		{
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"","Le date de certificat "+ Module.verifierDate(dateCertif)));
-			addValid = false;
-
-		} else {
-			try {
-				addValid=true;
-				cert.setDateCertif(sdf.parse(dateCertif));
-			} catch (ParseException e) {
-
-				e.printStackTrace();
+		if ((dateCertif != null) && (dateCertif.length() != 0)) {
+			if (Module.corigerDate(dateCertif) != null) {
+				this.setDateCertif(Module.corigerDate(dateCertif));
 			}
-		}
+
+			if ((Module.verifierDate(dateCertif).equals("")) == false)
+
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date de certificat "
+										+ Module.verifierDate(dateCertif)));
+				addValid = false;
+
+			} else {
+				try {
+					addValid = true;
+					cert.setDateCertif(sdf.parse(dateCertif));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+			}
 
 		}
 
-		
 		// verification de livree le
 		if (Module.corigerDate(livreele) != null) {
 			System.out.println("livrele" + livreele);
 			this.setLivreele(Module.corigerDate(livreele));
 		}
-		// verification de livrele 
-				if ((livreele == null) || (livreele.length() == 0)) {
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Veuillez saisi le date du livraison", ""));
-					addValid = false;
+		// verification de livrele
+		if ((livreele == null) || (livreele.length() == 0)) {
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Veuillez saisi le date du livraison", ""));
+			addValid = false;
 
-				}
+		}
 		if ((Module.verifierDate(livreele).equals("") == false))
 
 		{
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"","Le date du livraison"+ Module.verifierDate(livreele)));
+					"", "Le date du livraison" + Module.verifierDate(livreele)));
 			addValid = false;
 
 			// livreele = ancienValeurlivreele;
@@ -897,9 +924,9 @@ if(cfclient!=null)
 		}
 
 		if (face.getMessageList().size() == 0) {
-			addValid=true;
-cert.setDateCertif(sdf.parse(dateCertif));
-System.out.println("pas de prob");
+			addValid = true;
+			cert.setDateCertif(sdf.parse(dateCertif));
+			System.out.println("pas de prob");
 			cert.setA(a);
 			cert.setRemarques(remarques);
 
@@ -930,7 +957,6 @@ System.out.println("pas de prob");
 						FacesMessage.SEVERITY_INFO, "",
 						"Certificat ajoutée Avec succès"));
 
-				
 				selectedCertif = cert;
 				remarque = cert.getRemarque();
 				// }
@@ -952,18 +978,19 @@ System.out.println("pas de prob");
 
 			}
 		}
-System.out.println("addvalide"+addValid);
+		System.out.println("addvalide" + addValid);
 		intialecertif();
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
 
 	}
-public void verifierDatePresence()
-{
-setDateCertifPrese(dateCertifPrese);	
-}
+
+	public void verifierDatePresence() {
+		setDateCertifPrese(dateCertifPrese);
+	}
+
 	public void ajoutCertifRepos() throws SQLException, Exception {
-		
+
 		boolean addValid = false;
 		FacesContext face = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -973,24 +1000,21 @@ setDateCertifPrese(dateCertifPrese);
 
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if((dateCertif==null)||(dateCertif.equals("")))
-		{
+		if ((dateCertif == null) || (dateCertif.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date de cetificat"));
 			addValid = false;
 
 		}
-		if((adaterdu==null)||(adaterdu.equals("")))
-		{
+		if ((adaterdu == null) || (adaterdu.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date adater du"));
 			addValid = false;
 
 		}
-		if((type==null)||(type.equals("")))
-		{
+		if ((type == null) || (type.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez selectioner le type"));
@@ -998,41 +1022,44 @@ setDateCertifPrese(dateCertifPrese);
 
 		}
 
-		
 		// verification de date certif
-		if((dateCertif!=null)&&(dateCertif.length()!=0))
-		{if (Module.corigerDate(dateCertif) != null) {
-			this.setDateCertif(Module.corigerDate(dateCertif));
-		}
-		if ((Module.verifierDate(dateCertif).equals(""))==false)
-
-		{
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "Le date de certificat "+Module.verifierDate(dateCertif)));
-			addValid = false;
-
-		} else {
-			try {
-				cert.setDateCertif(sdf.parse(dateCertif));
-			} catch (ParseException e) {
-
-				e.printStackTrace();
+		if ((dateCertif != null) && (dateCertif.length() != 0)) {
+			if (Module.corigerDate(dateCertif) != null) {
+				this.setDateCertif(Module.corigerDate(dateCertif));
 			}
-		}
-
-		}
-		
-if((adaterdu!=null)&&(adaterdu.length()!=0))		
-			{if (Module.corigerDate(adaterdu) != null) {
-				this.setAdaterdu(Module.corigerDate(adaterdu));
-			}
-			if ((Module.verifierDate(adaterdu).equals(""))==false)
+			if ((Module.verifierDate(dateCertif).equals("")) == false)
 
 			{
 				blocage = true;
-				face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"","a dater du "+ Module.verifierDate(adaterdu)));
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date de certificat "
+										+ Module.verifierDate(dateCertif)));
+				addValid = false;
+
+			} else {
+				try {
+					cert.setDateCertif(sdf.parse(dateCertif));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		if ((adaterdu != null) && (adaterdu.length() != 0)) {
+			if (Module.corigerDate(adaterdu) != null) {
+				this.setAdaterdu(Module.corigerDate(adaterdu));
+			}
+			if ((Module.verifierDate(adaterdu).equals("")) == false)
+
+			{
+				blocage = true;
+				face.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"a dater du " + Module.verifierDate(adaterdu)));
 				addValid = false;
 
 			} else {
@@ -1043,58 +1070,59 @@ if((adaterdu!=null)&&(adaterdu.length()!=0))
 					e.printStackTrace();
 				}
 			}
-			}
-			
-
-		if(face.getMessageList().size()==0)
-{
-	System.out.println("pas de probleme");
-		cert.setDureederepos(dureederepos);
-		cert.setType(type1);
-
-		Certificat c = new CertificatService()
-				.rechercheCertifParMotif(motifCertificat);
-		cert.setCertificat(c);
-		cert.setRemarque(remarque);
-		if (c != null)
-			if (c.getRemarque() != null) {
-				String textelettre = c.getRemarque();
-				textelettre = intialeTextCertificats();
-				cert.setRemarque(textelettre);
-			}
-		cert.setCfclient(cfclient);
-		if (action.equals("Ajout")) {
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			serc.ajoutHistoriqueCertif(cert);
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat ajoutée avec succès"));
-
-			afficheImp = false;
-			addValid = true;
-			blocage = false;
-						
-			selectedCertif = cert;
-			remarque = cert.getRemarque();
-
 		}
-		
-		if (action.equals("Modification")) {
 
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert.setIdHistoriqueCertif(idHistoriqueCertif);
-			serc.modifierHistoriqueCertif(cert);
-			selectedCertif = cert;
-			
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat modifiée avec succès"));
-			afficheImp = false;
-			addValid = true;
-			blocage = false;
-						
-			selectedCertif = cert;
-			remarque = cert.getRemarque();
-		}}		
+		if (face.getMessageList().size() == 0) {
+			System.out.println("pas de probleme");
+			cert.setDureederepos(dureederepos);
+			cert.setType(type1);
+
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			cert.setRemarque(remarque);
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
+				}
+			cert.setCfclient(cfclient);
+			if (action.equals("Ajout")) {
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				serc.ajoutHistoriqueCertif(cert);
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat ajoutée avec succès"));
+
+				afficheImp = false;
+				addValid = true;
+				blocage = false;
+
+				selectedCertif = cert;
+				remarque = cert.getRemarque();
+
+			}
+
+			if (action.equals("Modification")) {
+
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				cert.setIdHistoriqueCertif(idHistoriqueCertif);
+				serc.modifierHistoriqueCertif(cert);
+				selectedCertif = cert;
+
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat modifiée avec succès"));
+				afficheImp = false;
+				addValid = true;
+				blocage = false;
+
+				selectedCertif = cert;
+				remarque = cert.getRemarque();
+			}
+		}
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
@@ -1121,54 +1149,52 @@ if((adaterdu!=null)&&(adaterdu.length()!=0))
 			addValid = false;
 
 		}
-		if((dateCertifPrese!=null)&&(dateCertifPrese.length()!=0))
-		{if (Module.corigerDate(dateCertifPrese) != null) {
-			this.setDateCertifPrese(Module.corigerDate(dateCertifPrese));
-		}
-		
-		
-		if ((Module.verifierDate(dateCertifPrese).equals(""))==false)
-
-		{
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"","Le date de certificat "+ Module.verifierDate(dateCertifPrese)));
-			addValid = false;
-
-		} else {
-			try {
-				addValid=true;
-				cert.setDateCertif(sdf.parse(dateCertifPrese));
-			} catch (ParseException e) {
-
-				e.printStackTrace();
+		if ((dateCertifPrese != null) && (dateCertifPrese.length() != 0)) {
+			if (Module.corigerDate(dateCertifPrese) != null) {
+				this.setDateCertifPrese(Module.corigerDate(dateCertifPrese));
 			}
-		}
 
-		}
-		
-		
-		if(face.getMessageList().size()==0)
+			if ((Module.verifierDate(dateCertifPrese).equals("")) == false)
+
 			{
-							
-							
-							
-							addValid = true;
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date de certificat "
+										+ Module.verifierDate(dateCertifPrese)));
+				addValid = false;
 
-							Certificat c = new CertificatService()
-									.rechercheCertifParMotif(motifCertificat);
-							cert.setCertificat(c);
-							//
-							// cert.setDateCertif(sdf.parse(dateCertif));
-							cert.setRemarque(remarque);
-							if (c != null)
-								if (c.getRemarque() != null) {
-									String textelettre = c.getRemarque();
-									textelettre = intialeTextCertificats();
-									cert.setRemarque(textelettre);
-								}
+			} else {
+				try {
+					addValid = true;
+					cert.setDateCertif(sdf.parse(dateCertifPrese));
+				} catch (ParseException e) {
 
-							if (action.equals("Ajout")) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		if (face.getMessageList().size() == 0) {
+
+			addValid = true;
+
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			//
+			// cert.setDateCertif(sdf.parse(dateCertif));
+			cert.setRemarque(remarque);
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
+				}
+
+			if (action.equals("Ajout")) {
 				HistoriqueCertifService serc = new HistoriqueCertifService();
 				serc.ajoutHistoriqueCertif(cert);
 				faces.addMessage(null, new FacesMessage(
@@ -1214,8 +1240,8 @@ if((adaterdu!=null)&&(adaterdu.length()!=0))
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if((dateCertifPreseAccomp==null)||(dateCertifPreseAccomp.equals("")))
-		{
+		if ((dateCertifPreseAccomp == null)
+				|| (dateCertifPreseAccomp.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date de cetificat"));
@@ -1223,32 +1249,38 @@ if((adaterdu!=null)&&(adaterdu.length()!=0))
 
 		}
 
-if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
-{
-		if (Module.corigerDate(dateCertifPreseAccomp) != null) {
-			this.setDateCertifPreseAccomp(Module.corigerDate(dateCertifPreseAccomp));
-		}
-		if ((Module.verifierDate(dateCertifPreseAccomp).equals(""))==false)
+		if ((dateCertifPreseAccomp != null)
+				&& (dateCertifPreseAccomp.length() != 0)) {
+			if (Module.corigerDate(dateCertifPreseAccomp) != null) {
+				this.setDateCertifPreseAccomp(Module
+						.corigerDate(dateCertifPreseAccomp));
+			}
+			if ((Module.verifierDate(dateCertifPreseAccomp).equals("")) == false)
 
-		{
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"","Le date du certificat "+ Module.verifierDate(dateCertifPreseAccomp)));
-			addValid = false;
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"",
+								"Le date du certificat "
+										+ Module.verifierDate(dateCertifPreseAccomp)));
+				addValid = false;
 
-			// dateCertif = ancienValeurDateCertif;
-		} else {
+				// dateCertif = ancienValeurDateCertif;
+			} else {
 
-			// ancienValeurDateCertif = dateCertif;
-			try {
-				addValid = true;
-				cert.setDateCertif(sdf.parse(dateCertifPreseAccomp));
-			} catch (ParseException e) {
+				// ancienValeurDateCertif = dateCertif;
+				try {
+					addValid = true;
+					cert.setDateCertif(sdf.parse(dateCertifPreseAccomp));
+				} catch (ParseException e) {
 
-				e.printStackTrace();
+					e.printStackTrace();
+				}
 			}
 		}
-}
 
 		if (face.getMessageList().size() == 0) {
 			cert.setCfclient(cfclient);
@@ -1301,8 +1333,9 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 		context.addCallbackParam("addValid", addValid);
 		intialecertif();
 	}
+
 	public void gotoAcceuil() {
-		afficheImp=true;
+		afficheImp = true;
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("Accueil");
@@ -1310,6 +1343,7 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 			System.out.println(e.getMessage());
 		}
 	}
+
 	public void ajoutCertifReposAccomp() throws SQLException, Exception {
 		System.out.println("entre methode accomp");
 		boolean addValid = false;
@@ -1321,32 +1355,28 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if((dateCertif==null)||(dateCertif.equals("")))
-		{
+		if ((dateCertif == null) || (dateCertif.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date de cetificat"));
 			addValid = false;
 
 		}
-		if((adaterdu==null)||(adaterdu.equals("")))
-		{
+		if ((adaterdu == null) || (adaterdu.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date adater du"));
 			addValid = false;
 
 		}
-		if((type==null)||(type.equals("")))
-		{
+		if ((type == null) || (type.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez selectioner le type"));
 			addValid = false;
 
 		}
-		if((accompagnant==null)||(accompagnant.equals("")))
-		{
+		if ((accompagnant == null) || (accompagnant.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le nom d'accompagnement"));
@@ -1354,46 +1384,48 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 
 		}
 
-		
 		// verification de date certif
-		if((dateCertif!=null)&&(dateCertif.equals("")==false))
-		{
-	
-		if (Module.corigerDate(dateCertif) != null) {
-			this.setDateCertif(Module.corigerDate(dateCertif));
-		}
-		if ((Module.verifierDate(dateCertif).equals(""))==false)
+		if ((dateCertif != null) && (dateCertif.equals("") == false)) {
 
-		{
-			System.out.println("problem datecrtif");
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"","Le date du certificat "+ Module.verifierDate(dateCertif)));
-			addValid = false;
-
-		}
-		else {
-			System.out.println("date certifcv");
-			try {
-				cert.setDateCertif(sdf.parse(dateCertif));
-			} catch (ParseException e) {
-
-				e.printStackTrace();
+			if (Module.corigerDate(dateCertif) != null) {
+				this.setDateCertif(Module.corigerDate(dateCertif));
 			}
+			if ((Module.verifierDate(dateCertif).equals("")) == false)
 
-		}}
-		if((adaterdu!=null)&&(adaterdu.equals("")==false))
-		{
+			{
+				System.out.println("problem datecrtif");
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date du certificat "
+										+ Module.verifierDate(dateCertif)));
+				addValid = false;
+
+			} else {
+				System.out.println("date certifcv");
+				try {
+					cert.setDateCertif(sdf.parse(dateCertif));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+
+			}
+		}
+		if ((adaterdu != null) && (adaterdu.equals("") == false)) {
 			if (Module.corigerDate(adaterdu) != null) {
 				this.setAdaterdu(Module.corigerDate(adaterdu));
 			}
-			if ((Module.verifierDate(adaterdu).equals(""))==false)
+			if ((Module.verifierDate(adaterdu).equals("")) == false)
 
 			{
 				System.out.println("adater invalide");
 				blocage = true;
-				face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"", "a dater du "+ Module.verifierDate(dateCertif)));
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"a dater du " + Module.verifierDate(dateCertif)));
 				addValid = false;
 
 			} else {
@@ -1405,58 +1437,61 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 				}
 			}
 		}
-		if(face.getMessageList().size()==0)
-{
-	System.out.println("pas de probleme certpresacomp");
-		cert.setDureederepos(dureederepos);
-		cert.setType(type1);
-		cert.setAccompagnant(accompagnant);
+		if (face.getMessageList().size() == 0) {
+			System.out.println("pas de probleme certpresacomp");
+			cert.setDureederepos(dureederepos);
+			cert.setType(type1);
+			cert.setAccompagnant(accompagnant);
 
-		Certificat c = new CertificatService()
-				.rechercheCertifParMotif(motifCertificat);
-		cert.setCertificat(c);
-		cert.setAccompagnant(accompagnant);
-		cert.setRemarque(remarque);
-		System.out.println("acccompagnement d'ajout "+cert.getAccompagnant());
-		if (c != null)
-			if (c.getRemarque() != null) {
-				String textelettre = c.getRemarque();
-				textelettre = intialeTextCertificats();
-				cert.setRemarque(textelettre);
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			cert.setAccompagnant(accompagnant);
+			cert.setRemarque(remarque);
+			System.out.println("acccompagnement d'ajout "
+					+ cert.getAccompagnant());
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
+				}
+			cert.setCfclient(cfclient);
+			if (action.equals("Ajout")) {
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				serc.ajoutHistoriqueCertif(cert);
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat ajoutée avec succès"));
+
+				afficheImp = false;
+				addValid = true;
+				blocage = false;
+
+				selectedCertif = cert;
+				remarque = cert.getRemarque();
+
 			}
-		cert.setCfclient(cfclient);
-		if (action.equals("Ajout")) {
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			serc.ajoutHistoriqueCertif(cert);
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat ajoutée avec succès"));
 
-			afficheImp = false;
-			addValid = true;
-			blocage = false;
-						
-			selectedCertif = cert;
-			remarque = cert.getRemarque();
+			if (action.equals("Modification")) {
 
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				cert.setIdHistoriqueCertif(idHistoriqueCertif);
+				serc.modifierHistoriqueCertif(cert);
+				selectedCertif = cert;
+
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat modifiée avec succès"));
+				afficheImp = false;
+				addValid = true;
+				blocage = false;
+
+				selectedCertif = cert;
+				remarque = cert.getRemarque();
+			}
 		}
-		
-		if (action.equals("Modification")) {
-
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert.setIdHistoriqueCertif(idHistoriqueCertif);
-			serc.modifierHistoriqueCertif(cert);
-			selectedCertif = cert;
-			
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat modifiée avec succès"));
-			afficheImp = false;
-			addValid = true;
-			blocage = false;
-						
-			selectedCertif = cert;
-			remarque = cert.getRemarque();
-		}}		
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
@@ -1464,7 +1499,7 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 	}
 
 	public void ajoutCertifGuerision() throws SQLException, Exception {
-	
+
 		FacesContext face = FacesContext.getCurrentInstance();
 		RequestContext context = RequestContext.getCurrentInstance();
 		boolean addValid = false;
@@ -1475,124 +1510,124 @@ if((dateCertifPreseAccomp!=null)&&(dateCertifPreseAccomp.length()!=0))
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
-		if((dateCertif==null)||(dateCertif.equals("")))
-		{
+		if ((dateCertif == null) || (dateCertif.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date de cetificat"));
 			addValid = false;
 
 		}
-		
+
 		// verification de date certif
-				if((dateCertif!=null)&&(dateCertif.length()!=0))
-				{
-			
-				if (Module.corigerDate(dateCertif) != null) {
-					this.setDateCertif(Module.corigerDate(dateCertif));
-				}
-				if ((Module.verifierDate(dateCertif).equals(""))==false)
+		if ((dateCertif != null) && (dateCertif.length() != 0)) {
 
-				{
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"","Le date du certificat "+ Module.verifierDate(dateCertif)));
-					addValid = false;
-
-				}
-				else {
-					try {
-						cert.setDateCertif(sdf.parse(dateCertif));
-					} catch (ParseException e) {
-
-						e.printStackTrace();
-					}
-
-				}
-				}
-				
-				// verification de date certif
-				if((datereprise!=null)&&(datereprise.equals("")==false))
-				{
-			
-				if (Module.corigerDate(datereprise) != null) {
-					this.setDatereprise(Module.corigerDate(datereprise));
-				}
-				if ((Module.verifierDate(datereprise).equals(""))==false)
-
-				{
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"", "Le date du certificat "+ Module.verifierDate(datereprise)));
-					addValid = false;
-
-				}
-				else {
-					try {
-						cert.setDatereprise(sdf.parse(datereprise));
-					} catch (ParseException e) {
-
-						e.printStackTrace();
-					}
-
-				}}
-				else
-				{
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"", "Veuillez saisi le date de reprise"));
-					addValid = false;
-
-				}
-		
-		
-if(face.getMessageList().size()==0)
-{	Certificat c = new CertificatService()
-				.rechercheCertifParMotif(motifCertificat);
-		cert.setCertificat(c);
-		if (c != null)
-			if (c.getRemarque() != null) {
-				String textelettre = c.getRemarque();
-				textelettre = intialeTextCertificats();
-				cert.setRemarque(textelettre);
+			if (Module.corigerDate(dateCertif) != null) {
+				this.setDateCertif(Module.corigerDate(dateCertif));
 			}
-		if (action.equals("Ajout")) {
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			serc.ajoutHistoriqueCertif(cert);
+			if ((Module.verifierDate(dateCertif).equals("")) == false)
 
-			// impression
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat ajoutée avec succès"));
-			afficheImp = false;
-			addValid = true;
-			blocage = false;
-						
-			selectedCertif = cert;
-			remarque = cert.getRemarque();
-		
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date du certificat "
+										+ Module.verifierDate(dateCertif)));
+				addValid = false;
+
+			} else {
+				try {
+					cert.setDateCertif(sdf.parse(dateCertif));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+
+			}
 		}
-		if (action.equals("Modification")) {
 
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert = serc.rechercheHistoriqueCertif(idHistoriqueCertif);
+		// verification de date certif
+		if ((datereprise != null) && (datereprise.equals("") == false)) {
 
-			serc.modifierHistoriqueCertif(cert);
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat modifiée avec succès"));
-			afficheImp = false;
-			addValid = true;
-			blocage = false;
-						
-			selectedCertif = cert;
-			remarque = cert.getRemarque();
-		
+			if (Module.corigerDate(datereprise) != null) {
+				this.setDatereprise(Module.corigerDate(datereprise));
+			}
+			if ((Module.verifierDate(datereprise).equals("")) == false)
+
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date du certificat "
+										+ Module.verifierDate(datereprise)));
+				addValid = false;
+
+			} else {
+				try {
+					cert.setDatereprise(sdf.parse(datereprise));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+
+			}
+		} else {
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", "Veuillez saisi le date de reprise"));
+			addValid = false;
 
 		}
-}
-context.addCallbackParam("addValid", addValid);
-intialecertif();
+
+		if (face.getMessageList().size() == 0) {
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
+				}
+			if (action.equals("Ajout")) {
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				serc.ajoutHistoriqueCertif(cert);
+
+				// impression
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat ajoutée avec succès"));
+				afficheImp = false;
+				addValid = true;
+				blocage = false;
+
+				selectedCertif = cert;
+				remarque = cert.getRemarque();
+
+			}
+			if (action.equals("Modification")) {
+
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				cert = serc.rechercheHistoriqueCertif(idHistoriqueCertif);
+
+				serc.modifierHistoriqueCertif(cert);
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat modifiée avec succès"));
+				afficheImp = false;
+				addValid = true;
+				blocage = false;
+
+				selectedCertif = cert;
+				remarque = cert.getRemarque();
+
+			}
+		}
+		context.addCallbackParam("addValid", addValid);
+		intialecertif();
 
 	}
 
@@ -1611,13 +1646,16 @@ intialecertif();
 		if (Module.corigerDate(dateCertif) != null) {
 			this.setDateCertif(Module.corigerDate(dateCertif));
 		}
-		if ((Module.verifierDate(dateCertif).equals(""))==false)
+		if ((Module.verifierDate(dateCertif).equals("")) == false)
 
 		{
 			System.out.println("problem datecrtif");
 			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "Le date du certificat "+ Module.verifierDate(dateCertif)));
+			face.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+							"Le date du certificat "
+									+ Module.verifierDate(dateCertif)));
 			addValid = false;
 
 		} else {
@@ -1630,110 +1668,113 @@ intialecertif();
 			}
 
 		}
-		
-			if (Module.corigerDate(adaterdu) != null) {
-				this.setAdaterdu(Module.corigerDate(adaterdu));
-			}
-			if ((Module.verifierDate(adaterdu).equals(""))==false)
 
-			{
-				System.out.println("adater invalide");
-				blocage = true;
-				face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"","a dater "+ Module.verifierDate(dateCertif)));
-				addValid = false;
-
-			} else {
-				try {
-					cert.setAdaterdu(sdf.parse(adaterdu));
-				} catch (ParseException e) {
-
-					e.printStackTrace();
-				}
-			}
-				
-				if (Module.corigerDate(datedelagression) != null) {
-					this.setDatedelagression(Module.corigerDate(datedelagression));
-				}
-				if ((Module.verifierDate(datedelagression).equals(""))==false)
-
-				{
-					System.out.println("date de guresiation invalide");
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"", "Le date de l'agression "+ Module.verifierDate(datedelagression)));
-					addValid = false;
-
-				} else {
-					try {
-						cert.setDatedelagression(sdf.parse(datedelagression));
-					} catch (ParseException e) {
-
-						e.printStackTrace();
-					}
-
-				}
-				
-				
-				if (face.getMessageList().size() == 0) {
-			
-				addValid=true;
-		cert.setHeuresys(heuresys);
-		cert.setMinutesys(minutesys);
-
-		cert.setHeurelagr(heurelagr);
-		cert.setMinutelagr(minutelagr);
-
-		cert.setDureederepos(dureederepos);
-		cert.setLesions(lesions);
-
-		Certificat c = new CertificatService()
-				.rechercheCertifParMotif(motifCertificat);
-		cert.setCertificat(c);
-		if (c != null)
-			if (c.getRemarque() != null) {
-				String textelettre = c.getRemarque();
-				textelettre = intialeTextCertificats();
-				cert.setRemarque(textelettre);
-			}
-		if (action.equals("Ajout")) {
-			addValid=true;
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			serc.ajoutHistoriqueCertif(cert);
-
-			face.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Certificat ajouté avec succès.", ""));
-
-			addValid = true;
-			selectedCertif = cert;
-			afficheImp = false;
-			remarque = cert.getRemarque();
-			
+		if (Module.corigerDate(adaterdu) != null) {
+			this.setAdaterdu(Module.corigerDate(adaterdu));
 		}
-		if (action.equals("Modification")) {
-addValid=true;
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert.setIdHistoriqueCertif(idHistoriqueCertif);
-			serc.modifierHistoriqueCertif(cert);
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat modifiée avec succès"));
-			
-			addValid = true;
-			selectedCertif = cert;
-			afficheImp = false;
-			remarque = cert.getRemarque();
+		if ((Module.verifierDate(adaterdu).equals("")) == false)
+
+		{
+			System.out.println("adater invalide");
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", "a dater " + Module.verifierDate(dateCertif)));
+			addValid = false;
+
+		} else {
+			try {
+				cert.setAdaterdu(sdf.parse(adaterdu));
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+		if (Module.corigerDate(datedelagression) != null) {
+			this.setDatedelagression(Module.corigerDate(datedelagression));
+		}
+		if ((Module.verifierDate(datedelagression).equals("")) == false)
+
+		{
+			System.out.println("date de guresiation invalide");
+			blocage = true;
+			face.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+							"Le date de l'agression "
+									+ Module.verifierDate(datedelagression)));
+			addValid = false;
+
+		} else {
+			try {
+				cert.setDatedelagression(sdf.parse(datedelagression));
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
 
 		}
+
+		if (face.getMessageList().size() == 0) {
+
+			addValid = true;
+			cert.setHeuresys(heuresys);
+			cert.setMinutesys(minutesys);
+
+			cert.setHeurelagr(heurelagr);
+			cert.setMinutelagr(minutelagr);
+
+			cert.setDureederepos(dureederepos);
+			cert.setLesions(lesions);
+
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
+				}
+			if (action.equals("Ajout")) {
+				addValid = true;
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				serc.ajoutHistoriqueCertif(cert);
+
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"Certificat ajouté avec succès.", ""));
+
+				addValid = true;
+				selectedCertif = cert;
+				afficheImp = false;
+				remarque = cert.getRemarque();
+
 			}
+			if (action.equals("Modification")) {
+				addValid = true;
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				cert.setIdHistoriqueCertif(idHistoriqueCertif);
+				serc.modifierHistoriqueCertif(cert);
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat modifiée avec succès"));
+
+				addValid = true;
+				selectedCertif = cert;
+				afficheImp = false;
+				remarque = cert.getRemarque();
+
+			}
+		}
 		context.addCallbackParam("addValid", addValid);
 		intialecertif();
 	}
 
 	public void ajoutCertifAptitude() throws SQLException, Exception {
 		FacesContext face = FacesContext.getCurrentInstance();
-boolean addValid=false;
+		boolean addValid = false;
 
 		HistoriqueCertif cert = new HistoriqueCertif();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -1743,96 +1784,96 @@ boolean addValid=false;
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
 
-		if((dateCertif==null)||(dateCertif.equals("")))
-		{
+		if ((dateCertif == null) || (dateCertif.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date de cetificat"));
 			addValid = false;
 
 		}
-		
+
 		// verification de date certif
-				if((dateCertif!=null)&&(dateCertif.length()!=0))
-				{
-			
-				if (Module.corigerDate(dateCertif) != null) {
-					this.setDateCertif(Module.corigerDate(dateCertif));
-				}
-				if ((Module.verifierDate(dateCertif).equals(""))==false)
+		if ((dateCertif != null) && (dateCertif.length() != 0)) {
 
-				{
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"", "Le date du certificat "+Module.verifierDate(dateCertif)));
-					addValid = false;
-
-				}
-				else {
-					try {
-						cert.setDateCertif(sdf.parse(dateCertif));
-					} catch (ParseException e) {
-
-						e.printStackTrace();
-					}
-
-				}
-				}
-				if(face.getMessageList().size()==0)
-				{	cert.setRemarques(remarques);
-		Certificat c = new CertificatService()
-				.rechercheCertifParMotif(motifCertificat);
-		cert.setCertificat(c);
-		if (c != null)
-			if (c.getRemarque() != null) {
-				String textelettre = c.getRemarque();
-				textelettre = intialeTextCertificats();
-				cert.setRemarque(textelettre);
+			if (Module.corigerDate(dateCertif) != null) {
+				this.setDateCertif(Module.corigerDate(dateCertif));
 			}
-		if (action.equals("Ajout")) {
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			serc.ajoutHistoriqueCertif(cert);
+			if ((Module.verifierDate(dateCertif).equals("")) == false)
 
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat ajoutée avec succès"));
-			
-			addValid = true;
-			selectedCertif = cert;
-			afficheImp = false;
-			remarque = cert.getRemarque();
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date du certificat "
+										+ Module.verifierDate(dateCertif)));
+				addValid = false;
 
+			} else {
+				try {
+					cert.setDateCertif(sdf.parse(dateCertif));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
 
 			}
-		
-		if (action.equals("Modification")) {
-
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert.setIdHistoriqueCertif(idHistoriqueCertif);
-			serc.modifierHistoriqueCertif(cert);
-			selectedCertif = cert;
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat modifiée avec succès"));
-			blocage = false;
-			
-			addValid = true;
-			selectedCertif = cert;
-			afficheImp = false;
-			remarque = cert.getRemarque();
-
 		}
+		if (face.getMessageList().size() == 0) {
+			cert.setRemarques(remarques);
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
 				}
-				RequestContext context = RequestContext.getCurrentInstance();
-				context.addCallbackParam("addValid", addValid);	
-	intialecertif();
+			if (action.equals("Ajout")) {
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				serc.ajoutHistoriqueCertif(cert);
+
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat ajoutée avec succès"));
+
+				addValid = true;
+				selectedCertif = cert;
+				afficheImp = false;
+				remarque = cert.getRemarque();
+
+			}
+
+			if (action.equals("Modification")) {
+
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				cert.setIdHistoriqueCertif(idHistoriqueCertif);
+				serc.modifierHistoriqueCertif(cert);
+				selectedCertif = cert;
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat modifiée avec succès"));
+				blocage = false;
+
+				addValid = true;
+				selectedCertif = cert;
+				afficheImp = false;
+				remarque = cert.getRemarque();
+
+			}
+		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
+		intialecertif();
 	}
 
 	public void ajoutCertifInaptitude() throws SQLException, Exception {
 		FacesContext face = FacesContext.getCurrentInstance();
-		boolean addValid=false;
+		boolean addValid = false;
 
-		
 		HistoriqueCertif cert = new HistoriqueCertif();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
@@ -1840,86 +1881,88 @@ boolean addValid=false;
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		cert.setCfclient(cfclient);
-		if((dateCertif==null)||(dateCertif.equals("")))
-		{
+		if ((dateCertif == null) || (dateCertif.equals(""))) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "Veuillez saisi le date de cetificat"));
 			addValid = false;
 
 		}
-		
+
 		// verification de date certif
-				if((dateCertif!=null)&&(dateCertif.length()!=0))
-				{
-			
-				if (Module.corigerDate(dateCertif) != null) {
-					this.setDateCertif(Module.corigerDate(dateCertif));
-				}
-				if ((Module.verifierDate(dateCertif).equals(""))==false)
+		if ((dateCertif != null) && (dateCertif.length() != 0)) {
 
-				{
-					blocage = true;
-					face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"","Le date du certificat "+Module.verifierDate(dateCertif)));
-					addValid = false;
-
-				}
-				else {
-					try {
-						cert.setDateCertif(sdf.parse(dateCertif));
-					} catch (ParseException e) {
-
-						e.printStackTrace();
-					}
-
-				}
-				}
-
-		
-		if(face.getMessageList().size()==0)
-{	cert.setInapte(inapte);
-		Certificat c = new CertificatService()
-				.rechercheCertifParMotif(motifCertificat);
-		cert.setCertificat(c);
-		if (c != null)
-			if (c.getRemarque() != null) {
-				String textelettre = c.getRemarque();
-				textelettre = intialeTextCertificats();
-				cert.setRemarque(textelettre);
+			if (Module.corigerDate(dateCertif) != null) {
+				this.setDateCertif(Module.corigerDate(dateCertif));
 			}
-		if (action.equals("Ajout")) {
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			serc.ajoutHistoriqueCertif(cert);
+			if ((Module.verifierDate(dateCertif).equals("")) == false)
 
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat ajoutée avec succès"));
-			
-			addValid = true;
-			selectedCertif = cert;
-			afficheImp = false;
-			remarque = cert.getRemarque();
+			{
+				blocage = true;
+				face.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date du certificat "
+										+ Module.verifierDate(dateCertif)));
+				addValid = false;
 
+			} else {
+				try {
+					cert.setDateCertif(sdf.parse(dateCertif));
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+
+			}
 		}
-		if (action.equals("Modification")) {
 
-			HistoriqueCertifService serc = new HistoriqueCertifService();
-			cert.setIdHistoriqueCertif(idHistoriqueCertif);
-			serc.modifierHistoriqueCertif(cert);
-			selectedCertif = cert;
-			blocage = false;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Certificat modifiée avec succès"));
-			blocage = false;
-			addValid = true;
-			selectedCertif = cert;
-			afficheImp = false;
-			remarque = cert.getRemarque();
+		if (face.getMessageList().size() == 0) {
+			cert.setInapte(inapte);
+			Certificat c = new CertificatService()
+					.rechercheCertifParMotif(motifCertificat);
+			cert.setCertificat(c);
+			if (c != null)
+				if (c.getRemarque() != null) {
+					String textelettre = c.getRemarque();
+					textelettre = intialeTextCertificats();
+					cert.setRemarque(textelettre);
+				}
+			if (action.equals("Ajout")) {
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				serc.ajoutHistoriqueCertif(cert);
 
-		}}
-RequestContext context = RequestContext.getCurrentInstance();
-context.addCallbackParam("addValid", addValid);	
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat ajoutée avec succès"));
+
+				addValid = true;
+				selectedCertif = cert;
+				afficheImp = false;
+				remarque = cert.getRemarque();
+
+			}
+			if (action.equals("Modification")) {
+
+				HistoriqueCertifService serc = new HistoriqueCertifService();
+				cert.setIdHistoriqueCertif(idHistoriqueCertif);
+				serc.modifierHistoriqueCertif(cert);
+				selectedCertif = cert;
+				blocage = false;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO, "",
+						"Certificat modifiée avec succès"));
+				blocage = false;
+				addValid = true;
+				selectedCertif = cert;
+				afficheImp = false;
+				remarque = cert.getRemarque();
+
+			}
+		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
 
 		intialecertif();
 	}
@@ -1976,8 +2019,8 @@ context.addCallbackParam("addValid", addValid);
 	}
 
 	public void intialecertif() {// pour initialiser les donnes des certificats
-		dateCertifPrese="";
-		dateCertifPreseAccomp="";
+		dateCertifPrese = "";
+		dateCertifPreseAccomp = "";
 		idCertificat = null;
 		dateCertif = null;
 		a = null;
@@ -2063,16 +2106,16 @@ context.addCallbackParam("addValid", addValid);
 	}
 
 	public void modifierCertif(HistoriqueCertif h) {
-		intialecertif() ;
+		intialecertif();
 		action = "Modification";
 		Format formater = new SimpleDateFormat("dd/MM/yyyy");
 		RequestContext context = RequestContext.getCurrentInstance();
 		motifCertificat = h.getCertificat().getNomCertificat();
 		idCertificat = h.getIdHistoriqueCertif();
 		dateCertif = formater.format(h.getDateCertif());
-		dateCertifPrese=formater.format(h.getDateCertif());
+		dateCertifPrese = formater.format(h.getDateCertif());
 		System.out.println("datecertif prese" + dateCertifPrese);
-		dateCertifPreseAccomp=formater.format(h.getDateCertif());
+		dateCertifPreseAccomp = formater.format(h.getDateCertif());
 		a = h.getA();
 		remarque = h.getRemarque();
 		remarques = h.getRemarques();
@@ -2080,10 +2123,9 @@ context.addCallbackParam("addValid", addValid);
 			datereprise = formater.format(h.getDatereprise());
 		dureederepos = h.getDureederepos();
 		dureedereposString = h.getDureederepos() + "";
-dateCertif = formater.format(h.getDateCertif());
-		
-		System.out.println("datecertif" + dateCertif);
+		dateCertif = formater.format(h.getDateCertif());
 
+		System.out.println("datecertif" + dateCertif);
 
 		if (h.getAdaterdu() != null)
 			adaterdu = formater.format(h.getAdaterdu());
@@ -2111,7 +2153,8 @@ dateCertif = formater.format(h.getDateCertif());
 			context.execute("PF('certMar').show();");
 		}
 		if (motifCertificat.equals("Certificat de présence")) {
-			RequestContext.getCurrentInstance().update("idDialogCertificatPresence");
+			RequestContext.getCurrentInstance().update(
+					"idDialogCertificatPresence");
 			context.execute("PF('CertificatPresence').show();");
 		}
 		if (motifCertificat.equals("Certificat de présence d'accompagnement")) {
@@ -2291,7 +2334,7 @@ dateCertif = formater.format(h.getDateCertif());
 	}
 
 	public void goToAccueil() {
-	afficheImp=true;
+		afficheImp = true;
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 
@@ -2394,8 +2437,5 @@ dateCertif = formater.format(h.getDateCertif());
 	public void setDateCertifPreseAccomp(String dateCertifPreseAccomp) {
 		this.dateCertifPreseAccomp = dateCertifPreseAccomp;
 	}
-
-	
-	
 
 }

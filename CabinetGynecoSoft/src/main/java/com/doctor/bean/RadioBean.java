@@ -17,7 +17,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.ExamenComplementaire;
@@ -494,7 +496,7 @@ public class RadioBean implements java.io.Serializable {
 		if (Module.dateTresAncien(dateRadioS))
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"La date saisie est très ancienne", ""));
-		
+
 		r.setDateRadios(dateRadios);
 		r.setExamenComplementaire(examenComplementaire);
 		r.setPossesseur(proprietaire);
@@ -905,7 +907,7 @@ public class RadioBean implements java.io.Serializable {
 
 	}
 
-	public void suppressionRadio(Integer idradio) {
+	public void SupprimerRadioDemande() {
 
 		Radio r = new RadioService().rechercheRadioAvecJoin(idradio);
 		consultationDetail = r.getConsultationDetail();
@@ -918,7 +920,7 @@ public class RadioBean implements java.io.Serializable {
 
 		FacesContext face = FacesContext.getCurrentInstance();
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Demande de radio supprimée avec succés", ""));
+				"Demande de radio supprimé avec succés", ""));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -929,34 +931,59 @@ public class RadioBean implements java.io.Serializable {
 
 	}
 
-	public void SupprimerRadio(Integer idradio) {
+	private String msg;
 
-		// rechercher consultation par radios
-		RadioService ser = new RadioService();
-		Radio r = new RadioService().rechercheRadioAvecJoin(idradio);
-		if (r != null) {
-			Integer idcons = r.getConsultationDetail()
-					.getIdConsultationDetail();
-			ser.supprimerRadio(idradio);
-			consultationDetail = new ConsultationDetailService()
-					.rechercheConsultationDetail(idcons);
-			if (consultationDetail != null) {
-				ConsultationDetailService se = new ConsultationDetailService();
-				consultationDetail
-						.setNbRadio(consultationDetail.getNbRadio() - 1);
-				se.modifierConsultationDetail(consultationDetail);
-			}
-			FacesContext face = FacesContext.getCurrentInstance();
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Radio supprimée avec succés", ""));
+	public String getMsg() {
+		return msg;
+	}
 
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getFlash().setKeepMessages(true);
-			try {
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
-				context.getExternalContext().redirect("HistoriqueRadios");
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+	public void suppressionRAdio(Radio rad) {
+		idradio = rad.getIdradio();
+		selectedRAdio = rad;
+		String dateR = "";
+		if (rad.getDateRadios() != null)
+			dateR = "du " + formatter.format(rad.getDateRadios());
+		msg = "Voulez-vous vraiment supprimer le radio " + dateR + " ?";
+
+		RequestContext.getCurrentInstance().update("f1:sup");
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('suppRadio').show();");
+	}
+
+	public void SupprimerRadio() {
+		if (idradio != null) {
+			// rechercher consultation par radios
+			RadioService ser = new RadioService();
+			Radio r = new RadioService().rechercheRadioAvecJoin(idradio);
+			if (r != null) {
+				Integer idcons = r.getConsultationDetail()
+						.getIdConsultationDetail();
+				ser.supprimerRadio(idradio);
+				consultationDetail = new ConsultationDetailService()
+						.rechercheConsultationDetail(idcons);
+				if (consultationDetail != null) {
+					ConsultationDetailService se = new ConsultationDetailService();
+					consultationDetail.setNbRadio(consultationDetail
+							.getNbRadio() - 1);
+					se.modifierConsultationDetail(consultationDetail);
+				}
+				FacesContext face = FacesContext.getCurrentInstance();
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_INFO,
+						"Radio supprimé avec succés", ""));
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.getExternalContext().getFlash().setKeepMessages(true);
+				try {
+
+					context.getExternalContext().redirect("HistoriqueRadios");
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 		}
 	}
@@ -964,7 +991,7 @@ public class RadioBean implements java.io.Serializable {
 	public void corection() {
 		FacesContext face = FacesContext.getCurrentInstance();
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Radio supprimée avec succés", ""));
+				"Radio supprimé avec succés", ""));
 	}
 
 	public void viewRadio(ActionEvent actionEvent) throws SQLException,

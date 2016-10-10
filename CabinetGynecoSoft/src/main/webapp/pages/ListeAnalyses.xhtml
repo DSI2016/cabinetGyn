@@ -28,7 +28,8 @@ Historique Analyses</ui:define>
 							</h:commandLink></td>
 						<td><h:commandLink
 								actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"
-								target="_blanc" rendered="#{analyseDemandeeBean.desibledImpr}and false">
+								target="_blanc"
+								rendered="#{analyseDemandeeBean.desibledImpr}and false">
 								<p:graphicImage value="/imagesMenu/imprimente10.png">
 								</p:graphicImage>
 							</h:commandLink></td>
@@ -47,19 +48,20 @@ Historique Analyses</ui:define>
 
 				<p:panel style="height:450px">
 					<table border="0" width="100%">
-						<tr> 
+						<tr>
 							<td width="60%" align="right"><h:outputText
 									value="Patiente : #{analyseDemandeeBean.cfclient.prenom} #{analyseDemandeeBean.cfclient.nom} "
 									style="font-size:15pt;font-weight:bold" /></td>
-							<td align="right">
-							<p:commandButton value="Imprimer" disabled="#{analyseDemandeeBean.impress}"
-							         rendered="#{connectionBean.imprAnal}"
+							<td align="right"><p:commandButton value="Imprimer"
+									disabled="#{analyseDemandeeBean.impress}"
+									rendered="#{connectionBean.imprAnal}"
 									style="font-size:small;font-weight:bold" icon="ui-icon-print"
-									ajax="false" actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"></p:commandButton>
+									ajax="false"
+									actionListener="#{analyseDemandeeBean.viewHistoriqueAnalyse}"></p:commandButton>
 							</td>
 						</tr>
 					</table>
-					
+
 					<p:dataTable id="patiente" var="ana"
 						style="font-size:small;font-weight:bold"
 						value="#{analyseDemandeeBean.analysesParPatient}"
@@ -138,14 +140,11 @@ Historique Analyses</ui:define>
 								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.idanalyseDemandee)}"
 								oncomplete="PF('detailAnalyse').show();" update=":f1:madetail" />
 
-							<p:commandButton update=":f1"
+							<p:commandButton update=":f1" actionListener="#{analyseDemandeeBean.supressionAnalyse(ana)}"
 								rendered="#{connectionBean.supAnalyse}" icon="ui-icon-trash"
-								title="Suppression Analyse"
-								style="font-size:small;font-weight:bold"
-								actionListener="#{analyseDemandeeBean.SupprimerAnalyse(ana.idanalyseDemandee)}">
-								<p:confirm header="Suppression analyse"
-									message="Voulez-vous vraiment supprimer cette Analyse ?"
-									icon="ui-icon-alert" />
+								title="Suppression Analyse" oncomplete="PF('suppAnalyse').show();"
+								style="font-size:small;font-weight:bold">
+								
 							</p:commandButton>
 
 						</p:column>
@@ -408,7 +407,29 @@ Historique Analyses</ui:define>
 
 				</p:dialog>
 
-
+				<p:dialog id="sup" widgetVar="suppAnalyse" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{analyseDemandeeBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{analyseDemandeeBean.SupprimerAnalyse()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppAnalyse').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
 			</h:form>
 		</div>
 	</ui:define>

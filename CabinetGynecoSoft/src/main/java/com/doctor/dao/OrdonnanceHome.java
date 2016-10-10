@@ -184,6 +184,7 @@ public class OrdonnanceHome {
 					.createAlias("cons.cfclient", "pat")
 					.add(Restrictions.eq("pat.code", cl));
 
+		crit.setFetchMode("consult", FetchMode.JOIN);
 		return crit.list();
 	}
 

@@ -203,12 +203,10 @@
 									style="font-size:small;font-weight:bold"
 									actionListener="#{radioBean.modifierRad(rad)}" update=":f1" />
 								<p:commandButton icon="ui-icon-trash" title="supprimer Radio"
-								    rendered="#{connectionBean.supRadio}"
+								    rendered="#{connectionBean.supRadio}" update=":f1" 
 									style="font-size:small;font-weight:bold"
-									actionListener="#{radioBean.suppressionRadio(rad.idradio)}">
-									<p:confirm header="Suppression radio"
-										message="Voulez-vous vraiment supprimer cet Radio ?"
-										icon="ui-icon-alert" />
+									actionListener="#{radioBean.suppressionRAdio(rad)}">
+									
 								</p:commandButton>
 							</p:column>
 						</p:dataTable>
@@ -221,6 +219,33 @@
 						</p:confirmDialog>
 					</p:panel>
 				</div>
+				
+				
+				<p:dialog id="sup" widgetVar="suppRadio" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{radioBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{radioBean.SupprimerRadioDemande()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppRadio').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
+				
+				
 			</h:form>
 		</div>
 	</ui:define>
