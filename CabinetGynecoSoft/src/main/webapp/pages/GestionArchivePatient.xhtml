@@ -19,17 +19,15 @@
 					<td width="30%"><h:commandLink
 							actionListener="#{cfclientBean.goToAccueil()}">
 							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
-						</h:commandLink><h:commandLink
+						</h:commandLink> <h:commandLink
 							actionListener="#{cfclientBean.goToListePatients()}">
 							<p:graphicImage value="/images/retour.png"></p:graphicImage>
-						</h:commandLink>
-						
-						  </td>
+						</h:commandLink></td>
 					<td align="left"><h:panelGrid columns="5">
 							<h:outputText value="Recherche: "
 								style="font-size:small;font-weight:bold" />
-							<p:inputText value="#{cfclientBean.valeurRechercheArchive}" id="valid" 
-								style="font-size:small;font-weight:bold;width:300px">
+							<p:inputText value="#{cfclientBean.valeurRechercheArchive}"
+								id="valid" style="font-size:small;font-weight:bold;width:300px">
 								<p:ajax event="change"
 									listener="#{cfclientBean.onchagevaleurRechercheArchive()}"></p:ajax>
 
@@ -44,59 +42,70 @@
 							<p:commandButton icon="ui-icon-search" title="Recherche Patient"
 								actionListener="#{cfclientBean.recherchePatientArchive()}" />
 							<p:commandButton icon="ui-icon-refresh" title="Actualiser"
-								actionListener="#{cfclientBean.annulerRechercheArchive()}" update=":f1:patiente,:f1:valid,:f1" />
-
+								actionListener="#{cfclientBean.annulerRechercheArchive()}"
+								update=":f1:patiente,:f1:valid,:f1" />
 						</h:panelGrid></td>
 					<td align="right"><h:panelGrid columns="3">
 
-								<h:outputText value="#{connectionBean.utilisateur}"
-									style="font-size:19px;font-weight:bold;font-style: italic" />
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
 
-								<h:commandLink actionListener="#{connectionBean.deconnecter()}">
-									<p:graphicImage value="/images/dec.png" width="25px" />
-								</h:commandLink>
-							</h:panelGrid></td>
+							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
+								<p:graphicImage value="/images/dec.png" width="25px" />
+							</h:commandLink>
+						</h:panelGrid></td>
 
 				</tr>
-				<tr><td width="38%"></td>
-					<td><table><tr><td><h:outputText value="Ordonner par:  "
-							style="font-size:small;font-weight:bold" /></td><td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
-							value="#{cfclientBean.attributTriArchive}" filter="true" effect="fade"
-							style="font-size:small;font-weight:bold">
-							<f:selectItem itemLabel="--Colonne--" itemValue="" />
-													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
-													<f:selectItem itemLabel="Nom" itemValue="Nom" />
-													<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
-													<f:selectItem itemLabel="Nbr Consultation" itemValue="Nbr Consultation" />
-													<f:selectItem itemLabel="Dernier Consultation" itemValue="Iréguliers" />
-							
-<!-- 							<f:selectItems value="#{cfclientBean.listestris}" var="tr" -->
-<!-- 								itemLabel="#{tr.toString()}" itemValue="#{tr}" /> -->
-							<p:ajax envent="change" listener="#{cfclientBean.triePatientArchive()}" update=":f1:patiente,:f1"></p:ajax> 
-						</p:selectOneMenu></td><td><p:commandButton icon="ui-icon-triangle-1-n"
-							title="Croissante" actionListener="#{cfclientBean.croissanteArchive()}"
-							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
-					</td><td><p:commandButton icon="ui-icon-triangle-1-s"
-							title="Décroissante"
-							actionListener="#{cfclientBean.decroissanteArchive()}"
-							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
-					</td></tr></table>
-					
-					
-					</td>
-					</tr>
+				<tr>
+					<td width="38%"></td>
+					<td><table>
+							<tr>
+								<td><h:outputText value="Ordonner par:  "
+										style="font-size:small;font-weight:bold" /></td>
+								<td><p:selectOneMenu id="trie" filterMatchMode="startsWith"
+										value="#{cfclientBean.attributTriArchive}" filter="true"
+										effect="fade" style="font-size:small;font-weight:bold">
+										<f:selectItem itemLabel="--Colonne--" itemValue="" />
+										<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+										<f:selectItem itemLabel="Nom" itemValue="Nom" />
+										<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
+										<f:selectItem itemLabel="Nbr Consultation"
+											itemValue="Nbr Consultation" />
+										<f:selectItem itemLabel="Dernier Consultation"
+											itemValue="Iréguliers" />
+
+										<!-- 							<f:selectItems value="#{cfclientBean.listestris}" var="tr" -->
+										<!-- 								itemLabel="#{tr.toString()}" itemValue="#{tr}" /> -->
+										<p:ajax envent="change"
+											listener="#{cfclientBean.triePatientArchive()}"
+											update=":f1:patiente,:f1"></p:ajax>
+									</p:selectOneMenu></td>
+								<td><p:commandButton icon="ui-icon-triangle-1-n"
+										title="Croissante"
+										actionListener="#{cfclientBean.croissanteArchive()}"
+										style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+								</td>
+								<td><p:commandButton icon="ui-icon-triangle-1-s"
+										title="Décroissante"
+										actionListener="#{cfclientBean.decroissanteArchive()}"
+										style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
+								</td>
+							</tr>
+						</table></td>
+				</tr>
 			</table>
-			
+
 
 			<p:dataTable id="patiente" var="Patient" widgetVar="tabPatient"
 				style="font-size:small;font-weight:bold"
-				value="#{cfclientBean.patientArchives}" emptyMessage="Pas de Patients !"
-				paginator="true" paginatorPosition="bottom"
+				value="#{cfclientBean.patientArchives}"
+				emptyMessage="Pas de Patients !" paginator="true"
+				paginatorPosition="bottom"
 				paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 				rows="16">
 
 
-				
+
 				<p:column headerText="Patiente" width="15%"
 					style="font-size:small;font-weight:bold">
 					<h:outputText value="#{Patient.prenom} #{Patient.nom}"
@@ -105,15 +114,15 @@
 
 				<p:column headerText="Age" style="font-size:small;font-weight:bold"
 					width="3.5%">
-					<h:outputText value="#{cfclientBean.calculAgeEnAns(Patient.dateNaiss)} ans"
+					<h:outputText
+						value="#{cfclientBean.calculAgeEnAns(Patient.dateNaiss)} ans"
 						style="font-size:small;font-weight:bold" />
 				</p:column>
 
 				<p:column headerText="Consultation" width="11%"
 					style="font-size:small;font-weight:bold">
 
-					<h:outputText
-						value="[#{Patient.nbCons}]&nbsp;&nbsp;"
+					<h:outputText value="[#{Patient.nbCons}]&nbsp;&nbsp;"
 						style="font-size:small;font-weight:bold;color:#045FB4" />
 					<h:outputText value="#{Patient.dernierVisite}"
 						style="font-size:small;font-weight:bold" />
@@ -143,38 +152,39 @@
 				</p:column>
 
 				<p:column style="text-align: center" width="18%">
-					
+
 
 					<p:commandButton update=":f1:formulaire:patientinfo"
 						rendered="#{connectionBean.detailPat}"
 						actionListener="#{cfclientBean.info(Patient)}"
 						title="Détails Patient" icon="ui-icon-search"
 						style="font-size:small;width:33pt;font-weight:bold" />
-						
-						<p:commandButton icon="ui-icon-arrowreturnthick-1-w" title="Restaurer Patient"
+
+					<p:commandButton icon="ui-icon-arrowreturnthick-1-w"
+						title="Restaurer Patient"
 						style="font-size:small;width:33pt;font-weight:bold"
 						actionListener="#{cfclientBean.getPatCode(Patient.code)}"
-						oncomplete="PF('archivDlg').show();" >
-						</p:commandButton>
-						
-						
-					
+						oncomplete="PF('archivDlg').show();">
+					</p:commandButton>
+
+
+
 					<p:commandButton update=":f1"
 						rendered="#{connectionBean.suppressionPat}"
 						actionListener="#{cfclientBean.Supprimer(Patient.code)}"
 						icon="ui-icon-trash" title="Suppression patient"
 						style="font-size:small;width:33pt;font-weight:bold">
-						
+
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 			<br />
-		
+
 			<br />
 			<div align="center">
 				<h:form id="formulaire">
-				
-				<p:dialog id="idSuppression" widgetVar="suppression"  modal="true"
+
+					<p:dialog id="idSuppression" widgetVar="suppression" modal="true"
 						resizable="false" closable="false" showHeader="false"
 						width="600px">
 
@@ -252,7 +262,7 @@
 									rendered="#{cfclientBean.afficheRDV}" />
 
 							</h:panelGrid>
-							<br/>
+							<br />
 							<div align="left">
 								<h:outputText
 									value="Cette patiente est présente dans la salle d'attente."
@@ -284,12 +294,13 @@
 							<p:commandButton value="Supprimer"
 								actionListener="#{cfclientBean.supprimPatientCascadArchi()}"></p:commandButton>
 							<p:commandButton value="Annuler"
+							    icon="ui-icon-closethick"
 								oncomplete="PF('suppression').hide();"></p:commandButton>
 						</h:panelGrid>
 					</p:dialog>
-					
-				
-				<p:dialog id="idSupprimer" widgetVar="supprimer" modal="true"
+
+
+					<p:dialog id="idSupprimer" widgetVar="supprimer" modal="true"
 						closable="false" header="Valider Suppression Patient"
 						width="500px">
 						<p:panel>
@@ -306,17 +317,18 @@
 								actionListener="#{cfclientBean.supprimPatienteArchi()}"
 								update=":f1:growl"></p:commandButton>
 							<p:commandButton value="Annuler"
+							    icon="ui-icon-closethick"
 								oncomplete="PF('supprimer').hide();"></p:commandButton>
 						</h:panelGrid>
 					</p:dialog>
-				
+
 					<p:dialog widgetVar="dialogInfo" resizable="false" closable="false"
 						header="Fiche Patiente">
 						<p:outputPanel id="patientinfo"
 							style="height: 400px; width: 800px;">
 
 							<p:tabView id="tab2" orientation="left" style="font-size:12pt"
-							 activeIndex="#{cfclientBean.indexInfo}">
+								activeIndex="#{cfclientBean.indexInfo}">
 
 								<p:tab title="Informations Générales">
 									<h:panelGrid columns="2" cellspacing="15">
@@ -329,15 +341,17 @@
 
 										<h:outputLabel value="Date De Naissance: "
 											style="font-size:small;font-weight:bold" />
-										 <h:panelGrid columns="3" >
-										<p:inputText readonly="true" value="#{cfclientBean.dateNaiss}"
-											style="font-size:small;font-weight:bold;width:200px" />
-											
-										<h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Age : "
-											style="font-size:small;font-weight:bold" />
-											
-										<p:inputText readonly="true"  value="#{cfclientBean.age} ans"
-											style="font-size:small;font-weight:bold;width:107px" />	
+										<h:panelGrid columns="3">
+											<p:inputText readonly="true"
+												value="#{cfclientBean.dateNaiss}"
+												style="font-size:small;font-weight:bold;width:200px" />
+
+											<h:outputLabel
+												value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Age : "
+												style="font-size:small;font-weight:bold" />
+
+											<p:inputText readonly="true" value="#{cfclientBean.age} ans"
+												style="font-size:small;font-weight:bold;width:107px" />
 										</h:panelGrid>
 
 										<h:outputLabel value="Profession : "
@@ -540,7 +554,7 @@
 						</p:outputPanel>
 					</p:dialog>
 
-					
+
 				</h:form>
 
 				<p:confirmDialog global="true" showEffect="fade"
@@ -551,24 +565,26 @@
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 				</p:confirmDialog>
 			</div>
-		
-		   <p:dialog id="idArchiv" widgetVar="archivDlg" resizable="false"
-				closable="false" modal="true"   header="Restaurer ?"
-				width="400pt" height="100pt" hideEffect="explode">
-				<p:panel >
-				   <h:outputText value="Voulez-vous vraiment restaurer cette patiente ?" ></h:outputText>
-				   <br/>
-				   <hr></hr>
-				   <div align="center">
-				   <h:panelGrid columns="2">
-				     <p:commandButton value="Oui" actionListener="#{cfclientBean.AnulArchivage()}"
-				    oncomplete="PF('archivDlg').hide();" ></p:commandButton>
-				     <p:commandButton value="Non" oncomplete="PF('archivDlg').hide();"></p:commandButton>
-				   </h:panelGrid>
-				   </div>
+
+			<p:dialog id="idArchiv" widgetVar="archivDlg" resizable="false"
+				closable="false" modal="true" header="Restaurer ?" width="400pt"
+				height="100pt" hideEffect="explode">
+				<p:panel>
+					<h:outputText
+						value="Voulez-vous vraiment restaurer cette patiente ?"></h:outputText>
+					<br />
+					<hr></hr>
+					<div align="center">
+						<h:panelGrid columns="2">
+							<p:commandButton value="Oui"
+								actionListener="#{cfclientBean.AnulArchivage()}"
+								oncomplete="PF('archivDlg').hide();"></p:commandButton>
+							<p:commandButton value="Non" oncomplete="PF('archivDlg').hide();"></p:commandButton>
+						</h:panelGrid>
+					</div>
 				</p:panel>
-				</p:dialog>
-		
+			</p:dialog>
+
 		</h:form>
 
 

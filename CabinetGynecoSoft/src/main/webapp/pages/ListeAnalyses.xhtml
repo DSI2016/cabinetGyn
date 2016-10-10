@@ -273,13 +273,15 @@ Historique Analyses</ui:define>
 							</div>
 							<div align="center">
 								<h:panelGrid columns="2">
-									<p:commandButton value="Valider"
+									<p:commandButton value="Valider" 
+									    icon="ui-icon-check"
 										actionListener="#{analyseDemandeeBean.validerListeAnalyse}"
 										style="font-size:small;font-weight:bold"
 										oncomplete="PF('modifAnalyse').hide();" update=":f1,:f1:growl">
 									</p:commandButton>
 
 									<p:commandButton value="Annuler"
+									    icon="ui-icon-closethick"
 										oncomplete="PF('modifAnalyse').hide();" update=":f1"
 										style="font-size:small;font-weight:bold"></p:commandButton>
 								</h:panelGrid>

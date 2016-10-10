@@ -184,7 +184,7 @@
 										actionListener="#{historiqueLettreBean.ModifierLettrePanel()}"
 										update=":f1:growl,:f1" />
 									<p:commandButton value="Annuler"
-										icon="ui-icon-arrowreturnthick-1-n"
+										icon="ui-icon-closethick"
 										actionListener="#{historiqueLettreBean.annulerModification()}"
 										update=":f1" />
 										<p:commandButton value="Imprimer" actionListener="#{historiqueLettreBean.viewLettreselect}" immediate="true" ajax="false" rendered="#{connectionBean.imprLettre}" disabled="#{historiqueLettreBean.afficheImpr}" ></p:commandButton>
@@ -282,6 +282,7 @@
 				<div align="center">
 
 					<p:commandButton update=":f1:growl,:f1"   value="Valider"
+					   icon="ui-icon-check"
 						actionListener="#{historiqueLettreBean.ajoutLettreReponseDemande()}"
 							oncomplete="handleLoginRequestlettrereponse(xhr, status, args)"
 						>
@@ -453,7 +454,7 @@
 
 				<br></br>
 				<div align="center">
-					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-check"
 						actionListener="#{historiqueLettreBean.ajoutLettreAccouchement()}"
 						value="Valider" oncomplete="handleLoginRequestlettreAccouchement(xhr, status, args)">
 					</p:commandButton>
@@ -516,7 +517,7 @@
 
 				<div align="center">
 
-					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-check"
 						actionListener="#{historiqueLettreBean.ajoutLettrereponceaunedemandedePriseEnCharge()}"
 						value="Valider" oncomplete="handleLoginRequestReponcedemande(xhr, status, args)"
 						>
@@ -591,7 +592,7 @@
 
 				<div align="center">
 
-					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
+					<p:commandButton update=":f1:growl,:f1" icon="ui-icon-check"
 						actionListener="#{historiqueLettreBean.ajoutLettrePriseEnCharge()}"
 						value="Valider" oncomplete="handleLoginRequestlettrepriseencharge(xhr, status, args)">
 					</p:commandButton>

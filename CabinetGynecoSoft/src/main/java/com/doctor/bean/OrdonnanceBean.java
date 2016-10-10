@@ -636,6 +636,7 @@ public class OrdonnanceBean implements Serializable {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
+		selectedOrd=o;
 		// validation = false;
 		if (o.getType() != null && o.getType().equals("Libre")) {
 			session.setAttribute("act", "ModifLibre");
@@ -1162,6 +1163,8 @@ public class OrdonnanceBean implements Serializable {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
+		
+		selectedOrd=o;
 		if (o.getType() != null && o.getType().equals("Libre")) {
 			// c'est une modification d'une ord libre
 			session.setAttribute("act", "ModifLibre");

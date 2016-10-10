@@ -372,6 +372,7 @@
 								actionListener="#{cfclientBean.versSalleAttente()}"></p:commandButton>
 							&nbsp;&nbsp;
 							<p:commandButton value="Annuler"
+							   icon="ui-icon-closethick"
 								actionListener="#{cfclientBean.initialisation()}"
 								oncomplete="PF('dlgsalle').hide();" ajax="false"></p:commandButton>
 						</div>
@@ -1043,12 +1044,12 @@
 											width="24px" height="24px"
 											 rendered="#{connectionBean.affectEtoile}"></p:graphicImage></td>
 									<td width="600"><p:commandButton value="Valider"
-											id="ajoutp" icon="ui-icon-disk"
+											id="ajoutp" icon="ui-icon-check"
 											actionListener="#{cfclientBean.ajouter()}"
 											oncomplete="handleLoginRequest(xhr, status, args)"
 											style="font-size:small;font-weight:bold" update=":f1:growl" />
 
-										<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+										<p:commandButton icon="ui-icon-closethick"
 											actionListener="#{cfclientBean.initialisation()}"
 											value="Annuler" oncomplete="PF('dlgValidation').hide();"
 											style="font-size:small;font-weight:bold" /></td>
@@ -1202,6 +1203,7 @@
 							<p:commandButton value="Supprimer"
 								actionListener="#{cfclientBean.supprimPatientCascad()}"></p:commandButton>
 							<p:commandButton value="Annuler"
+							    icon="ui-icon-closethick"
 								oncomplete="PF('suppression').hide();"></p:commandButton>
 						</h:panelGrid>
 					</p:dialog>
@@ -1223,6 +1225,7 @@
 								actionListener="#{cfclientBean.supprimPatiente()}"
 								update=":f1:growl"></p:commandButton>
 							<p:commandButton value="Annuler"
+							   icon="ui-icon-closethick"
 								oncomplete="PF('supprimer').hide();"></p:commandButton>
 						</h:panelGrid>
 					</p:dialog>
@@ -1298,7 +1301,7 @@
 						<p:commandButton value="Annuler"
 							actionListener="#{cfclientBean.initDialog()}"
 							onclick="PF('dlgValidation').show();PF('dialogVille').hide();"
-							icon="ui-icon-arrowreturnthick-1-n" />
+							icon="ui-icon-closethick" />
 					</h:panelGrid>
 				</p:panel>
 			</h:form>
@@ -1313,12 +1316,12 @@
 					<p:inputText value="#{cfclientBean.libprofession}">
 						<p:ajax listener="#{cfclientBean.profChange}"></p:ajax>
 					</p:inputText>
-					<p:commandButton icon="ui-icon-plusthick" value="Valider"
+					<p:commandButton icon="ui-icon-check" value="Valider"
 						actionListener="#{cfclientBean.ajoutProfession()}"
 						update=":f1:formulaire:idDlgValidation,:f1:growl"
 						oncomplete="handleLoginRequestProf(xhr, status, args)" />
 
-					<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+					<p:commandButton icon="ui-icon-closethick"
 						value="Annuler" actionListener="#{cfclientBean.initDialog()}"
 						onclick="PF('dlgValidation').show();PF('diag2').hide();" />
 				</h:panelGrid>
@@ -1332,11 +1335,11 @@
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Docteur : " />
 					<p:inputText value="#{cfclientBean.libdoctor}" />
-					<p:commandButton icon="ui-icon-plusthick" value="Valider"
+					<p:commandButton icon="ui-icon-check" value="Valider"
 						actionListener="#{cfclientBean.validationDocteur()}"
 						update=":f1:formulaire:idDlgValidation,:f1:growl"
 						oncomplete="handleLoginRequestDr(xhr, status, args)" />
-					<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+					<p:commandButton icon="ui-icon-closethick"
 						value="Annuler" actionListener="#{cfclientBean.initDialog()}"
 						onclick="PF('dlgValidation').show();PF('diag3').hide();" />
 				</h:panelGrid>
@@ -1349,11 +1352,11 @@
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Clinique : " />
 					<p:inputText value="#{cfclientBean.libclinique}" />
-					<p:commandButton icon="ui-icon-plusthick" value="Valider"
+					<p:commandButton icon="ui-icon-check" value="Valider"
 						actionListener="#{cfclientBean.validationClinique()}"
 						update=":f1:formulaire:idDlgValidation,:f1:growl"
 						oncomplete="handleLoginRequestClq(xhr, status, args)" />
-					<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+					<p:commandButton icon="ui-icon-closethick"
 						value="Annuler" actionListener="#{cfclientBean.initDialog()}"
 						onclick="PF('dlgValidation').show();PF('diag4').hide();" />
 				</h:panelGrid>

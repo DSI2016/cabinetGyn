@@ -1230,6 +1230,7 @@
 				<br />
 				<div align="center">
 					<p:commandButton value="Valider" update=":f1,:f1:growl"
+					    icon="ui-icon-check"
 						actionListener="#{salleBean.modifierLigneSalle()}"></p:commandButton>
 					&nbsp;&nbsp;
 					<p:commandButton value="Annuler"
@@ -1265,9 +1266,11 @@
 				<br />
 				<div align="center">
 					<p:commandButton value="Valider" update=":f1,:f1:growl"
+					    icon="ui-icon-check"
 						actionListener="#{salleBean.annulerLigneSalle()}"></p:commandButton>
 					&nbsp;&nbsp;
 					<p:commandButton value="Annuler"
+					    icon="ui-icon-closethick"
 						actionListener="#{salleBean.annuleAnnulation()}"
 						oncomplete="PF('annulation').hide();"></p:commandButton>
 				</div>

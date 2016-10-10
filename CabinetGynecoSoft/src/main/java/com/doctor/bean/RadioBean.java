@@ -295,6 +295,7 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public void modifierRad(Radio r) {
+		selectedRAdio=r;
 		action = "modification";
 		idradio = r.getIdradio();
 		examenComplementaire = r.getExamenComplementaire();

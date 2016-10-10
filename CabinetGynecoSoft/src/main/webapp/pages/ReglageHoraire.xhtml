@@ -166,7 +166,7 @@ Gestion Des Horaire</ui:define>
 								<p:commandButton value="Valider" icon="ui-icon-check"
 									actionListener="#{horaireBean.validation()}" update=":f1" />
 								<p:commandButton value="Annuler"
-									icon="ui-icon-arrowreturnthick-1-n"
+									icon="ui-icon-closethick"
 									actionListener="#{horaireBean.init()}" update=":f1" />
 							</p:panel>
 						</p:dialog>
@@ -190,9 +190,9 @@ Gestion Des Horaire</ui:define>
 						<p:commandButton value="Valider" icon="ui-icon-check"
 							oncomplete="PF('dialogSaison').hide();"
 							actionListener="#{horaireBean.validerSaison}" update=":f1" />
-						<p:commandButton value="Annuler"
+						<p:commandButton value="Annuler" 
 							oncomplete="PF('dialogSaison').hide();"
-							icon="ui-icon-arrowreturnthick-1-n" />
+							icon="ui-icon-closethick" />
 					</h:panelGrid>
 
 				</p:panel>

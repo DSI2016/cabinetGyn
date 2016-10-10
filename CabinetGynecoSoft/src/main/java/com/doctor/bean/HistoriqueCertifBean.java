@@ -2106,7 +2106,12 @@ public class HistoriqueCertifBean implements Serializable {
 	}
 
 	public void modifierCertif(HistoriqueCertif h) {
+
 		intialecertif();
+
+		intialecertif() ;
+		selectedCertif=h;
+
 		action = "Modification";
 		Format formater = new SimpleDateFormat("dd/MM/yyyy");
 		RequestContext context = RequestContext.getCurrentInstance();

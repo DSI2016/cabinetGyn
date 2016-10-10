@@ -1621,6 +1621,7 @@ public class historiqueLettreBean implements Serializable {
 
 	public void modifierLettre(historiqueLettre h) {
 		action = "Modification";
+		selectedhistolettre=h;
 		RequestContext context = RequestContext.getCurrentInstance();
 		if (h != null) {
 			nomLettre = h.getLettre().getNomLettre();

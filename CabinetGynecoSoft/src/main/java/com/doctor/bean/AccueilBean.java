@@ -344,7 +344,7 @@ public class AccueilBean {
 	public void goToGestionCertificat() {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("Modélle-Certificat");
+					.redirect("Modelle-Certificat");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -353,7 +353,7 @@ public class AccueilBean {
 	public void goToGestionLettre() {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("Modélle-Lettre");
+					.redirect("Modelle-Lettre");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

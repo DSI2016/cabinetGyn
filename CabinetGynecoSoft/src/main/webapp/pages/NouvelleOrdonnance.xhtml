@@ -302,7 +302,7 @@
 										</p:commandButton>
 
 										<p:commandButton value="Annuler"
-										    icon="ui-icon-arrowreturnthick-1-s"
+										    icon="ui-icon-closethick"
 											actionListener="#{ordonnanceBean.annulation()}" update=":f1"
 											rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>
@@ -372,7 +372,7 @@
 								oncomplete="handleLoginRequest(xhr, status, args)"
 								update=":f1:growl" />
 							<p:commandButton value="Annuler"
-								icon="ui-icon-arrowreturnthick-1-n"
+								icon="ui-icon-closethick"
 								actionListener="#{ordonnanceBean.closeDiagMed()}" update=":f1" />
 						</h:panelGrid>
 					</p:panel>
@@ -393,7 +393,7 @@
 									oncomplete="handleLoginRequest2(xhr, status, args)"
 									update=":f1:fmed:dialog ,:f1:growl" />
 								<p:commandButton value="Annuler"
-									icon="ui-icon-arrowreturnthick-1-n"
+									icon="ui-icon-closethick"
 									oncomplete="PF('dialogforme').hide()" update=":f1:fmed" />
 							</h:panelGrid>
 						</p:panel>
@@ -411,11 +411,11 @@
 						<h:panelGrid columns="2">
 							<h:outputText value="Nom Modèle: " />
 							<p:inputText value="#{ordonnanceBean.nomModeleOrd}"></p:inputText>
-							<p:commandButton value="Valider" icon="ui-icon-plusthick">
+							<p:commandButton value="Valider" icon="ui-icon-check">
 								<p:ajax listener="#{ordonnanceBean.ajouterModeleOrdonnance()}"
 									update=":f1,:f1:growl"></p:ajax>
 							</p:commandButton>
-							<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+							<p:commandButton icon="ui-icon-closethick"
 								oncomplete="PF('ajoutModel').hide();" value="Annuler"
 								update=":f1" />
 

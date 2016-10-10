@@ -182,9 +182,10 @@
 										selectionMode="single" 
 										scrollable="true"
 										scrollHeight="110"
+										
 										selection="#{consultationDetailBean.selectedCons}"
-										rowKey="#{cons.idConsultationDetail}" rows="3"
-										paginator="true" paginatorPosition="bottom"
+										rowKey="#{cons.idConsultationDetail}" 
+										 paginatorPosition="bottom"
 										emptyMessage="Pas des Consultations !" 
 										currentPageReportTemplate="{currentPage} / {totalPages}"
 										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
@@ -225,13 +226,10 @@
 												rendered="#{connectionBean.modifGyneco}"
 												action="#{consultationDetailBean.modif(cons)}" update=":f1" />
 											<p:commandButton icon="ui-icon-trash"
-												action="#{consultationDetailBean.supprimerConsultationGyneco(cons)}"
+												action="#{consultationDetailBean.suppCons(cons)}"
 												title="Suppression Consultation"
-												update=":f1:eventsDT,:f1:growl"
-												rendered="#{connectionBean.suppGyneco}">
-												<p:confirm header="Suppression Consultation"
-													message="Voulez-vous vraiment supprimer cette Consultation ?"
-													icon="ui-icon-alert" />
+												rendered="#{connectionBean.suppGyneco}"
+												update=":f1">
 											</p:commandButton>
 
 
@@ -241,13 +239,7 @@
 
 								</p:panel>
 							</td>
-							<p:confirmDialog global="true" showEffect="fade"
-								hideEffect="explode">
-								<p:commandButton value="Oui" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-								<p:commandButton value="Non" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-							</p:confirmDialog>
+							
 
 
 							<td valign="top"><p:panel id="p3" style="height:90%">
@@ -351,11 +343,13 @@
 					</table>
 					<div align="center">
 						<p:commandButton value="Valider"
+						   icon="ui-icon-check"
 							actionListener="#{consultationDetailBean.validerConsultationGyneco()}"
 							update=":f1,:f1:growl">
 						</p:commandButton>
 
 						<p:commandButton value="Annuler"
+						    icon="ui-icon-closethick"
 							actionListener="#{consultationDetailBean.initialisation}"
 							update=":f1,:f1:nouvelleordonnace,:f1:analyse,:f1:Radio"></p:commandButton>
 					</div>
@@ -366,6 +360,28 @@
 			
 			<br />
 			<br />
+		</h:form>
+		<h:form id="f2">
+		  <p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+					closable="false" modal="true" model="true"
+					header="Suppression Consultation" hideEffect="explode">
+					<p:panel>
+						<h:panelGrid columns="2">
+							<p:graphicImage value="/images/warning.jpg" />
+							<p:outputLabel value="#{consultationDetailBean.message}" />
+						</h:panelGrid>
+						
+						<hr></hr>
+						<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{consultationDetailBean.supprimerConsultationGyneco}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:dialog>
 		</h:form>
 <style>
 .ui-datatable-data tr{

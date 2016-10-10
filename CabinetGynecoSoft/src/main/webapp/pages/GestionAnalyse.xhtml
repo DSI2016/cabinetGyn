@@ -39,7 +39,7 @@
 
 							<p:commandButton icon="ui-icon-search" title="Recherche Analyse"
 								actionListener="#{analyseBean.init()}" update=":f1" />
-							<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+							<p:commandButton icon="ui-icon-closethick" title="Actualiser"
 								actionListener="#{analyseBean.annulerRecherche}" update=":f1" />
 
 						</h:panelGrid></td>
@@ -133,7 +133,7 @@
 										oncomplete="handleLoginRequest(xhr, status, args)"
 										update=":f1:growl" />
 									<p:commandButton value="Annuler"
-										icon="ui-icon-arrowreturnthick-1-n"
+										icon="ui-icon-closethick"
 										actionListener="#{analyseBean.closeDiag()}" update=":f1" />
 								</h:panelGrid>
 							</p:panel>
