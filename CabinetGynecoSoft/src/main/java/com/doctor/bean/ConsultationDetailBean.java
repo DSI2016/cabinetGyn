@@ -23,6 +23,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tools.ant.taskdefs.Sleep;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
@@ -214,6 +215,18 @@ public class ConsultationDetailBean implements Serializable {
 	private boolean afficheImpr = true;
 	private boolean afficheValidEchoObs = true;
 	private boolean afficheImprEchoObs = true;
+	
+	private String message;
+	
+	
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	public boolean isAfficheValidEchoObs() {
 		return afficheValidEchoObs;
@@ -1555,13 +1568,28 @@ public class ConsultationDetailBean implements Serializable {
 		
 		
 	}
+	
+	
+	public void suppCons(ConsultationDetail cons){// en cliquant sur le btn supprimer
+		
+		selectedCons=cons;
+		Date d=cons.getDateConsultation();
+		SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    String newDateFrm = myFormat.format(d);
+		message="voulez vous vraiment supprimer la consultation du "+ newDateFrm;
 
-	public void supprimerConsultationEchoGyneco(ConsultationDetail cons) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.update(":f2:idDlgSup"); 
+		context.execute("PF('suppDlg').show();");
 		
+	}
+
+	public void supprimerConsultationEchoGyneco() {// en cliquer sur oui pour valider la suppression
 		
+		System.out.println(selectedCons);
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetailService ser = new ConsultationDetailService();
-		ser.supprimerConsultationDetail(cons.getIdConsultationDetail());
+		ser.supprimerConsultationDetail(selectedCons.getIdConsultationDetail());
 		selectedCons = null;
 		initialisationechogyneco();
 		this.blocage = false;
@@ -1605,11 +1633,12 @@ public class ConsultationDetailBean implements Serializable {
 
 	}
 
-	public void supprimerConsultationEchoObs(ConsultationDetail cons) {
+	public void supprimerConsultationEchoObs() {
 
+		
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetailService ser = new ConsultationDetailService();
-		ser.supprimerConsultationDetail(cons.getIdConsultationDetail());
+		ser.supprimerConsultationDetail(selectedCons.getIdConsultationDetail());
 		selectedCons = null;
 		initialisationechogyneco();
 		this.blocage = false;
@@ -1650,6 +1679,8 @@ public class ConsultationDetailBean implements Serializable {
 			serclt.modifierPatient(c);
 
 		}
+		
+		
 
 	}
 
@@ -4496,24 +4527,24 @@ public class ConsultationDetailBean implements Serializable {
 
 	}
 
-	public void supprimerConsultationGyneco(ConsultationDetail cons) {
-
+	public void supprimerConsultationGyneco() {
+        
 		FacesContext face = FacesContext.getCurrentInstance();
 		String chAnalyse = "";
 		String chRadio = "";
 		String chOrdonnace = "";
-		if (cons != null) {
+		if (selectedCons != null) {
 
 			// recherche si nous avons analyse pour cette consultation
 			ConsultationDetailService ser = new ConsultationDetailService();
-			if (cons.getAnalyse() != null) {
+			if (selectedCons.getAnalyse() != null) {
 				chAnalyse = "" + "Elle contient une Analyse lieé ";
 				this.erreur = true;
 
 			}
 
 			// recherche si nous avons radio pour cette consultation
-			if (cons.getRadio() != null) {
+			if (selectedCons.getRadio() != null) {
 				chRadio = "" + " Elle contient un Radio lieé ";
 				this.erreur = true;
 
@@ -4541,26 +4572,26 @@ public class ConsultationDetailBean implements Serializable {
 
 			if ((face.getMessageList().size() == 0) && (this.erreur == false)) {
 				String motif = "";
-				if (cons.isConsGrossType()) {// c'est une nouvelle grossesse -->
+				if (selectedCons.isConsGrossType()) {// c'est une nouvelle grossesse -->
 												// Gest-1
 					motif = "nvGross";
 
 				}
-				ser.supprimerConsultationDetail(cons.getIdConsultationDetail());
+				ser.supprimerConsultationDetail(selectedCons.getIdConsultationDetail());
 				this.erreur = false;
 				this.blocage = false;
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_INFO, "",
 						"Consultation supprimée avec succés"));
-				// FacesContext context = FacesContext.getCurrentInstance();
-				// context.getExternalContext().getFlash().setKeepMessages(true);
-				// try {
-				// context.getExternalContext().redirect("Consultation-Gynecologue");
-				//
-				// } catch (Exception e) {
-				// System.out.println(e.getMessage());
-				//
-				// }
+				FacesContext context = FacesContext.getCurrentInstance();
+				 context.getExternalContext().getFlash().setKeepMessages(true);
+				 try {
+				 context.getExternalContext().redirect("Consultation-Gynecologique");
+				
+				 } catch (Exception e) {
+				System.out.println(e.getMessage());
+				
+				}
 
 				CfclientService serclt = new CfclientService();
 				HttpSession session = (HttpSession) FacesContext
@@ -4590,7 +4621,7 @@ public class ConsultationDetailBean implements Serializable {
 					if (motif.equals("nvGross")) {
 						List<HistoriqueGross> gr = null;
 						HistoriqueGrossService serhisto = new HistoriqueGrossService();
-						gr = serhisto.rechercheHistoriqueParidcons(cons
+						gr = serhisto.rechercheHistoriqueParidcons(selectedCons
 								.getIdConsultationDetail());
 
 						if (gr != null) {
@@ -4613,24 +4644,24 @@ public class ConsultationDetailBean implements Serializable {
 
 	}
 
-	public void supprimerConsultationGrosses(ConsultationDetail cons) {
+	public void supprimerConsultationGrosses() {
 
 		FacesContext face = FacesContext.getCurrentInstance();
 		String chAnalyse = "";
 		String chRadio = "";
 		String chOrdonnace = "";
-		if (cons != null) {
+		if (selectedCons != null) {
 
 			// recherche si nous avons analyse pour cette consultation
 			ConsultationDetailService ser = new ConsultationDetailService();
-			if (cons.getAnalyse() != null) {
+			if (selectedCons.getAnalyse() != null) {
 				chAnalyse = "" + "Elle contient une Analyse lieé ";
 				this.erreur = true;
 
 			}
 
 			// recherche si nous avons radio pour cette consultation
-			if (cons.getRadio() != null) {
+			if (selectedCons.getRadio() != null) {
 				chRadio = "" + " Elle contient un Radio lieé ";
 				this.erreur = true;
 
@@ -4658,12 +4689,12 @@ public class ConsultationDetailBean implements Serializable {
 
 			if ((face.getMessageList().size() == 0) && (this.erreur == false)) {
 				String motif = "";
-				if (cons.isConsGrossType()) {// c'est une nouvelle grossesse -->
+				if (selectedCons.isConsGrossType()) {// c'est une nouvelle grossesse -->
 												// Gest-1
 					motif = "nvGross";
 
 				}
-				ser.supprimerConsultationDetail(cons.getIdConsultationDetail());
+				ser.supprimerConsultationDetail(selectedCons.getIdConsultationDetail());
 				this.erreur = false;
 				this.blocage = false;
 				face.addMessage(null, new FacesMessage(
@@ -4730,7 +4761,7 @@ public class ConsultationDetailBean implements Serializable {
 					if (motif.equals("nvGross")) {
 						List<HistoriqueGross> gr = null;
 						HistoriqueGrossService serhisto = new HistoriqueGrossService();
-						gr = serhisto.rechercheHistoriqueParidcons(cons
+						gr = serhisto.rechercheHistoriqueParidcons(selectedCons
 								.getIdConsultationDetail());
 
 						if (gr != null) {
