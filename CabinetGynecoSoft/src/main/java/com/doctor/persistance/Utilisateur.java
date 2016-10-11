@@ -280,7 +280,7 @@ public class Utilisateur implements Serializable {
     private boolean ajoutDemandeAnal;
     
     private boolean affectEtoile;
-    
+    private boolean confSession;
     
     
 	public boolean isAffectEtoile() {
@@ -1708,6 +1708,7 @@ public class Utilisateur implements Serializable {
 		result = prime * result
 				+ ((chargPatient == null) ? 0 : chargPatient.hashCode());
 		result = prime * result + ((civil == null) ? 0 : civil.hashCode());
+		result = prime * result + (confSession ? 1231 : 1237);
 		result = prime * result + (consultArchiv ? 1231 : 1237);
 		result = prime * result + (consultDetAnal ? 1231 : 1237);
 		result = prime * result + (consultDetOrd ? 1231 : 1237);
@@ -2119,6 +2120,8 @@ public class Utilisateur implements Serializable {
 			if (other.civil != null)
 				return false;
 		} else if (!civil.equals(other.civil))
+			return false;
+		if (confSession != other.confSession)
 			return false;
 		if (consultArchiv != other.consultArchiv)
 			return false;
@@ -2926,7 +2929,7 @@ public class Utilisateur implements Serializable {
 				+ ", modifGynObs=" + modifGynObs + ", ajoutDemandeOrd="
 				+ ajoutDemandeOrd + ", ajoutDemandeRad=" + ajoutDemandeRad
 				+ ", ajoutDemandeAnal=" + ajoutDemandeAnal + ", affectEtoile="
-				+ affectEtoile + "]";
+				+ affectEtoile + ", confSession=" + confSession + "]";
 	}
 
 	public boolean isNbrEnfentFiche() {
@@ -3541,9 +3544,19 @@ public class Utilisateur implements Serializable {
 	public boolean isGestLettre() {
 		return gestLettre;
 	}
+	
+
+	public boolean isConfSession() {
+		return confSession;
+	}
+
+	public void setConfSession(boolean confSession) {
+		this.confSession = confSession;
+	}
 
 	public void setGestLettre(boolean gestLettre) {
 		this.gestLettre = gestLettre;
 	}
+	
 
 }

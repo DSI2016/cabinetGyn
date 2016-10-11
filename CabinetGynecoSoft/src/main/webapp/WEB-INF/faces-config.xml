@@ -5,15 +5,7 @@
 
 
 
-	<navigation-rule>
-		<from-view-id>/pages2/connection.xhtml</from-view-id>
-		<navigation-case>
-			<from-action>#{connectionBean.connecter()}</from-action>
-			<from-outcome>accepted</from-outcome>
-			<to-view-id>/pages/Accueil.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
+	
 
 
 

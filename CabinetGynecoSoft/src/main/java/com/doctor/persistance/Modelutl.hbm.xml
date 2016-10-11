@@ -881,6 +881,10 @@
 			<column name="affectEtoile" length="1" default="false" />
 		</property>
 		
+		<property name="confSession" type="boolean">
+			<column name="confSession" length="1" default="false" />
+		</property>
+		
 		
 </class>
 </hibernate-mapping>		

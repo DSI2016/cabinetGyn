@@ -16,7 +16,11 @@
 		<property name="docteur" type="string">
 			<column name="docteur" length="45" />
 		</property>
-<property name="ville" type="string">
+		
+<property name="nbPost" type="string">
+			<column name="nbPost" length="45" />
+		</property>
+		<property name="ville" type="string">
 			<column name="ville" length="45" />
 		</property>
 

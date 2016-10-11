@@ -11,14 +11,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
 
-
+import com.doctor.filter.SessionCounter;
 import com.doctor.persistance.Connecte;
 import com.doctor.persistance.EnLigne;
 import com.doctor.persistance.TabSalle;
 import com.doctor.persistance.Utilisateur;
+import com.doctor.service.CabinetService;
 import com.doctor.service.ConnecteService;
 import com.doctor.service.EnLigneService;
 import com.doctor.service.TabSalleService;
@@ -32,9 +35,9 @@ public class ConnectionBean implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private Utilisateur u;
-	
+
 	private String login;
 	private String motpass;
 	private String connecte;
@@ -52,14 +55,14 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean archiverPat;
 	private boolean suppressionPatientSal;
 	private boolean verConsultation;
-	private boolean consultPat =false;
+	private boolean consultPat = false;
 	private boolean chargerPatientSal;
 	private boolean supAnulSal;
 	private boolean modifNoteSal;
 	private boolean anulSal;
-	private  boolean consultArchiv;
+	private boolean consultArchiv;
 	private boolean menuSalle;
-	private boolean menuGestionPat; 
+	private boolean menuGestionPat;
 	private boolean menuGestStat;
 	private boolean menuGestParametre;
 	private boolean menuGestRapport;
@@ -84,7 +87,7 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean rapportOrdnce;
 	private boolean rapportLettre;
 	private boolean rapportCertif;
-    private boolean modifCons; 
+	private boolean modifCons;
 	private boolean verSalle;
 	private boolean modifPatient;
 	private boolean detailPat;
@@ -124,11 +127,11 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean ajouterSymp;
 	private boolean supprimSymp;
 	private boolean modifierSymp;
-	
+
 	private boolean consultDetAnal;
-	
+
 	private boolean modifGynObs;
-	
+
 	private boolean ajouterExmComp;
 	private boolean supprimExmComp;
 	private boolean modifierExmComp;
@@ -277,28 +280,28 @@ public class ConnectionBean implements java.io.Serializable {
 	private boolean ajouterHeurTrav;
 	private boolean modifierHeurTrav;
 	private boolean supprimHeurTrav;
-	
+
 	private boolean gestSais;
-	
+
 	private boolean donnerRdv;
-	
+
 	private boolean consultDetRad;
 	private boolean consultDetOrd;
-	
-    
+
 	private boolean tabAnulSal;
 	private boolean tabTelSal;
-	
+
 	private boolean ajoutDemandeOrd;
 	private boolean ajoutDemandeRad;
 	private boolean ajoutDemandeAnal;
-	
+
 	private boolean affectEtoile;
-	
+	private boolean confSession;
+
 	private String valOnlic;
-	
-	
-	
+
+	RequestContext context = RequestContext.getCurrentInstance();
+
 	public boolean isAffectEtoile() {
 		return affectEtoile;
 	}
@@ -355,23 +358,21 @@ public class ConnectionBean implements java.io.Serializable {
 		this.supAnulSal = supAnulSal;
 	}
 
-	//liste des tabSalle active pour récuperer les motifs
-	private List<TabSalle> tabSallesActiv= new ArrayList<TabSalle>();
-	
-	
+	// liste des tabSalle active pour récuperer les motifs
+	private List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
 
 	public List<TabSalle> getTabSallesActiv() {
-        TabSalleService ser= new TabSalleService();
-		tabSallesActiv=ser.rechercheParActive();// liste des tabSalle active
-		if(u !=null){
-		  if(u.isTabTelSal()){
-			TabSalle ts=new TabSalle();
-			ts.setNomTab("Telephone");
-		//	tabSallesActiv.add(ts);
-		  }
+		TabSalleService ser = new TabSalleService();
+		tabSallesActiv = ser.rechercheParActive();// liste des tabSalle active
+		if (u != null) {
+			if (u.isTabTelSal()) {
+				TabSalle ts = new TabSalle();
+				ts.setNomTab("Telephone");
+				// tabSallesActiv.add(ts);
+			}
 		}
 		return tabSallesActiv;
-		
+
 	}
 
 	public void setTabSallesActiv(List<TabSalle> tabSallesActiv) {
@@ -473,8 +474,6 @@ public class ConnectionBean implements java.io.Serializable {
 	public void setConsultDetAnal(boolean consultDetAnal) {
 		this.consultDetAnal = consultDetAnal;
 	}
-	
-	
 
 	public boolean isModifGynObs() {
 		return modifGynObs;
@@ -1343,8 +1342,6 @@ public class ConnectionBean implements java.io.Serializable {
 	public void setModifPatient(boolean modifPatient) {
 		this.modifPatient = modifPatient;
 	}
-	
-	
 
 	public boolean isModifCons() {
 		return modifCons;
@@ -1537,7 +1534,6 @@ public class ConnectionBean implements java.io.Serializable {
 	public void setMenuGestionPat(boolean menuGestionPat) {
 		this.menuGestionPat = menuGestionPat;
 	}
-	
 
 	public boolean isMenuGestStat() {
 		return menuGestStat;
@@ -1688,13 +1684,39 @@ public class ConnectionBean implements java.io.Serializable {
 		this.utilisateur = utilisateur;
 	}
 
-	public String connecter() {
+	public static HttpSession find(String sessionId) {
+		return SessionCounter.sessions.get(sessionId);
+
+	}
+
+	public void connecter() {
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session4 = request.getSession();
+
+		int nbrPost = 0;
+		EnLigneService serenligne = new EnLigneService();
+		EnLigneService ser1 = new EnLigneService();
+		List<EnLigne>  sesionEnLigne = ser1.rechercheTousEnLigne();
+		int nbrPostEnligne = serenligne.rechercheTousEnLigne().size();// contient
+		CabinetService ser = new CabinetService();
+		if ((ser.rechercheTousCabinet().get(0) != null)
+				&& (ser.rechercheTousCabinet().get(0).getNbPost() != null)) {
+			String nbrpostString = ser.rechercheTousCabinet().get(0)
+					.getNbPost();
+			nbrPost = Integer.parseInt(nbrpostString.substring(3,
+					nbrpostString.length() - 3)) - 2;// ce champs contient les
+														// nbr des utilisateur
+														// maximum connecter
+														// apres le décréptage
+		}
 		FacesContext face = FacesContext.getCurrentInstance();
-		
-		
+
 		if (login == null || (login.trim().length() == 0)) {
-			
-			face.addMessage("formconnection:loginid", new FacesMessage("Login manquant"));
+
+			face.addMessage("formconnection:loginid", new FacesMessage(
+					"Login manquant"));
 		}
 
 		if (motpass == null || (motpass.trim().length() == 0)) {
@@ -1702,6 +1724,7 @@ public class ConnectionBean implements java.io.Serializable {
 					"Mot de passe manquant"));
 		}
 		if (face.getMessageList().size() == 0) {
+			nbrPostEnligne = nbrPostEnligne + 1;
 
 			if (login.equals("superadmin")) {
 				// génération du mot de passe
@@ -1720,17 +1743,19 @@ public class ConnectionBean implements java.io.Serializable {
 					permuterPatientSal = true;
 					premierPatientSal = true;
 					dernierPatientSal = true;
-					archiverPat=true;
+					archiverPat = true;
 					suppressionPatientSal = true;
 					verConsultation = true;
 					chargerPatientSal = true;
-					supAnulSal=true;
-					anulSal=true;
-					modifNoteSal=true;
+					supAnulSal = true;
+					anulSal = true;
+					modifNoteSal = true;
 					menuSalle = false;
-					consultArchiv=false;
+					consultArchiv = false;
+					confSession = true;
+
 					menuGestionPat = false;
-					menuGestStat=false;
+					menuGestStat = false;
 					menuGestParametre = false;
 					menuGestRapport = false;
 					menuGestUtilisateur = false;
@@ -1756,7 +1781,7 @@ public class ConnectionBean implements java.io.Serializable {
 					rapportCertif = false;
 					verSalle = true;
 					modifPatient = true;
-				    modifCons= true;
+					modifCons = true;
 					detailPat = true;
 					chargerPat = true;
 					suppressionPat = true;
@@ -1794,13 +1819,13 @@ public class ConnectionBean implements java.io.Serializable {
 					ajouterSymp = true;
 					supprimSymp = true;
 					modifierSymp = true;
-					
-					consultDetAnal=false;
-					consultDetRad=false;
-					consultDetOrd=false;
-					
-					modifGynObs=true;
-					
+
+					consultDetAnal = false;
+					consultDetRad = false;
+					consultDetOrd = false;
+
+					modifGynObs = true;
+
 					ajouterExmComp = true;
 					supprimExmComp = true;
 					modifierExmComp = true;
@@ -1864,16 +1889,16 @@ public class ConnectionBean implements java.io.Serializable {
 
 					modifAnalyse = true;
 					supAnalyse = true;
-					ajoutDemandeAnal=true;
-					detAnal=true;
+					ajoutDemandeAnal = true;
+					detAnal = true;
 					modifRadio = true;
 					supRadio = true;
-					ajoutDemandeRad=true;
-					detRad=true;
+					ajoutDemandeRad = true;
+					detRad = true;
 					modifOrdnce = true;
 					supOrdnce = true;
-					ajoutDemandeOrd=true;
-					affectEtoile=true;
+					ajoutDemandeOrd = true;
+					affectEtoile = true;
 					supprimerDocteur = true;
 					gestionUterus = false;
 					ModifGyneco = true;
@@ -1904,7 +1929,7 @@ public class ConnectionBean implements java.io.Serializable {
 					reponseSal = true;
 					selectAntecedent = false;
 					gestAntecedent = false;
-					gestConsultation=false;
+					gestConsultation = false;
 					gestHoraire = false;
 					gestCabinet = false;
 					gestionJourFr = false;
@@ -1922,8 +1947,8 @@ public class ConnectionBean implements java.io.Serializable {
 					modifGestAntMed = true;
 					suppGestAntMed = true;
 					ajoutGestAntMed = true;
-					modifAnt=true;
-					suppAnt=true;
+					modifAnt = true;
+					suppAnt = true;
 					suppGestAntChirg = true;
 					ajoutGestChirg = true;
 					modifGestChirg = true;
@@ -1938,8 +1963,8 @@ public class ConnectionBean implements java.io.Serializable {
 					ajoutModeleord = true;
 					suppModeleOrd = true;
 					imprOrd = true;
-					imprAnal=true;
-					imprRad=true;
+					imprAnal = true;
+					imprRad = true;
 					suppOrd = true;
 					nouvCertif = false;
 					modifCertif = true;
@@ -1952,45 +1977,37 @@ public class ConnectionBean implements java.io.Serializable {
 					modifSterilite = false;
 					reglageHoraire = true;
 					loggedInFilter = true;
-				    gestSais=true;
-				    donnerRdv=true;
-					tabAnulSal=true;
-					tabTelSal=true;
+					gestSais = true;
+					donnerRdv = true;
+					tabAnulSal = true;
+					tabTelSal = true;
 					Module.menuConfig = "0";
 					Module.actif = true;
 					Module.passif = false;
-					EnLigne enLigne = new EnLigne();
-					EnLigneService ser1 = new EnLigneService();
-					HttpSession session5 = (HttpSession) FacesContext
-							.getCurrentInstance().getExternalContext()
-							.getSession(true);
-					String idSessionCourant=session5.getId();
-				
-					enLigne.setIdSession(idSessionCourant);
-					ser1.ajoutEnLigne(enLigne);
-				    //redirection
-//				    try {
-//
-//						FacesContext.getCurrentInstance().getExternalContext()
-//								.redirect("Patients");
-//					} catch (Exception e) {
-//						System.out.println(e.getMessage());
-//					}
-//				    
-				    
-				    
-					return "accepted";
+					confSession = true;
+
+					loggedIn = true;
+					FacesContext context = FacesContext.getCurrentInstance();
+					try {
+
+						context.getExternalContext().redirect("Accueil");
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 				}
 			}
 
-			else if (Test.currentConnect < Test.maxConnect) {
+			else if (nbrPostEnligne <= nbrPost) {
+
 				// pas de message d'erreur == les champs login et mp non vide
 				// tester le nombre de session
 
 				// tester si le login et le mot de passe existe dans la base
 				UtilisateurService c = new UtilisateurService();
-				 u = c.rechercheParLoginMotPass(login, motpass);
-
+				u = c.rechercheParLoginMotPass(login, motpass);
+				if (u != null) {
+					confSession = true;
+				}
 				if (u != null) {
 					if (u.isPassif()) {
 
@@ -1998,16 +2015,21 @@ public class ConnectionBean implements java.io.Serializable {
 								"Ce compte est désactivé."));
 
 					} else {
-						Test.currentConnect++;
+						EnLigne enLigne = new EnLigne();
+
+						enLigne.setNomUtilisateur(u.getPrenom() + " "
+								+ u.getNom() + " :" + u.getLogin());
+						enLigne.setIdSession(session4.getId());
+						if (ser1.rechercheParEnLigne(session4.getId()) == null) {
+							ser1.ajoutEnLigne(enLigne);
+						}
 						connecte = u.getPrenom() + " " + u.getNom();
-						
+
 						utilisateur = login;
 						HttpSession session = (HttpSession) FacesContext
 								.getCurrentInstance().getExternalContext()
 								.getSession(false);
 						session.setAttribute("name", login);
-
-					
 
 						Connecte connect = new ConnecteService()
 								.rechercheParConnecte(login);
@@ -2030,19 +2052,16 @@ public class ConnectionBean implements java.io.Serializable {
 						} else {
 							menuSalle = false;
 						}
-						
-						consultArchiv=!u.isConsultArchiv();
+
+						consultArchiv = !u.isConsultArchiv();
 
 						if (u.getMenuGestPat().equals("0")) {
 							menuGestionPat = true;
 						} else {
 							menuGestionPat = false;
 						}
-						
-						
-						menuGestStat = ! u.isMenuGestStat();
-						
-						
+
+						menuGestStat = !u.isMenuGestStat();
 
 						if (u.getMenuParametre().equals("0")) {
 							menuGestParametre = true;
@@ -2251,8 +2270,8 @@ public class ConnectionBean implements java.io.Serializable {
 							dernierPatientSal = false;
 						else
 							dernierPatientSal = true;
-						
-						archiverPat=u.isArchiverPat();
+
+						archiverPat = u.isArchiverPat();
 
 						if (u.getSupPatSal().equals("0"))
 							suppressionPatientSal = false;
@@ -2269,11 +2288,11 @@ public class ConnectionBean implements java.io.Serializable {
 							chargerPatientSal = false;
 						else
 							chargerPatientSal = true;
-						
-						anulSal=u.isAnulSal();
-						modifNoteSal=u.isModifNoteSal();
-						
-						supAnulSal=u.isSupAnulSal();
+
+						anulSal = u.isAnulSal();
+						modifNoteSal = u.isModifNoteSal();
+
+						supAnulSal = u.isSupAnulSal();
 
 						if (u.getAjoutVil().equals("0"))
 							ajoutVille = false;
@@ -2334,8 +2353,8 @@ public class ConnectionBean implements java.io.Serializable {
 							supprimerDocteur = false;
 						else
 							supprimerDocteur = true;
-                        
-						modifCons= u.isModifCons();
+
+						modifCons = u.isModifCons();
 						gestionUterus = !(u.isGestionUterus());
 						ajouterEtBb = u.isAjoutEtBb();
 						ModifGyneco = u.isModifGyneco();
@@ -2378,13 +2397,13 @@ public class ConnectionBean implements java.io.Serializable {
 						ajouterSymp = u.isAjoutAsym();
 						supprimSymp = u.isSupAsym();
 						modifierSymp = u.isModifAsym();
-						
-						consultDetAnal= !u.isConsultDetAnal();
-						consultDetRad=!u.isConsultDetRad();
-						consultDetOrd= !u.isConsultDetOrd();
-						
-						modifGynObs= ! u.isModifGynObs();
-						
+
+						consultDetAnal = !u.isConsultDetAnal();
+						consultDetRad = !u.isConsultDetRad();
+						consultDetOrd = !u.isConsultDetOrd();
+
+						modifGynObs = !u.isModifGynObs();
+
 						ajouterExmComp = u.isAjoutExmComp();
 						supprimExmComp = u.isSupExmComp();
 						modifierExmComp = u.isModifExmComp();
@@ -2392,13 +2411,13 @@ public class ConnectionBean implements java.io.Serializable {
 
 						modifAnalyse = u.isModifAnalyse();
 						supAnalyse = u.isSupAnalyse();
-						ajoutDemandeAnal=u.isAjoutDemandeAnal();
-						detAnal=u.isDetHistoAnal();
+						ajoutDemandeAnal = u.isAjoutDemandeAnal();
+						detAnal = u.isDetHistoAnal();
 						modifRadio = u.isModifRadio();
 						supRadio = u.isSupRadio();
-						ajoutDemandeOrd=u.isAjoutDemandeRad();
-						affectEtoile=u.isAffectEtoile();
-						detRad=u.isDetHistoRad();
+						ajoutDemandeOrd = u.isAjoutDemandeRad();
+						affectEtoile = u.isAffectEtoile();
+						detRad = u.isDetHistoRad();
 						modifOrdnce = u.isModifOrdnce();
 						supOrdnce = u.isSupOrdnce();
 						ajoutUterus = u.isAjoutUt();
@@ -2429,7 +2448,7 @@ public class ConnectionBean implements java.io.Serializable {
 						reponseSal = u.isReponseSal();
 						selectAntecedent = !(u.isSelectAntecedent());
 						gestAntecedent = !(u.isGestAntecedent());
-						gestConsultation=!(u.isGestConsultation());
+						gestConsultation = !(u.isGestConsultation());
 						gestHoraire = !(u.isGestHoraire());
 						gestCabinet = !(u.isGestCabinet());
 						gestionJourFr = !(u.isGestionJourFr());
@@ -2447,8 +2466,8 @@ public class ConnectionBean implements java.io.Serializable {
 						modifGestAntMed = u.isModifGestAntMed();
 						suppGestAntMed = u.isSuppGestAntMed();
 						ajoutGestAntMed = u.isAjoutGestAntMed();
-						modifAnt=u.isModifAnt();
-						suppAnt=u.isSuppAnt();
+						modifAnt = u.isModifAnt();
+						suppAnt = u.isSuppAnt();
 						suppGestAntChirg = u.isSuppGestAntChirg();
 						ajoutGestChirg = u.isAjoutGestChirg();
 						modifGestChirg = u.isModifGestChirg();
@@ -2463,8 +2482,8 @@ public class ConnectionBean implements java.io.Serializable {
 						ajoutModeleord = u.isAjoutModeleord();
 						suppModeleOrd = u.isSuppModeleOrd();
 						imprOrd = u.isImprOrd();
-						imprAnal=u.isImprmAnal();
-						imprRad=u.isImprRadio();
+						imprAnal = u.isImprmAnal();
+						imprRad = u.isImprRadio();
 						suppOrd = u.isSuppOrd();
 						nouvCertif = !(u.isNouvCertif());
 						modifCertif = u.isModifCertif();
@@ -2476,30 +2495,22 @@ public class ConnectionBean implements java.io.Serializable {
 						imprLettre = u.isImprLettre();
 						modifSterilite = !(u.isModifSterilite());
 						reglageHoraire = u.isReglageHoraire();
-						
-						gestSais=u.isGestSais();
-						donnerRdv=u.isDonnerRdv();
-						
-						tabAnulSal=u.isTabAnulSal();
-						tabTelSal=u.isTabTelSal();
-						
+
+						gestSais = u.isGestSais();
+						donnerRdv = u.isDonnerRdv();
+
+						tabAnulSal = u.isTabAnulSal();
+						tabTelSal = u.isTabTelSal();
+
 						ajoutAntecedentListe = u.isAjoutAntecedentListe();
-						/*nouvelleContraceptionAntecedent = u
-								.isNouvelleContraceptionAntecedent();
-						System.out.println("nouvelleContraceptionAntecedent=="+nouvelleContraceptionAntecedent);
-						nouvelleGrossesseAntecedent = u
-								.isNouvelleGrossesseAntecedent();
-						System.out.println("nouvelleGrossesseAntecedent=="+nouvelleGrossesseAntecedent);*/
-						
-						
-						
+
 						modifCab = u.isModifCab();
 
-						if(u.getConsultGrossOrd().equals("0"))
+						if (u.getConsultGrossOrd().equals("0"))
 							consulGrosstOrd = false;
 						else
 							consulGrosstOrd = true;
-						
+
 						if (u.getAntecedent().equals("0"))
 							antecedent = false;
 						else
@@ -2629,9 +2640,9 @@ public class ConnectionBean implements java.io.Serializable {
 							analGyn = false;
 						else
 							analGyn = true;
-						
+
 						if (u.getGynOrd().equals("0"))
-						
+
 							consulGrosstOrd = false;
 						else
 							consulGrosstOrd = true;
@@ -2650,32 +2661,45 @@ public class ConnectionBean implements java.io.Serializable {
 							nouvConGross = false;
 						else
 							nouvConGross = true;
-
+						confSession = u.isConfSession();
 						Module.menuConfig = "0";
 						Module.actif = u.isActif();
 						Module.passif = u.isPassif();
-						EnLigne enLigne = new EnLigne();
-						EnLigneService ser1 = new EnLigneService();
-						HttpSession session5 = (HttpSession) FacesContext
-								.getCurrentInstance().getExternalContext()
-								.getSession(true);
-						String idSessionCourant=session5.getId();
-					
-						enLigne.setIdSession(idSessionCourant);
-						ser1.ajoutEnLigne(enLigne);
-						loggedInFilter = true;
-						
-						return "accepted";
-					}
-				} else
-					face.addMessage("formconnection:f", new FacesMessage(
-							"N'existe pas un compte avec ces paramètres."));
-			} else {
-				face.addMessage(
-						"formconnection:f",
-						new FacesMessage(
-								"Veuillez fermer une session pour pouvoir ouvrir une autre."));
 
+						loggedInFilter = true;
+
+						FacesContext context = FacesContext
+								.getCurrentInstance();
+						try {
+
+							context.getExternalContext().redirect("Accueil");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+						}
+
+					}
+				} else {
+					face.addMessage("formconnection:f", new FacesMessage(
+
+					"N'existe pas un compte avec ces paramètres."));
+				}
+			} else {
+				confSession = true;
+				if (confSession == true) {
+
+					RequestContext context2 = RequestContext
+							.getCurrentInstance();
+
+					RequestContext.getCurrentInstance().update(
+							":fsession:idSession");
+					context2.execute("PF('diagSession').show();");
+				} else {
+					face.addMessage(
+							"formconnection:f",
+							new FacesMessage(
+									"Veuillez fermer une session pour pouvoir ouvrir une autre."));
+
+				}
 			}
 			HttpSession session = (HttpSession) FacesContext
 					.getCurrentInstance().getExternalContext()
@@ -2686,8 +2710,8 @@ public class ConnectionBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("name", utilisateur);
-		System.out.println("c'est null");
-		return null;
+		RequestContext.getCurrentInstance().update("formconnection:f");
+
 	}
 
 	public void annuler() {
@@ -2705,8 +2729,25 @@ public class ConnectionBean implements java.io.Serializable {
 			loggedIn = false;
 			if (Test.currentConnect > 0 && !login.equals("superadmin"))
 				Test.currentConnect--;
+			if (login.equals("superadmin") == false) {
+
+				HttpServletRequest request = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				HttpSession session4 = request.getSession();
+				
+
+				EnLigneService serenligne = new EnLigneService();
+				List<EnLigne> sesionEnLigne = new ArrayList<EnLigne>();
+				boolean temp = false;
+				EnLigne ligne = serenligne
+						.rechercheParEnLigne(session4.getId());
+				if (ligne != null) {
+					serenligne.supprimerEnLigne(ligne);
+					session4.invalidate();
+				}
+			}
 		}
-		
+
 		loggedInFilter = false;
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -2766,7 +2807,6 @@ public class ConnectionBean implements java.io.Serializable {
 	}
 
 	public boolean isSelectTableConsultation() {
-		// System.out.println("select" + selectTableConsultation);
 		return selectTableConsultation;
 	}
 
@@ -2983,8 +3023,6 @@ public class ConnectionBean implements java.io.Serializable {
 	public void setGestAntecedent(boolean gestAntecedent) {
 		this.gestAntecedent = gestAntecedent;
 	}
-	
-	
 
 	public boolean isGestConsultation() {
 		return gestConsultation;
@@ -3113,8 +3151,6 @@ public class ConnectionBean implements java.io.Serializable {
 	public void setSuppGestAntMed(boolean suppGestAntMed) {
 		this.suppGestAntMed = suppGestAntMed;
 	}
-	
-	
 
 	public boolean isModifAnt() {
 		return modifAnt;
@@ -3371,9 +3407,10 @@ public class ConnectionBean implements java.io.Serializable {
 	public void setModifSterilite(boolean modifSterilite) {
 		this.modifSterilite = modifSterilite;
 	}
+
 	
+
 	public void goToSalle() {
-		
 
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -3382,7 +3419,13 @@ public class ConnectionBean implements java.io.Serializable {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
+	public boolean isConfSession() {
+		return confSession;
+	}
+
+	public void setConfSession(boolean confSession) {
+		this.confSession = confSession;
+	}
 
 }

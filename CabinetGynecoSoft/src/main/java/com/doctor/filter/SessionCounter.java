@@ -28,47 +28,53 @@ public static List<EnLigne> sesionEnLigne = new ArrayList<EnLigne>();
 		EnLigneService ser1 = new EnLigneService();
 		
 		
-		enLigne.setIdSession(session.getId());
-		if(ser1.rechercheParEnLigne(session.getId())!=null)
+//		enLigne.setIdSession(session.getId());
+//		if(ser1.rechercheParEnLigne(session.getId())==null)
+//		{		
+//	ser1.ajoutEnLigne(enLigne);
+//	System.out.println("ligne ajouter"+enLigne.getIdSession());
+//		}
+//		
+		List<EnLigne> Listesession=ser1.rechercheTousEnLigne();
+		for(int i=0;i<Listesession.size();i++)
+		
+		if(Listesession.get(i)!=null)
+			
 		{		
-	ser1.ajoutEnLigne(enLigne);
-	System.out.println("ligne ajouter"+enLigne.getIdenligne());
-		}
+			HttpSession sessionTemp =find(Listesession.get(i).getIdSession());
+			if(sessionTemp!=null)
 
+			{
+				if(sessionTemp.getAttribute("name")!=null)
+				{
+					System.out.println("la session "+Listesession.get(i).getIdSession()+"est reste actif ");
+				}
+				
+				
+				
+				
+					
+			}		}
+
+		
+		
 		HttpSession temp;
 
 		
 		sesionEnLigne.clear();
 		sesionEnLigne = ser1.rechercheTousEnLigne();
-		for (int i = 0; i < sesionEnLigne.size(); i++) {
+		if(sesionEnLigne!=null)
+		{for (int i = 0; i < sesionEnLigne.size(); i++) {
 			temp = find(sesionEnLigne.get(i).getIdSession());
 			if (temp == null) {
-				ser1.supprimerEnLigne(sesionEnLigne.get(i));
 				System.out.println("supprimer"
 						+ sesionEnLigne.get(i).getIdenligne());
+				ser1.supprimerEnLigne(sesionEnLigne.get(i));
+				
 			}
 		}
+		}
 
-
-		if(sesionEnLigne.size()>3)
-			
-		{
-			HttpSession temp1=find(sesionEnLigne.get(2).getIdSession());
-		if(temp1!=null)
-		{
-			temp1.invalidate();
-			System.out.println("nbr"+activeSessions);
-			EnLigneService ser2 = new EnLigneService();
-			enLigne.setIdSession(temp1.getId());
-	ser2.supprimerEnLigne(enLigne);
-		}
-		
-		}
-		else
-		{
-		System.out.println("PAS ENCORE");	
-		}
-		
 	}
 //
 //	 public void sessionDestroyed(HttpSessionEvent event) {

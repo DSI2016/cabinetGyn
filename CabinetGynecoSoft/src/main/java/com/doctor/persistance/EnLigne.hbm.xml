@@ -12,5 +12,9 @@
         <property name="idSession" type="string">
             <column name="idSession" length="255" not-null="true" />
         </property>
+           <property name="nomUtilisateur" type="string">
+            <column name="nomUtilisateur" length="255" not-null="true" />
+        </property>
+       
     </class>
 </hibernate-mapping>

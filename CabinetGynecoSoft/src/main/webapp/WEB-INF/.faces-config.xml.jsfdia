@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
- <PROCESS-ITEM NAME="rules:#pages2#connection.xhtml"
-  PATH="/pages2/connection.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#pages2#connection.xhtml:0" NAME="item"
-   PATH="/pages2/connection.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="accepted:#{connectionBean.connecter()}:#pages#Accueil.xhtml"
-    NAME="output" PATH="/pages/Accueil.xhtml"
-    TARGET="rules:#pages#Accueil.xhtml"
-    TITLE="#{connectionBean.connecter()}:accepted" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
- </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#pages#Accueil.xhtml"
-  PATH="/pages/Accueil.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#GestionPatient.xhtml"
   PATH="/pages/GestionPatient.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#pages#GestionPatient.xhtml:0" NAME="item"

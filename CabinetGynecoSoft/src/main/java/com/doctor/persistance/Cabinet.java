@@ -10,6 +10,7 @@ public class Cabinet {
 	private String gsm1;
 	private String gsm2;
 	private String fax;
+	private String nbPost;
 	private String eMail;
 
 	private String specialite;
@@ -106,6 +107,7 @@ public class Cabinet {
 		result = prime * result + ((gsm2 == null) ? 0 : gsm2.hashCode());
 		result = prime * result
 				+ ((idcabinet == null) ? 0 : idcabinet.hashCode());
+		result = prime * result + ((nbPost == null) ? 0 : nbPost.hashCode());
 		result = prime * result
 				+ ((specialite == null) ? 0 : specialite.hashCode());
 		result = prime * result + ((tel1 == null) ? 0 : tel1.hashCode());
@@ -158,6 +160,11 @@ public class Cabinet {
 				return false;
 		} else if (!idcabinet.equals(other.idcabinet))
 			return false;
+		if (nbPost == null) {
+			if (other.nbPost != null)
+				return false;
+		} else if (!nbPost.equals(other.nbPost))
+			return false;
 		if (specialite == null) {
 			if (other.specialite != null)
 				return false;
@@ -181,6 +188,14 @@ public class Cabinet {
 		return true;
 	}
 
+	public String getNbPost() {
+		return nbPost;
+	}
+
+	public void setNbPost(String nbPost) {
+		this.nbPost = nbPost;
+	}
+
 	public String getVille() {
 		return ville;
 	}
@@ -194,8 +209,8 @@ public class Cabinet {
 		return "Cabinet [idcabinet=" + idcabinet + ", docteur=" + docteur
 				+ ", adresse=" + adresse + ", ville=" + ville + ", tel1="
 				+ tel1 + ", tel2=" + tel2 + ", gsm1=" + gsm1 + ", gsm2=" + gsm2
-				+ ", fax=" + fax + ", eMail=" + eMail + ", specialite="
-				+ specialite + "]";
+				+ ", fax=" + fax + ", nbPost=" + nbPost + ", eMail=" + eMail
+				+ ", specialite=" + specialite + "]";
 	}
 
 }
