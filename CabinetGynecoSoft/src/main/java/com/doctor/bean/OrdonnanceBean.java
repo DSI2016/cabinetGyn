@@ -2,6 +2,8 @@ package com.doctor.bean;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,8 +21,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpSession;
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.FormeMedicament;
@@ -870,17 +874,17 @@ public class OrdonnanceBean implements Serializable {
 			app = true;
 	}
 
-	public void suppressionOrdonnance(Integer idOrd) {
+	public void suppressionOrdonnance() {
 		// supression des medOrd avec cet idOrd
 
 		MedOrdService s = new MedOrdService();
-		List<MedOrd> listMed = s.rechercheParIdOrd(idOrd);
+		List<MedOrd> listMed = s.rechercheParIdOrd(idOrdonnance);
 		for (int i = 0; i < listMed.size(); i++)
 			s.supprimerMedOrd(listMed.get(i));
 		medOrds.clear();
 		OrdonnanceService ser = new OrdonnanceService();
 
-		ser.supprimerOrdonnance(idOrd);
+		ser.supprimerOrdonnance(idOrdonnance);
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idConsult = (Integer) session.getAttribute("idConsultD");
@@ -903,18 +907,55 @@ public class OrdonnanceBean implements Serializable {
 		}
 	}
 
-	public void supprimerOrdonnance(Integer idOrd) {
+	public void suppressionOrd(Ordonnance ord) {
+		idOrdonnance = ord.getIdOrdonnance();
+		selectedOrd = ord;
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String dateO = "";
+		if (ord.getDateOrd() != null)
+			dateO = "du " + formatter.format(ord.getDateOrd());
+		msg = "Voulez-vous vraiment supprimer l'ordonannce " + dateO + " ?";
+
+		RequestContext.getCurrentInstance().update("f1:sup");
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.execute("PF('suppOrd').show();");
+
+	}
+
+	private String msg;
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public void supprimerOrdonnance() {
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		idConsult = (Integer) session.getAttribute("idConsultD");
+		if (idConsult != null) {
+			consult = new ConsultationDetailService()
+					.rechercheConsultationDetail(idConsult);
+			consult.setNbOrd(consult.getNbOrd() - 1);
+			new ConsultationDetailService().modifierConsultationDetail(consult);
+		}
+		 //System.out.println(idOrdonnance);
+		
+
 		// supression des medOrd avec cet idOrd
 
 		MedOrdService s = new MedOrdService();
-		List<MedOrd> listMed = s.rechercheParIdOrd(idOrd);
+		List<MedOrd> listMed = s.rechercheParIdOrd(idOrdonnance);
 		for (int i = 0; i < listMed.size(); i++)
 			s.supprimerMedOrd(listMed.get(i));
 		medOrds.clear();
 		OrdonnanceService ser = new OrdonnanceService();
 
-		ser.supprimerOrdonnance(idOrd);
-
+		ser.supprimerOrdonnance(idOrdonnance);
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesContext faces = FacesContext.getCurrentInstance();
 		blocage = false;

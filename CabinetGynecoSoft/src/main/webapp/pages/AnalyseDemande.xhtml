@@ -262,10 +262,9 @@
 													rendered="#{connectionBean.supAnalyse}"
 													icon="ui-icon-trash" title="Suppression Analyse"
 													style="font-size:small;font-weight:bold"
-													actionListener="#{analyseDemandeeBean.suppressionAnalyse(ana.idanalyseDemandee)}">
-													<p:confirm header="Suppression analyse"
-														message="Voulez-vous vraiment supprimer cette Analyse ?"
-														icon="ui-icon-alert" />
+													actionListener="#{analyseDemandeeBean.supressionAnalyse(ana)}"
+													oncomplete="PF('suppAnalyse').show();">
+													
 												</p:commandButton>
 
 											</p:column>
@@ -282,6 +281,30 @@
 						</p:panel>
 						<br /> <br />
 					</div>
+					
+					<p:dialog id="sup" widgetVar="suppAnalyse" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{analyseDemandeeBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{analyseDemandeeBean.suppressionAnalyse()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppAnalyse').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
 				</h:form>
 			</div>
 		</h:body>

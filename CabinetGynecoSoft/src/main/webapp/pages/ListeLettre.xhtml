@@ -140,11 +140,9 @@
 
 									<p:commandButton icon="ui-icon-trash"
 										rendered="#{connectionBean.suppLettre}"
-										action="#{historiqueLettreBean.supprimerLettre(histo1.idHistoriquelettre)}"
+										action="#{historiqueLettreBean.suppressionLettre(histo1)}"
 										title="Suppression Lettre" update=":f1">
-										<p:confirm header="Suppression lettre"
-											message="Voulez-vous vraiment supprimer cette lettre ?"
-											icon="ui-icon-alert" />
+										
 									</p:commandButton>
 
 								</p:column>
@@ -196,6 +194,35 @@
 					</tr>
 				</table>
 			</p:panel>
+			
+			
+			<p:dialog id="sup" widgetVar="suppLet" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{historiqueLettreBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+								action="#{historiqueLettreBean.supprimerLettre()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppLet').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
+			
+			
+			
+			
 		</h:form>
 
 		<h:form id="fDiag">

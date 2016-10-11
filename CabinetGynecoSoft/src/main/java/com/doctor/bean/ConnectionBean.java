@@ -1978,7 +1978,7 @@ public class ConnectionBean implements java.io.Serializable {
 //					}
 //				    
 				    
-				    
+					loggedIn = true;
 					return "accepted";
 				}
 			}

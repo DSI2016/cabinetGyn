@@ -161,12 +161,10 @@ Historique Ordonnances</ui:define>
 
 										<p:commandButton icon="ui-icon-trash"
 											title="Suppression Ordonnance"
-											actionListener="#{ordonnanceBean.supprimerOrdonnance(ord.idOrdonnance)}"
+											actionListener="#{ordonnanceBean.suppressionOrd(ord)}"
 											rendered="#{connectionBean.supphistoOrd}"
 											style="font-size:small;font-weight:bold" update=":f1">
-											<p:confirm header="Suppression Ordonnance"
-												message="Voulez-vous vraiment supprimer cet Ordonnance ?"
-												icon="ui-icon-alert" />
+											
 
 										</p:commandButton>
 
@@ -212,6 +210,30 @@ Historique Ordonnances</ui:define>
 					</table>
 
 				</p:panel>
+				<p:dialog id="sup" widgetVar="suppOrd" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{ordonnanceBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{ordonnanceBean.supprimerOrdonnance()}"
+									update=":f1,:f3:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppOrd').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
+				
 			</h:form>
 		</div>
 

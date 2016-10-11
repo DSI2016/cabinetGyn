@@ -407,100 +407,117 @@ public class ModifPatient {
 	public static void MajOrdonnance() {
 		List<Ordonnance> ords = new OrdonnanceService()
 				.rechercheTousOrdonnance();
-		for (int i = 0; i < ords.size(); i++)
-		{	if (ords.get(i).getPatient() != null)
-				{Cfclient c=new CfclientService().RechercheCfclient(ords.get(i)
-						.getPatient().getCode());
-				ords.get(i).setProprietaire(c.getPrenom()+" "+c.getNom());
+		for (int i = 0; i < ords.size(); i++) {
+			if (ords.get(i).getPatient() != null) {
+				Cfclient c = new CfclientService().RechercheCfclient(ords
+						.get(i).getPatient().getCode());
+				ords.get(i).setProprietaire(c.getPrenom() + " " + c.getNom());
 				new OrdonnanceService().modifierOrdonnance(ords.get(i));
-				}
+			}
 		}
 	}
 
-	
-public static int compteurChar(String str, char ch) 
-{
-	int compteur = 0;                  
-	for (int i = 0; i < str.length(); i++) 
-if (str.charAt(i) == ch)             
-   compteur++;                         
-	return compteur;   
-}
-	
+	public static int compteurChar(String str, char ch) {
+		int compteur = 0;
+		for (int i = 0; i < str.length(); i++)
+			if (str.charAt(i) == ch)
+				compteur++;
+		return compteur;
+	}
+
 	public static void corigerCategoriePatientelle() {
 		CfclientService sr = new CfclientService();
 		List<Cfclient> patients = new CfclientService().rechercheToutPatients();
 		// Cfclient patients.get(i)=new Cfclient();
-		int nbrMoins=0;
-		int nbrPlus=0;
+		int nbrMoins = 0;
+		int nbrPlus = 0;
 		for (int i = 0; i < patients.size(); i++) {
 			System.out.println("code" + patients.get(i).getCode());
 			if (patients.get(i).getCode() != null) {
 				if ((patients.get(i).getCategorie()) != null) {
-					
-					if((compteurChar(patients.get(i).getCategorie().trim(), '+')==0)&&(compteurChar(patients.get(i).getCategorie().trim(), '-')!=0))
-					{	nbrMoins=compteurChar(patients.get(i).getCategorie().trim(), '-');
-					
-					if(nbrMoins==1)
-					patients.get(i).setCategoriEtoile("etoileNegative1");
-					if(nbrMoins==2)
-						patients.get(i).setCategoriEtoile("etoileNegative2");
-					if((nbrMoins==3)||(nbrMoins>3))
-						patients.get(i).setCategoriEtoile("etoileNegative3");
-					}
-					
-					if((compteurChar(patients.get(i).getCategorie().trim(), '+')!=0)&&(compteurChar(patients.get(i).getCategorie().trim(), '-')==0))
-						{
-						nbrPlus=compteurChar(patients.get(i).getCategorie().trim(), '+');
-						
-						if(nbrPlus==1)
-							patients.get(i).setCategoriEtoile("etoilePositive1");
-							if(nbrPlus==2)
-								patients.get(i).setCategoriEtoile("etoilePositive2");
-							if(nbrPlus==3)
-								patients.get(i).setCategoriEtoile("etoilePositive3");
-							if(nbrPlus==4)
-								patients.get(i).setCategoriEtoile("etoileExtra");
-							}
-						
-					if((compteurChar(patients.get(i).getCategorie().trim(), '+')!=0)&&(compteurChar(patients.get(i).getCategorie().trim(), '-')!=0))
-						{
-						nbrPlus=compteurChar(patients.get(i).getCategorie().trim(), '+');
-						
-					    nbrMoins=compteurChar(patients.get(i).getCategorie().trim(), '-');
-					    if((nbrPlus==1)&&(nbrMoins==1))
-					    {
-					    	
-					    	patients.get(i).setCategoriEtoile("etoileMoyen");
-					    }
-					    if(nbrPlus==nbrMoins)
-					    {
-					    	
-					    	patients.get(i).setCategoriEtoile("etoileMoyen");
-					    }	
-					    
-					    	
-					    }
-					if((compteurChar(patients.get(i).getCategorie().trim(), '+')==0)&&(compteurChar(patients.get(i).getCategorie().trim(), '-')==0))
-					{
-					
-						patients.get(i).setCategoriEtoile("etoileMoyen");
-						
-					}
-					if (((patients.get(i).getCategorie()) == null)||(patients.get(i).getCategorie()).equals("")) {
-						patients.get(i).setCategoriEtoile("etoileMoyen");
-						}	}
-					}
-			sr.modifierPatient(patients.get(i));		
-		}		
 
+					if ((compteurChar(patients.get(i).getCategorie().trim(),
+							'+') == 0)
+							&& (compteurChar(patients.get(i).getCategorie()
+									.trim(), '-') != 0)) {
+						nbrMoins = compteurChar(patients.get(i).getCategorie()
+								.trim(), '-');
+
+						if (nbrMoins == 1)
+							patients.get(i)
+									.setCategoriEtoile("etoileNegative1");
+						if (nbrMoins == 2)
+							patients.get(i)
+									.setCategoriEtoile("etoileNegative2");
+						if ((nbrMoins == 3) || (nbrMoins > 3))
+							patients.get(i)
+									.setCategoriEtoile("etoileNegative3");
+					}
+
+					if ((compteurChar(patients.get(i).getCategorie().trim(),
+							'+') != 0)
+							&& (compteurChar(patients.get(i).getCategorie()
+									.trim(), '-') == 0)) {
+						nbrPlus = compteurChar(patients.get(i).getCategorie()
+								.trim(), '+');
+
+						if (nbrPlus == 1)
+							patients.get(i)
+									.setCategoriEtoile("etoilePositive1");
+						if (nbrPlus == 2)
+							patients.get(i)
+									.setCategoriEtoile("etoilePositive2");
+						if (nbrPlus == 3)
+							patients.get(i)
+									.setCategoriEtoile("etoilePositive3");
+						if (nbrPlus == 4)
+							patients.get(i).setCategoriEtoile("etoileExtra");
+					}
+
+					if ((compteurChar(patients.get(i).getCategorie().trim(),
+							'+') != 0)
+							&& (compteurChar(patients.get(i).getCategorie()
+									.trim(), '-') != 0)) {
+						nbrPlus = compteurChar(patients.get(i).getCategorie()
+								.trim(), '+');
+
+						nbrMoins = compteurChar(patients.get(i).getCategorie()
+								.trim(), '-');
+						if ((nbrPlus == 1) && (nbrMoins == 1)) {
+
+							patients.get(i).setCategoriEtoile("etoileMoyen");
+						}
+						if (nbrPlus == nbrMoins) {
+
+							patients.get(i).setCategoriEtoile("etoileMoyen");
+						}
+
+					}
+					if ((compteurChar(patients.get(i).getCategorie().trim(),
+							'+') == 0)
+							&& (compteurChar(patients.get(i).getCategorie()
+									.trim(), '-') == 0)) {
+
+						patients.get(i).setCategoriEtoile("etoileMoyen");
+
+					}
+					if (((patients.get(i).getCategorie()) == null)
+							|| (patients.get(i).getCategorie()).equals("")) {
+						patients.get(i).setCategoriEtoile("etoileMoyen");
+					}
+				}
+			}
+			sr.modifierPatient(patients.get(i));
 		}
+
+	}
+
 	public static void main(String[] args) {
-//		 corigerCfClient();
-//		corigerHistoriqueCertif();
-//		 corigerHistoriqueLettre();
-//		corigerHistoriqueCertifCERTIFPRESENCE();
-//		MajOrdonnance();
+		// corigerCfClient();
+		// corigerHistoriqueCertif();
+		// corigerHistoriqueLettre();
+		// corigerHistoriqueCertifCERTIFPRESENCE();
+		// MajOrdonnance();
 		corigerCategoriePatientelle();
 	}
 
