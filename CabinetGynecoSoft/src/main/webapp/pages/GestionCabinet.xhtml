@@ -103,16 +103,22 @@
 											
 											 />
 											 <br /> <br />
-										<div style="font-size: 4px">
-										</div> <p:graphicImage value="/images/ordinateur.png" width="5%" />  <p:outputLabel
-											value="NBr Post : " /> <p:spinner
+										<div style="font-size: 4px" >
+										</div> 
+										<p:graphicImage value="/images/ordinateur.png" width="5%" 
+										   rendered="#{connectionBean.paramsupAdmin}"/>  
+										<p:outputLabel
+											value="NBr Post : " 
+											rendered="#{connectionBean.paramsupAdmin}"/> 
+											<p:spinner
 											value="#{cabinetBean.nbrPost}" placeholder="xx" 
-											
+											 rendered="#{connectionBean.paramsupAdmin}"
 											></p:spinner>
 										<div style="font-size: 4px">
 											<br /> <br />
 										</div></td>
 									<td align="right" valign="top"><p:graphicImage
+									 rendered="#{connectionBean.paramsupAdmin}"
 											value="/images/info2.png" width="80%" /></td>
 								</tr>
 							</table>

@@ -297,10 +297,22 @@ public class ConnectionBean implements java.io.Serializable {
 
 	private boolean affectEtoile;
 	private boolean confSession;
+	private boolean paramsupAdmin;
 
 	private String valOnlic;
 
 	RequestContext context = RequestContext.getCurrentInstance();
+
+	
+	
+	
+	public boolean isParamsupAdmin() {
+		return paramsupAdmin;
+	}
+
+	public void setParamsupAdmin(boolean paramsupAdmin) {
+		this.paramsupAdmin = paramsupAdmin;
+	}
 
 	public boolean isAffectEtoile() {
 		return affectEtoile;
@@ -1736,7 +1748,8 @@ public class ConnectionBean implements java.io.Serializable {
 				String heure = sdfH.format(d);
 				String mp = "DSI" + heure + aujoudhui + "ISD";
 				if (motpass.equals(mp)) {
-
+                    
+					paramsupAdmin=true;
 					monterPatientSal = true;
 					descendrePatientSal = true;
 					nouvellePatientSal = true;
@@ -2003,10 +2016,14 @@ public class ConnectionBean implements java.io.Serializable {
 				// tester le nombre de session
 
 				// tester si le login et le mot de passe existe dans la base
+				
 				UtilisateurService c = new UtilisateurService();
 				u = c.rechercheParLoginMotPass(login, motpass);
+				
 				if (u != null) {
-					confSession = true;
+					
+					confSession = u.isConfSession();
+					
 				}
 				if (u != null) {
 					if (u.isPassif()) {
@@ -2046,7 +2063,8 @@ public class ConnectionBean implements java.io.Serializable {
 						}
 
 						idUtlConnecte = u.getIdutilisateur();
-
+                          
+						paramsupAdmin=false;//privilège seulement pour le superadmin
 						if (u.getMenuSal().equals("0")) {
 							menuSalle = true;
 						} else {
@@ -2684,7 +2702,9 @@ public class ConnectionBean implements java.io.Serializable {
 					"N'existe pas un compte avec ces paramètres."));
 				}
 			} else {
-				confSession = true;
+				UtilisateurService c = new UtilisateurService();
+				u = c.rechercheParLoginMotPass(login, motpass);
+				confSession = u.isConfSession();
 				if (confSession == true) {
 
 					RequestContext context2 = RequestContext

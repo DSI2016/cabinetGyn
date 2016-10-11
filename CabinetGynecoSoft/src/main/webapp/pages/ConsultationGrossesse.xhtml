@@ -115,7 +115,7 @@
 											<p:selectOneMenu id="consul"
 												rendered="#{connectionBean.selectNouvGross}"
 												value="#{consultationDetailBean.typeConsultation}"
-												style="width:80px;font-size:small;font-weight:bold"
+												style="width:120px;font-size:small;font-weight:bold"
 												effect="fade">
 
 												<p:ajax
@@ -440,6 +440,7 @@
 
 										<div align="center">
 											<p:commandButton value="Valider"
+											    disabled="#{consultationDetailBean.disabledvalidConsGross}"
 											    icon=" ui-icon-check"
 												actionListener="#{consultationDetailBean.validationConsultationGross()}"
 												update=":f1,:f1:growl"></p:commandButton>
@@ -460,9 +461,7 @@
 			</div>
 			<br />
 			<br />
-		</h:form>
-		<h:form id="f2">
-		  <p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
 					closable="false" modal="true" model="true"
 					header="Suppression Consultation" hideEffect="explode">
 					<p:panel>
@@ -482,6 +481,10 @@
 						</div>
 					</p:panel>
 				</p:dialog>
+			
+		</h:form>
+		<h:form id="f2">
+		  
 		</h:form>
 
 	</ui:define>

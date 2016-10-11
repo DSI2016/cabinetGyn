@@ -3546,6 +3546,8 @@ public class Utilisateur implements Serializable {
 	}
 	
 
+	
+
 	public boolean isConfSession() {
 		return confSession;
 	}

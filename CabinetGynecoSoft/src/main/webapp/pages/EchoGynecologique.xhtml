@@ -264,7 +264,7 @@
 													action="#{consultationDetailBean.modiefierConsEchoGyneco(cons)}"
 													update=":f1:p2,:f1:p3,:f1:p4,:f1"
 													rendered="#{connectionBean.modifechogyneco}" />
-												<p:commandButton icon="ui-icon-trash"
+												<p:commandButton icon="ui-icon-trash" update=":f1"
 													actionListener="#{consultationDetailBean.suppCons(cons)}"
 													title="Suppression Consultation"
 													rendered="#{connectionBean.suppechogyneco}"
@@ -348,6 +348,27 @@
 			<br />
 			<br />
 			<br />
+			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+					closable="false" modal="true" model="true"
+					header="Suppression Consultation" hideEffect="explode">
+					<p:panel>
+						<h:panelGrid columns="2">
+							<p:graphicImage value="/images/warning.jpg" />
+							<p:outputLabel value="#{consultationDetailBean.message}" />
+						</h:panelGrid>
+						
+						<hr></hr>
+						<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:dialog>
+			
 			<h:form id="fmodele">
 				<p:dialog header="Nouvelle modéle" widgetVar="diag2" modal="true"
 					resizable="false">
@@ -370,28 +391,7 @@
 				
 
 			</h:form>
-			<h:form id="f2">
-			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
-					closable="false" modal="true" model="true"
-					header="Suppression Consultation" hideEffect="explode">
-					<p:panel>
-						<h:panelGrid columns="2">
-							<p:graphicImage value="/images/warning.jpg" />
-							<p:outputLabel value="#{consultationDetailBean.message}" />
-						</h:panelGrid>
-						
-						<hr></hr>
-						<div align="center">
-							<h:panelGrid columns="2">
-								<p:commandButton value="Oui"
-									actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco()}"
-									update=":f1,:f1:growl"></p:commandButton>
-								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
-							</h:panelGrid>
-						</div>
-					</p:panel>
-				</p:dialog>
-			</h:form>
+			
 		</h:form>
 		<style type="text/css">
 .act {
