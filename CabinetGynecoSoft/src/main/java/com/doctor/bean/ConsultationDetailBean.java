@@ -1579,7 +1579,8 @@ public class ConsultationDetailBean implements Serializable {
 		message="voulez vous vraiment supprimer la consultation du "+ newDateFrm;
 
 		RequestContext context = RequestContext.getCurrentInstance();
-		context.update(":f2:idDlgSup"); 
+		//context.update(":f1"); 
+		context.update(":f2:idDlgSup,f1"); 
 		context.execute("PF('suppDlg').show();");
 		
 	}

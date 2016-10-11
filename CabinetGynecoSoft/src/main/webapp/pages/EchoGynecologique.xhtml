@@ -236,12 +236,9 @@
 
 										<p:dataTable id="eventsDT" 
 										    scrollable="true"
-										    
+										    scrollHeight="140"
 											value="#{consultationDetailBean.consultationDetails}"
-											
 											emptyMessage="Pas des Consultations !"
-											
-											
 											var="cons" selectionMode="single"
 											selection="#{consultationDetailBean.selectedCons}"
 											rowKey="#{cons.idConsultationDetail}">
@@ -270,7 +267,8 @@
 												<p:commandButton icon="ui-icon-trash"
 													actionListener="#{consultationDetailBean.suppCons(cons)}"
 													title="Suppression Consultation"
-													rendered="#{connectionBean.suppechogyneco}">
+													rendered="#{connectionBean.suppechogyneco}"
+													>
 												</p:commandButton>
 											</p:column>
 										</p:dataTable>
@@ -369,7 +367,11 @@
 
 				</p:dialog>
 
-				<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+				
+
+			</h:form>
+			<h:form id="f2">
+			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
 					closable="false" modal="true" model="true"
 					header="Suppression Consultation" hideEffect="explode">
 					<p:panel>
@@ -389,7 +391,6 @@
 						</div>
 					</p:panel>
 				</p:dialog>
-
 			</h:form>
 		</h:form>
 		<style type="text/css">
