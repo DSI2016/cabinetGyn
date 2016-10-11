@@ -29,6 +29,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 
 import com.doctor.persistance.Analyse;
+import com.doctor.persistance.AnalyseDemandee;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Consultation;
 import com.doctor.persistance.ConsultationDetail;
@@ -38,8 +39,10 @@ import com.doctor.persistance.ExamenComplementaire;
 import com.doctor.persistance.HistoriqueGross;
 import com.doctor.persistance.Modele;
 import com.doctor.persistance.Ordonnance;
+import com.doctor.persistance.Radio;
 import com.doctor.persistance.Symptome;
 import com.doctor.persistance.Uterus;
+import com.doctor.service.AnalyseDemandeeService;
 import com.doctor.service.AnalyseService;
 import com.doctor.service.CfclientService;
 import com.doctor.service.ConsultaionService;
@@ -49,6 +52,7 @@ import com.doctor.service.ExamenService;
 import com.doctor.service.HistoriqueGrossService;
 import com.doctor.service.ModeleService;
 import com.doctor.service.OrdonnanceService;
+import com.doctor.service.RadioService;
 import com.doctor.service.SymptomeService;
 import com.doctor.service.UterusService;
 
@@ -215,10 +219,29 @@ public class ConsultationDetailBean implements Serializable {
 	private boolean afficheImpr = true;
 	private boolean afficheValidEchoObs = true;
 	private boolean afficheImprEchoObs = true;
+	private boolean disabledvalidConsGross=true;
+	private boolean disabledvalidconsGyn=true;
 	
 	private String message;
 	
+
 	
+
+	public boolean isDisabledvalidconsGyn() {
+		return disabledvalidconsGyn;
+	}
+
+	public void setDisabledvalidconsGyn(boolean disabledvalidconsGyn) {
+		this.disabledvalidconsGyn = disabledvalidconsGyn;
+	}
+
+	public boolean isDisabledvalidConsGross() {
+		return disabledvalidConsGross;
+	}
+
+	public void setDisabledvalidConsGross(boolean disabledvalidConsGross) {
+		this.disabledvalidConsGross = disabledvalidConsGross;
+	}
 
 	public String getMessage() {
 		return message;
@@ -1576,11 +1599,11 @@ public class ConsultationDetailBean implements Serializable {
 		Date d=cons.getDateConsultation();
 		SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
 	    String newDateFrm = myFormat.format(d);
-		message="voulez vous vraiment supprimer la consultation du "+ newDateFrm;
+		message="voulez vous vraiment supprimer la consultation du "+ newDateFrm + " ?";
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		//context.update(":f1"); 
-		context.update(":f2:idDlgSup,f1"); 
+		context.update("f1:idDlgSup"); 
 		context.execute("PF('suppDlg').show();");
 		
 	}
@@ -2207,6 +2230,7 @@ public class ConsultationDetailBean implements Serializable {
 							histo.setIdcons(cd.getIdConsultationDetail());
 							histo.setCfclient(clt);
 							serhisto.ajouterHistoriqueGross(histo);
+							disabledvalidConsGross=true;
 
 						}
 						clt.setPoids(poids);
@@ -2231,6 +2255,7 @@ public class ConsultationDetailBean implements Serializable {
 				if (action != null && action.equals("modif")) {
 					cd.setIdConsultationDetail(idConsultationDetail);
 					ser.modifierConsultationDetail(cd);
+					disabledvalidConsGross=true;
 					if (msg.equals("")) {
 						blocage = false;
 						face.addMessage(null, new FacesMessage(
@@ -2380,6 +2405,7 @@ public class ConsultationDetailBean implements Serializable {
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Consultation Ajoutée Avec Succés"));
+					disabledvalidconsGyn=true;
 					read = "noeditable";
 					// mettre à jour les données du patient
 					clt.setPoids(poids);
@@ -2475,6 +2501,7 @@ public class ConsultationDetailBean implements Serializable {
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Consultation Modifiée Avec Succés"));
+					disabledvalidconsGyn=true;
 					read = "noeditable";
 					// mettre à jour les données du patient
 					clt.setPoids(poids);
@@ -2836,7 +2863,7 @@ public class ConsultationDetailBean implements Serializable {
 		desibledRadio = true;
 		desibledAnalyse = true;
 		desibledOrd = true;
-
+		disabledvalidconsGyn=true;
 		selectedCons = null;
 		selectedConsult = null;
 		ddr = null;
@@ -2899,6 +2926,8 @@ public class ConsultationDetailBean implements Serializable {
 	}
 
 	public void initialisationAnnuler() {
+		
+		disabledvalidConsGross=true;
 		desibledRadio = true;
 		desibledAnalyse = true;
 		desibledOrd = true;
@@ -2969,7 +2998,7 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cons.getIdConsultationDetail());
-
+		disabledvalidconsGyn=false;
 		selectedCons=cons;
 		idConsultationDetail = cons.getIdConsultationDetail();
 		dateConsultation = formatter.format(cons.getDateConsultation());
@@ -4495,6 +4524,7 @@ public class ConsultationDetailBean implements Serializable {
 	}
 
 	public void ajoutConsGynecologie() {
+		disabledvalidconsGyn=false;
 		poids = null;
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService serclt = new CfclientService();
@@ -4534,19 +4564,30 @@ public class ConsultationDetailBean implements Serializable {
 		String chAnalyse = "";
 		String chRadio = "";
 		String chOrdonnace = "";
+		
+		List<AnalyseDemandee> listanal = null;
+		AnalyseDemandeeService seranal= new AnalyseDemandeeService();
+		listanal= seranal.rechercheAnalyseParConsultation(selectedCons.getIdConsultationDetail());
+		
+		List<Radio> listrad = null;
+		RadioService serRad= new RadioService();
+		listrad= serRad.rechercheRadioParConsultation(selectedCons.getIdConsultationDetail());
+		
 		if (selectedCons != null) {
 
 			// recherche si nous avons analyse pour cette consultation
 			ConsultationDetailService ser = new ConsultationDetailService();
-			if (selectedCons.getAnalyse() != null) {
-				chAnalyse = "" + "Elle contient une Analyse lieé ";
+			
+			
+			if (listanal.size() !=0) {
+				chAnalyse = "" + "Elle contient des Analyses";
 				this.erreur = true;
 
 			}
 
 			// recherche si nous avons radio pour cette consultation
-			if (selectedCons.getRadio() != null) {
-				chRadio = "" + " Elle contient un Radio lieé ";
+			if (listrad.size() !=0) {
+				chRadio = "" + " Elle contient des Radios";
 				this.erreur = true;
 
 			}
@@ -4558,7 +4599,7 @@ public class ConsultationDetailBean implements Serializable {
 					.rechercheOrdonnanceParConsultation(idConsultationDetail);
 
 			if ((listeord.size() != 0)) {
-				chOrdonnace = "" + "Elle contient une Ordannace lieé ";
+				chOrdonnace = "" + "Elle contient des Ordannaces";
 				this.erreur = true;
 			}
 
@@ -4584,15 +4625,7 @@ public class ConsultationDetailBean implements Serializable {
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_INFO, "",
 						"Consultation supprimée avec succés"));
-				FacesContext context = FacesContext.getCurrentInstance();
-				 context.getExternalContext().getFlash().setKeepMessages(true);
-				 try {
-				 context.getExternalContext().redirect("Consultation-Gynecologique");
 				
-				 } catch (Exception e) {
-				System.out.println(e.getMessage());
-				
-				}
 
 				CfclientService serclt = new CfclientService();
 				HttpSession session = (HttpSession) FacesContext
@@ -4640,6 +4673,16 @@ public class ConsultationDetailBean implements Serializable {
 					serclt.modifierPatient(c);
 
 				}
+				
+				FacesContext context = FacesContext.getCurrentInstance();
+				 context.getExternalContext().getFlash().setKeepMessages(true);
+				 try {
+				 context.getExternalContext().redirect("Consultation-Gynecologique");
+				
+				 } catch (Exception e) {
+				System.out.println(e.getMessage());
+				
+				}
 			}
 		}
 
@@ -4651,18 +4694,27 @@ public class ConsultationDetailBean implements Serializable {
 		String chAnalyse = "";
 		String chRadio = "";
 		String chOrdonnace = "";
+		
+		List<AnalyseDemandee> listanal = null;
+		AnalyseDemandeeService seranal= new AnalyseDemandeeService();
+		listanal= seranal.rechercheAnalyseParConsultation(selectedCons.getIdConsultationDetail());
+		
+		List<Radio> listrad = null;
+		RadioService serRad= new RadioService();
+		listrad= serRad.rechercheRadioParConsultation(selectedCons.getIdConsultationDetail());
+		
 		if (selectedCons != null) {
 
 			// recherche si nous avons analyse pour cette consultation
 			ConsultationDetailService ser = new ConsultationDetailService();
-			if (selectedCons.getAnalyse() != null) {
+			if (listanal.size() != 0) {
 				chAnalyse = "" + "Elle contient une Analyse lieé ";
 				this.erreur = true;
 
 			}
 
 			// recherche si nous avons radio pour cette consultation
-			if (selectedCons.getRadio() != null) {
+			if (listrad.size() != 0) {
 				chRadio = "" + " Elle contient un Radio lieé ";
 				this.erreur = true;
 
@@ -4908,6 +4960,7 @@ public class ConsultationDetailBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idConsultD", cd.getIdConsultationDetail());
+		disabledvalidConsGross=false;
         selectedCons=cd;
 		idConsultationDetail = cd.getIdConsultationDetail();
 
@@ -5063,6 +5116,8 @@ public class ConsultationDetailBean implements Serializable {
 	}
 
 	public void onTypeConsultChange() {
+		
+		disabledvalidConsGross=false;
 
 		if ((ancianTypeCons == null)
 				|| (ancianTypeCons.equals(typeConsultation))) {

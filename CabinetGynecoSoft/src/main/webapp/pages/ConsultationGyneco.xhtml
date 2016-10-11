@@ -226,7 +226,7 @@
 												rendered="#{connectionBean.modifGyneco}"
 												action="#{consultationDetailBean.modif(cons)}" update=":f1" />
 											<p:commandButton icon="ui-icon-trash"
-												action="#{consultationDetailBean.suppCons(cons)}"
+												actionListener="#{consultationDetailBean.suppCons(cons)}"
 												title="Suppression Consultation"
 												rendered="#{connectionBean.suppGyneco}"
 												update=":f1">
@@ -343,6 +343,7 @@
 					</table>
 					<div align="center">
 						<p:commandButton value="Valider"
+						   disabled="#{consultationDetailBean.disabledvalidconsGyn}"
 						   icon="ui-icon-check"
 							actionListener="#{consultationDetailBean.validerConsultationGyneco()}"
 							update=":f1,:f1:growl">
@@ -360,11 +361,7 @@
 			
 			<br />
 			<br />
-			
-			
-		</h:form>
-		<h:form id="f2">
-		  <p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
 					closable="false" modal="true" model="true"
 					header="Suppression Consultation" hideEffect="explode">
 					<p:panel>
@@ -384,6 +381,10 @@
 						</div>
 					</p:panel>
 				</p:dialog>
+			
+		</h:form>
+		<h:form id="f2">
+		  
 		</h:form>
 <style>
 .ui-datatable-data tr{

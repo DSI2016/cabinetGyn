@@ -8,10 +8,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.jasperreports.engine.JasperRunManager;
+
 import com.doctor.dao.HibernateUtil;
 import com.mysql.jdbc.Connection;
 
@@ -338,8 +342,13 @@ public class Module {
 
 		String msg = "";
 		String format = "dd/MM/yyyy";
+		
+		if (date == null || (date.equals(""))) {
+			
+			msg="est vide";
+		}
 
-		if (isValid(date, format) == false)
+		else	if (isValid(date, format) == false)
 
 			msg = "est invalide";
 
