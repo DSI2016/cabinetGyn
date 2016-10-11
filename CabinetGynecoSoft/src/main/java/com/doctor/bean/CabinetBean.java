@@ -1,8 +1,14 @@
 package com.doctor.bean;
 
+import java.io.RandomAccessFile;
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import java.util.List;
-
+import java.util.Random;
+import java.io.IOException;
+import java.net.*;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,6 +36,7 @@ public class CabinetBean implements Serializable {
 	private String fax;
 	private String eMail;
 	private String specialite;
+	private String nbrPost;
 
 	public String getSpecialite() {
 		return specialite;
@@ -56,7 +63,7 @@ public class CabinetBean implements Serializable {
 	}
 
 	public String getAdresse() {
-		return adresse;
+return adresse;
 	}
 
 	public void setAdresse(String adresse) {
@@ -133,6 +140,7 @@ public class CabinetBean implements Serializable {
 	}
 
 	public void valider() {
+		String nbrposttraiter;
 		Cabinet c = new Cabinet();
 		CabinetService ser = new CabinetService();
 		c.setIdcabinet(idcabinet);
@@ -144,7 +152,67 @@ public class CabinetBean implements Serializable {
 		c.setGsm2(gsm2);
 		c.setFax(fax);
 		c.seteMail(eMail);
+		if(Module.isNumeric(nbrPost)==true)
+		{	
+			Random r = new Random();
+					int n = 100000 + r.nextInt(900000);
+					String nString=n+"";
+					System.out.println("nstring "+nString);
+			System.out.println("random"+nString.substring(0, 3)+nbrPost+2+nString.substring(3, nString.length()));
+			nbrposttraiter=nString.substring(0, 3)+nbrPost+nString.substring(3, nString.length());
+			c.setNbPost(nbrposttraiter);
+			
+			InetAddress[] adrServeurs;
+			try {
+				adrServeurs = InetAddress.getAllByName("www.microsoft.com");
+			
+			
+			System.out.println("Adresses Microsoft : ");
+			for (int i = 0; i > adrServeurs.length; i++) {
+			System.out.println("     "+adrServeurs[i].getHostAddress());
+			}
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+			
+		//	ServerSocket server = null; //Initialize server socket here.
+
+//			try {
+//				Socket client = server.accept();
+//				String hostName = client.getInetAddress().getHostName();
+//	            System.out.println("pc connecter"+hostName);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			
+//            
+//			}
+//			try {
+//				InetAddress[] adr= InetAddress.
+//				String address = InetAddress.getLocalHost().getHostName();
+//				for(int i=0;i<adr.length;i++)
+//				{
+//				System.out.println("pc connecter"+adr[i]);
+//				}
+//			} catch (UnknownHostException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
+		else
+		
 		ser.modifierCabinet(c);
 	}
+
+	public String getNbrPost() {
+		return nbrPost;
+	}
+
+	public void setNbrPost(String nbrPost) {
+		this.nbrPost = nbrPost;
+	}
+	
 
 }

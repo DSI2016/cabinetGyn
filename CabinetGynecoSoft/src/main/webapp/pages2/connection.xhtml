@@ -11,28 +11,28 @@
 	<ui:define name="title">Authentification</ui:define>
 	<link rel="stylesheet" type="text/css" href="../css/styles.css" />
 	<ui:define name="body">
-		
+
 
 		<div align="center" style="width: 100%">
-		
-		
-		<br/>
-		<h:outputText styleClass="sty"
-			value="Bienvenue Dans GynécoSoft" />
-			<br></br>
-			<br></br>
+
+
+			<br />
+			<h:outputText styleClass="sty" value="Bienvenue Dans GynécoSoft" />
+			<br></br> <br></br>
 			<table>
-			<tr>		<td><p:graphicImage value="/images/symbol.png"></p:graphicImage></td>	
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<h:outputText styleClass="sty"
-			value="Dr. " /></td><td><h:outputText styleClass="sty"
-			value=" #{cabinetBean.docteur}" /></td>
-			<td>&nbsp;&nbsp;&nbsp;&nbsp;<p:graphicImage value="/images/symbol.png"></p:graphicImage>	</td>
-			</tr>
-			
+				<tr>
+					<td><p:graphicImage value="/images/symbol.png"></p:graphicImage></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<h:outputText styleClass="sty"
+							value="Dr. " /></td>
+					<td><h:outputText styleClass="sty"
+							value=" #{cabinetBean.docteur}" /></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<p:graphicImage
+							value="/images/symbol.png"></p:graphicImage>
+					</td>
+				</tr>
+
 			</table>
-		<br></br>
-		
-			<br/>
+			<br></br> <br />
 			<h:form id="formconnection">
 				<p:fieldset id="f" style="width: 60%">
 
@@ -40,61 +40,116 @@
 						<tr>
 							<td><h:graphicImage value="/images/doctor.png" /></td>
 							<td>
-							<div align="center" >
-							<p:fieldset id="f2" legend="Authentification" >
-							<h:panelGrid columns="2">
-									<h:outputText value="Login:*" />
-									<p:inputText id="loginid" value="#{connectionBean.login}" />
-									<h:outputText value=" " style="font-size:8pt"/><h:message for="loginid" style="font-weight:bold;color:red;font-size:8pt" />
-									
-									<h:outputText id="mpid" value="Mot de passe:*" />
-									<p:password value="#{connectionBean.motpass}" />
-									<h:outputText value=" " style="font-size:8pt"/><h:message for="mpid" style="font-weight:bold;color:red;font-size:8pt" />
-									</h:panelGrid>
-									
-									<h:panelGrid columns="2">
-									<p:commandButton value="Connecter" icon="ui-icon-key"  ajax="false"
-										action="#{connectionBean.connecter()}" />
-									<p:commandButton value="Annuler" ajax="false" icon=" ui-icon-arrowreturnthick-1-n"
-									      action="#{connectionBean.annuler()}"/>
-									<br />
-									
-								</h:panelGrid>
-								<h:message for="f" style="font-weight:bold;color:red;font-size:10pt" />
-								</p:fieldset>
+								<div align="center">
+									<p:fieldset id="f2" legend="Authentification">
+										<h:panelGrid columns="2">
+											<h:outputText value="Login:*" />
+											<p:inputText id="loginid" value="#{connectionBean.login}" />
+											<h:outputText value=" " style="font-size:8pt" />
+											<h:message for="loginid"
+												style="font-weight:bold;color:red;font-size:8pt" />
+
+											<h:outputText id="mpid" value="Mot de passe:*" />
+											<p:password value="#{connectionBean.motpass}" />
+											<h:outputText value=" " style="font-size:8pt" />
+											<h:message for="mpid"
+												style="font-weight:bold;color:red;font-size:8pt" />
+										</h:panelGrid>
+
+										<h:panelGrid columns="2">
+											<p:commandButton value="Connecter" icon="ui-icon-key"
+												actionListener="#{connectionBean.connecter()}"  />
+													
+												
+												
+											
+											<p:commandButton value="Annuler" ajax="false"
+												icon=" ui-icon-arrowreturnthick-1-n"
+												action="#{connectionBean.annuler()}" />
+											<br />
+
+										</h:panelGrid>
+										<h:message for="f"
+											style="font-weight:bold;color:red;font-size:10pt" />
+									</p:fieldset>
 								</div>
-								</td>
+							</td>
 						</tr>
-						<tr><td >
-						  
-						</td>
-						<td>
-						 
-						</td>
-						
+						<tr>
+							<td></td>
+							<td></td>
+
 						</tr>
 					</table>
 				</p:fieldset>
+			
+				
+
+			</h:form>
+			<h:form id="fsession">
+			<div align="center">
+
+					<p:dialog id="idSession" widgetVar="diagSession" resizable="false"
+						 modal="true"  
+						width="500pt" height="260pt" hideEffect="explode">
+						<h:form id="formSession">
+							<p:panel id="pSalle"
+								header="Configuration des utilisateurs en ligne">
+								
+								<br></br>
+								<h:outputLabel
+									value="Veuillez fermer une session pour pouvoir ouvrir une autre." />
+									
+									<br></br>
+								<p:dataTable var="sessionListe" id="sessid"
+									value="#{enLigneBean.enLignes}" border="1" paginator="true"
+									paginatorPosition="bottom"
+									paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+									rows="10">
+									
+									<p:column>
+										<f:facet name="header">
+											<h:outputLabel value="Session" />
+										</f:facet>
+      #{sessionListe.nomUtilisateur}
+</p:column>
+
+									<p:column style="width:20%">
+										<p:commandButton
+											actionListener="#{enLigneBean.deconnectSession(sessionListe.idSession,sessionListe.idenligne)}"
+											update="sessid" icon="ui-icon-circle-close"
+											title="Déconnécter utilisateur" />
+
+
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</h:form>
+					</p:dialog>
+				</div>
 			</h:form>
 		</div>
-		
-	
-		<div align="center" class="footer" style="width: 100%;padding-top: 0px;">
-		<hr />
-		<table>
-		<tr>
-		<td ><h:graphicImage value="/images/dsi.png" width="40px" height="40px" /></td>
-		<td width="3%"></td>
-		<td ><p:outputLabel  styleClass="sty1" >GynécoSoft Copyright © DSI_2016 ( Développement Solution Informatique )</p:outputLabel></td>
-		<td width="3%"></td>
-		<td ><h:graphicImage value="/images/dsi.png" width="40px" height="40px" /></td>
-		</tr>
-		</table>
-		
-		
-		
+
+
+		<div align="center" class="footer"
+			style="width: 100%; padding-top: 0px;">
+			<hr />
+			<table>
+				<tr>
+					<td><h:graphicImage value="/images/dsi.png" width="40px"
+							height="40px" /></td>
+					<td width="3%"></td>
+					<td><p:outputLabel styleClass="sty1">GynécoSoft Copyright © DSI_2016 ( Développement Solution Informatique )</p:outputLabel></td>
+					<td width="3%"></td>
+					<td><h:graphicImage value="/images/dsi.png" width="40px"
+							height="40px" /></td>
+				</tr>
+			</table>
+
+
+
 		</div>
-		
+
 		<style type="text/css">
 .footer {
 	background-color: transparent;
@@ -104,23 +159,23 @@
 }
 </style>
 		<style type="text/css">
- .sty{
- font-style: italic;
- font-size:35pt;font-weight: 900;
- color: #7ECEDA; 
- font-family: Lucida Calligraphy;
- text-shadow:1px 1px 2px black, 0 0 #000000, 0 0 0.2em blue;
- }
+.sty {
+	font-style: italic;
+	font-size: 35pt;
+	font-weight: 900;
+	color: #7ECEDA;
+	font-family: Lucida Calligraphy;
+	text-shadow: 1px 1px 2px black, 0 0 #000000, 0 0 0.2em blue;
+}
 </style>
-<style type="text/css">
- .sty1{
- 
- color:#165AA5;
- font-size:10pt; 
-  font-weight:bold
- }
+		<style type="text/css">
+.sty1 {
+	color: #165AA5;
+	font-size: 10pt;
+	font-weight: bold
+}
 </style>
-		
-</ui:define>
+
+	</ui:define>
 </ui:composition>
 </html>

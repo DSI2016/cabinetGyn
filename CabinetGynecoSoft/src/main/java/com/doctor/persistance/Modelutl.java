@@ -265,6 +265,7 @@ public class Modelutl implements Serializable {
     private boolean ajoutDemandeAnal;
     
     private boolean affectEtoile;
+    private boolean confSession;
     
     
     
@@ -1740,6 +1741,7 @@ public class Modelutl implements Serializable {
 				+ ((chargPatSal == null) ? 0 : chargPatSal.hashCode());
 		result = prime * result
 				+ ((chargPatient == null) ? 0 : chargPatient.hashCode());
+		result = prime * result + (confSession ? 1231 : 1237);
 		result = prime * result + (consultArchiv ? 1231 : 1237);
 		result = prime * result + (consultDetAnal ? 1231 : 1237);
 		result = prime * result + (consultDetOrd ? 1231 : 1237);
@@ -2129,6 +2131,8 @@ public class Modelutl implements Serializable {
 			if (other.chargPatient != null)
 				return false;
 		} else if (!chargPatient.equals(other.chargPatient))
+			return false;
+		if (confSession != other.confSession)
 			return false;
 		if (consultArchiv != other.consultArchiv)
 			return false;
@@ -2896,7 +2900,14 @@ public class Modelutl implements Serializable {
 				+ ", suppAnt=" + suppAnt + ", modifGynObs=" + modifGynObs
 				+ ", ajoutDemandeOrd=" + ajoutDemandeOrd + ", ajoutDemandeRad="
 				+ ajoutDemandeRad + ", ajoutDemandeAnal=" + ajoutDemandeAnal
-				+ ", affectEtoile=" + affectEtoile + "]";
+				+ ", affectEtoile=" + affectEtoile + ", confSession="
+				+ confSession + "]";
+	}
+	public boolean isConfSession() {
+		return confSession;
+	}
+	public void setConfSession(boolean confSession) {
+		this.confSession = confSession;
 	}
 
 	
