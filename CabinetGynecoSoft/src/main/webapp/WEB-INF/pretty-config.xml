@@ -116,12 +116,12 @@
 		<view-id value="/pages/Rapport.xhtml" />
 	</url-mapping>
 	<url-mapping id="Modélle-Lettre">
-		<pattern value="/Modélle-Lettre" />
+		<pattern value="/Modelle-Lettre" />
 		<view-id value="/pages/GestionLettre.xhtml" />
 
 	</url-mapping>
 	<url-mapping id="Modélle-Certificat">
-		<pattern value="/Modélle-Certificat" />
+		<pattern value="/Modelle-Certificat" />
 		<view-id value="/pages/GestionCertificat.xhtml" />
 	</url-mapping>
 

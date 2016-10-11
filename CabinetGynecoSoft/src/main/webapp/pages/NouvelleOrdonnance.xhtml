@@ -222,12 +222,11 @@
 
 														<p:commandButton icon="ui-icon-trash"
 															title="Suppression Ordonnance"
-															actionListener="#{ordonnanceBean.suppressionOrdonnance(ord.idOrdonnance)}"
+															actionListener="#{ordonnanceBean.suppressionOrd(ord)}"
+															
 															rendered="#{connectionBean.supphistoOrd}"
-															style="font-size:small;font-weight:bold" update=":f1">
-															<p:confirm header="Suppression Ordonnance"
-																message="Voulez-vous vraiment supprimer cet Ordonnance ?"
-																icon="ui-icon-alert" />
+															style="font-size:small;font-weight:bold" >
+															
 
 														</p:commandButton>
 
@@ -303,7 +302,7 @@
 										</p:commandButton>
 
 										<p:commandButton value="Annuler"
-										    icon="ui-icon-arrowreturnthick-1-s"
+										    icon="ui-icon-closethick"
 											actionListener="#{ordonnanceBean.annulation()}" update=":f1"
 											rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>
@@ -373,7 +372,7 @@
 								oncomplete="handleLoginRequest(xhr, status, args)"
 								update=":f1:growl" />
 							<p:commandButton value="Annuler"
-								icon="ui-icon-arrowreturnthick-1-n"
+								icon="ui-icon-closethick"
 								actionListener="#{ordonnanceBean.closeDiagMed()}" update=":f1" />
 						</h:panelGrid>
 					</p:panel>
@@ -394,7 +393,7 @@
 									oncomplete="handleLoginRequest2(xhr, status, args)"
 									update=":f1:fmed:dialog ,:f1:growl" />
 								<p:commandButton value="Annuler"
-									icon="ui-icon-arrowreturnthick-1-n"
+									icon="ui-icon-closethick"
 									oncomplete="PF('dialogforme').hide()" update=":f1:fmed" />
 							</h:panelGrid>
 						</p:panel>
@@ -412,11 +411,11 @@
 						<h:panelGrid columns="2">
 							<h:outputText value="Nom Modèle: " />
 							<p:inputText value="#{ordonnanceBean.nomModeleOrd}"></p:inputText>
-							<p:commandButton value="Valider" icon="ui-icon-plusthick">
+							<p:commandButton value="Valider" icon="ui-icon-check">
 								<p:ajax listener="#{ordonnanceBean.ajouterModeleOrdonnance()}"
 									update=":f1,:f1:growl"></p:ajax>
 							</p:commandButton>
-							<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+							<p:commandButton icon="ui-icon-closethick"
 								oncomplete="PF('ajoutModel').hide();" value="Annuler"
 								update=":f1" />
 
@@ -425,6 +424,30 @@
 					</p:panel>
 				</h:form>
 			</p:dialog>
+
+<p:dialog id="sup" widgetVar="suppOrd" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{ordonnanceBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{ordonnanceBean.suppressionOrdonnance()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppOrd').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
 
 			<script type="text/javascript">
 					function handleLoginRequest(xhr, status, args) {

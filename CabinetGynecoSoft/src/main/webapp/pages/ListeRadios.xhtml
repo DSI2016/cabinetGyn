@@ -119,10 +119,9 @@ Historique Radios</ui:define>
 								rendered="#{connectionBean.supRadio}" icon="ui-icon-trash"
 								title="Suppression Radio"
 								style="font-size:small;font-weight:bold"
-								actionListener="#{radioBean.SupprimerRadio(rad.idradio)}">
-								<p:confirm header="Suppression radio"
-									message="Voulez-vous vraiment supprimer cette Radio ?"
-									icon="ui-icon-alert" />
+								
+								actionListener="#{radioBean.suppressionRAdio(rad)}">
+								
 							</p:commandButton>
 
 						</p:column>
@@ -240,13 +239,13 @@ Historique Radios</ui:define>
 								</div>
 								<div align="center">
 									<h:panelGrid columns="2">
-										<p:commandButton value="Valider"
+										<p:commandButton icon="ui-icon-check" value="Valider"
 											actionListener="#{radioBean.validerHisto()}"
 											style="font-size:small;font-weight:bold"
 											oncomplete="PF('modifRadios').hide();" update=":f1,:f1:growl">
 										</p:commandButton>
 
-										<p:commandButton value="Annuler"
+										<p:commandButton value="Annuler" icon="ui-icon-closethick"
 											oncomplete="PF('modifRadios').hide();" update=":f1"
 											style="font-size:small;font-weight:bold"></p:commandButton>
 									</h:panelGrid>
@@ -255,6 +254,7 @@ Historique Radios</ui:define>
 						</div>
 					</p:outputPanel>
 				</p:dialog>
+				
 				<p:dialog id="madetail" widgetVar="modifRadiosdetail"
 					resizable="false" closable="false" model="true" width="740pt"
 					showHeader="false">
@@ -370,6 +370,30 @@ Historique Radios</ui:define>
 
 					</p:outputPanel>
 				</p:dialog>
+		
+		<p:dialog id="sup" widgetVar="suppRadio" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText	
+								value="#{radioBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{radioBean.SupprimerRadio()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('suppRadio').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
+		
 			</h:form>
 		</div>
 

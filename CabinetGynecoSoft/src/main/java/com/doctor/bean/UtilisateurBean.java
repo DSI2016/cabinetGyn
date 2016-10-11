@@ -7210,7 +7210,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = true;
 		rechercheOrdPriv = true;
 		imprOrdPriv = true;
-		ajoutDemandRadPriv=true;
+		ajoutDemandOrdPriv=true;
 
 	}
 

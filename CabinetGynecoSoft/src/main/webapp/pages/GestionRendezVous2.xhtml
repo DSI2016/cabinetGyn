@@ -312,8 +312,10 @@
 					<br></br>
 					<div align="center">
 						<p:commandButton value="Envoyer" oncomplete="dlgsalle.hide();"
+						    icon="ui-icon-arrowthickstop-1-e"
 							ajax="false" actionListener="#{rendezVousBean.versSalle()}" />
-						<p:commandButton value="Annuler" oncomplete="dlgsalle.hide();"
+						<p:commandButton value="Annuler"
+						icon="ui-icon-closethick" oncomplete="dlgsalle.hide();"
 							ajax="false"></p:commandButton>
 					</div>
 				</p:outputPanel>
@@ -343,7 +345,7 @@
 						update=":formeGenerale" oncomplete="PF('eventDialog').show();"
 						actionListener="#{rendezVousBean.modifier()}" />
 					<p:commandButton value="Annuler"
-						icon="ui-icon-arrowreturnthick-1-n" update=":formeGenerale"
+						icon="ui-icon-closethick" update=":formeGenerale"
 						oncomplete="PF('eventDialog').show();" />
 				</h:panelGrid>
 			</p:dialog>

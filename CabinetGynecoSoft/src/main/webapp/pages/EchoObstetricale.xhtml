@@ -61,6 +61,7 @@
 										<td><h:outputText value="DDR"
 												style="font-size:small;font-weight:bold" /></td>
 										<td><h:inputText value="#{consultationDetailBean.ddr}"
+										         disabled="#{consultationDetailBean.lireReadOnly()}"
 												style="width:100%;font-size:small;font-weight:bold"
 												readonly="true">
 												<p:ajax event="blur" update="ddg,tp,ta,:f1:growl"
@@ -73,6 +74,7 @@
 										<td><h:outputText value="DDG"
 												style="font-size:small;font-weight:bold" /></td>
 										<td><h:inputText id="ddg"
+										        disabled="#{consultationDetailBean.lireReadOnly()}"
 												value="#{consultationDetailBean.ddg}"
 												style="width:100%;font-size:small;font-weight:bold"
 												readonly="true" /></td>
@@ -81,6 +83,7 @@
 										<td><h:outputText value="Terme Prévu:"
 												style="width:100%;font-size:small;font-weight:bold" /></td>
 										<td><h:inputText id="tp"
+										        disabled="#{consultationDetailBean.lireReadOnly()}"
 												value="#{consultationDetailBean.termePrevu}"
 												style="width:100%;font-size:small;font-weight:bold"
 												readonly="true" /></td>
@@ -88,6 +91,7 @@
 										<td><h:outputText value="Terme Actuel:"
 												style="width:100%;font-size:small;font-weight:bold" /></td>
 										<td><h:inputText id="ta"
+										        disabled="#{consultationDetailBean.lireReadOnly()}"
 												value="#{consultationDetailBean.termeActuel}"
 												style="width:100%;font-size:small;font-weight:bold"
 												readonly="true" /></td>
@@ -117,8 +121,10 @@
 									style="font-size:small;font-weight:bold" update=":f1,:f1:e"
 									rendered="#{connectionBean.nouvechoObs}"></p:commandButton>
 							</div> <p:dataTable id="tb"
+							    scrollable="true"
+							    scrollHeight="140"
 								value="#{consultationDetailBean.consultationDetails}" var="cons"
-								paginator="true" paginatorPosition="bottom"
+								 paginatorPosition="bottom"
 								currentPageReportTemplate="{currentPage} / {totalPages}"
 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 								rows="3" selectionMode="single"
@@ -151,29 +157,16 @@
 									<p:commandButton icon="ui-icon-pencil"
 										rendered="#{connectionBean.modifechoObs}"
 										action="#{consultationDetailBean.modiefierConsEchoObs(cons)}"
-										update=":f1" />
-
-
+										update=":f1"/>
 
 									<p:commandButton icon="ui-icon-trash"
 										rendered="#{connectionBean.suppechoObs}"
-										action="#{consultationDetailBean.supprimerConsultationEchoObs(cons)}"
-										title="Suppression Consultation" update=":f1">
-										<p:confirm header="Suppression Consultation"
-											message="Voulez-vous vraiment supprimer cette Consultation ?"
-											icon="ui-icon-alert" />
+										action="#{consultationDetailBean.suppCons(cons)}"
+										title="Suppression Consultation" >
 									</p:commandButton>
-
 								</p:column>
-
-
-							</p:dataTable> <p:confirmDialog global="true" showEffect="fade"
-								hideEffect="explode">
-								<p:commandButton value="Oui" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-								<p:commandButton value="Non" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-							</p:confirmDialog></td>
+							</p:dataTable> 
+							</td>
 
 						<td><p:tabView width="50%"
 								activeIndex="#{consultationDetailBean.indexTbView}" id="tabView"
@@ -659,19 +652,10 @@
 																value="#{consultationDetailBean.mf3}"
 																readonly="#{consultationDetailBean.lireReadOnly()}"
 																disabled="#{consultationDetailBean.lireReadOnly()}"></p:inputText>
-
-
 														</h:panelGrid>
-
-
 													</h:panelGrid>
 												</p:panel>
 											</td>
-
-
-
-
-
 											<td valign="top"><h:panelGrid columns="1">
 													<p:panel id="p16" header="Morphologie"
 														style="font-size:small;font-weight:bold;">
@@ -709,7 +693,7 @@
 						actionListener="#{consultationDetailBean.validerConsEchoObs()}"
 						disabled="#{consultationDetailBean.afficheValidEchoObs}"
 						update=":f1,:f1:e,:f1:growl"></p:commandButton>
-					<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
+					<p:commandButton icon="ui-icon-closethick"
 						value="Annuler"
 						actionListener="#{consultationDetailBean.initialisationEchoObs()}"
 						update=":f1,:f1:e"></p:commandButton>
@@ -756,6 +740,28 @@
 </style>
 
 		</h:form>
+	   <h:form id="f2">
+	    <p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+					closable="false" modal="true" model="true"
+					header="Suppression Consultation" hideEffect="explode">
+					<p:panel>
+						<h:panelGrid columns="2">
+							<p:graphicImage value="/images/warning.jpg" />
+							<p:outputLabel value="#{consultationDetailBean.message}" />
+						</h:panelGrid>
+						<hr></hr>
+						<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{consultationDetailBean.supprimerConsultationEchoObs()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:dialog>
+	   </h:form>
+	
 	</ui:define>
 </ui:composition>
 </html>

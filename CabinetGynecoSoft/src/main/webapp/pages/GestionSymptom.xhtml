@@ -38,7 +38,7 @@ Symptômes</ui:define>
 
 								<p:commandButton icon="ui-icon-search" title="Recherche Docteur"
 									update=":f1" />
-								<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+								<p:commandButton icon="ui-icon-closethick" title="Actualiser"
 									actionListener="#{symptomeBean.annulerRecherche}" update=":f1" />
 
 							</h:panelGrid>
@@ -121,7 +121,7 @@ Symptômes</ui:define>
 										actionListener="#{symptomeBean.validation()}"
 										update=":f1:growl" />
 									<p:commandButton value="Annuler"
-										icon="ui-icon-arrowreturnthick-1-n"
+										icon="ui-icon-closethick"
 										actionListener="#{symptomeBean.closeDiag()}" update=":f1" />
 								</h:panelGrid>
 							</p:panel>

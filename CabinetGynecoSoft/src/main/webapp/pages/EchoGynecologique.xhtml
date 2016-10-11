@@ -75,18 +75,16 @@
 
 						</table>
 					</td>
-				<td align="right" width="30%">
-							<h:panelGrid columns="3">
-								<h:outputText value="#{connectionBean.utilisateur}"
-									style="font-size:19px;font-weight:bold;font-style: italic" />
+					<td align="right" width="30%"><h:panelGrid columns="3">
+							<h:outputText value="#{connectionBean.utilisateur}"
+								style="font-size:19px;font-weight:bold;font-style: italic" />
 							<h:commandLink actionListener="#{connectionBean.deconnecter()}">
 								<p:graphicImage value="/images/dec.png" width="80%" />
 							</h:commandLink>
-							
-                        </h:panelGrid>
-					</td>
-				
-				
+
+						</h:panelGrid></td>
+
+
 				</tr>
 			</table>
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -96,7 +94,7 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 			<div align="center">
-			
+
 
 				<h:panelGrid columns="1" style=" width : 1205px;">
 					<p:panel style="width:100%;font-size:13pt;font-weight:bold">
@@ -121,15 +119,14 @@
 									<table border="0">
 										<tr>
 											<td width="140px"><p:outputLabel value="Date"
-													style="font-size:small;font-weight:bold"></p:outputLabel> 
-													<p:inputMask mask="99/99/9999"
-													id="iddate"
+													style="font-size:small;font-weight:bold"></p:outputLabel> <p:inputMask
+													mask="99/99/9999" id="iddate"
 													style="width:68px;font-size:small;font-weight:bold"
 													value="#{consultationDetailBean.dateConsultation}"
 													disabled="#{consultationDetailBean.lireReadOnly()}">
 													<p:ajax event="blur" update=":f1:growl,:f1:iddate"
-														listener="#{consultationDetailBean.verifierDate()}" /></p:inputMask>
-												</td>
+														listener="#{consultationDetailBean.verifierDate()}" />
+												</p:inputMask></td>
 											<td width="180px"><h:outputText value="Honoraires :"
 													style="font-size:small;font-weight:bold" /> <p:inputText
 													value="#{consultationDetailBean.honorairestring}"
@@ -137,7 +134,7 @@
 													style="width:50px;font-size:small;font-weight:bold"
 													disabled="#{consultationDetailBean.lireReadOnly()}"
 													update=":f1:growl">
-													
+
 												</p:inputText></td>
 											<td>
 												<div align="right">
@@ -159,8 +156,7 @@
 												<p:selectOneMenu id="uterusid"
 													disabled="#{consultationDetailBean.lireReadOnly()}"
 													value="#{consultationDetailBean.idUterus}"
-													style="width:140px"
-													 filter="true"
+													style="width:140px" filter="true"
 													filterMatchMode="startsWith" effect="fade"
 													placeholder="Uterus">
 													<f:selectItem itemLabel="--Selectioner--" itemValue="" />
@@ -238,24 +234,23 @@
 										</p:panel>
 									</h:panelGrid> <p:panel style="width:492px">
 
-										<p:dataTable id="eventsDT" rows="3"
+										<p:dataTable id="eventsDT" 
+										    scrollable="true"
+										    scrollHeight="140"
 											value="#{consultationDetailBean.consultationDetails}"
-											paginator="true" paginatorPosition="bottom"
-											emptyMessage="Pas des Consultations !" 
-											currentPageReportTemplate="{currentPage} / {totalPages}"
-											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											emptyMessage="Pas des Consultations !"
 											var="cons" selectionMode="single"
 											selection="#{consultationDetailBean.selectedCons}"
-											
 											rowKey="#{cons.idConsultationDetail}">
 											<p:ajax event="rowSelect"
 												listener="#{consultationDetailBean.onRowSelectEchiGyneco}"
 												update=":f1,:f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
-											<p:column headerText="Date" 
+											<p:column headerText="Date"
 												style="font-size:small;font-weight:bold;width:10px">
 												<h:outputText value="#{cons.dateConsultation}"
-													style="font-size:small;font-weight:bold" >
-													<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Europe/Paris"/>
+													style="font-size:small;font-weight:bold">
+													<f:convertDateTime pattern="dd/MM/yyyy"
+														timeZone="Europe/Paris" />
 												</h:outputText>
 											</p:column>
 											<p:column headerText="Conclusion"
@@ -263,40 +258,23 @@
 												<h:outputText value="#{cons.conclusion}"
 													style="font-size:small;font-weight:bold" styleClass="act" />
 											</p:column>
-											<p:column headerText="" style="width:20px">
+											<p:column headerText="" style="width:45px">
 												<p:commandButton icon="ui-icon-pencil"
-												   title="Modification Consultation"
+													title="Modification Consultation"
 													action="#{consultationDetailBean.modiefierConsEchoGyneco(cons)}"
 													update=":f1:p2,:f1:p3,:f1:p4,:f1"
 													rendered="#{connectionBean.modifechogyneco}" />
 												<p:commandButton icon="ui-icon-trash"
-													action="#{consultationDetailBean.supprimerConsultationEchoGyneco(cons)}"
+													actionListener="#{consultationDetailBean.suppCons(cons)}"
 													title="Suppression Consultation"
-													update=":f1:p2,:f1:p3,:f1:p4,:f1,:f1:eventsDT"
-													rendered="#{connectionBean.suppechogyneco}">
-													<p:confirm header="Suppression Consultation"
-														message="Voulez-vous vraiment supprimer cette Consultation ?"
-														icon="ui-icon-alert" />
+													rendered="#{connectionBean.suppechogyneco}"
+													>
 												</p:commandButton>
-
 											</p:column>
-
 										</p:dataTable>
-										<p:confirmDialog global="true" showEffect="fade"
-											hideEffect="explode">
-											<p:commandButton value="Oui" type="button"
-												styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-											<p:commandButton value="Non" type="button"
-												styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-										</p:confirmDialog>
 									</p:panel>
 								</td>
-
-
-
-
 								<td valign="top"><p:panel id="p3" style="height:375px">
-
 										<table>
 											<tr>
 												<td valign="top"><h:panelGrid columns="2">
@@ -333,8 +311,8 @@
 															style="font-size:small;font-weight:bold;height:95px; width : 620px;"
 															readonly="#{consultationDetailBean.lireReadOnly()}"
 															disabled="#{consultationDetailBean.lireReadOnly()}" />
-															
-															
+
+
 													</h:panelGrid></td>
 											</tr>
 										</table>
@@ -350,26 +328,23 @@
 								actionListener="#{consultationDetailBean.validerConsEchoGyneco()}"
 								disabled="#{consultationDetailBean.afficheValid}"
 								update=":f1,:f1:growl"></p:commandButton>
-							<p:commandButton icon="ui-icon-arrowreturnthick-1-s"
-								value="Annuler"
+							<p:commandButton icon="ui-icon-closethick" value="Annuler"
 								actionListener="#{consultationDetailBean.initialisationechogyneco()}"
 								update=":f1,:f1:growl"></p:commandButton>
 							<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
-											actionListener="#{consultationDetailBean.viewEchogyneco}" 
-											value="Imprimer"
-											rendered="#{connectionBean.imprechogyneco}"
-											disabled="#{consultationDetailBean.afficheImpr}"
-										    immediate="true"
-											ajax="false" >
-							</p:commandButton>	
-										
-											
+								actionListener="#{consultationDetailBean.viewEchogyneco}"
+								value="Imprimer" rendered="#{connectionBean.imprechogyneco}"
+								disabled="#{consultationDetailBean.afficheImpr}"
+								immediate="true" ajax="false">
+							</p:commandButton>
+
+
 						</div>
 					</p:panel>
 
 				</h:panelGrid>
-				</div>
-			
+			</div>
+
 			<br />
 			<br />
 			<br />
@@ -382,14 +357,39 @@
 						<p:inputText value="#{consultationDetailBean.nommodele}" />
 					</h:panelGrid>
 					<div align="center">
-						<p:commandButton icon="ui-icon-plusthick" value="Valider"
+						<p:commandButton icon="ui-icon-check" value="Valider"
 							update=":f1,:f1:growl"
 							actionListener="#{consultationDetailBean.ajouterModele()}"
 							oncomplete="PF('diag2').hide();" />
-						<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
-							value="Annuler" onclick="PF('diag2').hide();" />
+						<p:commandButton icon="ui-icon-closethick" value="Annuler"
+							onclick="PF('diag2').hide();" />
 					</div>
 
+				</p:dialog>
+
+				
+
+			</h:form>
+			<h:form id="f2">
+			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
+					closable="false" modal="true" model="true"
+					header="Suppression Consultation" hideEffect="explode">
+					<p:panel>
+						<h:panelGrid columns="2">
+							<p:graphicImage value="/images/warning.jpg" />
+							<p:outputLabel value="#{consultationDetailBean.message}" />
+						</h:panelGrid>
+						
+						<hr></hr>
+						<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco()}"
+									update=":f1,:f1:growl"></p:commandButton>
+								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+					</p:panel>
 				</p:dialog>
 			</h:form>
 		</h:form>

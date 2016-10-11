@@ -72,7 +72,7 @@
 								<p:commandButton icon="ui-icon-search"
 									actionListener="#{medicamentBean.init()}"
 									title="Recherche Médicament" update=":f1" />
-								<p:commandButton icon="ui-icon-refresh" title="Actualiser"
+								<p:commandButton icon="ui-icon-closethick" title="Actualiser"
 									actionListener="#{medicamentBean.annulerRecherche}"
 									update=":f1" />
 
@@ -235,7 +235,7 @@
 										oncomplete="handleLoginRequest(xhr, status, args)"
 										update=":f1:growl" />
 									<p:commandButton value="Annuler"
-										icon="ui-icon-arrowreturnthick-1-n"
+										icon="ui-icon-closethick"
 										actionListener="#{medicamentBean.closeDiag()}" update=":f1" />
 								</h:panelGrid>
 							</p:panel>
@@ -256,7 +256,7 @@
 											oncomplete="handleLoginRequest2(xhr, status, args)"
 											update=":f1:f2:dialog ,:f1:growl" />
 										<p:commandButton value="Annuler"
-											icon="ui-icon-arrowreturnthick-1-n"
+											icon="ui-icon-closethick"
 											oncomplete="PF('dialogforme').hide()" update=":f1:f2" />
 									</h:panelGrid>
 								</p:panel>

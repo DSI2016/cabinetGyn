@@ -1856,7 +1856,7 @@
 						update=":f1" />
 
 					<p:commandButton value="Annuler"
-						icon="ui-icon-arrowreturnthick-1-n"
+						icon="ui-icon-closethick"
 						actionListener="#{utilisateurBean.redirectvergestUtl}"
 						update=":f1" />
 				</div>
@@ -1877,8 +1877,8 @@
 							<h:panelGrid columns="2">
 								<p:commandButton value="Valider" update=":f1:tabmodif,:f1:growl"
 									actionListener="#{utilisateurBean.ajouterModelUtl()}"
-									icon="ui-icon-plusthick"></p:commandButton>
-								<p:commandButton icon="ui-icon-arrowreturnthick-1-n"
+									icon="ui-icon-check"></p:commandButton>
+								<p:commandButton icon="ui-icon-closethick"
 									oncomplete="PF('ajoutModel').hide();" value="Annuler" />
 							</h:panelGrid>
 						</div>
