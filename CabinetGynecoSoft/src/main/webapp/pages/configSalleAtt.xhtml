@@ -69,103 +69,30 @@
 
 							<p:commandButton
 								actionListener="#{configSalleBean.desactiverTab(tabSal)}"
-								update=":f1" icon="ui-icon-closethick" title="Désactiver" 
-								rendered="#{tabSal.active}"/>
+								update=":f1" icon="ui-icon-closethick" title="Désactiver"
+								rendered="#{tabSal.active}" />
 
 							<p:commandButton icon="ui-icon-check" title="Activer"
-							    rendered="#{not tabSal.active}"
-								actionListener="#{configSalleBean.activerTab(tabSal)}"
-								oncomplete="PF('dialogActiv').show()" update=":f1">
+								rendered="#{not tabSal.active}"
+								actionListener="#{configSalleBean.recupererDonnees(tabSal)}"
+								oncomplete="PF('dialogActiv').show()" update=":f2:idDialogActiv">
 							</p:commandButton>
 							<p:commandButton icon="ui-icon-pencil" title="Modifier"
-							      update=":f2:idDialogModif"
-						          actionListener="#{configSalleBean.recupererDonnees(tabSal)}" 
-						          oncomplete="PF('dialogModif').show()"
-						          />
+							    disabled="#{not configSalleBean.afficheModif(tabSal)}"
+								update=":f1:idDialogModif"
+								actionListener="#{configSalleBean.recupererDonnees(tabSal)}"
+								oncomplete="PF('dialogModif').show()" />
 						</p:column>
 					</p:dataTable>
 				</div>
 			</div>
 
-		</h:form>
-		<h:form id="f2">
-			<p:dialog id="idDialogActiv" widgetVar="dialogActiv" modal="true"
-				showHeader="false" closable="false" resizable="false">
-
-				<p:panel id="dialog2" header="Activation Tab Salle">
-					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
-						<p:outputLabel value="Nom de tab* : " />
-						<p:inputText value="#{configSalleBean.nomTab}" id="pro" />
-						<p:outputLabel value="order* : " />
-
-
-						<p:selectOneMenu id="ordrid" value="#{configSalleBean.index}"
-							effect="fade" style="width:220px">
-							<p:ajax event="change" update=":f2:iddlg2"
-								listener="#{configSalleBean.onchageOrdr()}"></p:ajax>
-							<f:selectItem itemLabel="--Selectionner--" itemValue="" />
-							<f:selectItems value="#{configSalleBean.ordres}" var="ord"
-								itemLabel="#{ord}" itemValue="#{ord}" />
-
-						</p:selectOneMenu>
-					</h:panelGrid>
-
-					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
-						<p:outputLabel value="Cet tab a le meme ordre géneral?" />
-						<p:selectOneRadio id="conso2" layout="grid" columns="1"
-							value="#{configSalleBean.ordreDiff}">
-							<f:selectItem itemLabel="Oui" itemValue="true" />
-							<f:selectItem itemLabel="Non" itemValue="false" />
-						</p:selectOneRadio>
-					</h:panelGrid>
-
-					<div align="center">
-						<h:panelGrid columns="2">
-
-							<p:commandButton value="Valider" icon="ui-icon-check"
-								oncomplete="handleLoginRequest(xhr, status, args)"
-								actionListener="#{configSalleBean.validation()}"
-								update=":f1,:f1:growl" />
-							<p:commandButton value="Annuler"
-							     actionListener="#{configSalleBean.initialisation()}"
-								 icon="ui-icon-closethick" 
-								 update=":f1" 
-								 oncomplete="PF('dialogActiv').hide();"/>
-						</h:panelGrid>
-					</div>
-				</p:panel>
-			</p:dialog>
-			<p:dialog id="iddlg2" widgetVar="Dlg2" resizable="false"
-				closable="false" modal="true" model="true" 
-				 hideEffect="explode">
-				<p:panel>
-					<h:outputText
-						value="Cet ordre est utilisé par le tab #{configSalleBean.tabselectionne} "></h:outputText>
-					<br />
-					<hr></hr>
-					
-					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
-						<p:outputLabel value="Voulez vous " />
-						<p:selectOneRadio id="conso3" layout="grid" columns="1"
-							value="#{configSalleBean.choix}">
-							<f:selectItem itemLabel="Permuter ?" itemValue="1" />
-							<f:selectItem itemLabel="Glisser ?" itemValue="2" />
-						</p:selectOneRadio>
-					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<p:commandButton value="ok"
-							
-							oncomplete="PF('Dlg2').hide();"></p:commandButton>
-					</h:panelGrid>
-				</p:panel>
-			</p:dialog>
 			<p:dialog id="idDialogModif" widgetVar="dialogModif" modal="true"
 				showHeader="false" closable="false" resizable="false">
-
 				<p:panel id="dialog3" header="Modification Tab Salle">
 					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
 						<p:outputLabel value="Nom de tab* : " />
-						<p:inputText value="#{configSalleBean.nomTab}" id="pro2" />
+						<p:inputText value="#{configSalleBean.nomTab2}" id="pro2" />
 						<p:outputLabel value="order* : " />
 						<p:selectOneMenu id="ordrid2" value="#{configSalleBean.index}"
 							effect="fade" style="width:220px">
@@ -180,11 +107,10 @@
 						<p:outputLabel value="Cet tab a le meme ordre géneral?" />
 						<p:selectOneRadio id="conso4" layout="grid" columns="1"
 							value="#{configSalleBean.ordreDiff}">
-							<f:selectItem itemLabel="Oui" itemValue="true" />
-							<f:selectItem itemLabel="Non" itemValue="false" />
+							<f:selectItem itemLabel="Oui" itemValue="false" />
+							<f:selectItem itemLabel="Non" itemValue="true" />
 						</p:selectOneRadio>
 					</h:panelGrid>
-
 					<div align="center">
 						<h:panelGrid columns="2">
 							<p:commandButton value="Valider" icon="ui-icon-check"
@@ -192,28 +118,85 @@
 								actionListener="#{configSalleBean.validationModif()}"
 								update=":f1,:f1:growl" />
 							<p:commandButton value="Annuler"
-							     actionListener="#{configSalleBean.initialisation()}"
-								 icon="ui-icon-closethick" 
-								 update=":f1" 
-								 oncomplete="PF('dialogModif').hide();"/>
+								actionListener="#{configSalleBean.initialisation()}"
+								icon="ui-icon-closethick" update=":f1"
+								oncomplete="PF('dialogModif').hide();" />
 						</h:panelGrid>
 					</div>
 				</p:panel>
 			</p:dialog>
 
-			<script type="text/javascript">
-					function handleLoginRequest(xhr, status, args) {
-						if (args.validationFailed || !args.addValid) {
-							PF('dialogAvtiv').jq.effect("shake", {
-								times : 5
-							}, 100);
-						} else {
-							PF('dialogActiv').hide();
-							$('#loginLink').fadeOut();
-						}
-					}
-				</script>
-				<script type="text/javascript">
+
+		</h:form>
+		<h:form id="f2">
+			<p:dialog id="idDialogActiv" widgetVar="dialogActiv" modal="true"
+				showHeader="false" closable="false" resizable="false">
+				<p:panel id="dialog2" header="Activation Tab Salle">
+					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
+						<p:outputLabel value="Nom de tab* : " />
+						<p:inputText value="#{configSalleBean.nomTab2}">
+
+						</p:inputText>
+						<p:outputLabel value="order* : " />
+						<p:selectOneMenu id="ordrid" value="#{configSalleBean.index}"
+							effect="fade" style="width:220px">
+							<p:ajax event="change" update=":f2:iddlg2"
+								listener="#{configSalleBean.onchageOrdr()}"></p:ajax>
+							<f:selectItem itemLabel="--Selectionner--" itemValue="" />
+							<f:selectItems value="#{configSalleBean.ordres}" var="ord"
+								itemLabel="#{ord}" itemValue="#{ord}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
+						<p:outputLabel value="Cet tab a le meme ordre géneral?" />
+						<p:selectOneRadio id="conso2" layout="grid" columns="1"
+							value="#{configSalleBean.ordreDiff}">
+							<f:selectItem itemLabel="Oui" itemValue="true" />
+							<f:selectItem itemLabel="Non" itemValue="false" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+					<div align="center">
+						<h:panelGrid columns="2">
+							<p:commandButton value="Valider" icon="ui-icon-check"
+								oncomplete="handleLoginRequest(xhr, status, args)"
+								actionListener="#{configSalleBean.validation()}"
+								update=":f1,:f1:growl" />
+							<p:commandButton value="Annuler"
+								actionListener="#{configSalleBean.initialisation()}"
+								icon="ui-icon-closethick" update=":f1"
+								oncomplete="PF('dialogActiv').hide();" />
+						</h:panelGrid>
+					</div>
+				</p:panel>
+			</p:dialog>
+			<p:dialog id="iddlg2" widgetVar="Dlg2" resizable="false"
+				closable="false" modal="true" model="true" hideEffect="explode">
+				<p:panel>
+					<h:outputText
+						value="Cet ordre est utilisé par le tab #{configSalleBean.tabselectionne} "></h:outputText>
+					<br />
+					<hr></hr>
+
+					<h:panelGrid columns="2" cellspacing="8" cellpadding="5">
+						<p:outputLabel value="Voulez vous " />
+						<p:selectOneRadio id="conso3" layout="grid" columns="1"
+							value="#{configSalleBean.choix}">
+							<f:selectItem itemLabel="Permuter ?" itemValue="1" />
+							<f:selectItem itemLabel="Glisser ?" itemValue="2" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="ok" oncomplete="PF('Dlg2').hide();"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</p:dialog>
+
+
+
+
+
+		</h:form>
+		<script type="text/javascript">
 					function handleLoginRequest(xhr, status, args) {
 						if (args.validationFailed || !args.addValid) {
 							PF('dialogModif').jq.effect("shake", {
@@ -225,9 +208,7 @@
 						}
 					}
 				</script>
-
-		</h:form>
-
+				
 
 	</ui:define>
 </ui:composition>
