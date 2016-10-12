@@ -25,9 +25,10 @@
 								<h:commandLink actionListener="#{sterileBean.goToAcceuil()}">
 									<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
 								</h:commandLink>
-								<h:commandLink actionListener="#{sterileBean.goToRetour()}">
+								<h:commandLink actionListener="#{sterileBean.goToRetour()}" >
 									<p:graphicImage value="/images/retour.png"></p:graphicImage>
 								</h:commandLink>
+								<p:commandButton actionListener="#{sterileBean.goToRetour()}" update=":f1:growl"></p:commandButton>
 
 							</h:panelGrid>
 						</div></td>
@@ -54,12 +55,12 @@
 				<table><tr><td><h:panelGrid columns="4" cellspacing="10">
 						<h:outputText value="Date mariage"
 							style="font-size:small;font-weight:bold" />
-						<h:inputText id="im" value="#{sterileBean.dateMariage}"
-							readonly="#{connectionBean.modifSterilite}" pattern="dd/MM/yyyy">
-							<p:ajax event="blur" update="im,:f1"
-								listener="#{sterileBean.dateMariageChange()}" />
-						</h:inputText>
-
+							<p:inputMask mask="99/99/9999" id="im"  value="#{sterileBean.dateMariage}"  
+							readonly="#{connectionBean.modifSterilite}" 
+>
+							<p:ajax event="blur" update=":f1"
+								listener="#{sterileBean.dateMariageChange()}" /></p:inputMask>
+						
 						<h:outputText value="Stérilité"
 							style="font-size:small;font-weight:bold" />
 
@@ -80,12 +81,12 @@
 						<h:outputText value="Depuis"
 							style="font-size:small;font-weight:bold" />
 
-						<h:inputText id="dep" value="#{sterileBean.dateDepuis}"
-							readonly="#{connectionBean.modifSterilite}" pattern="dd/MM/yyyy">
+						<p:inputMask mask="99/99/9999" id="dep" value="#{sterileBean.dateDepuis}"
+							readonly="#{connectionBean.modifSterilite}" >
 
-							<p:ajax event="blur" update="dep,:f1"
+							<p:ajax event="blur" update=":f1"
 								listener="#{sterileBean.depuisChange()}" />
-						</h:inputText>
+						</p:inputMask>
 
 
 						<h:outputText value="Cohabitation"

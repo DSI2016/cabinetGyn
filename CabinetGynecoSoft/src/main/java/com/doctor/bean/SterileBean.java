@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
+
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Sterile;
 import com.doctor.service.CfclientService;
@@ -58,7 +60,7 @@ public class SterileBean implements Serializable {
 	private boolean blocage;
 	private String consultationmotif;
 	private boolean spanio;
-
+private boolean addValid=false;
 	public boolean isSpanio() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
@@ -811,13 +813,14 @@ public class SterileBean implements Serializable {
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		mariage = cfclient.getMariage();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		if(mariage!=null)
+		{SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			dateMariage = sdf.format(mariage);
 		} catch (Exception e) {
 			dateMariage = null;
-		}
-		ancienvaleurDateMar = dateMariage;
+		}}
+		//ancienvaleurDateMar = dateMariage;
 		
 		return dateMariage;
 	}
@@ -837,6 +840,7 @@ public class SterileBean implements Serializable {
 	}
 
 	public void dateMariageChange() {
+		System.out.println("entree methode verification mariage ");
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -845,28 +849,23 @@ public class SterileBean implements Serializable {
 		cfclient = se.RechercheCfclient(idPatient);
 
 		FacesContext face = FacesContext.getCurrentInstance();
-		if (dateMariage != null && dateMariage.trim().length() > 0) {
+		
 
 			String dateCorrige = Module.corigerDate(dateMariage);
-			if (dateCorrige != null) {
-				this.setDateMariage(dateCorrige);
-			}
+			
 			String verifDate = Module.verifierDate(dateMariage);
-			if (!(verifDate.equals(""))) {
+			if ((verifDate.equals(""))==false) {
+				addValid=false;
 				this.blocage = true;
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
-						"Problème date mariage : ", verifDate));
-				dateMariage = ancienvaleurDateMar;
+						"","Le date du mariage "+ verifDate));
 
 			}
 
 			else if (face.getMessageList().size() == 0)
-				try {
-					ancienvaleurDateMar = dateMariage;
-				} catch (Exception e) {
-
-				}
+			{
+				addValid =true;
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
@@ -876,12 +875,12 @@ public class SterileBean implements Serializable {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-		}else{
-			mariage=null;
-		}
-		cfclient.setMariage(mariage);
+			cfclient.setMariage(mariage);
 
-		se.modifierPatient(cfclient);
+			se.modifierPatient(cfclient);
+			}
+	
+		
 
 	}
 
@@ -1299,61 +1298,49 @@ public class SterileBean implements Serializable {
 	}
 
 	public void depuisChange() {
-		setDateDepuis(dateDepuis);
+		System.out.println("entree methode depuis");
+		//setDateDepuis(dateDepuis);
 		SterileService ser = new SterileService();
 		Sterile s;
 		FacesContext face = FacesContext.getCurrentInstance();
-		if (dateDepuis != null && dateDepuis.trim().length() > 0) {
-			String dateCorrige = Module.corigerDate(dateDepuis);
-			if (dateCorrige != null) {
-				this.setDateDepuis(dateCorrige);
-			}
+			
 			String verifDate = Module.verifierDate(dateDepuis);
-			if (!(verifDate.equals(""))) {
+			if ((verifDate.equals(""))==false) {
 				this.blocage = true;
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
-						"Problème date stérilité : ", verifDate));
+						"", "Le date du dépuis "+ verifDate));
+				addValid=false;
 
-				dateDepuis = ancienvaleurDateDepuis;
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				try {
-					if (dateDepuis != null && dateDepuis.length() > 0)
-						depuis = sdf.parse(dateDepuis);
-					else
-						depuis = null;
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+				
 			} else if (face.getMessageList().size() == 0) {
-				try {
-					ancienvaleurDateDepuis = dateDepuis;
+				
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					try {
-						if (dateDepuis != null && dateDepuis.length() > 0)
+					if (dateDepuis != null && dateDepuis.length() > 0)
+						try {
 							depuis = sdf.parse(dateDepuis);
-						else
-							depuis = null;
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-				} catch (Exception e) {
-				}
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						
+					
+					addValid=true;
+					if (idSterile != null) {
+						s = ser.rechercheParId(idSterile);
+						s.setDepuis(depuis);
+						ser.modifierSterile(s);
+					} else {
+						s = new Sterile();
+						s.setDepuis(depuis);
+						s.setCfclient(cfclient);
+						ser.ajouterSterile(s);
+					}		
+						}
 			}
-		} else {
-			depuis = null;
-		}
+		
 
-		if (idSterile != null) {
-			s = ser.rechercheParId(idSterile);
-			s.setDepuis(depuis);
-			ser.modifierSterile(s);
-		} else {
-			s = new Sterile();
-			s.setDepuis(depuis);
-			s.setCfclient(cfclient);
-			ser.ajouterSterile(s);
-		}
+		
 
 	}
 
@@ -1373,12 +1360,24 @@ public class SterileBean implements Serializable {
 	}
 
 	public void goToRetour() {
+		
+		if(addValid==false)
+		{
+			dateMariageChange();
+			depuisChange();
+			
+
+			RequestContext.getCurrentInstance().update(
+					":f1:growl");
+		}
+		else{
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 
 			context.getExternalContext().redirect("FichePatiente");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		}
 		}
 	}
 

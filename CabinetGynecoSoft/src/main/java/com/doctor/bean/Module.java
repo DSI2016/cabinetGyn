@@ -8,14 +8,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
-
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.jasperreports.engine.JasperRunManager;
-
 import com.doctor.dao.HibernateUtil;
 import com.mysql.jdbc.Connection;
 
@@ -150,8 +146,8 @@ public class Module {
 		String jour = "";
 		String mois = "";
 		String annee = "";
-
-		if ((date.length() == 8) && (date.indexOf("/") == -1)) {
+if(date.length()>0)
+		{if ((date.length() == 8) && (date.indexOf("/") == -1)) {
 			if (date.indexOf("/") == -1) {
 				jour = date.substring(0, 2);
 				mois = date.substring(2, 4);
@@ -217,7 +213,8 @@ public class Module {
 		}
 		// System.out.println(date1);
 		return (date1);
-
+		}
+return(null);
 	}
 
 	static boolean testBissextile(int annee) {
@@ -343,14 +340,15 @@ public class Module {
 		String msg = "";
 		String format = "dd/MM/yyyy";
 		
-		if (date == null || (date.equals(""))) {
+if (date.length()<=0) {
+	System.out.println("date vide");
 			
 			msg="est vide";
 		}
+else if  (date.length()>0)
+{if(isValid(date, format) == false)
 
-		else	if (isValid(date, format) == false)
-
-			msg = "est invalide";
+	msg = "est invalide";
 
 		else {
 			try {
@@ -411,6 +409,7 @@ public class Module {
 				msg = "est invalide!";
 			}
 		}
+}
 
 		return (msg);
 	}
