@@ -94,9 +94,7 @@
 												value="#{consultationDetailBean.dateConsultation}"
 												style="width:70px;font-size:small;font-weight:bold"
 												disabled="#{consultationDetailBean.lireReadOnly()}">
-												<p:ajax event="blur" update=":f1:growl,:f1:idate,:f1:pg"
-													listener="#{consultationDetailBean.verifierDate()}">
-												</p:ajax>
+												
 
 											</p:inputMask>
 											<h:outputText value="Honoraire :"

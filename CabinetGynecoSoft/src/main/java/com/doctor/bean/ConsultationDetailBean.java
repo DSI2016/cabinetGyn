@@ -1266,10 +1266,11 @@ public class ConsultationDetailBean implements Serializable {
 			honoraire = cons.getHonoraire();
 			honorairestring = Double.toString(honoraire);
 			if (cons.getUterus() != null) {
-				uterus = cons.getUterus();
+				//uterus = cons.getUterus();
 				idUterus = cons.getUterus().getIduterus();
 				nomUterus = cons.getUterus().getUterus();
 			}
+			
 			contours = cons.getContours();
 			echostructure = cons.getEchostructure();
 		}
@@ -1478,6 +1479,8 @@ public class ConsultationDetailBean implements Serializable {
 						serclt.modifierPatient(c);
 
 						cons.setCfclient(c);
+						
+						
 					}
 					if (idUterus != null) {
 						UterusService seruterus = new UterusService();
@@ -1528,8 +1531,14 @@ public class ConsultationDetailBean implements Serializable {
 					// idPatient = Module.idpatient;
 					Cfclient c = serclt.RechercheCfclient(idPatient);
 					UterusService seruterus = new UterusService();
+					System.out.println("idUterus=======>>>>"+idUterus);
 					if (idUterus != null) {
 						uterus = seruterus.rechercheUterus(idUterus);
+						cons.setUterus(uterus);
+					}
+					if (idUterus == null) {
+						System.out.println("get in idut null");
+						cons.setUterus(null);
 					}
 
 					cons.setAnnexes(annexes);
@@ -1546,6 +1555,7 @@ public class ConsultationDetailBean implements Serializable {
 					cons.setConsultation(consultation);
 					cons.setLigne(ligne);
 					se.modifierConsultationDetail(cons);
+					System.out.println("ut apres modification"+cons.getUterus());
 					
 					blocage = false;
 					tempsface = 3500;
@@ -1760,8 +1770,6 @@ public class ConsultationDetailBean implements Serializable {
 		
 		read = "noeditable";
 		
-		System.out.println("selectedCons== "+selectedCons);
-		
 		//selectedCons = c;
 		action = null;
 		if (selectedCons != null) {
@@ -1780,9 +1788,9 @@ public class ConsultationDetailBean implements Serializable {
 			honorairestring = Double.toString(honoraire);
 			
 			if (selectedCons.getUterus() != null) {
-				uterus = selectedCons.getUterus();
+				//uterus = selectedCons.getUterus();
 				idUterus = selectedCons.getUterus().getIduterus();
-				nomUterus = selectedCons.getUterus().getUterus();
+				//nomUterus = selectedCons.getUterus().getUterus();
 				
 			}
 			
@@ -2123,6 +2131,62 @@ public class ConsultationDetailBean implements Serializable {
 				honoraire = consf.getHonoraire();
 				honorairestring = Double.toString(honoraire);
 			}
+			if(ddr!=null)
+			{
+				if(ddr.equals("")==false &&(ddr.length()>0)&&(ddr.equals("__/__/____"))==false)
+			{if (Module.corigerDate(ddr) != null) {
+				this.setDdr(Module.corigerDate(ddr));
+			}
+			if (!(Module.verifierDate(ddr).equals("")))
+
+			{
+				this.blocage = true;
+				face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"", "Le date du dernier régle "+Module.verifierDate(ddr)));
+				//ddr = ancienvaleurddr;
+			}}
+			}
+if(termeActuel!=null)
+{
+	if (termeActuel != null && termeActuel.trim().length() != 0) {
+		if (Module.NumericTermeGrossese(termeActuel) == null) {
+			this.blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", "Le terme prevu d'accouchement est invalide "));
+		}
+
+
+}
+}
+if(ddg!=null)
+{
+	if(ddg.equals("")==false &&(ddg.length()>0)&&(ddg.equals("__/__/____"))==false)
+{if (Module.corigerDate(ddg) != null) {
+				this.setDdg(Module.corigerDate(ddg));
+			}
+			if (!(Module.verifierDate(ddg).equals("")))
+
+			{
+				this.blocage = true;
+				face.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+								"Le date du début grossese "+Module.verifierDate(ddg)));
+				//ddg = ancienvaleurddg;
+
+			}
+			
+}
+}
+			
+			if(Module.corigerDate(dateConsultation)!=null)
+				dateConsultation=Module.corigerDate(dateConsultation);
+			
+			String verifDate = Module.verifierDate(dateConsultation);
+			if ((verifDate.equals(""))==false) {
+				this.blocage = true;
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"","Le date du consultation "+ verifDate));}
 
 			if (poids != null && poids.trim().length() > 0)
 				try {
@@ -4213,8 +4277,8 @@ public class ConsultationDetailBean implements Serializable {
 				this.blocage = true;
 				face.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-								Module.verifierDate(ddg)));
-				ddg = ancienvaleurddg;
+								"Le date du début grossese"+Module.verifierDate(ddg)));
+				//ddg = ancienvaleurddg;
 
 			}
 
@@ -4262,7 +4326,8 @@ public class ConsultationDetailBean implements Serializable {
 		}
 
 	}
-
+	//*************************************************************************************************************************************************************
+// ************************************************************************************************************************************************************ 
 	public void calculDate() {
 		// System.out.println("entree la methode calcul date ddr");
 		FacesContext face = FacesContext.getCurrentInstance();
@@ -4274,8 +4339,8 @@ public class ConsultationDetailBean implements Serializable {
 		{
 			this.blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", Module.verifierDate(ddr)));
-			ddr = ancienvaleurddr;
+					"", "Le date du dernier régle "+Module.verifierDate(ddr)));
+			//ddr = ancienvaleurddr;
 
 		}
 
@@ -4318,6 +4383,8 @@ public class ConsultationDetailBean implements Serializable {
 						"Date Invalide"));
 			}
 	}
+	//*********************************************************************************************************************************
+
 
 	public void verifierDate() {
 
