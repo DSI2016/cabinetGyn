@@ -1752,37 +1752,42 @@ public class ConsultationDetailBean implements Serializable {
 
 	public void onRowSelectEchiGyneco(SelectEvent event) {
 
-		ConsultationDetail c = (ConsultationDetail) event.getObject();
+		//ConsultationDetail c = (ConsultationDetail) event.getObject();
 		// initialisationechogyneco();
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-		session.setAttribute("idConsultD", c.getIdConsultationDetail());
+		//HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				//.getExternalContext().getSession(false);
+		//session.setAttribute("idConsultD", c.getIdConsultationDetail());
 		
 		read = "noeditable";
-
-		selectedCons = c;
+		
+		System.out.println("selectedCons== "+selectedCons);
+		
+		//selectedCons = c;
 		action = null;
-		if (c != null) {
-			cfclient = c.getCfclient();
-			idConsultationDetail = c.getIdConsultationDetail();
-			indications = c.getIndications();
-			longueur = c.getLongueur();
-			larg = c.getLarg();
-			diam = c.getDiam();
-			ligne = c.getLigne();
-			dateConsultation = formatter.format(c.getDateConsultation());
+		if (selectedCons != null) {
+			cfclient = selectedCons.getCfclient();
+			idConsultationDetail = selectedCons.getIdConsultationDetail();
+			indications = selectedCons.getIndications();
+			longueur = selectedCons.getLongueur();
+			larg = selectedCons.getLarg();
+			diam = selectedCons.getDiam();
+			ligne = selectedCons.getLigne();
+			dateConsultation = formatter.format(selectedCons.getDateConsultation());
 
-			annexes = c.getAnnexes();
-			conclusion = c.getConclusion();
-			honoraire = c.getHonoraire();
+			annexes = selectedCons.getAnnexes();
+			conclusion = selectedCons.getConclusion();
+			honoraire = selectedCons.getHonoraire();
 			honorairestring = Double.toString(honoraire);
-			if (c.getUterus() != null) {
-				uterus = c.getUterus();
-				idUterus = c.getUterus().getIduterus();
-				nomUterus = c.getUterus().getUterus();
+			
+			if (selectedCons.getUterus() != null) {
+				uterus = selectedCons.getUterus();
+				idUterus = selectedCons.getUterus().getIduterus();
+				nomUterus = selectedCons.getUterus().getUterus();
+				
 			}
-			contours = c.getContours();
-			echostructure = c.getEchostructure();
+			
+			contours = selectedCons.getContours();
+			echostructure = selectedCons.getEchostructure();
 			read = "noeditable";
 
 		}
@@ -4597,6 +4602,8 @@ public class ConsultationDetailBean implements Serializable {
 			List<Ordonnance> listeord = null;
 			listeord = serord
 					.rechercheOrdonnanceParConsultation(idConsultationDetail);
+			
+			System.out.println("listeord.size()== "+listeord.size());
 
 			if ((listeord.size() != 0)) {
 				chOrdonnace = "" + "Elle contient des Ordannaces";
@@ -4707,10 +4714,10 @@ public class ConsultationDetailBean implements Serializable {
 
 			// recherche si nous avons analyse pour cette consultation
 			ConsultationDetailService ser = new ConsultationDetailService();
+			
 			if (listanal.size() != 0) {
 				chAnalyse = "" + "Elle contient une Analyse lieé ";
 				this.erreur = true;
-
 			}
 
 			// recherche si nous avons radio pour cette consultation
@@ -4727,7 +4734,7 @@ public class ConsultationDetailBean implements Serializable {
 					.rechercheOrdonnanceParConsultation(idConsultationDetail);
 
 			if ((listeord.size() != 0)) {
-				chOrdonnace = "" + "Elle contient une Ordannace lieé ";
+				chOrdonnace = "" + "Elle contient des Ordannaces";
 				this.erreur = true;
 			}
 

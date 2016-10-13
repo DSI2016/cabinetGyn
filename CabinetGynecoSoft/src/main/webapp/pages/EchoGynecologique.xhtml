@@ -39,7 +39,8 @@
 										panelStyle="width:180px" filter="true"
 										filterMatchMode="startsWith" effect="fade"
 										placeholder="Modele"
-										rendered="#{connectionBean.appliquemodelechogyneco}">
+										rendered="#{connectionBean.appliquemodelechogyneco}"
+										disabled="#{consultationDetailBean.afficheValid}">
 										<p:ajax event="change" update=":f1"
 											listener="#{ordonnanceBean.modeleSelectionChanged}" />
 										<f:selectItem itemLabel="--Selectioner--" itemValue="" />
@@ -50,6 +51,7 @@
 
 								<td><p:commandButton title="Ajouter Un Modéle"
 										rendered="#{connectionBean.ajoutmodelechogyneco}"
+										disabled="#{consultationDetailBean.afficheValid}"
 										icon="ui-icon-plusthick" oncomplete="PF('diag2').show();">
 									</p:commandButton></td>
 								<td><p:commandButton title="Apliquer Un Modéle"
@@ -244,7 +246,7 @@
 											rowKey="#{cons.idConsultationDetail}">
 											<p:ajax event="rowSelect"
 												listener="#{consultationDetailBean.onRowSelectEchiGyneco}"
-												update=":f1,:f1:p2,:f1:p3,:f1:p4,:f1:iddate,:f1:idhonoraire" />
+												update=":f1" />
 											<p:column headerText="Date"
 												style="font-size:small;font-weight:bold;width:10px">
 												<h:outputText value="#{cons.dateConsultation}"
@@ -362,7 +364,7 @@
 							<h:panelGrid columns="2">
 								<p:commandButton value="Oui"
 									actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco()}"
-									update=":f1,:f1:growl"></p:commandButton>
+									update=":f1:growl"></p:commandButton>
 								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
 							</h:panelGrid>
 						</div>
