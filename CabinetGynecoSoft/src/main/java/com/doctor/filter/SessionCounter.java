@@ -26,7 +26,6 @@ public static List<EnLigne> sesionEnLigne = new ArrayList<EnLigne>();
 		HttpSession session = event.getSession();
 		activeSessions++;
 		sessions.put(session.getId(), session);//ajouter la session courant dans la map
-		EnLigne enLigne = new EnLigne();
 		EnLigneService ser1 = new EnLigneService();
 		
 		
