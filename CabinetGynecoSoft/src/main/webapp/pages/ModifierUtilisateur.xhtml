@@ -1845,7 +1845,22 @@
 										</p:panel>
 									</div>
 								</p:tab>
-
+                                <p:tab title="Connexion" titleStyle="font-size:small;font-weight:bold">
+                                           <div align="center">
+												<p:panel
+													style="width:500px;height:100px">
+													<br></br>
+													<div align="center">
+														<h:panelGrid columns="2" style="margin-bottom:10px"
+															cellpadding="5">
+															<p:selectBooleanCheckbox
+																value="#{utilisateurBean.desactivSessPriv}" />
+															<h:outputText value="Désactiver session" />
+														</h:panelGrid>
+													</div>
+												</p:panel>
+											</div>
+                                        </p:tab>
 							</p:tabView>
 						</div>
 					</p:tab>

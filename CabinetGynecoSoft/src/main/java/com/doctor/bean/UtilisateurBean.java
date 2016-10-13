@@ -420,9 +420,17 @@ public class UtilisateurBean implements java.io.Serializable {
 	private List<Modelutl> modeleUtls = new ArrayList<Modelutl>();
 
 	private boolean consultAnalActiv = true;
+	private boolean desactivSessPriv;
 	
 	
-	
+
+	public boolean isDesactivSessPriv() {
+		return desactivSessPriv;
+	}
+
+	public void setDesactivSessPriv(boolean desactivSessPriv) {
+		this.desactivSessPriv = desactivSessPriv;
+	}
 
 	public boolean isAjoutDemandAnalPriv() {
 		return ajoutDemandAnalPriv;
@@ -2798,6 +2806,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setAjoutDemandeAnal(false);
 			}
+			if (desactivSessPriv) {
+				u.setConfSession(true);
+			} else {
+				u.setConfSession(false);
+			}
+			
+			
 			if (ajoutDemandRadPriv) {
 				u.setAjoutDemandeRad(true);
 			} else {
@@ -4128,6 +4143,11 @@ public class UtilisateurBean implements java.io.Serializable {
 					u.setAjoutDemandeAnal(true);
 				} else {
 					u.setAjoutDemandeAnal(false);
+				}
+				if (desactivSessPriv) {
+					u.setConfSession(true);
+				} else {
+					u.setConfSession(false);
 				}
 				if (ajoutDemandRadPriv) {
 					u.setAjoutDemandeRad(true);
@@ -5468,6 +5488,12 @@ public class UtilisateurBean implements java.io.Serializable {
 		} else {
 			ajoutDemandAnalPriv = false;
 		}
+		if (u.isConfSession()) {
+			desactivSessPriv= true;
+		} else {
+			desactivSessPriv = false;
+		}
+		
 		if (u.isAjoutDemandeRad()) {
 			ajoutDemandRadPriv= true;
 		} else {
@@ -6568,6 +6594,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		consultHistoAnalPriv = false;
 		supHistoAnalPriv = false;
 		ajoutDemandAnalPriv=false;
+		desactivSessPriv=false;
 
 		radioFichePriv = false;
 		modifHistoRadPriv = false;
@@ -7738,6 +7765,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setAjoutDemandeAnal(false);
 			}
+			if (desactivSessPriv) {
+				u.setConfSession(true);
+			} else {
+				u.setConfSession(false);
+			}
+			
 			if (ajoutDemandRadPriv) {
 				u.setAjoutDemandeRad(true);
 			} else {
@@ -9045,6 +9078,12 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				ajoutDemandAnalPriv = false;
 			}
+			if (u.isConfSession()) {
+				desactivSessPriv= true;
+			} else {
+				desactivSessPriv = false;
+			}
+			
 			if (u.isAjoutDemandeRad()) {
 				ajoutDemandRadPriv= true;
 			} else {
