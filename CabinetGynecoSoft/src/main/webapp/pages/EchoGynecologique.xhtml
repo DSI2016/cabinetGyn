@@ -153,14 +153,14 @@
 									</table> <h:panelGrid columns="2">
 										<p:panel id="p4" style="width:95%;height:10%">
 											<h:panelGrid columns="2">
-												<h:outputText value="Uterus"
+												<h:outputText value="Uterus: "
 													style="font-size:small;font-weight:bold" />
 												<p:selectOneMenu id="uterusid"
 													disabled="#{consultationDetailBean.lireReadOnly()}"
 													value="#{consultationDetailBean.idUterus}"
 													style="width:140px" filter="true"
 													filterMatchMode="startsWith" effect="fade"
-													placeholder="Uterus">
+													>
 													<f:selectItem itemLabel="--Selectioner--" itemValue="" />
 													<f:selectItems value="#{consultationDetailBean.uteruss}"
 														var="pro" itemLabel="#{pro.uterus}"
