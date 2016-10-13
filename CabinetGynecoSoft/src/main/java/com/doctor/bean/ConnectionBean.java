@@ -1723,6 +1723,7 @@ public class ConnectionBean implements java.io.Serializable {
 														// maximum connecter
 														// apres le décréptage
 		}
+		
 		FacesContext face = FacesContext.getCurrentInstance();
 
 		if (login == null || (login.trim().length() == 0)) {
@@ -1735,6 +1736,7 @@ public class ConnectionBean implements java.io.Serializable {
 			face.addMessage("formconnection:mpid", new FacesMessage(
 					"Mot de passe manquant"));
 		}
+		
 		if (face.getMessageList().size() == 0) {
 			nbrPostEnligne = nbrPostEnligne + 1;
 
@@ -2704,7 +2706,8 @@ public class ConnectionBean implements java.io.Serializable {
 			} else {
 				UtilisateurService c = new UtilisateurService();
 				u = c.rechercheParLoginMotPass(login, motpass);
-				confSession = u.isConfSession();
+			//	confSession = u.isConfSession();
+				confSession=true;
 				if (confSession == true) {
 
 					RequestContext context2 = RequestContext

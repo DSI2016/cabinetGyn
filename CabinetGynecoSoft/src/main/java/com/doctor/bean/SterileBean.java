@@ -812,14 +812,16 @@ private boolean addValid=false;
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
+		if((cfclient.getMariage()!=null))
 		mariage = cfclient.getMariage();
 		if(mariage!=null)
+			{if((mariage.equals("")==false)&&(mariage.equals("__/__/____")==false))
 		{SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			dateMariage = sdf.format(mariage);
 		} catch (Exception e) {
 			dateMariage = null;
-		}}
+		}}}
 		//ancienvaleurDateMar = dateMariage;
 		
 		return dateMariage;
@@ -855,6 +857,7 @@ private boolean addValid=false;
 			
 			String verifDate = Module.verifierDate(dateMariage);
 			if ((verifDate.equals(""))==false) {
+				System.out.println("entre verification");
 				addValid=false;
 				this.blocage = true;
 				face.addMessage(null, new FacesMessage(
@@ -870,8 +873,11 @@ private boolean addValid=false;
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
 
-				if (dateMariage != null && dateMariage.length() > 0)
-					mariage = sdf.parse(dateMariage);
+				if ((dateMariage != null)&&(dateMariage.equals("")==false))
+				{
+					if(dateMariage.equals("__/__/____")==false)
+					{
+					mariage = sdf.parse(dateMariage);}}
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -1305,6 +1311,8 @@ private boolean addValid=false;
 		FacesContext face = FacesContext.getCurrentInstance();
 			
 			String verifDate = Module.verifierDate(dateDepuis);
+			
+			
 			if ((verifDate.equals(""))==false) {
 				this.blocage = true;
 				face.addMessage(null, new FacesMessage(
@@ -1317,7 +1325,7 @@ private boolean addValid=false;
 			} else if (face.getMessageList().size() == 0) {
 				
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					if (dateDepuis != null && dateDepuis.length() > 0)
+					if (dateDepuis != null && dateDepuis.length() > 0 && dateDepuis.equals("__/__/____")==false)
 						try {
 							depuis = sdf.parse(dateDepuis);
 						} catch (ParseException e) {
@@ -1360,17 +1368,17 @@ private boolean addValid=false;
 	}
 
 	public void goToRetour() {
-		
-		if(addValid==false)
-		{
-			dateMariageChange();
-			depuisChange();
-			
-
-			RequestContext.getCurrentInstance().update(
-					":f1:growl");
-		}
-		else{
+//		
+//		if(addValid==false)
+//		{
+//			dateMariageChange();
+//			depuisChange();
+//			
+//
+//			RequestContext.getCurrentInstance().update(
+//					":f1:growl");
+//		}
+//		else{
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 
@@ -1379,7 +1387,7 @@ private boolean addValid=false;
 			System.out.println(e.getMessage());
 		}
 		}
-	}
+	//}
 
 	public void goToAcceuil() {
 		FacesContext context = FacesContext.getCurrentInstance();

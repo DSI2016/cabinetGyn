@@ -142,11 +142,14 @@ public class Module {
 	}
 
 	static String corigerFormatDate(String date) {
+		System.out.println("entree coriger date "+date );
 		String date1 = date;
 		String jour = "";
 		String mois = "";
 		String annee = "";
-if(date.length()>0)
+		if(date!=null)
+		
+		{if((date.equals("__/__/____")==false)&&(date.length()>0))
 		{if ((date.length() == 8) && (date.indexOf("/") == -1)) {
 			if (date.indexOf("/") == -1) {
 				jour = date.substring(0, 2);
@@ -213,7 +216,7 @@ if(date.length()>0)
 		}
 		// System.out.println(date1);
 		return (date1);
-		}
+		}}
 return(null);
 	}
 
@@ -274,7 +277,11 @@ return(null);
 	}
 
 	static String corigerDate(String date1) { // pour coriger le format de date
-												// si possible
+if(date1!=null)
+{if((date1.equals("__/__/____")==false)&&(date1.length()>0))
+{	
+	
+	// si possible
 		try {
 			String date3;
 			String date = corigerFormatDate(date1);
@@ -305,7 +312,10 @@ return(null);
 
 			return (null);
 		}
-
+}}
+else
+return (null);
+return null;
 	}
 
 	static boolean estUnEntier(String chaine) { // pour verifier le chaine est
@@ -319,18 +329,27 @@ return(null);
 		return true;
 	}
 
-	static boolean isValid(String strdate, String format) { // pour verifier le
-															// format de date
-															// est de la forme
-															// dd/mm/yyyy
-		SimpleDateFormat df = new SimpleDateFormat(format);
+	static String isValid(String strdate, String format) {
+		// pour verifier le format de date  dd/mm/yyyy
+		if(strdate==null)
+			
+		{return("est vide");	}	
+		else
+		if(strdate.equals("")||(strdate.length()<0)||(strdate.equals("__/__/____")))									// est de la forme
+		{return("est vide");	}												
+		else
+		{SimpleDateFormat df = new SimpleDateFormat(format);
 		try {
-			df.parse(strdate);
-			return true;
-		} catch (ParseException ex) {
-
-			return false;
+			
+			
+					df.parse(strdate);
+					}
+		 catch (ParseException ex) {
+			System.out.println("entree invalide");
+return("est invalide");
 		}
+	}
+		return(null);
 	}
 
 	static String verifierDate(String date) {
@@ -340,17 +359,13 @@ return(null);
 		String msg = "";
 		String format = "dd/MM/yyyy";
 		
-if (date.length()<=0) {
-	System.out.println("date vide");
-			
-			msg="est vide";
-		}
-else if  (date.length()>0)
-{if(isValid(date, format) == false)
+if(isValid(date, format)!=null)
 
-	msg = "est invalide";
+	{msg =isValid(date, format) ;}
+	
 
 		else {
+			
 			try {
 				String[] tNaiss = date.split("/");
 				String annees = tNaiss[2].toString();
@@ -385,7 +400,7 @@ else if  (date.length()>0)
 								|| ((annee % 400 == 0) && (annee % 100 == 0))) {
 
 							if (jour > 29)
-								msg = "est invalide.";
+								msg = "est invalide!";
 						}
 
 						else {
@@ -398,7 +413,7 @@ else if  (date.length()>0)
 						msg = "est invalide!";
 					else if (dateDepassee(date) == true) {
 
-						msg = msg + "est dépassé!";
+						msg ="est dépassé!";
 
 					}
 				} catch (NumberFormatException e) {
@@ -408,10 +423,18 @@ else if  (date.length()>0)
 			} catch (java.lang.ArrayIndexOutOfBoundsException e1) {
 				msg = "est invalide!";
 			}
+			
+			if (date.length()<=0) {
+				System.out.println("date vide");
+						
+						msg="est vide";
+					}
 		}
-}
+
 
 		return (msg);
+			
+
 	}
 
 	public static int calculAgeEnAns(String dateNaiss) {
