@@ -93,19 +93,35 @@ public class OrdonnanceBean implements Serializable {
 	private List<Ordonnance> ordonnances = new ArrayList<Ordonnance>();
 	private List<MedOrd> medOrds = new ArrayList<MedOrd>(0);
 	private boolean consultation;
+	private boolean afficheBtnAnnul;
+	
+	
+
+	public boolean isAfficheBtnAnnul() {
+		return afficheBtnAnnul;
+	}
+
+	public void setAfficheBtnAnnul(boolean afficheBtnAnnul) {
+		this.afficheBtnAnnul = afficheBtnAnnul;
+	}
 
 	public boolean isConsultation() {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		action = (String) session.getAttribute("act");
-		if (action == null)
+		if (action == null){
 			consultation = true;
+		    afficheBtnAnnul=true;
+		    }
 		else {
-			if (action != null && action.equals("consulter"))
+			if (action != null && action.equals("consulter")){
 				consultation = true;
+				afficheBtnAnnul=false;
+			}
 			else
 				consultation = false;
+			    afficheBtnAnnul=true;
 		}
 
 		return consultation;
@@ -680,24 +696,44 @@ public class OrdonnanceBean implements Serializable {
 	public void annulation() {
 
 		List<MedOrd> l;
+		
+		System.out.println("action=="+action);
 		if (action != null && action.equals("Ajout")) {
 			// suppression l'ordonnance ajoutée et les medord liés
 			l = new MedOrdService().rechercheParIdOrd(idOrdonnance);
+			if(l.size()!= 0){
 			for (int i = 0; i < l.size(); i++)
 				new MedOrdService().supprimerMedOrd(l.get(i).getIdMedOrd());
 			new OrdonnanceService().supprimerOrdonnance(idOrdonnance);
+			}
 		}
+		
 		if (action != null && action.equals("ajoutOrdLibre")) {
 			l = new MedOrdService().rechercheParIdOrd(idOrdonnance);
+			if(l.size()!= 0){
 			for (int i = 0; i < l.size(); i++)
 				new MedOrdService().supprimerMedOrd(l.get(i).getIdMedOrd());
 			new OrdonnanceService().supprimerOrdonnance(idOrdonnance);
+			}
 		}
 		medOrds.clear();
 		dateOrd = null;
 		action = null;
 		idOrdonnance = null;
 		// validation = true;
+		consultation=true;
+		afficheBtnAnnul=true;
+		System.out.println("consultation==>>"+consultation);
+		//RequestContext.getCurrentInstance().update("f1");
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+			context.getExternalContext().redirect("NouvelleOrdonnance");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 	public void retour() {
@@ -727,6 +763,15 @@ public class OrdonnanceBean implements Serializable {
 
 	public void ajouterModeleOrdonnance() {
 		FacesContext face = FacesContext.getCurrentInstance();
+		boolean addValid = false;
+		nomModeleOrd=nomModeleOrd.replaceAll("\\s+", " ");
+		// tester si  le nom modèle est vide
+		if (nomModeleOrd == null || (nomModeleOrd.trim().length() == 0)) {
+			addValid = false;
+			blocage = true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Erreur", "Veulliez donner le nom de modèle"));
+		}
 		// tester si existe un modèle avec le meme nom
 		ModeleOrdonnanceService ser = new ModeleOrdonnanceService();
 		ModeleOrdonnance mo = ser.rechercheParModeleOrdonnance(nomModeleOrd);
@@ -742,6 +787,7 @@ public class OrdonnanceBean implements Serializable {
 		}
 		if (face.getMessageList().size() == 0) {
 			ModeleOrdonnance mOrd = new ModeleOrdonnance();
+			System.out.println("nomModeleOrd===>> "+nomModeleOrd);
 			mOrd.setNomModele(nomModeleOrd);
 			ser.ajoutModeleOrdonnance(mOrd);
 
@@ -750,6 +796,8 @@ public class OrdonnanceBean implements Serializable {
 
 			MedOrdService se = new MedOrdService();
 
+			System.out.println("medOrds.size()== "+medOrds.size());
+			
 			Iterator<MedOrd> itr = medOrds.iterator();
 			while (itr.hasNext()) {
 				MedOrd m = itr.next();
@@ -763,11 +811,20 @@ public class OrdonnanceBean implements Serializable {
 			}
 			blocage = false;
 			tempsface = 3000;
-
+             addValid=true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Modèle ajouté avec succés "));
-
+			
+			FacesContext context2 = FacesContext.getCurrentInstance();
+			context2.getExternalContext().getFlash().setKeepMessages(true);
+			try {
+				context2.getExternalContext().redirect("NouvelleOrdonnance");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
+		
+		
 	}
 
 	public void onMedicamentChange() {
@@ -837,7 +894,7 @@ public class OrdonnanceBean implements Serializable {
 	}
 
 	public void ajoutModel() {
-		RequestContext.getCurrentInstance().update(":f1:f2:p1");
+		RequestContext.getCurrentInstance().update(":f2:p1");
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('ajoutModel').show();");
