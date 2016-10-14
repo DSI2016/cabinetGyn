@@ -182,6 +182,7 @@ public class ConsultationDetail implements Serializable {
 	}
 
 	public Date getDateConsultation() {
+		System.out.println("date cons"+dateConsultation);
 		return dateConsultation;
 	}
 
