@@ -84,9 +84,7 @@
 													id="iddate"
 													style="width:70px;font-size:small;font-weight:bold"
 													disabled="#{consultationDetailBean.lireReadOnly()}">
-												<p:ajax event="blur" update=":f1:growl,:f1"
-														listener="#{consultationDetailBean.verifierDate()}">
-													</p:ajax></p:inputMask>
+												</p:inputMask>
 
 											</h:panelGrid></td>
 										<td><h:panelGrid columns="2">
@@ -97,8 +95,6 @@
 													id="idhonoraire"
 													style="width:50px;font-size:small;font-weight:bold"
 													disabled="#{consultationDetailBean.lireReadOnly()}">
-													<p:ajax event="blur"
-														update=":f1:growl"></p:ajax>
 												</h:inputText>
 											</h:panelGrid></td>
 

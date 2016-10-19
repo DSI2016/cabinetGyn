@@ -5,15 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
-import org.primefaces.context.RequestContext;
-
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Sterile;
 import com.doctor.service.CfclientService;
@@ -853,7 +849,7 @@ private boolean addValid=false;
 		FacesContext face = FacesContext.getCurrentInstance();
 		
 
-			String dateCorrige = Module.corigerDate(dateMariage);
+		dateMariage = Module.corigerDate(dateMariage);
 			
 			String verifDate = Module.verifierDate(dateMariage);
 			if ((verifDate.equals(""))==false) {
@@ -1320,7 +1316,6 @@ private boolean addValid=false;
 						"", "Le date du dépuis "+ verifDate));
 				addValid=false;
 
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				
 			} else if (face.getMessageList().size() == 0) {
 				
@@ -1429,6 +1424,14 @@ private boolean addValid=false;
 
 			return Module.age(DateDuJour);
 		}
+	}
+
+	public boolean isAddValid() {
+		return addValid;
+	}
+
+	public void setAddValid(boolean addValid) {
+		this.addValid = addValid;
 	}
 
 }

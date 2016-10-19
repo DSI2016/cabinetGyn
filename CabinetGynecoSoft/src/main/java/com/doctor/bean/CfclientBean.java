@@ -33,6 +33,7 @@ import com.doctor.persistance.AntChirCfclient;
 import com.doctor.persistance.AntFamCfclient;
 import com.doctor.persistance.AntMedCfclient;
 import com.doctor.persistance.Cfclient;
+import com.doctor.persistance.Cfclient_view;
 import com.doctor.persistance.Clinique;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.Contraception;
@@ -56,6 +57,7 @@ import com.doctor.service.AntChirCfclientService;
 import com.doctor.service.AntFamCfclientService;
 import com.doctor.service.AntMedCfclientService;
 import com.doctor.service.CfclientService;
+import com.doctor.service.Cfclient_viewService;
 import com.doctor.service.CliniqueService;
 import com.doctor.service.ConsultationDetailService;
 import com.doctor.service.ContraceptionService;
@@ -191,8 +193,28 @@ public class CfclientBean implements java.io.Serializable {
 	private String attribut;
 	private String motif;
 	private List<Cfclient> patients;
-	private List<Cfclient> patientArchives;
+	private List<Cfclient_view> patientsView;
+
+	
+	
+	private List<Cfclient_view> patientArchives;
 	private List<Cfclient> filtred;
+	
+	private List<Radio> r;
+	private List<ConsultationDetail> cons;
+	private List<AnalyseDemandee> a;
+	private List<Ordonnance> ords;
+	private List<Contraception> cont;
+	private List<RendezVous> rend;
+	private List<AntChirCfclient> antChir;
+	private List<AntMedCfclient> antMed;
+	private List<AntFamCfclient> antFam;
+	private List<HistoriqueCertif> histoCert;
+	private List<historiqueLettre> histoLett;
+	private List<HistoriqueGross> histoGross;
+	private Sterile ste;
+	private Salle s;
+	private boolean archive;
 
 	private String professionP;
 	private String professionC;
@@ -281,11 +303,14 @@ public class CfclientBean implements java.io.Serializable {
 		this.style = style;
 	}
 
-	public List<Cfclient> getPatientArchives() {
+	
+
+	public List<Cfclient_view> getPatientArchives() {
+		patientArchives= new Cfclient_viewService().rechercheTousCfclient_view(true);
 		return patientArchives;
 	}
 
-	public void setPatientArchives(List<Cfclient> patientArchives) {
+	public void setPatientArchives(List<Cfclient_view> patientArchives) {
 		this.patientArchives = patientArchives;
 	}
 
@@ -1141,8 +1166,21 @@ public class CfclientBean implements java.io.Serializable {
 
 	@PostConstruct
 	public void init() {
-		patients = new CfclientService().rechercheParArchive(false);
-		patientArchives = new CfclientService().rechercheParArchive(true);
+		//patients = new CfclientService().rechercheParArchive(false);
+		patientsView= new Cfclient_viewService().rechercheTousCfclient_view(false);
+		
+		//patientArchives = new CfclientService().rechercheParArchive(true);
+	}
+
+
+
+
+	public List<Cfclient_view> getPatientsView() {
+		return patientsView;
+	}
+
+	public void setPatientsView(List<Cfclient_view> patientsView) {
+		this.patientsView = patientsView;
 	}
 
 	public List<Cfclient> getPatients() {
@@ -1250,15 +1288,16 @@ public class CfclientBean implements java.io.Serializable {
 	public void triePatient() {
 
 		ordre = "croissante";
-		patients = new CfclientService().rechercherTriePatient(attributTri,
+		patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
 				ordre);
 		RequestContext.getCurrentInstance().update("f1:patiente");
 	}
+	
 	public void triePatientArchive() {
 
 		ordreArchive = "croissante";
 
-		 patientArchives = new CfclientService().rechercherTriePatientArchive(attributTriArchive,
+		 patientArchives = new Cfclient_viewService().rechercherTriePatient(true,attributTriArchive,
 				ordreArchive);
 		RequestContext.getCurrentInstance().update("f1:patiente");
 	}
@@ -1580,12 +1619,14 @@ public class CfclientBean implements java.io.Serializable {
 
 	public void Supprimer(Integer id) {
 
+		
 		// si sont code existe dans une autre tabel on ne le supprime pas
 		patient = new CfclientService().RechercheCfclient(id);
+		archive=patient.isArchive();
 		initNb();
 		boolean ok = true;
 		// Consultationdetail
-		List<ConsultationDetail> cons = new ConsultationDetailService()
+		 cons = new ConsultationDetailService()
 				.rechercheToutConsultation(id);
 		if (cons != null && cons.size() > 0) {
 			ok = false;
@@ -1594,23 +1635,32 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// Ordonnance
-		List<Ordonnance> ords = new OrdonnanceService()
+		ords = new OrdonnanceService()
 				.rechercheOrdonnanceParPatient(id);
 		if (ords != null && ords.size() > 0) {
 			ok = false;
 			nbOrdonnance = ords.size();
 			afficheOrdonnance = true;
 		}
-		List<AnalyseDemandee> a = new AnalyseDemandeeService()
-				.rechercheAnalyseDemandeeParPatient(patient.getCode());
+		//Analyse
+		 a = new AnalyseDemandeeService()
+				.rechercheAnalyseDemandeeParPatient(id);
 		if (a != null && a.size() > 0) {
 			ok = false;
 			nbAnalyse = a.size();
 			afficheAnalyse = true;
 		}
-
+		//Radio
+				r = new RadioService()
+						.rechercheRadioParIdPatient(id);
+				
+				if (r != null && r.size() > 0) {
+					ok = false;
+					nbRadios = r.size();
+					afficheRadios = true;
+				}
 		// stérilité
-		Sterile ste = new SterileService().rechercheSterilePatient(id);
+		 ste = new SterileService().rechercheSterilePatient(id);
 		if (ste != null) {
 			ok = false;
 			nbSterilite = 1;
@@ -1618,7 +1668,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// Contraception
-		List<Contraception> cont = new ContraceptionService()
+		 cont = new ContraceptionService()
 				.rechercheToutContraception(id);
 		if (cont != null && cont.size() > 0) {
 			ok = false;
@@ -1627,7 +1677,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// Rendez-vous
-		List<RendezVous> rend = new RendezVousService().rechercheParPatient(id);
+		rend = new RendezVousService().rechercheParPatient(id);
 		if (rend != null && rend.size() > 0) {
 			ok = false;
 			nbRDV = rend.size();
@@ -1635,7 +1685,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// antChir
-		List<AntChirCfclient> antChir = new AntChirCfclientService()
+		 antChir = new AntChirCfclientService()
 				.rechercheAntChirParCfclient(id);
 		if (antChir != null && antChir.size() > 0) {
 			ok = false;
@@ -1644,7 +1694,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// antMed
-		List<AntMedCfclient> antMed = new AntMedCfclientService()
+		 antMed = new AntMedCfclientService()
 				.rechercheAntMedParCfclient(id);
 		if (antMed != null && antMed.size() > 0) {
 			ok = false;
@@ -1653,7 +1703,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// antFam
-		List<AntFamCfclient> antFam = new AntFamCfclientService()
+	    antFam = new AntFamCfclientService()
 				.rechercheAntFamParCfclient(id);
 		if (antFam != null && antFam.size() > 0) {
 			ok = false;
@@ -1662,7 +1712,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// historiqueCertif
-		List<HistoriqueCertif> histoCert = new HistoriqueCertifService()
+		 histoCert = new HistoriqueCertifService()
 				.rechercheTousHistoriqueCertifByPatient(id);
 		if (histoCert != null && histoCert.size() > 0) {
 			ok = false;
@@ -1671,7 +1721,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// historiqueLettres
-		List<historiqueLettre> histoLett = new historiqueLettreService()
+		histoLett = new historiqueLettreService()
 				.rechercheTousHistoriqueLettre(id);
 		if (histoLett != null && histoLett.size() > 0) {
 			ok = false;
@@ -1680,7 +1730,7 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// historiqueGross
-		List<HistoriqueGross> histoGross = new HistoriqueGrossService()
+		histoGross = new HistoriqueGrossService()
 				.rechercheToutHistoriqueGross(id);
 		if (histoGross != null && histoGross.size() > 0) {
 
@@ -1692,7 +1742,7 @@ public class CfclientBean implements java.io.Serializable {
 			afficheHisto = true;
 
 		// salle
-		Salle s = new SalleService().rechercheSalleParPatient(id);
+		 s = new SalleService().rechercheSalleParPatient(id);
 		if (s != null) {
 			ok = false;
 			afficheSalle = true;
@@ -1725,6 +1775,7 @@ public class CfclientBean implements java.io.Serializable {
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
 				"Patiente supprimée avec succés"));
 
+		if(!archive){
 		FacesContext context2 = FacesContext.getCurrentInstance();
 		context2.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -1732,7 +1783,18 @@ public class CfclientBean implements java.io.Serializable {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		}else{
+			FacesContext context2 = FacesContext.getCurrentInstance();
+			context2.getExternalContext().getFlash().setKeepMessages(true);
+			try {
+				context2.getExternalContext().redirect("PatientArchive");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
 	}
+		
 
 	public void supprimPatientCascad() {
 		
@@ -1740,8 +1802,7 @@ public class CfclientBean implements java.io.Serializable {
 		// la suppression cascade
 		
 		if (afficheOrdonnance) {
-			List<Ordonnance> ords = new OrdonnanceService()
-					.rechercheOrdonnanceParPatient(patient.getCode());
+			
 			if (ords != null && ords.size() > 0) {
 				for (int i = 0; i < ords.size(); i++) {// supprimer les lignes
 														// de l'ordonnance
@@ -1757,46 +1818,42 @@ public class CfclientBean implements java.io.Serializable {
 				}
 			}
 		}
+		
+		
 		if (afficheRadios) {
-			List<Radio> r = new RadioService().rechercheRadioParPatient(patient
-					.getCode());
+			
 			if (r != null && r.size() > 0) {
-				for (int i = 0; i < r.size(); i++)
+				for (int i = 0; i < r.size(); i++){
 					new RadioService().supprimerRadio(r.get(i).getIdradio());
+					}
 			}
 		}
 		if (afficheAnalyse) {
-			List<AnalyseDemandee> a = new AnalyseDemandeeService()
-					.rechercheAnalyseDemandeeParPatient(patient.getCode());
 			if (a != null && a.size() > 0) {
 				for (int i = 0; i < a.size(); i++)
-					new AnalyseService().supprimerAnalyse(a.get(i)
+					new AnalyseDemandeeService().supprimerAnalyseDemandee(a.get(i)
 							.getIdanalyseDemandee());
 			}
 		}
 		if (afficheCertif) {
-			List<HistoriqueCertif> c = new HistoriqueCertifService()
-					.rechercheTousHistoriqueCertifByPatient(patient.getCode());
-			if (c != null && c.size() > 0) {
-				for (int i = 0; i < c.size(); i++)
-					new HistoriqueCertifService().supprimerHistoriqueCertif(c
+			 
+			if (histoCert != null && histoCert.size() > 0) {
+				for (int i = 0; i < histoCert.size(); i++)
+					new HistoriqueCertifService().supprimerHistoriqueCertif(histoCert
 							.get(i).getIdHistoriqueCertif());
 			}
 
 		}
 		if (afficheLettre) {
-			List<historiqueLettre> l = new historiqueLettreService()
-					.rechercheTousHistoriqueLettre(patient.getCode());
-			if (l != null && l.size() > 0) {
-				for (int i = 0; i < l.size(); i++)
-					new historiqueLettreService().supprimerHistoriqueLettre(l
+						if ( histoLett != null && histoLett.size() > 0) {
+				for (int i = 0; i < histoLett.size(); i++)
+					new historiqueLettreService().supprimerHistoriqueLettre(histoLett
 							.get(i).getIdHistoriquelettre());
 			}
 		}
 		
 		if(afficheGross){
-			List<HistoriqueGross> histoGross = new HistoriqueGrossService()
-			.rechercheToutHistoriqueGross(patient.getCode());
+			
 			if (histoGross != null && histoGross.size() > 0) {
 				for (int i = 0; i < histoGross.size(); i++)
 					new HistoriqueGrossService().supprimerHistoriqueGross(histoGross
@@ -1806,58 +1863,61 @@ public class CfclientBean implements java.io.Serializable {
 		
 		
 		if (afficheConsultation) {
-			List<ConsultationDetail> cons = new ConsultationDetailService()
-					.rechercheToutConsultation(patient.getCode());
-			for (int i = 0; i < cons.size(); i++)
+			
+			for (int i = 0; i < cons.size(); i++){
 				new ConsultationDetailService()
 						.supprimerConsultationDetail(cons.get(i));
+				
+			}
 		}
 		if (afficheSterilite) {
-			Sterile s = new SterileService().rechercheSterilePatient(patient
-					.getCode());
-			if (s != null)
-				new SterileService().supprimerSterile(s);
+			
+			if (ste != null)
+				new SterileService().supprimerSterile(ste);
 		}
+       if (afficheContraception) {
+			
+			if (cont != null && cont.size() > 0)
+				for (int i = 0; i < cont.size(); i++)
+					new ContraceptionService().supprimerContraception(cont.get(i)
+							.getIdcontraception());
+		}
+		
 		if (afficheRDV) {
-			List<RendezVous> r = new RendezVousService()
-					.rechercheParPatient(patient.getCode());
-			if (r != null && r.size() > 0)
-				for (int i = 0; i < r.size(); i++)
-					new RendezVousService().supprimerRendezVous(r.get(i)
+			
+			if (rend != null && rend.size() > 0)
+				for (int i = 0; i < rend.size(); i++)
+					new RendezVousService().supprimerRendezVous(rend.get(i)
 							.getIdrendezVous());
 		}
 		if (afficheAntecedentChir) {
-			List<AntChirCfclient> a = new AntChirCfclientService()
-					.rechercheAntChirParCfclient(patient.getCode());
-			if (a != null && a.size() > 0) {
-				for (int i = 0; i < a.size(); i++)
-					new AntChirCfclientService().supprimerAntChirCfclient(a
+			
+			if (antChir != null && antChir.size() > 0) {
+				for (int i = 0; i < antChir.size(); i++)
+					new AntChirCfclientService().supprimerAntChirCfclient(antChir
 							.get(i).getIdantchircfclient());
 			}
 
 		}
 		if (afficheAntecedentFam) {
-			List<AntFamCfclient> a = new AntFamCfclientService()
-					.rechercheAntFamParCfclient(patient.getCode());
-			if (a != null && a.size() > 0) {
-				for (int i = 0; i < a.size(); i++)
-					new AntFamCfclientService().supprimerAntFamCfclient(a
+			
+			if (antFam != null && antFam.size() > 0) {
+				for (int i = 0; i < antFam.size(); i++)
+					new AntFamCfclientService().supprimerAntFamCfclient(antFam
 							.get(i).getIdantfamcfclient());
 			}
 
 		}
 		if (afficheAntecedentMed) {
-			List<AntMedCfclient> a = new AntMedCfclientService()
-					.rechercheAntMedParCfclient(patient.getCode());
-			if (a != null && a.size() > 0) {
-				for (int i = 0; i < a.size(); i++)
-					new AntMedCfclientService().supprimerAntMedCfclient(a
+			
+			if (antMed != null && antMed.size() > 0) {
+				for (int i = 0; i < antMed.size(); i++)
+					new AntMedCfclientService().supprimerAntMedCfclient(antMed
 							.get(i).getIdantmedcfclient());
 			}
 		}
 		if (afficheSalle) {
-			Salle s = new SalleService().rechercheSalleParPatient(patient
-					.getCode());
+			
 			if (s != null) {
 				int ordre = s.getOrdre();
 				String motif = s.getMotif();
@@ -1901,15 +1961,28 @@ public class CfclientBean implements java.io.Serializable {
 		}
 
 		// suppression de la patiente
-		new CfclientService().supprimerPatient(patient.getCode());
+		CfclientService ser=new CfclientService();
+		ser.supprimerPatient(patient.getCode());
 		FacesContext context2 = FacesContext.getCurrentInstance();
+		context2 .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+				"Patiente supprimée avec succés"));
+		
+		if(!archive){
 		context2.getExternalContext().getFlash().setKeepMessages(true);
 		try {
 			context2.getExternalContext().redirect("Patients");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
+		}else{
+			
+			context2.getExternalContext().getFlash().setKeepMessages(true);
+			try {
+				context2.getExternalContext().redirect("PatientArchive");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 
 
@@ -1937,8 +2010,7 @@ public class CfclientBean implements java.io.Serializable {
 		// la suppression cascade
 		
 		if (afficheOrdonnance) {
-			List<Ordonnance> ords = new OrdonnanceService()
-					.rechercheOrdonnanceParPatient(patient.getCode());
+			
 			if (ords != null && ords.size() > 0) {
 				for (int i = 0; i < ords.size(); i++) {// supprimer les lignes
 														// de l'ordonnance
@@ -1955,7 +2027,7 @@ public class CfclientBean implements java.io.Serializable {
 			}
 		}
 		if (afficheRadios) {
-			List<Radio> r = new RadioService().rechercheRadioParPatient(patient
+			List<Radio> r = new RadioService().rechercheRadioParIdPatient(patient
 					.getCode());
 			if (r != null && r.size() > 0) {
 				for (int i = 0; i < r.size(); i++)
@@ -1972,11 +2044,10 @@ public class CfclientBean implements java.io.Serializable {
 			}
 		}
 		if (afficheCertif) {
-			List<HistoriqueCertif> c = new HistoriqueCertifService()
-					.rechercheTousHistoriqueCertifByPatient(patient.getCode());
-			if (c != null && c.size() > 0) {
-				for (int i = 0; i < c.size(); i++)
-					new HistoriqueCertifService().supprimerHistoriqueCertif(c
+			
+			if (histoCert != null && histoCert.size() > 0) {
+				for (int i = 0; i < histoCert.size(); i++)
+					new HistoriqueCertifService().supprimerHistoriqueCertif(histoCert
 							.get(i).getIdHistoriqueCertif());
 			}
 
@@ -2002,17 +2073,15 @@ public class CfclientBean implements java.io.Serializable {
 		}
 		
 		if (afficheConsultation) {
-			List<ConsultationDetail> cons = new ConsultationDetailService()
-					.rechercheToutConsultation(patient.getCode());
+			
 			for (int i = 0; i < cons.size(); i++)
 				new ConsultationDetailService()
 						.supprimerConsultationDetail(cons.get(i));
 		}
 		if (afficheSterilite) {
-			Sterile s = new SterileService().rechercheSterilePatient(patient
-					.getCode());
-			if (s != null)
-				new SterileService().supprimerSterile(s);
+			
+			if (ste != null)
+				new SterileService().supprimerSterile(ste);
 		}
 		if (afficheRDV) {
 			List<RendezVous> r = new RendezVousService()
@@ -2506,7 +2575,10 @@ public class CfclientBean implements java.io.Serializable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void info(Cfclient c) {
+	public void info(Integer  idc) {
+		Cfclient c= new Cfclient();
+		CfclientService ser= new CfclientService();
+		 c= ser.RechercheCfclientAvecId(idc);
 		indexInfo = 0;
 		code = c.getCode();
 		nom = c.getNom();
@@ -2603,7 +2675,11 @@ public class CfclientBean implements java.io.Serializable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void recupererDonnees(Cfclient c) {
+	public void recupererDonnees(Integer  idPat) {
+		Cfclient c= new Cfclient();
+		CfclientService ser= new CfclientService();
+		 c= ser.RechercheCfclientAvecId(idPat);
+		
 		code = c.getCode();
 		index = 0;
 		nom = c.getNom();
@@ -2816,7 +2892,10 @@ public class CfclientBean implements java.io.Serializable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void initVersSalle(Cfclient patient) {
+	public void initVersSalle(Integer idpatient) {
+		Cfclient patient= new Cfclient();
+		CfclientService cfSer= new CfclientService();
+		patient= cfSer.RechercheCfclient(idpatient);
 		code = patient.getCode();
 		nom = patient.getNom();
 		prenom = patient.getPrenom();
@@ -3435,9 +3514,10 @@ public class CfclientBean implements java.io.Serializable {
 
 	public void goToListePatients() {
 
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+		/*HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		session.setAttribute("retourPatient", "FichePatiente");
+		session.setAttribute("retourPatient", "FichePatiente")
+		*/
 		valeurRecherche = null;
 
 		try {
@@ -3473,7 +3553,6 @@ public class CfclientBean implements java.io.Serializable {
 	public void recherchePatient() {
 		boolean addValid=false;
 		FacesContext face = FacesContext.getCurrentInstance();
-		System.out.println("entree methode recherche");
 		if ((valeurRecherche != null) && (valeurRecherche.trim().length() > 0)
 				&& (attribut != null)) {
 			addValid=true;
@@ -3495,7 +3574,7 @@ public class CfclientBean implements java.io.Serializable {
 				valeurRecherche = ch1;
 				// c'est un numero de telephone sans point et sans espace
 			}
-			patients = new CfclientService().rechercheFiltre(attribut,
+			patientsView = new Cfclient_viewService().rechercheFiltre(false,attribut,
 					valeurRecherche);
 		}
 		else
@@ -3536,7 +3615,7 @@ public class CfclientBean implements java.io.Serializable {
 				valeurRechercheArchive = ch1;
 				// c'est un numero de telephone sans point et sans espace
 			}
-			patientArchives = new CfclientService().rechercheFiltreArchive(
+			patientArchives = new Cfclient_viewService().rechercheFiltre(true,
 					attribut, valeurRechercheArchive);
 		}
 
@@ -3576,12 +3655,6 @@ public class CfclientBean implements java.io.Serializable {
 			context.execute("PF('archivDlg').show();");
 		}
 				
-				
-
-		
-		
-		
-		
 	}
 
 	public void archiver() {
@@ -3675,7 +3748,7 @@ public class CfclientBean implements java.io.Serializable {
 
 	}
 
-	public boolean changerRendredNegative1(Cfclient cl) throws Exception {
+	public boolean changerRendredNegative1(Cfclient_view cl) throws Exception {
 
 		if (cl != null) {
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative1"))
@@ -3691,7 +3764,7 @@ public class CfclientBean implements java.io.Serializable {
 		return (false);
 	}
 
-	public boolean changerRendredNegative2(Cfclient cl) throws Exception {
+	public boolean changerRendredNegative2(Cfclient_view cl) throws Exception {
 		if (cl != null) {
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative2")) {
 				return (true);
@@ -3704,7 +3777,7 @@ public class CfclientBean implements java.io.Serializable {
 		return (false);
 	}
 
-	public boolean changerRendredNegative3(Cfclient cl) throws Exception {
+	public boolean changerRendredNegative3(Cfclient_view cl) throws Exception {
 		if (cl != null) {
 
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative3")) {
@@ -3714,7 +3787,7 @@ public class CfclientBean implements java.io.Serializable {
 		return (false);
 	}
 
-	public boolean changerRendredMoyen(Cfclient cl) throws Exception {
+	public boolean changerRendredMoyen(Cfclient_view cl) throws Exception {
 		if (cl != null) {
 
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileMoyen")) {
@@ -3725,7 +3798,7 @@ public class CfclientBean implements java.io.Serializable {
 
 	}
 
-	public boolean changerRendredPositive1(Cfclient cl) throws Exception {
+	public boolean changerRendredPositive1(Cfclient_view cl) throws Exception {
 
 		if (cl != null) {
 			if (cl.getCategoriEtoile()!=null && cl.getCategoriEtoile().equals("etoilePositive1"))
@@ -3744,7 +3817,7 @@ public class CfclientBean implements java.io.Serializable {
 		return (false);
 	}
 
-	public boolean changerRendredPositive2(Cfclient cl) throws Exception {
+	public boolean changerRendredPositive2(Cfclient_view cl) throws Exception {
 		if (cl != null) {
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive2")) {
 				return (true);
@@ -3759,7 +3832,7 @@ public class CfclientBean implements java.io.Serializable {
 		return (false);
 	}
 
-	public boolean changerRendredPositive3(Cfclient cl) throws Exception {
+	public boolean changerRendredPositive3(Cfclient_view cl) throws Exception {
 		if (cl != null) {
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive3")) {
 				return (true);
@@ -3771,7 +3844,7 @@ public class CfclientBean implements java.io.Serializable {
 		return (false);
 	}
 
-	public boolean changerRendredExtra(Cfclient cl) throws Exception {
+	public boolean changerRendredExtra(Cfclient_view cl) throws Exception {
 		if (cl != null) {
 			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileExtra")) {
 				return (true);
@@ -3847,7 +3920,7 @@ public class CfclientBean implements java.io.Serializable {
 	public void croissante() {
 		ordre = "croissante";
 		if ((attributTri.equals("") == false) || (attribut != null)) {
-			patients = new CfclientService().rechercherTriePatient(attributTri,
+			patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
 					ordre);
 			RequestContext.getCurrentInstance().update("f1:patiente");
 		}
@@ -3856,7 +3929,7 @@ public class CfclientBean implements java.io.Serializable {
 	public void decroissante() {
 		ordre = "décroissante";
 		if ((attributTri.equals("") == false) || (attribut != null)) {
-			patients = new CfclientService().rechercherTriePatient(attributTri,
+			patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
 					ordre);
 			RequestContext.getCurrentInstance().update("f1:patiente");
 		}
@@ -3864,7 +3937,7 @@ public class CfclientBean implements java.io.Serializable {
 	public void croissanteArchive() {
 		ordreArchive = "croissante";
 		if ((attributTriArchive.equals("") == false) || (attributTriArchive != null)) {
-			 patientArchives = new CfclientService().rechercherTriePatientArchive(attributTriArchive, ordreArchive);
+			 patientArchives = new Cfclient_viewService().rechercherTriePatient(true,attributTriArchive, ordreArchive);
 			RequestContext.getCurrentInstance().update("f1:patiente");
 		}
 	}
@@ -3872,7 +3945,7 @@ public class CfclientBean implements java.io.Serializable {
 	public void decroissanteArchive() {
 		ordreArchive = "décroissante";
 		if ((attributTriArchive.equals("") == false) || (attributTriArchive != null)) {
-			 patientArchives = new CfclientService().rechercherTriePatientArchive(attributTriArchive,
+			 patientArchives = new Cfclient_viewService().rechercherTriePatient(true,attributTriArchive,
 					ordreArchive);
 			RequestContext.getCurrentInstance().update("f1:patiente");
 		}

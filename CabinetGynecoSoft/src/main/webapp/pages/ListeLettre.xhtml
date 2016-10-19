@@ -91,6 +91,26 @@
 									
 								</p:menuitem>
 							</p:splitButton></td>
+							<td><h:panelGrid columns="3">
+									<h:outputText value="Lettre pour : "
+										style="font-size:13pt;font-weight:bold" />
+									<h:panelGrid columns="2">
+										<h:selectOneRadio id="consolee" layout="grid" columns="2"
+											
+											style="font-size:13pt;font-weight:bold"
+											value="#{historiqueLettreBean.proprietaire}">
+											<p:ajax event="change"
+												listener="#{historiqueLettreBean.changeProp}" update="nomP"></p:ajax>
+											<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+											<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+										</h:selectOneRadio>
+									</h:panelGrid>
+									<h:inputText id="nomP"
+										
+										value="#{historiqueLettreBean.nomProprietaire}" size="45"></h:inputText>
+
+								</h:panelGrid></td>
 						<td><h:commandLink
 								actionListener="#{historiqueLettreBean.viewLettreselect}"
 								rendered="false" target="_blanc">
@@ -102,7 +122,7 @@
 
 				<table>
 					<tr>
-						<td valign="top" width="700"><p:dataTable var="histo1"
+						<td valign="top" width="700"><p:dataTable var="histo1" id="histoId"
 								style="font-size:small;font-weight:bold;width:550px;"
 								rowKey="#{histo1.idHistoriquelettre}"
 								value="#{historiqueLettreBean.historiqueLettres}"
@@ -134,7 +154,7 @@
 									<p:commandButton icon="ui-icon-pencil"
 										actionListener="#{historiqueLettreBean.modifierLettre(histo1)}"
 										rendered="#{connectionBean.modifLettre}"
-										title="Modification Lettre" update=":fDiag">
+										title="Modification Lettre" update=":fDiag,:f1:histoId">
 
 									</p:commandButton>
 
@@ -229,7 +249,7 @@
 
 			<p:dialog id="idLettreReponse" widgetVar="lettrereponse" modal="true"
 				showHeader="false" resizable="false">
-				<p:panel header="Lettre Confidentielle">
+				<p:panel header="#{historiqueLettreBean.titreDiag} lettre Confidentielle">
 					<table>
 						<tr>
 							<td width="330"><h:outputLabel
@@ -245,7 +265,7 @@
 					<br></br>
 					<h:panelGrid columns="2">
 						<h:outputText value="Acte le " />
-						<p:inputMask id="o" value="#{historiqueLettreBean.acte}" size="6"
+						<p:inputMask id="o" value="#{historiqueLettreBean.acte}" size="6" mask="99/99/9999"
 							>
 							<p:ajax event="blur"
 								listener="#{historiqueLettreBean.verifieractele()}"
@@ -314,20 +334,20 @@
 
 			<p:dialog id="idLettreAccouchement" widgetVar="lettreAccouchement"
 				modal="true" showHeader="false" resizable="false">
-				<p:panel id="p2" header="Lettre d'accouchement">
+				<p:panel id="p2" header="#{historiqueLettreBean.titreDiag} lettre d'accouchement">
 					<table>
 						<tr>
 							<td width="420"><h:outputLabel
 									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
 							</td>
-							<td width="150"><h:outputText value="Le " /> <p:inputText
+							<td width="150"><h:outputText value="Le " /> <p:inputMask mask="99/99/9999"
 									id="datelel" value="#{historiqueLettreBean.dateLettreAccouchem}" size="6"
 									pattern="dd/MM/yyyy">
 									<p:ajax event="blur"
 										listener="#{historiqueLettreBean.verifierDate()}"
 										update=":f1:growl">
 									</p:ajax>
-								</p:inputText></td>
+								</p:inputMask></td>
 
 						</tr>
 					</table>
@@ -482,7 +502,7 @@
 			<p:dialog id="idLettreReponse2" widgetVar="lettreReponse2"
 				modal="true" showHeader="false" resizable="false">
 				<p:panel id="p3"
-					header="Lettre de réponse a une demande de prise en charge">
+					header="#{historiqueLettreBean.titreDiag} lettre de réponse a une demande de prise en charge">
 					<table>
 						<tr>
 							<td width="350"><h:outputLabel
@@ -547,20 +567,21 @@
 
 			<p:dialog id="idlettrepriseencharge" widgetVar="lettrepriseencharge"
 				modal="true" showHeader="false" resizable="false">
-				<p:panel id="p44" header="Lettre de prise en charge">
+				<p:panel id="p44" header="#{historiqueLettreBean.titreDiag} lettre de prise en charge">
 					<table>
 						<tr>
 							<td width="350"><h:outputLabel
 									value="Patiente  #{historiqueLettreBean.cfclient.prenom}  #{historiqueLettreBean.cfclient.nom}"></h:outputLabel>
 							</td>
-							<td><h:outputText value="Le: " /> <p:inputText
+							<td><h:outputText value="Le: " /> <p:inputMask mask="99/99/9999"
 									value="#{historiqueLettreBean.dateDelettrepriseencharge}" size="6"
-									pattern="dd/MM/yyyy" id="date144">
+									 id="date144">
 									<p:ajax event="blur"
 										listener="#{historiqueLettreBean.verifierDateDelettrepriseencharge()}"
 										>
 									</p:ajax>
-								</p:inputText></td>
+									</p:inputMask>
+								</td>
 						</tr>
 					</table>
 

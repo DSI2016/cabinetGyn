@@ -23,7 +23,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tools.ant.taskdefs.Sleep;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
@@ -439,6 +438,7 @@ public class ConsultationDetailBean implements Serializable {
 						.equals("")) && uterus != null)) {
 			consultationDetails = ser.rechercheToutConsultationDetail(
 					idPatient, consultationmotif, uterus);
+			System.out.println("size data table"+consultationDetails.size());
 		}
 
 		return consultationDetails;
@@ -1060,10 +1060,12 @@ public class ConsultationDetailBean implements Serializable {
 			diam = mod.getDiam();
 
 			if (mod.getUterus() != null) {
-				uterus = mod.getUterus();
+				
 				idUterus = mod.getUterus().getIduterus();
-				nomUterus = mod.getUterus().getUterus();
+				
 			}
+			if(mod.getUterus()==null)
+				idUterus=null;
 		} else
 
 		{
@@ -1433,31 +1435,35 @@ public class ConsultationDetailBean implements Serializable {
 				blocage = true;
 				msg = Module.verifierDate(dateConsultation) + "";
 				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Erreur", msg));
+						FacesMessage.SEVERITY_ERROR, "","Le date du consultation "+ msg));
 			}
-			try {
+			if(honorairestring!=null)
+			{
+				if(honorairestring.equals("")==false)
+				{try {
 
 				honoraire = Float.parseFloat(honorairestring);
 
 			} catch (Exception e) {
 				// honoraire = (float) 0;
-				// testValid = false;
-				msg = msg + "L'honoraire ne contient que des chiffres";
+				// testValid = false; 
+				
 				blocage = true;
 				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Erreur", msg));
+						FacesMessage.SEVERITY_ERROR, "","L'honoraire ne contient que des chiffres"));
 
-			}
+			}}}
 
-			try {
-				cons.setDateConsultation(formatter.parse(dateConsultation));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+		
 
-			if (msg.equals("") || msg == null) {
+			if (face.getMessageList().size()==0) {
 
 				if (action != null && action.equals("ajouter")) {
+					try {
+						cons.setDateConsultation(formatter.parse(dateConsultation));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 
 					if (consultationmotif != null) {
 						ConsultaionService s = new ConsultaionService();
@@ -2113,23 +2119,23 @@ public class ConsultationDetailBean implements Serializable {
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetail cd = new ConsultationDetail();
 		if (action != null) {
-			try {
+			if(honorairestring!=null)
+			{
+				if(honorairestring.equals("")==false)
+				{try {
 
 				honoraire = Float.parseFloat(honorairestring);
-				setHonoraire(honoraire);
 
 			} catch (Exception e) {
 				// honoraire = (float) 0;
-				// testValid = false;
-				this.blocage = true;
-				msg = "L'honoraire ne contient que des chiffres";
+				// testValid = false; 
+				
+				blocage = true;
 				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "", msg));
-				ConsultaionService serf = new ConsultaionService();
-				Consultation consf = serf
-						.rechercheParConsultation(consultationmotif);
-				honoraire = consf.getHonoraire();
-				honorairestring = Double.toString(honoraire);
+						FacesMessage.SEVERITY_ERROR, "","L'honoraire ne contient que des chiffres"));
+
+			}}
+				
 			}
 			if(ddr!=null)
 			{
@@ -2234,7 +2240,11 @@ if(ddg!=null)
 					// tad = ancientTad;
 				}
 			if (msg.equals("") && face.getMessageList().size() == 0) {
-
+				ConsultaionService serf = new ConsultaionService();
+				Consultation consf = serf
+						.rechercheParConsultation(consultationmotif);
+				honoraire = consf.getHonoraire();
+				honorairestring = Double.toString(honoraire);
 				cd.setTas(tas);
 				cd.setDdgCorigee(ddgCorigee);
 				cd.setCfclient(clt);
@@ -2387,6 +2397,24 @@ if(ddg!=null)
 				this.blocage = true;
 				// poids = ancientPoids;
 			}
+		if(honorairestring!=null)
+		{
+			if(honorairestring.equals("")==false)
+			{try {
+
+			honoraire = Float.parseFloat(honorairestring);
+
+		} catch (Exception e) {
+			// honoraire = (float) 0;
+			// testValid = false; 
+			
+			blocage = true;
+			face.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "","L'honoraire ne contient que des chiffres"));
+
+		}}
+			
+		}
 
 		if (tas != null && tas.trim().length() > 0)
 			try {
@@ -2416,9 +2444,19 @@ if(ddg!=null)
 				this.blocage = true;
 				// tad = ancientTad;
 			}
-
+		if(Module.corigerDate(dateConsultation)!=null)
+			dateConsultation=Module.corigerDate(dateConsultation);
+		
+		String verifDate = Module.verifierDate(dateConsultation);
+		if ((verifDate.equals(""))==false) {
+			this.blocage = true;
+			face.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"","Le date du consultation "+ verifDate));}
+		
 		if (action != null) {
-			if (action.equals("ajouter")) {
+			if(face.getMessageList().size()==0)
+			{if (action.equals("ajouter")) {
 				ConsultationDetail cd = new ConsultationDetail();
 				cd.setCfclient(clt);
 				cd.setDdr(ddr);
@@ -2430,17 +2468,7 @@ if(ddg!=null)
 					honoraire = Float.parseFloat(honorairestring);
 
 				} catch (Exception e) {
-					// testValid = false;
-					msg = "L'honoraire ne contient que des chiffres";
-					this.blocage = true;
-					face.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, "", msg));
-
-					ConsultaionService serf = new ConsultaionService();
-					Consultation consf = serf
-							.rechercheParConsultation(consultationmotif);
-					honoraire = consf.getHonoraire();
-					honorairestring = Double.toString(honoraire);
+System.out.println(e.getMessage());
 				}
 
 				if (msg.equals("") && face.getMessageList().size() == 0) {
@@ -2584,7 +2612,7 @@ if(ddg!=null)
 
 				}
 			}
-
+			}
 		} else if (action == null) {
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
@@ -3593,7 +3621,6 @@ if(ddg!=null)
 
 	public void validerConsEchoObs() {
 
-		String msg = "";
 		FacesContext face = FacesContext.getCurrentInstance();
 		ConsultationDetailService ser = new ConsultationDetailService();
 		CfclientService serclt = new CfclientService();
@@ -3601,12 +3628,12 @@ if(ddg!=null)
 		if (action != null) {
 			if (trim == 1) {
 				if (action != null) {
-					if (action.equals("ajouter")) {
+					
 						if (echomoyen == null
 								|| (echomoyen.trim().length() == 0)) {
 							blocage = true;
 							face.addMessage(null, new FacesMessage(
-									FacesMessage.SEVERITY_ERROR, "Erreur",
+									FacesMessage.SEVERITY_ERROR, "",
 									"Veuillez saisir l'echo moyen"));
 
 						}
@@ -3623,14 +3650,37 @@ if(ddg!=null)
 									new FacesMessage(
 											FacesMessage.SEVERITY_ERROR,
 											"",
-											Module.verifierDate(dateconsultation1)));
+											"Le date du consultation "+Module.verifierDate(dateconsultation1)));
 
-							dateconsultation1 = ancienValeur1;
 						}
+						
+						
 
-						else if (face.getMessageList().size() == 0)
+						
+						if(honoraireStringobs1!=null)
+						{
+							if(honoraireStringobs1.equals("")==false)
+							{try {
+
+								honorairesobs= Float.parseFloat(honoraireStringobs1);
+
+						} catch (Exception e) {
+							// honoraire = (float) 0;
+							// testValid = false; 
+							
+							blocage = true;
+							face.addMessage(null, new FacesMessage(
+									FacesMessage.SEVERITY_ERROR, "","L'honoraire ne contient que des chiffres"));
+
+						}}
+							
+						}
+						
+
+						if (face.getMessageList().size() == 0)
 
 						{
+							if (action.equals("ajouter")) {
 							cons = new ConsultationDetail();
 							if (consultationmotif != null) {
 								ConsultaionService s = new ConsultaionService();
@@ -3654,11 +3704,19 @@ if(ddg!=null)
 								cons.setCfclient(c);
 							}
 							try {
+
+								honorairesobs= Float.parseFloat(honoraireStringobs1);
+
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+						}
+							try {
 								cons.setDateConsultation(formatter
 										.parse(dateconsultation1));
 							} catch (ParseException e1) {
 								e1.printStackTrace();
 							}
+							cons.setHonoraire(honorairesobs);
 							cons.setTrim(trim);
 							cons.setEchomoyen(echomoyen);
 							cons.setSac(sac);
@@ -3671,25 +3729,6 @@ if(ddg!=null)
 							cons.setTrophoblaste(trophoblaste);
 							cons.setVesicule(vesicule);
 							cons.setAnnexesobs(annexesobs);
-							try {
-
-								honorairesobs = Float
-										.parseFloat(honoraireStringobs1);
-								setHonoraire(honorairesobs);
-
-							} catch (Exception e) {
-								honorairesobs = (float) 0;
-								msg = msg
-										+ "L'honoraire ne contient que des chiffres";
-								ConsultaionService serf = new ConsultaionService();
-								Consultation consf = serf
-										.rechercheParConsultation(consultationmotif);
-								honoraire = consf.getHonoraire();
-								honoraireStringobs1 = Double
-										.toString(honorairesobs);
-							}
-							cons.setHonoraire(honorairesobs);
-
 							cons.setConsultation(consultation);
 							cons.setDdr(ddr);
 							cons.setDdg(ddg);
@@ -3709,35 +3748,10 @@ if(ddg!=null)
 							selectedCons = cons;
 
 						}
-					}
+					
 
 					else if (action.equals("modifier")) {
-						if (echomoyen == null
-								|| (echomoyen.trim().length() == 0)) {
-							blocage = true;
-							face.addMessage(null, new FacesMessage(
-									FacesMessage.SEVERITY_ERROR, "Erreur",
-									"Veuillez saisir l'echo moyen"));
-
-						}
-						if (Module.corigerDate(dateconsultation1) != null) {
-							this.setDateconsultation1(Module
-									.corigerDate(dateconsultation1));
-						}
-						if (!(Module.verifierDate(dateconsultation1).equals("")))
-
-						{
-							blocage = true;
-							face.addMessage(
-									null,
-									new FacesMessage(Module
-											.verifierDate(dateconsultation1)));
-							dateconsultation1 = ancienValeur1;
-						}
-
-						else if (face.getMessageList().size() == 0)
-
-						{
+						
 							ConsultationDetailService se = new ConsultationDetailService();
 
 							cons = se
@@ -3758,26 +3772,28 @@ if(ddg!=null)
 							} catch (ParseException e) {
 								e.printStackTrace();
 							}
-							cons.setCfclient(c);
+							cons.setHonoraire(honorairesobs);
+							cons.setTrim(trim);
+							cons.setEchomoyen(echomoyen);
 							cons.setSac(sac);
 							cons.setTonique(tonique);
 							cons.setConclusionobs(conclusionobs);
 							cons.setLcc(lcc);
 							cons.setBip(bip);
 							cons.setAc(ac);
-							cons.setEchomoyen(echomoyen);
 							cons.setEf(ef);
 							cons.setTrophoblaste(trophoblaste);
 							cons.setVesicule(vesicule);
 							cons.setAnnexesobs(annexesobs);
+							cons.setConsultation(consultation);
 							cons.setDdr(ddr);
 							cons.setDdg(ddg);
 							cons.setDdgCorigee(ddgCorigee);
 							cons.setTermePrevu(termePrevu);
 							cons.setTermeActuel(termeActuel);
-
-							cons.setHonoraire(honorairesobs);
-							cons.setConsultation(consultation);
+							
+							cons.setCfclient(c);
+							cons.setConclusionobs(conclusionobs);
 							se.modifierConsultationDetail(cons);
 							this.blocage = false;
 							tempsface = 3500;
@@ -3791,36 +3807,66 @@ if(ddg!=null)
 							selectedCons = cons;
 						}
 					}
+						}
 				}
 
-			}
+			
 			if (trim == 3) {
 				if (action != null) {
-					if (action.equals("ajouter")) {
-						if (echomoyen == null
-								|| (echomoyen.trim().length() == 0)) {
-							blocage = true;
-							face.addMessage(null, new FacesMessage(
-									FacesMessage.SEVERITY_ERROR, "Erreur",
-									"Veuillez saisir l'echo moyen"));
+					if (echomoyen == null
+							|| (echomoyen.trim().length() == 0)) {
+						blocage = true;
+						face.addMessage(null, new FacesMessage(
+								FacesMessage.SEVERITY_ERROR, "",
+								"Veuillez saisir l'echo moyen"));
 
-						}
-						if (Module.corigerDate(dateconsultation3) != null) {
-							this.setDateconsultation3(Module
-									.corigerDate(dateconsultation3));
-						}
-						if (!(Module.verifierDate(dateconsultation3).equals("")))
+					}
+					if (Module.corigerDate(dateconsultation3) != null) {
+						this.setDateconsultation3(Module
+								.corigerDate(dateconsultation3));
+					}
+					if (!(Module.verifierDate(dateconsultation3).equals("")))
 
-						{
-							tempsface = 3500;
-							face.addMessage(null, new FacesMessage("Erreur",
-									Module.verifierDate(dateconsultation3)));
-							dateconsultation3 = ancienValeur3;
-						}
+					{
+						this.blocage = true;
+						face.addMessage(
+								null,
+								new FacesMessage(
+										FacesMessage.SEVERITY_ERROR,
+										"",
+										"Le date du consultation "+Module.verifierDate(dateconsultation3)));
 
-						else if (face.getMessageList().size() == 0)
+					}
+					
+					
 
-						{
+					
+					if(honoraireStringobs3!=null)
+					{
+						if(honoraireStringobs3.equals("")==false)
+						{try {
+
+							honorairesobs3= Float.parseFloat(honoraireStringobs3);
+
+					} catch (Exception e) {
+						// honoraire = (float) 0;
+						// testValid = false; 
+						
+						blocage = true;
+						face.addMessage(null, new FacesMessage(
+								FacesMessage.SEVERITY_ERROR, "","L'honoraire ne contient que des chiffres"));
+
+					}}
+						
+					}
+					
+					
+					if(face.getMessageList().size()==0)
+					{if (action.equals("ajouter")) {
+
+						
+
+						
 							cons = new ConsultationDetail();
 							if (consultationmotif != null) {
 								ConsultaionService s = new ConsultaionService();
@@ -3856,13 +3902,13 @@ if(ddg!=null)
 							cons.setDat(dat3);
 							cons.setCa(ca3);
 							cons.setBip(bip3);
+							cons.setHonorairesobs(honorairesobs3);
 							cons.setFemur(femur3);
 							cons.setHonoraire(honorairesobs3);
 							cons.setAc(ac3);
 							cons.setMf(mf3);
 							cons.setEchomoyen(echomoyen);
 							cons.setPresentation(presentation3);
-							cons.setConclusionobs(conclusionobs3);
 							cons.setDdr(ddr);
 							cons.setDdg(ddg);
 							cons.setDdgCorigee(ddgCorigee);
@@ -3883,33 +3929,8 @@ if(ddg!=null)
 							action = null;
 
 						}
-					}
 
 					else if (action.equals("modifier")) {
-						if (echomoyen == null
-								|| (echomoyen.trim().length() == 0)) {
-							blocage = true;
-							face.addMessage(null, new FacesMessage(
-									FacesMessage.SEVERITY_ERROR, "Erreur",
-									"Veuillez saisir l'echo moyen "));
-
-						}
-						if (Module.corigerDate(dateconsultation3) != null) {
-							this.setDateconsultation3(Module
-									.corigerDate(dateconsultation3));
-						}
-						if (!(Module.verifierDate(dateconsultation3).equals(""))) {
-							blocage = true;
-							face.addMessage(
-									null,
-									new FacesMessage(Module
-											.verifierDate(dateconsultation3)));
-							dateconsultation3 = ancienValeur3;
-						}
-
-						else if (face.getMessageList().size() == 0)
-
-						{
 							ConsultationDetailService se = new ConsultationDetailService();
 
 							cons = se
@@ -3938,11 +3959,12 @@ if(ddg!=null)
 							cons.setPlacenta(placenta3);
 							cons.setConclusionobs(conclusionobs3);
 							cons.setDdr(ddr);
+							cons.setEchomoyen(echomoyen);
 							cons.setDdg(ddg);
 							cons.setDdgCorigee(ddgCorigee);
 							cons.setTermePrevu(termePrevu);
 							cons.setTermeActuel(termeActuel);
-
+							cons.setHonorairesobs(honorairesobs3);
 							cons.setDat(dat3);
 							cons.setCa(ca3);
 							cons.setEchomoyen(echomoyen);
@@ -3953,7 +3975,6 @@ if(ddg!=null)
 							cons.setMf(mf3);
 							cons.setPresentation(presentation3);
 							cons.setConclusionobs(conclusionobs3);
-							cons.setConsultation(consultation);
 							se.modifierConsultationDetail(cons);
 							this.blocage = false;
 							tempsface = 3500;
@@ -3972,36 +3993,55 @@ if(ddg!=null)
 
 			if (trim == 2) {
 				if (action != null) {
+					if (echomoyen == null
+							|| (echomoyen.trim().length() == 0)) {
+						blocage = true;
+						face.addMessage(null, new FacesMessage(
+								FacesMessage.SEVERITY_ERROR, "",
+								"Veuillez saisir l'echo moyen"));
+
+					}
+					if (Module.corigerDate(dateconsultation2) != null) {
+						this.setDateconsultation2(Module
+								.corigerDate(dateconsultation2));
+					}
+					if (!(Module.verifierDate(dateconsultation2).equals("")))
+
+					{
+						this.blocage = true;
+						face.addMessage(
+								null,
+								new FacesMessage(
+										FacesMessage.SEVERITY_ERROR,
+										"",
+										"Le date du consultation "+Module.verifierDate(dateconsultation2)));
+
+					}
+					
+					
+
+					
+					if(honoraireStringobs2!=null)
+					{
+						if(honoraireStringobs2.equals("")==false)
+						{try {
+
+							honorairesobs2= Float.parseFloat(honoraireStringobs2);
+
+					} catch (Exception e) {
+						// honoraire = (float) 0;
+						// testValid = false; 
+						
+						blocage = true;
+						face.addMessage(null, new FacesMessage(
+								FacesMessage.SEVERITY_ERROR, "","L'honoraire ne contient que des chiffres"));
+
+					}}
+						
+					}
+					 if (face.getMessageList().size() == 0)
+						{
 					if (action.equals("ajouter")) {
-						if (echomoyen == null
-								|| (echomoyen.trim().length() == 0)) {
-							blocage = true;
-							face.addMessage(null, new FacesMessage(
-									FacesMessage.SEVERITY_ERROR, "Erreur",
-									"Veuillez remplir l'echo vide"));
-
-						}
-						if (Module.corigerDate(dateconsultation2) != null) {
-							this.setDateconsultation2(Module
-									.corigerDate(dateconsultation2));
-						}
-						if (!(Module.verifierDate(dateconsultation2).equals("")))
-
-						{
-							this.blocage = true;
-							face.addMessage(
-									null,
-									new FacesMessage(
-											FacesMessage.SEVERITY_ERROR,
-											"",
-											Module.verifierDate(dateconsultation2)));
-							tempsface = 3500;
-							dateconsultation2 = ancienValeur2;
-						}
-
-						else if (face.getMessageList().size() == 0)
-
-						{
 							cons = new ConsultationDetail();
 							if (consultationmotif != null) {
 								ConsultaionService s = new ConsultaionService();
@@ -4065,36 +4105,10 @@ if(ddg!=null)
 							selectedCons = cons;
 
 						}
-					}
 
 					else if (action.equals("modifier")) {
-						if (echomoyen == null
-								|| (echomoyen.trim().length() == 0)) {
-							blocage = true;
-							face.addMessage(null, new FacesMessage(
-									FacesMessage.SEVERITY_ERROR, "Erreur",
-									"Veuillez remplir l' echo moyen "));
-
-						}
-						if (Module.corigerDate(dateconsultation2) != null) {
-							this.setDateconsultation2(Module
-									.corigerDate(dateconsultation2));
-						}
-						if (!(Module.verifierDate(dateconsultation2).equals("")))
-
-						{
-							this.blocage = true;
-							face.addMessage(
-									null,
-									new FacesMessage(
-											FacesMessage.SEVERITY_ERROR,
-											"",
-											Module.verifierDate(dateconsultation2)));
-							tempsface = 3500;
-							dateconsultation2 = ancienValeur2;
-						} else if (face.getMessageList().size() == 0)
-
-						{
+						
+						
 							ConsultationDetailService se = new ConsultationDetailService();
 
 							cons = se

@@ -142,7 +142,6 @@ public class Module {
 	}
 
 	static String corigerFormatDate(String date) {
-		System.out.println("entree coriger date "+date );
 		String date1 = date;
 		String jour = "";
 		String mois = "";
@@ -345,7 +344,6 @@ return null;
 					df.parse(strdate);
 					}
 		 catch (ParseException ex) {
-			System.out.println("entree invalide");
 return("est invalide");
 		}
 	}
@@ -425,7 +423,6 @@ if(isValid(date, format)!=null)
 			}
 			
 			if (date.length()<=0) {
-				System.out.println("date vide");
 						
 						msg="est vide";
 					}

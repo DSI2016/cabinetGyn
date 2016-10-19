@@ -12,7 +12,7 @@
 	<ui:define name="body">
 		<p:graphicImage value="/imagesTitre/echogyn1.png" width="100%"></p:graphicImage>
 		<br />
-
+	
 		<h:form id="f1">
 
 			<p:growl id="growl" showDetail="true"
@@ -41,7 +41,7 @@
 										placeholder="Modele"
 										rendered="#{connectionBean.appliquemodelechogyneco}"
 										disabled="#{consultationDetailBean.afficheValid}">
-										<p:ajax event="change" update=":f1"
+										<p:ajax event="change" update=":f1:suppMod,:f1:appliqueMod,:f1:ajoutMod"
 											listener="#{ordonnanceBean.modeleSelectionChanged}" />
 										<f:selectItem itemLabel="--Selectioner--" itemValue="" />
 										<f:selectItems value="#{consultationDetailBean.modeles}"
@@ -49,22 +49,22 @@
 											itemValue="#{pro.idmodele}" />
 									</p:selectOneMenu></td>
 
-								<td><p:commandButton title="Ajouter Un Modéle"
+								<td><p:commandButton title="Ajouter Un Modéle" id="ajoutMod"
 										rendered="#{connectionBean.ajoutmodelechogyneco}"
 										disabled="#{consultationDetailBean.afficheValid}"
 										icon="ui-icon-plusthick" oncomplete="PF('diag2').show();">
 									</p:commandButton></td>
-								<td><p:commandButton title="Apliquer Un Modéle"
-										icon="ui-icon-check" disabled="#{consultationDetailBean.app}"
+								<td><p:commandButton title="Apliquer Un Modéle" id="appliqueMod"
+										icon="ui-icon-check" disabled="#{consultationDetailBean.app and consultationDetailBean.afficheValid}"
 										rendered="#{connectionBean.appliquemodelechogyneco}"
 										actionListener="#{consultationDetailBean.apliquerModele(consultationDetailBean.idmodele)}"
-										update=":f1:p2,:f1:p3,:f1:p4,:f1:growl,:f1:eventsDT">
+										update=":f1:p2,:f1:p3,:f1:p4,:f1:growl">
 									</p:commandButton></td>
 
-								<td><p:commandButton icon="ui-icon-trash"
+								<td><p:commandButton icon="ui-icon-trash" id="suppMod"
 										rendered="#{connectionBean.suppmodelechogyneco}"
 										title="Suppression Modéle"
-										disabled="#{consultationDetailBean.app}"
+										disabled="#{consultationDetailBean.app and consultationDetailBean.afficheValid}"
 										actionListener="#{consultationDetailBean.supprimerModeleConsEchoGyn(consultationDetailBean.idmodele)}"
 										update=":f1">
 
@@ -126,8 +126,7 @@
 													style="width:68px;font-size:small;font-weight:bold"
 													value="#{consultationDetailBean.dateConsultation}"
 													disabled="#{consultationDetailBean.lireReadOnly()}">
-													<p:ajax event="blur" update=":f1:growl,:f1:iddate"
-														listener="#{consultationDetailBean.verifierDate()}" />
+
 												</p:inputMask></td>
 											<td width="180px"><h:outputText value="Honoraires :"
 													style="font-size:small;font-weight:bold" /> <p:inputText
@@ -159,8 +158,7 @@
 													disabled="#{consultationDetailBean.lireReadOnly()}"
 													value="#{consultationDetailBean.idUterus}"
 													style="width:140px" filter="true"
-													filterMatchMode="startsWith" effect="fade"
-													>
+													filterMatchMode="startsWith" effect="fade">
 													<f:selectItem itemLabel="--Selectioner--" itemValue="" />
 													<f:selectItems value="#{consultationDetailBean.uteruss}"
 														var="pro" itemLabel="#{pro.uterus}"
@@ -236,12 +234,11 @@
 										</p:panel>
 									</h:panelGrid> <p:panel style="width:492px">
 
-										<p:dataTable id="eventsDT" 
-										    scrollable="true"
-										    scrollHeight="140"
+										<p:dataTable id="eventsDT" scrollable="true"
+											scrollHeight="140"
 											value="#{consultationDetailBean.consultationDetails}"
-											emptyMessage="Pas des Consultations !"
-											var="cons" selectionMode="single"
+											emptyMessage="Pas des Consultations !" var="cons"
+											selectionMode="single"
 											selection="#{consultationDetailBean.selectedCons}"
 											rowKey="#{cons.idConsultationDetail}">
 											<p:ajax event="rowSelect"
@@ -269,8 +266,7 @@
 												<p:commandButton icon="ui-icon-trash" update=":f1"
 													actionListener="#{consultationDetailBean.suppCons(cons)}"
 													title="Suppression Consultation"
-													rendered="#{connectionBean.suppechogyneco}"
-													>
+													rendered="#{connectionBean.suppechogyneco}">
 												</p:commandButton>
 											</p:column>
 										</p:dataTable>
@@ -351,26 +347,26 @@
 			<br />
 			<br />
 			<p:dialog id="idDlgSup" widgetVar="suppDlg" resizable="false"
-					closable="false" modal="true" model="true"
-					header="Suppression Consultation" hideEffect="explode">
-					<p:panel>
+				closable="false" modal="true" model="true"
+				header="Suppression Consultation" hideEffect="explode">
+				<p:panel>
+					<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.jpg" />
+						<p:outputLabel value="#{consultationDetailBean.message}" />
+					</h:panelGrid>
+
+					<hr></hr>
+					<div align="center">
 						<h:panelGrid columns="2">
-							<p:graphicImage value="/images/warning.jpg" />
-							<p:outputLabel value="#{consultationDetailBean.message}" />
+							<p:commandButton value="Oui"
+								actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco()}"
+								update=":f1:growl"></p:commandButton>
+							<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
 						</h:panelGrid>
-						
-						<hr></hr>
-						<div align="center">
-							<h:panelGrid columns="2">
-								<p:commandButton value="Oui"
-									actionListener="#{consultationDetailBean.supprimerConsultationEchoGyneco()}"
-									update=":f1:growl"></p:commandButton>
-								<p:commandButton value="Non" oncomplete="PF('suppDlg').hide();"></p:commandButton>
-							</h:panelGrid>
-						</div>
-					</p:panel>
-				</p:dialog>
-			
+					</div>
+				</p:panel>
+			</p:dialog>
+
 			<h:form id="fmodele">
 				<p:dialog header="Nouvelle modéle" widgetVar="diag2" modal="true"
 					resizable="false">
@@ -390,10 +386,10 @@
 
 				</p:dialog>
 
-				
+
 
 			</h:form>
-			
+
 		</h:form>
 		<style type="text/css">
 .act {

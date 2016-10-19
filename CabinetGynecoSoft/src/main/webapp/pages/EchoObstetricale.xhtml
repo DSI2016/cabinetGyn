@@ -199,9 +199,7 @@
 																			disabled="#{consultationDetailBean.lireReadOnly()}"
 																			readonly="#{consultationDetailBean.lireReadOnly()}"
 																			stepFactor="0.01" min="0" max="100" size="1">
-																			<p:ajax event="blur"
-																				listener="#{consultationDetailBean.changeHonoraireObs1}"
-																				update=":f1:growl,:f1:tabView:idhonoraire1"></p:ajax>
+																		
 																		</p:inputText></td>
 																	<td><h:outputLabel value="Date"
 																			style="font-size:small;font-weight:bold;" /></td>
@@ -211,9 +209,7 @@
 																			readonly="#{consultationDetailBean.lireReadOnly()}"
 																			disabled="#{consultationDetailBean.lireReadOnly()}"
 																			style="font-size:small;font-weight:bold;width:70px;height : 25px;">
-																			<p:ajax event="blur"
-																				update=":f1:growl,:f1:tabView:date1"
-																				listener="#{consultationDetailBean.verifierDate1()}" />
+																			
 																		</p:inputMask></td>
 																</tr>
 
@@ -378,9 +374,7 @@
 																			disabled="#{consultationDetailBean.lireReadOnly()}"
 																			readonly="#{consultationDetailBean.lireReadOnly()}"
 																			stepFactor="0.01" min="0" max="100" size="1">
-																			<p:ajax event="blur"
-																				listener="#{consultationDetailBean.changeHonoraireObs2}"
-																				update=":f1:growl,:f1:tabView:idhonoraire2"></p:ajax>
+																			
 																		</p:inputText></td>
 																	<td><h:outputLabel value="Date"
 																			style="font-size:small;font-weight:bold;" /></td>
@@ -390,9 +384,7 @@
 																			disabled="#{consultationDetailBean.lireReadOnly()}"
 																			readonly="#{consultationDetailBean.lireReadOnly()}"
 																			style="font-size:small;font-weight:bold;width:70px;height : 25px;">
-																			<p:ajax event="blur"
-																				update=":f1:growl,:f1:tabView:date2"
-																				listener="#{consultationDetailBean.verifierDate2()}" />
+																			
 																		</p:inputMask></td>
 																</tr>
 
@@ -548,9 +540,7 @@
 																			disabled="#{consultationDetailBean.lireReadOnly()}"
 																			stepFactor="0.01" min="0" max="100" size="1"
 																			id="idhonoraire3">
-																			<p:ajax event="blur"
-																				listener="#{consultationDetailBean.changeHonoraireObs3}"
-																				update=":f1:growl,:f1:tabView:idhonoraire3"></p:ajax>
+																			
 																		</p:inputText></td>
 																	<td><h:outputLabel value="Date"
 																			style="font-size:small;font-weight:bold;" /></td>
@@ -560,9 +550,7 @@
 																			readonly="#{consultationDetailBean.lireReadOnly()}"
 																			disabled="#{consultationDetailBean.lireReadOnly()}"
 																			style="font-size:small;font-weight:bold;width:70px;height : 25px;">
-																			<p:ajax event="blur"
-																				update=":f1:growl,:f1:tabView:date3"
-																				listener="#{consultationDetailBean.verifierDate3()}" />
+																			
 																		</p:inputMask></td>
 																</tr>
 

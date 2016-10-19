@@ -40,7 +40,7 @@ public class HistoriqueCertifBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer idHistoriqueCertif;
-
+private String titreDiag;
 	private String type1;
 	private Integer idPatient;
 	private Cfclient cfclient;
@@ -50,6 +50,8 @@ public class HistoriqueCertifBean implements Serializable {
 	private String remarque;
 	private String dateCertifPrese;
 	private String dateCertifPreseAccomp;
+	private String proprietaire="Patiente";
+	private String nomProprietaire="";
 
 	private boolean afficheImp = true;
 	private String datereprise;
@@ -742,9 +744,8 @@ public class HistoriqueCertifBean implements Serializable {
 		} else
 			rem = remplaceMot(rem, "$livreele", "");
 		if (cfclient != null) {
-			if ((cfclient.getPrenom() != null) || (cfclient.getNom() != null))
-				rem = remplaceMot(rem, "$NP", cfclient.getPrenom() + " "
-						+ cfclient.getNom());
+			if (nomProprietaire!=null)
+				rem = remplaceMot(rem, "$NP", nomProprietaire);
 			else
 				rem = remplaceMot(rem, "$NP", "");
 		}
@@ -924,6 +925,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 			addValid = true;
 			cert.setDateCertif(sdf.parse(dateCertif));
 			System.out.println("pas de prob");
@@ -1073,6 +1075,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 			System.out.println("pas de probleme");
 			cert.setDureederepos(dureederepos);
 			cert.setType(type1);
@@ -1178,7 +1181,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
-
+			cert.setNomProprietaire(nomProprietaire);
 			addValid = true;
 
 			Certificat c = new CertificatService()
@@ -1268,10 +1271,8 @@ public class HistoriqueCertifBean implements Serializable {
 										+ Module.verifierDate(dateCertifPreseAccomp)));
 				addValid = false;
 
-				// dateCertif = ancienValeurDateCertif;
 			} else {
 
-				// ancienValeurDateCertif = dateCertif;
 				try {
 					addValid = true;
 					cert.setDateCertif(sdf.parse(dateCertifPreseAccomp));
@@ -1283,6 +1284,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 			cert.setCfclient(cfclient);
 
 			Certificat c = new CertificatService()
@@ -1438,7 +1440,7 @@ public class HistoriqueCertifBean implements Serializable {
 			}
 		}
 		if (face.getMessageList().size() == 0) {
-			System.out.println("pas de probleme certpresacomp");
+			cert.setNomProprietaire(nomProprietaire);
 			cert.setDureederepos(dureederepos);
 			cert.setType(type1);
 			cert.setAccompagnant(accompagnant);
@@ -1448,8 +1450,7 @@ public class HistoriqueCertifBean implements Serializable {
 			cert.setCertificat(c);
 			cert.setAccompagnant(accompagnant);
 			cert.setRemarque(remarque);
-			System.out.println("acccompagnement d'ajout "
-					+ cert.getAccompagnant());
+		
 			if (c != null)
 				if (c.getRemarque() != null) {
 					String textelettre = c.getRemarque();
@@ -1581,6 +1582,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 			Certificat c = new CertificatService()
 					.rechercheCertifParMotif(motifCertificat);
 			cert.setCertificat(c);
@@ -1696,7 +1698,6 @@ public class HistoriqueCertifBean implements Serializable {
 		if ((Module.verifierDate(datedelagression).equals("")) == false)
 
 		{
-			System.out.println("date de guresiation invalide");
 			blocage = true;
 			face.addMessage(
 					null,
@@ -1716,6 +1717,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 
 			addValid = true;
 			cert.setHeuresys(heuresys);
@@ -1820,6 +1822,7 @@ public class HistoriqueCertifBean implements Serializable {
 			}
 		}
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 			cert.setRemarques(remarques);
 			Certificat c = new CertificatService()
 					.rechercheCertifParMotif(motifCertificat);
@@ -1918,6 +1921,7 @@ public class HistoriqueCertifBean implements Serializable {
 		}
 
 		if (face.getMessageList().size() == 0) {
+			cert.setNomProprietaire(nomProprietaire);
 			cert.setInapte(inapte);
 			Certificat c = new CertificatService()
 					.rechercheCertifParMotif(motifCertificat);
@@ -1971,6 +1975,7 @@ public class HistoriqueCertifBean implements Serializable {
 	{
 		action = "Ajout";
 		Date actuelle = new Date();
+		titreDiag="Ajout du";
 		// * Definition du format utilise pour les dates DateFormat
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
 		String dateJour = format.format(actuelle);
@@ -2113,6 +2118,7 @@ public class HistoriqueCertifBean implements Serializable {
 		selectedCertif=h;
 
 		action = "Modification";
+		titreDiag="Modification du";
 		Format formater = new SimpleDateFormat("dd/MM/yyyy");
 		RequestContext context = RequestContext.getCurrentInstance();
 		motifCertificat = h.getCertificat().getNomCertificat();
@@ -2442,5 +2448,57 @@ public class HistoriqueCertifBean implements Serializable {
 	public void setDateCertifPreseAccomp(String dateCertifPreseAccomp) {
 		this.dateCertifPreseAccomp = dateCertifPreseAccomp;
 	}
+
+	public String getTitreDiag() {
+		return titreDiag;
+	}
+
+	public void setTitreDiag(String titreDiag) {
+		this.titreDiag = titreDiag;
+	}
+
+	public boolean isAfficheImp() {
+		return afficheImp;
+	}
+
+	public void setAfficheImp(boolean afficheImp) {
+		this.afficheImp = afficheImp;
+	}
+
+	public String getProprietaire() {
+		return proprietaire;
+	}
+
+	public void setProprietaire(String proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+
+	public String getNomProprietaire() {
+		return nomProprietaire;
+	}
+
+	public void setNomProprietaire(String nomProprietaire) {
+		this.nomProprietaire = nomProprietaire;
+	}
+	
+	
+	public void changeProp()
+	{
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		idPatient = (Integer) session.getAttribute("idu");
+
+		CfclientService se = new CfclientService();
+		cfclient = se.RechercheCfclient(idPatient);
+		if(proprietaire!=null)
+		{if(proprietaire.equals("Patiente"))
+		{nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();}
+		else
+		{nomProprietaire="M"+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+		}
+	}
+	
+
+	
 
 }

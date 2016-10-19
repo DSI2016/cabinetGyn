@@ -31,17 +31,7 @@
 		</navigation-case>
 	</navigation-rule>
 
-	<navigation-rule>
-		<from-view-id>/pages/FichePatient.xhtml</from-view-id>
-
-		<navigation-case>
-			<from-action>#{fichePatientBean.nouvelleConsult()}</from-action>
-			<from-outcome>consGross</from-outcome>
-			<to-view-id>/pages/NouvelleConsultation.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-
+	
 	<navigation-rule>
 		<from-view-id>/pages/FichePatient.xhtml</from-view-id>
 

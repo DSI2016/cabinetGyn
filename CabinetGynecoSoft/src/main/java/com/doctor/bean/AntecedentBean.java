@@ -1715,19 +1715,19 @@ EtatBebeService setetab=new EtatBebeService();
 			}
 			EtatFinGrossService ser = new EtatFinGrossService();
 			EtatFinGross eFinG = ser.rechercheParEtatFinGross(etatFinGross);
-			EtatFinGross eFinGA = ser
-					.rechercheParEtatFinGross(etatFinGrossAncien);
+//			EtatFinGross eFinGA = ser
+//					.rechercheParEtatFinGross(etatFinGrossAncien);
 			EtatBebeService seretatbebe = new EtatBebeService();
 
 			EtatBebe etatbeb1 = seretatbebe.rechercheParEtatBebe(etatBebe);
-			EtatBebe etatbebA1 = seretatbebe
-					.rechercheParEtatBebe(etatBebeAncien);
+//			EtatBebe etatbebA1 = seretatbebe
+//					.rechercheParEtatBebe(etatBebeAncien);
 			EtatBebe etatbeb2 = seretatbebe.rechercheParEtatBebe(etatBebe2);
-			EtatBebe etatbebA2 = seretatbebe
-					.rechercheParEtatBebe(etatBebe2Ancien);
+//			EtatBebe etatbebA2 = seretatbebe
+//					.rechercheParEtatBebe(etatBebe2Ancien);
 			EtatBebe etatbeb3 = seretatbebe.rechercheParEtatBebe(etatBebe3);
-			EtatBebe etatbebA3 = seretatbebe
-					.rechercheParEtatBebe(etatBebe3Ancien);
+//			EtatBebe etatbebA3 = seretatbebe
+//					.rechercheParEtatBebe(etatBebe3Ancien);
 			cf = se.RechercheCfclient(idPatient);
 			if (hg2 != null) {
 				
@@ -1971,7 +1971,7 @@ EtatBebeService setetab=new EtatBebeService();
 				}
 
 				se.modifierPatient(cf);
-				Integer code = hg2.getIdhistoriqueGross();
+			//	Integer code = hg2.getIdhistoriqueGross();
 				sere.ModifierHistoriqueGross(hg2);
 
 				// etape d'ajout
@@ -2864,18 +2864,21 @@ EtatBebeService setetab=new EtatBebeService();
 			AntecedentMed a = new AntecedentMedService()
 					.rechercheAntecedentMed(idantecedentMed);
 			am = a.getAntMedical();
+			dateAm=null;
 		}
 
 		if (idantecedentChir != null) {
 			AntecedentChir a = new AntecedentChirService()
 					.rechercheAntecedentChir(idantecedentChir);
 			am = a.getAntChirugical();
+			dateAm=null;
 		}
 
 		if (idantecedentFam != null) {
 			AntecedentFam a = new AntecedentFamService()
 					.rechercheAntecedentFam(idantecedentFam);
 			am = a.getAntFamilial();
+			dateAm=null;
 		}
 	}
 
@@ -2888,6 +2891,7 @@ EtatBebeService setetab=new EtatBebeService();
 			AntMedCfclientService s = new AntMedCfclientService();
 			s.ajoutAntMedCfclient(a);
 			idantecedentMed = null;
+			dateAm=null;
 		}
 
 		if (idantecedentChir != null) {
@@ -2898,6 +2902,8 @@ EtatBebeService setetab=new EtatBebeService();
 			AntChirCfclientService s = new AntChirCfclientService();
 			s.ajoutAntChirCfclient(a);
 			idantecedentChir = null;
+			dateAm=null;
+
 		}
 
 		if (idantecedentFam != null) {
@@ -2908,6 +2914,7 @@ EtatBebeService setetab=new EtatBebeService();
 			AntFamCfclientService s = new AntFamCfclientService();
 			s.ajoutAntFamCfclient(a);
 			idantecedentFam = null;
+			dateAm=null;
 		}
 		am = null;
 		dateAm = null;

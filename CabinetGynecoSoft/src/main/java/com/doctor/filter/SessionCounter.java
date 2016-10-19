@@ -60,8 +60,8 @@ public static boolean findSession(String sessionId)// cette methode retourner tr
 
 {
 	boolean temp=false;
-	Set cles = sessions.keySet();
-	Iterator it = cles.iterator();
+	Set<String> cles = sessions.keySet();
+	Iterator<String> it = cles.iterator();
 	while (it.hasNext()&&(temp==false)){
 	   Object cle = it.next(); // tu peux typer plus finement ici
 	   HttpSession valeur = sessions.get(cle); // tu peux typer plus finement ici

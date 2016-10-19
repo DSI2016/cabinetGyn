@@ -6,15 +6,15 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import com.doctor.persistance.Horaire;
 import com.doctor.persistance.Jour;
@@ -38,55 +38,9 @@ public class HoraireBean implements java.io.Serializable {
 	private Horaire selectedHoraire = new Horaire();
 	private int minHeurs;
 	private int maxHeurs;
+	private Date dateDebut;
+	private Date dateFin;
 
-	
-	@PostConstruct
-	public void mettreAJourSaison() {
-		// récuperer la liste de saison;
-		List<Saison> l = new SaisonService().rechercheTousSaison();
-
-		// tester pour chaque saison si date fin < date aujourd'hui
-		for (int i = 0; i < l.size(); i++) {
-			if (l.get(i).getFin().before(new Date())) {
-				
-				Date df = l.get(i).getFin();
-				
-				
-				Calendar calf = Calendar.getInstance();
-				calf.setTime(df);
-				calf.add(Calendar.YEAR, 1);
-				
-				
-				Date dd = l.get(i).getDebut();
-				
-				Calendar cald = Calendar.getInstance();
-				cald.setTime(df);
-				cald.add(Calendar.YEAR, 1);
-				
-				if (l.get(i).getNom().equals("Ramadhan")) {
-					// si c'est ramadhane on ajout 1 ans -12jours
-					
-					calf.add(Calendar.DATE, -12);
-					cald.add(Calendar.DATE, -12);
-				} 
-				
-				df=calf.getTime();
-				l.get(i).setFin(df);
-				
-				dd = cald.getTime();
-				l.get(i).setDebut(dd);
-				
-				//modifier la date de debu et fin du siason
-				
-				new SaisonService().modifierSaison(l.get(i));
-				
-			}
-
-		}
-
-	}
-
-	
 	public Integer getIdHoraire() {
 		return idHoraire;
 	}
@@ -279,7 +233,7 @@ public class HoraireBean implements java.io.Serializable {
 	private Integer idSaison;
 	private String debutSaison;
 	private String finSaison;
-	private Saison DEF ;
+	private Saison DEF;
 	private Saison ETE;
 	private Saison RAM;
 
@@ -411,59 +365,131 @@ public class HoraireBean implements java.io.Serializable {
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
 		debutSaison = format.format(saison.getDebut());
 		finSaison = format.format(saison.getFin());
+
 	}
 
+	@SuppressWarnings("deprecation")
 	public void validerSaison() {
+		FacesContext face = FacesContext.getCurrentInstance();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		boolean addValid = false;
+		if (debutSaison.equals("") == false && (debutSaison.length() > 0)
+				&& (debutSaison.equals("__/__/____") == false)) {
+			try {
+				dateDebut = sdf.parse(debutSaison);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		if (finSaison.equals("") == false && (finSaison.length() > 0)
+				& (finSaison.equals("__/__/____") == false)) {
+			try {
+				dateFin = sdf.parse(finSaison);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		Date dateSys = new Date();
+
 		SaisonService ser = new SaisonService();
 		Saison s = ser.rechercheSaisonParId(idSaison);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			s.setDebut(sdf.parse(debutSaison));
-			s.setFin(sdf.parse(finSaison));
-		} catch (ParseException e) {
-			e.printStackTrace();
+		if (Module.isValid(debutSaison, "dd/MM/yyyy") != null) {
+			face.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+							"Le date du debut est "
+									+ Module.isValid(debutSaison, "dd/MM/yyyy")));
+			addValid = false;
+		}
+		if (Module.isValid(finSaison, "dd/MM/yyyy") != null) {
+			face.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+							"Le date du fin est "
+									+ Module.isValid(finSaison, "dd/MM/yyyy")));
+			addValid = false;
 		}
 
-		ser.modifierSaison(s);
-		
-		// modification selection
-		Date aujourdhui = new Date();
-		// SaisonService ser = new SaisonService();
-		Saisons = ser.rechercheTousSaisonAvecJointure();
+		if (idSaison == 3) {
+			if ((dateDebut != null) && (dateFin != null)) {
+				if (dateDebut.getYear() > dateSys.getYear() + 1) {
+					face.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "",
+							"configuration date du debut est invalide"));
+					addValid = false;
+				}
 
-		if (Saisons.get(2).getDebut() != null
-				&& Saisons.get(2).getFin() != null
-				&& aujourdhui.after(Saisons.get(2).getDebut())
-				&& aujourdhui.before(Saisons.get(2).getFin())) {
-			// saisonEnCour = "de Ramadhan";
-			Saisons.get(0).setSelect(0);
-			Saisons.get(1).setSelect(0);
-			Saisons.get(2).setSelect(1);
-			ser.modifierSaison(Saisons.get(0));
-			ser.modifierSaison(Saisons.get(1));
-			ser.modifierSaison(Saisons.get(2));
+				long diff = dateFin.getTime() - dateDebut.getTime();
+				int diference = (int) (diff / (1000 * 60 * 60 * 24));
+
+				if (diference > 30) {
+					face.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "",
+							"configuration invalide"));
+					addValid = false;
+				}
+			}
 		}
+		if (face.getMessageList().size() == 0) {
+			addValid = true;
+			try {
+				s.setDebut(sdf.parse(debutSaison));
+				s.setFin(sdf.parse(finSaison));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 
-		else if (Saisons.get(1).getDebut() != null
-				&& Saisons.get(1).getFin() != null
-				&& aujourdhui.after(Saisons.get(1).getDebut())
-				&& aujourdhui.before(Saisons.get(1).getFin())) {
-			// saisonEnCour = "d'été";
-			Saisons.get(0).setSelect(0);
-			Saisons.get(1).setSelect(1);
-			Saisons.get(2).setSelect(0);
-			ser.modifierSaison(Saisons.get(0));
-			ser.modifierSaison(Saisons.get(1));
-			ser.modifierSaison(Saisons.get(2));
+			ser.modifierSaison(s);
+			{
+				face.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "",
+						"saison modifié avec sucés"));
+			}
 
-		} else {
-			// saisonEnCour = "d'hiver";
-			Saisons.get(0).setSelect(1);
-			Saisons.get(1).setSelect(0);
-			Saisons.get(2).setSelect(0);
-			ser.modifierSaison(Saisons.get(0));
-			ser.modifierSaison(Saisons.get(1));
-			ser.modifierSaison(Saisons.get(2));
+			// modification selection
+			Date aujourdhui = new Date();
+			// SaisonService ser = new SaisonService();
+			Saisons = ser.rechercheTousSaisonAvecJointure();
+
+			if (Saisons.get(2).getDebut() != null
+					&& Saisons.get(2).getFin() != null
+					&& aujourdhui.after(Saisons.get(2).getDebut())
+					&& aujourdhui.before(Saisons.get(2).getFin())) {
+				// saisonEnCour = "de Ramadhan";
+				Saisons.get(0).setSelect(0);
+				Saisons.get(1).setSelect(0);
+				Saisons.get(2).setSelect(1);
+				ser.modifierSaison(Saisons.get(0));
+				ser.modifierSaison(Saisons.get(1));
+				ser.modifierSaison(Saisons.get(2));
+			}
+
+			else if (Saisons.get(1).getDebut() != null
+					&& Saisons.get(1).getFin() != null
+					&& aujourdhui.after(Saisons.get(1).getDebut())
+					&& aujourdhui.before(Saisons.get(1).getFin())) {
+				// saisonEnCour = "d'été";
+				Saisons.get(0).setSelect(0);
+				Saisons.get(1).setSelect(1);
+				Saisons.get(2).setSelect(0);
+				ser.modifierSaison(Saisons.get(0));
+				ser.modifierSaison(Saisons.get(1));
+				ser.modifierSaison(Saisons.get(2));
+
+			} else {
+				// saisonEnCour = "d'hiver";
+				Saisons.get(0).setSelect(1);
+				Saisons.get(1).setSelect(0);
+				Saisons.get(2).setSelect(0);
+				ser.modifierSaison(Saisons.get(0));
+				ser.modifierSaison(Saisons.get(1));
+				ser.modifierSaison(Saisons.get(2));
+			}
 		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
 	}
 }

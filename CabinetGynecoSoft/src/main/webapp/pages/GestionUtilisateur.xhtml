@@ -255,8 +255,8 @@
 												cellpadding="7">
 
 												<p:selectBooleanCheckbox
-													value="#{utilisateurBean.descdrePatSalPriv}" />
-												<h:outputText value="Descendre Patient " />
+													value="#{utilisateurBean.permutPatSalPriv}" />
+												<h:outputText value="Permuter Patient " />
 												<p:selectBooleanCheckbox
 													value="#{utilisateurBean.reponseSalPriv}" />
 												<h:outputText value="Repondre téléphone" />
@@ -712,7 +712,7 @@
 														</div>
 													</p:panel>
 												</p:tab>
-												<p:tab title="Etat Bb"
+												<p:tab title="Etat Bébé"
 													titleStyle="font-size:small;font-weight:bold">
 													<p:panel
 														style="width:320px;height:180px">
@@ -1727,14 +1727,14 @@
 				</p:dialog>
 
 				<p:dialog widgetVar="dialogMotPass" modal="true" closable="false"
-					resizable="false" header="Changer Mot de Passe">
+					resizable="false" header="Changer mot de Passe">
 
 					<p:panel id="dialogPass">
 						<h:panelGrid columns="2">
-							<p:outputLabel value="Mot de passe:"
+							<p:outputLabel value="Nouveau mot de passe:"
 								style="font-size:small;font-weight:bold" />
 							<p:password value="#{utilisateurBean.motpass1}" />
-							<p:outputLabel value=" Confirmer Mot de passe:"
+							<p:outputLabel value=" Confirmer mot de passe:"
 								style="font-size:small;font-weight:bold" />
 							<p:password id="pass" value="#{utilisateurBean.motpass2}" />
 						</h:panelGrid>

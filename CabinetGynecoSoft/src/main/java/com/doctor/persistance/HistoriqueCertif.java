@@ -61,6 +61,7 @@ public class HistoriqueCertif implements Serializable {
 	private String v29;
 	private String v30;
 	private String v31;
+	private String nomProprietaire;
 
 	public Cfclient getCfclient() {
 
@@ -502,6 +503,8 @@ public class HistoriqueCertif implements Serializable {
 		result = prime * result + minutelagr;
 		result = prime * result + minutesys;
 		result = prime * result
+				+ ((nomProprietaire == null) ? 0 : nomProprietaire.hashCode());
+		result = prime * result
 				+ ((remarque == null) ? 0 : remarque.hashCode());
 		result = prime * result
 				+ ((remarques == null) ? 0 : remarques.hashCode());
@@ -613,6 +616,11 @@ public class HistoriqueCertif implements Serializable {
 		if (minutelagr != other.minutelagr)
 			return false;
 		if (minutesys != other.minutesys)
+			return false;
+		if (nomProprietaire == null) {
+			if (other.nomProprietaire != null)
+				return false;
+		} else if (!nomProprietaire.equals(other.nomProprietaire))
 			return false;
 		if (remarque == null) {
 			if (other.remarque != null)
@@ -806,7 +814,8 @@ public class HistoriqueCertif implements Serializable {
 				+ v18 + ", v19=" + v19 + ", v20=" + v20 + ", v21=" + v21
 				+ ", v22=" + v22 + ", v23=" + v23 + ", v24=" + v24 + ", v25="
 				+ v25 + ", v26=" + v26 + ", v27=" + v27 + ", v28=" + v28
-				+ ", v29=" + v29 + ", v30=" + v30 + ", v31=" + v31 + "]";
+				+ ", v29=" + v29 + ", v30=" + v30 + ", v31=" + v31
+				+ ", nomProprietaire=" + nomProprietaire + "]";
 	}
 
 	public String getLivreele() {
@@ -816,5 +825,11 @@ public class HistoriqueCertif implements Serializable {
 	public void setLivreele(String livreele) {
 		this.livreele = livreele;
 	}
-
+	public String getNomProprietaire() {
+		return nomProprietaire;
+	}
+	public void setNomProprietaire(String nomProprietaire) {
+		this.nomProprietaire = nomProprietaire;
+	}
+	
 }

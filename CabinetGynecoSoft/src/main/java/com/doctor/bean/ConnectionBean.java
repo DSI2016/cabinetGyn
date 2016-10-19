@@ -3,6 +3,7 @@ package com.doctor.bean;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,13 @@ import org.primefaces.context.RequestContext;
 import com.doctor.filter.SessionCounter;
 import com.doctor.persistance.Connecte;
 import com.doctor.persistance.EnLigne;
+import com.doctor.persistance.Saison;
 import com.doctor.persistance.TabSalle;
 import com.doctor.persistance.Utilisateur;
 import com.doctor.service.CabinetService;
 import com.doctor.service.ConnecteService;
 import com.doctor.service.EnLigneService;
+import com.doctor.service.SaisonService;
 import com.doctor.service.TabSalleService;
 import com.doctor.service.UtilisateurService;
 
@@ -303,9 +306,6 @@ public class ConnectionBean implements java.io.Serializable {
 
 	RequestContext context = RequestContext.getCurrentInstance();
 
-	
-	
-	
 	public boolean isParamsupAdmin() {
 		return paramsupAdmin;
 	}
@@ -1710,7 +1710,6 @@ public class ConnectionBean implements java.io.Serializable {
 		int nbrPost = 0;
 		EnLigneService serenligne = new EnLigneService();
 		EnLigneService ser1 = new EnLigneService();
-		List<EnLigne>  sesionEnLigne = ser1.rechercheTousEnLigne();
 		int nbrPostEnligne = serenligne.rechercheTousEnLigne().size();// contient
 		CabinetService ser = new CabinetService();
 		if ((ser.rechercheTousCabinet().get(0) != null)
@@ -1723,7 +1722,7 @@ public class ConnectionBean implements java.io.Serializable {
 														// maximum connecter
 														// apres le décréptage
 		}
-		
+
 		FacesContext face = FacesContext.getCurrentInstance();
 
 		if (login == null || (login.trim().length() == 0)) {
@@ -1736,9 +1735,17 @@ public class ConnectionBean implements java.io.Serializable {
 			face.addMessage("formconnection:mpid", new FacesMessage(
 					"Mot de passe manquant"));
 		}
-		
+
 		if (face.getMessageList().size() == 0) {
 			nbrPostEnligne = nbrPostEnligne + 1;
+
+			UtilisateurService c = new UtilisateurService();
+			u = c.rechercheParLoginMotPass(login, motpass);
+			if (u != null) {
+
+				confSession = u.isConfSession();
+
+			}
 
 			if (login.equals("superadmin")) {
 				// génération du mot de passe
@@ -1750,8 +1757,8 @@ public class ConnectionBean implements java.io.Serializable {
 				String heure = sdfH.format(d);
 				String mp = "DSI" + heure + aujoudhui + "ISD";
 				if (motpass.equals(mp)) {
-                    
-					paramsupAdmin=true;
+
+					paramsupAdmin = true;
 					monterPatientSal = true;
 					descendrePatientSal = true;
 					nouvellePatientSal = true;
@@ -2018,15 +2025,7 @@ public class ConnectionBean implements java.io.Serializable {
 				// tester le nombre de session
 
 				// tester si le login et le mot de passe existe dans la base
-				
-				UtilisateurService c = new UtilisateurService();
-				u = c.rechercheParLoginMotPass(login, motpass);
-				
-				if (u != null) {
-					
-					confSession = u.isConfSession();
-					
-				}
+
 				if (u != null) {
 					if (u.isPassif()) {
 
@@ -2036,8 +2035,8 @@ public class ConnectionBean implements java.io.Serializable {
 					} else {
 						EnLigne enLigne = new EnLigne();
 
-						enLigne.setNomUtilisateur(u.getPrenom() + " "
-								+ u.getNom() + " :" + u.getLogin());
+						enLigne.setNomUtilisateur(u.getLogin() + " :"
+								+ u.getNom());
 						enLigne.setIdSession(session4.getId());
 						if (ser1.rechercheParEnLigne(session4.getId()) == null) {
 							ser1.ajoutEnLigne(enLigne);
@@ -2065,8 +2064,9 @@ public class ConnectionBean implements java.io.Serializable {
 						}
 
 						idUtlConnecte = u.getIdutilisateur();
-                          
-						paramsupAdmin=false;//privilège seulement pour le superadmin
+
+						paramsupAdmin = false;// privilège seulement pour le
+												// superadmin
 						if (u.getMenuSal().equals("0")) {
 							menuSalle = true;
 						} else {
@@ -2435,7 +2435,8 @@ public class ConnectionBean implements java.io.Serializable {
 						detAnal = u.isDetHistoAnal();
 						modifRadio = u.isModifRadio();
 						supRadio = u.isSupRadio();
-						ajoutDemandeOrd = u.isAjoutDemandeRad();
+						ajoutDemandeOrd = u.isAjoutDemandeOrd();
+						ajoutDemandeRad = u.isAjoutDemandeRad();
 						affectEtoile = u.isAffectEtoile();
 						detRad = u.isDetHistoRad();
 						modifOrdnce = u.isModifOrdnce();
@@ -2697,6 +2698,7 @@ public class ConnectionBean implements java.io.Serializable {
 							System.out.println(e.getMessage());
 						}
 
+						mettreAJourSaison();
 					}
 				} else {
 					face.addMessage("formconnection:f", new FacesMessage(
@@ -2704,10 +2706,9 @@ public class ConnectionBean implements java.io.Serializable {
 					"N'existe pas un compte avec ces paramètres."));
 				}
 			} else {
-				UtilisateurService c = new UtilisateurService();
-				u = c.rechercheParLoginMotPass(login, motpass);
-			//	confSession = u.isConfSession();
-				confSession=true;
+				UtilisateurService c7 = new UtilisateurService();
+				u = c7.rechercheParLoginMotPass(login, motpass);
+				confSession = u.isConfSession();
 				if (confSession == true) {
 
 					RequestContext context2 = RequestContext
@@ -2757,11 +2758,8 @@ public class ConnectionBean implements java.io.Serializable {
 				HttpServletRequest request = (HttpServletRequest) FacesContext
 						.getCurrentInstance().getExternalContext().getRequest();
 				HttpSession session4 = request.getSession();
-				
 
 				EnLigneService serenligne = new EnLigneService();
-				List<EnLigne> sesionEnLigne = new ArrayList<EnLigne>();
-				boolean temp = false;
 				EnLigne ligne = serenligne
 						.rechercheParEnLigne(session4.getId());
 				if (ligne != null) {
@@ -3431,8 +3429,6 @@ public class ConnectionBean implements java.io.Serializable {
 		this.modifSterilite = modifSterilite;
 	}
 
-	
-
 	public void goToSalle() {
 
 		try {
@@ -3451,4 +3447,74 @@ public class ConnectionBean implements java.io.Serializable {
 		this.confSession = confSession;
 	}
 
+	@SuppressWarnings("deprecation")
+	public void mettreAJourSaison() {
+		
+		// récuperer la liste de saison;
+		List<Saison> l = new SaisonService().rechercheTousSaison();
+
+		// tester pour chaque saison si date fin < date aujourd'hui
+		Date dateSys = new Date();
+		Calendar calSys = Calendar.getInstance();
+		Calendar calSessDebut = Calendar.getInstance();
+		Calendar calSessFin = Calendar.getInstance();
+		Date dateDebut = new Date();
+		Date dateFin = new Date();
+		if (l.get(0) != null) {
+			dateDebut = l.get(0).getDebut();
+			dateFin = l.get(0).getFin();
+			calSessDebut.setTime(dateDebut);
+			if (calSessDebut.equals(calSys) == false) {
+				dateDebut.setYear(dateSys.getYear());
+				dateFin.setYear(dateSys.getYear() + 1);
+				if (dateSys.after(dateFin)) {
+					dateDebut.setYear(dateSys.getYear() + 1);
+					dateFin.setYear(dateSys.getYear() + 2);
+				}
+
+			}
+			l.get(0).setDebut(dateDebut);
+			l.get(0).setFin(dateFin);
+		}
+		new SaisonService().modifierSaison(l.get(0));
+		if (l.get(1) != null) {
+			dateDebut = l.get(1).getDebut();
+			dateFin = l.get(1).getFin();
+			calSessDebut.setTime(dateDebut);
+			if (calSessDebut.equals(calSys) == false) {
+				dateDebut.setYear(dateSys.getYear());
+				dateFin.setYear(dateSys.getYear());
+				if (dateSys.after(dateFin)) {
+					dateDebut.setYear(dateSys.getYear() + 1);
+					dateFin.setYear(dateSys.getYear() + 1);
+				}
+			}
+			l.get(1).setDebut(dateDebut);
+			l.get(1).setFin(dateFin);
+		}
+		new SaisonService().modifierSaison(l.get(1));
+
+		if (l.get(2) != null) {
+			dateDebut = l.get(2).getDebut();
+			dateFin = l.get(2).getFin();
+			calSessDebut.setTime(dateDebut);
+
+			if (dateSys.after(dateFin)) {
+
+				calSessDebut.setTime(dateDebut);
+				calSessFin.setTime(dateFin);
+				calSessDebut.add(Calendar.DATE, -12);
+				calSessFin.add(Calendar.DATE, -12);
+				calSessDebut.add(Calendar.YEAR, 1);
+				calSessFin.add(Calendar.YEAR, 1);
+				dateDebut = calSessDebut.getTime();
+				dateFin = calSessFin.getTime();
+
+			}
+			l.get(2).setDebut(dateDebut);
+			l.get(2).setFin(dateFin);
+		}
+		new SaisonService().modifierSaison(l.get(2));
+
+	}
 }

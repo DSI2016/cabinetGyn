@@ -24,20 +24,12 @@
   <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:0" NAME="item"
    PATH="/pages/FichePatient.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="consGross:#{fichePatientBean.nouvelleConsult()}:#pages#NouvelleConsultation.xhtml"
-    NAME="output" PATH="/pages/NouvelleConsultation.xhtml"
-    TARGET="rules:#pages#NouvelleConsultation.xhtml"
-    TITLE="#{fichePatientBean.nouvelleConsult()}:consGross" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:1" NAME="item1"
-   PATH="/pages/FichePatient.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
     ID="Obst:#{consultationDetailBean.selectedHisto(ConsultationDetail)}:#pages#ConsultationGrossesse.xhtml"
     NAME="output" PATH="/pages/ConsultationGrossesse.xhtml"
     TARGET="rules:#pages#ConsultationGrossesse.xhtml"
     TITLE="#{consultationDetailBean.selectedHisto(ConsultationDetail)}:Obst" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:2" NAME="item2"
+  <PROCESS-ITEM ID="rules:#pages#FichePatient.xhtml:1" NAME="item1"
    PATH="/pages/FichePatient.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
     ID="Gyneco:#{consultationDetailBean.selectedHisto(c)}:#pages#ConsultationGyneco.xhtml"
@@ -48,8 +40,6 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#GestionSalleAttente.xhtml"
   PATH="/pages/GestionSalleAttente.xhtml" SHAPE="256,289,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#pages#NouvelleConsultation.xhtml"
-  PATH="/pages/NouvelleConsultation.xhtml" SHAPE="272,401,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#Antecedent.xhtml"
   PATH="/pages/Antecedent.xhtml" SHAPE="256,145,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#ConsultationGyneco.xhtml"

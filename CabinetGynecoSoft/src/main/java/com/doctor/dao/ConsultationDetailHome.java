@@ -180,20 +180,23 @@ public class ConsultationDetailHome {
 	@SuppressWarnings("unchecked")
 	public List<ConsultationDetail> findAll(Integer idPatient,
 			String nomConsultation, Uterus uterus) {
-		
+		System.out.println("home uterus "+uterus);
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(ConsultationDetail.class, "CD")
-				.addOrder(Property.forName("CD.idConsultationDetail").desc())
-				.createAlias("CD.consultation", "cons")
-				.createAlias("CD.cfclient", "cf");
+				.addOrder(Property.forName("CD.idConsultationDetail").desc());
+				
 				
 		        
 		if (nomConsultation.equals("E. Gyneco"))
 			if (uterus != null) {
 				//System.out.println("ut   "+uterus);
+				crit.createAlias("CD.consultation", "cons");
+				crit.createAlias("CD.cfclient", "cf");
 				crit.createAlias("CD.uterus", "ut");
 			}
 		if (uterus == null) {
+			crit.createAlias("CD.consultation", "cons");
+			crit.createAlias("CD.cfclient", "cf");
 			//System.out.println("ut   "+uterus);
 			
 		}

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -89,52 +87,52 @@ public class RendezVousBean implements Serializable {
 	private Date selectedDate = new Date();
 	private boolean permenent;
 	private String dateChoisi;
-
-	@PostConstruct
-	public void mettreAJourSaison() {
-		// récuperer la liste de saison;
-		List<Saison> l = new SaisonService().rechercheTousSaison();
-
-		// tester pour chaque saison si date fin < date aujourd'hui
-		for (int i = 0; i < l.size(); i++) {
-			if (l.get(i).getFin().before(new Date())) {
-				
-				Date df = l.get(i).getFin();
-				
-				
-				Calendar calf = Calendar.getInstance();
-				calf.setTime(df);
-				calf.add(Calendar.YEAR, 1);
-				
-				
-				Date dd = l.get(i).getDebut();
-				
-				Calendar cald = Calendar.getInstance();
-				cald.setTime(df);
-				cald.add(Calendar.YEAR, 1);
-				
-				if (l.get(i).getNom().equals("Ramadhan")) {
-					// si c'est ramadhane on ajout 1 ans -12jours
-					
-					calf.add(Calendar.DATE, -12);
-					cald.add(Calendar.DATE, -12);
-				} 
-				
-				df=calf.getTime();
-				l.get(i).setFin(df);
-				
-				dd = cald.getTime();
-				l.get(i).setDebut(dd);
-				
-				//modifier la date de debu et fin du siason
-				
-				new SaisonService().modifierSaison(l.get(i));
-				
-			}
-
-		}
-
-	}
+//^pjkjkghgfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfg
+//	@PostConstruct
+//	public void mettreAJourSaison() {
+//		// récuperer la liste de saison;
+//		List<Saison> l = new SaisonService().rechercheTousSaison();
+//
+//		// tester pour chaque saison si date fin < date aujourd'hui
+//		for (int i = 0; i < l.size(); i++) {
+//			if (l.get(i).getFin().before(new Date())) {
+//				
+//				Date df = l.get(i).getFin();//date debut desaison
+//				
+//				
+//				Calendar calf = Calendar.getInstance();
+//				calf.setTime(df);
+//				calf.add(Calendar.YEAR, 1);
+//				
+//				
+//				Date dd = l.get(i).getDebut();
+//				
+//				Calendar cald = Calendar.getInstance();
+//				cald.setTime(df);
+//				cald.add(Calendar.YEAR, 1);
+//				
+//				if (l.get(i).getNom().equals("Ramadhan")) {
+//					// si c'est ramadhane on ajout 1 ans -12jours
+//					
+//					calf.add(Calendar.DATE, -12);
+//					cald.add(Calendar.DATE, -12);
+//				} 
+//				
+//				df=calf.getTime();
+//				l.get(i).setFin(df);
+//				
+//				dd = cald.getTime();
+//				l.get(i).setDebut(dd);
+//				
+//				//modifier la date de debu et fin du siason
+//				
+//				new SaisonService().modifierSaison(l.get(i));
+//				
+//			}
+//
+//		}
+//
+//	}
 
 	public String getDateChoisi() {
 		return dateChoisi;
@@ -1224,7 +1222,6 @@ public class RendezVousBean implements Serializable {
 			permenent = true;
 		}
 
-		System.out.println(addValid);
 		context.addCallbackParam("addValid", addValid);
 	}
 

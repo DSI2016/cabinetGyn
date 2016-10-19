@@ -181,22 +181,34 @@ Gestion Des Horaire</ui:define>
 				<p:panel>
 					<h:panelGrid columns="2">
 						<h:outputText value="Debut: " />
-						<h:inputText value="#{horaireBean.debutSaison}" />
+						<p:inputMask value="#{horaireBean.debutSaison}" mask="99/99/9999"/>
 
 						<h:outputText value="Fin: " />
-						<h:inputText value="#{horaireBean.finSaison}" />
+						<p:inputMask value="#{horaireBean.finSaison}"  mask="99/99/9999" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:commandButton value="Valider" icon="ui-icon-check"
-							oncomplete="PF('dialogSaison').hide();"
+							oncomplete="handleLoginRequestcertdialogSaison(xhr, status, args)"
 							actionListener="#{horaireBean.validerSaison}" update=":f1" />
 						<p:commandButton value="Annuler" 
 							oncomplete="PF('dialogSaison').hide();"
-							icon="ui-icon-closethick" />
+							icon="ui-icon-closethick" update=":f1"/>
 					</h:panelGrid>
 
 				</p:panel>
 			</p:dialog>
+			<script type="text/javascript">
+					function handleLoginRequestcertdialogSaison(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dialogSaison').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dialogSaison').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
 		</h:form>
 
 		<script type="text/javascript">  

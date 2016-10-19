@@ -8,9 +8,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.doctor.persistance.Connecte;
+import com.doctor.persistance.EnLigne;
 import com.doctor.persistance.HistoriqueMsg;
-import com.doctor.service.ConnecteService;
+import com.doctor.service.EnLigneService;
 import com.doctor.service.HistoriqueMsgService;
 
 @ManagedBean(name = "chatBean")
@@ -19,18 +19,22 @@ public class ChatBean {
 	private List<HistoriqueMsg> listeMessages = new ArrayList<HistoriqueMsg>();
 	private String globalMessage;
 
-	private List<Connecte> users = new ArrayList<Connecte>();
+	private List<EnLigne> users = new ArrayList<EnLigne>();
 
-	public List<Connecte> getUsers() {
-		ConnecteService s = new ConnecteService();
-		users = s.rechercheTousConnecte();
-
+	public List<EnLigne> getUsers() {
+		EnLigneService enligneser =new EnLigneService();
+		//users = s.rechercheTousConnecte();
+users=enligneser.rechercheTousEnLigne();
 		return users;
 	}
 
-	public void setUsers(List<Connecte> users) {
+	
+
+	public void setUsers(List<EnLigne> users) {
 		this.users = users;
 	}
+
+
 
 	public List<HistoriqueMsg> getListeMessages() {
 		listeMessages = new HistoriqueMsgService().rechercheTousHistoriqueMsg();

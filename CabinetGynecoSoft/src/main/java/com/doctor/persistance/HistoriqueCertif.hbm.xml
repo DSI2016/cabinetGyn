@@ -160,6 +160,10 @@
 		<property name="v31" type="string">
 			<column name="v31" length="45" />
 		</property>
+		<property name="nomProprietaire" type="string">
+			<column name="nomProprietaire" length="255" />
+		</property>
+		
 
 		<many-to-one class="com.doctor.persistance.Cfclient"
 			fetch="select" name="cfclient">

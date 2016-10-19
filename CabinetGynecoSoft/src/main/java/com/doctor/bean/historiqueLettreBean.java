@@ -19,6 +19,8 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 
+
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -39,6 +41,7 @@ public class historiqueLettreBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String textLettre;
+	private String titreDiag;
 	private Lettre lettre;
 	private String dateDelettrepriseencharge;
 	private String dateLet;
@@ -105,6 +108,9 @@ public class historiqueLettreBean implements Serializable {
 	private String ancienValeurDateCertif;
 	private String dateDelettre;
 	private boolean blocage;
+	private String proprietaire="Patiente";
+	private String nomProprietaire;
+
 
 	public String getAncienValeurDateCertif() {
 		return ancienValeurDateCertif;
@@ -136,7 +142,6 @@ public class historiqueLettreBean implements Serializable {
 	}
 
 	public void setDateLet(String dateLet) {
-		System.out.println("dqate lettre" + dateLet);
 		this.dateLet = dateLet;
 	}
 
@@ -171,6 +176,7 @@ public class historiqueLettreBean implements Serializable {
 	}
 
 	public void setNomLettre(String nomLettre) {
+		
 		this.nomLettre = nomLettre;
 	}
 
@@ -592,6 +598,7 @@ public class historiqueLettreBean implements Serializable {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	
 
 	public void suppressionLettre(historiqueLettre histo1) {
 		selectedhistolettre = histo1;
@@ -626,20 +633,11 @@ public class historiqueLettreBean implements Serializable {
 			System.out.println(e.getMessage());
 
 		}
-		// try {
-		// FacesContext.getCurrentInstance().getExternalContext()
-		// .redirect("Lettres");
-		// } catch (Exception e) {
-		// }
+		
 	}
 
 	public void onRowSelectlettre(SelectEvent event) {
 		historiqueLettre c = (historiqueLettre) event.getObject();
-		// try {
-		// FacesContext.getCurrentInstance().getExternalContext()
-		// .redirect("ListeLettre.xhtml");
-		// } catch (Exception e) {
-		// }
 		afficheImpr = false;
 		selectedhistolettre = c;
 		textLettre = c.getTextLettre();
@@ -737,8 +735,7 @@ public class historiqueLettreBean implements Serializable {
 		cab = serCabinet.rechercheTousCabinet().get(0);
 
 		if ((cfclient.getPrenom() != null) || (cfclient.getNom() != null))
-			rem = remplaceMot(rem, "$NP",
-					cfclient.getPrenom() + " " + cfclient.getNom());
+			rem = remplaceMot(rem, "$NP",nomProprietaire);
 		else
 			rem = remplaceMot(rem, "$NP", "");
 		if (Module.age(cfclient.getDateNaiss()) != null) {
@@ -884,16 +881,7 @@ public class historiqueLettreBean implements Serializable {
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
 		let.setCfclient(cfclient);
-		if (dateLettreConf.length() == 0)
-
-		{
-			System.out.println(" is null");
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "veullez saisi le date de lettre"));
-			addValid = false;
-		}
-		if (dateLettreConf.length() > 0) {
+		
 			if (Module.corigerDate(dateLettreConf) != null) {
 				this.setDateLettreConf(Module.corigerDate(dateLettreConf));
 			}
@@ -903,7 +891,7 @@ public class historiqueLettreBean implements Serializable {
 				blocage = true;
 				face.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-								Module.verifierDate(dateLettreConf)));
+								"Le date du lettre "+Module.verifierDate(dateLettreConf)));
 				addValid = false;
 
 			} else {
@@ -912,19 +900,8 @@ public class historiqueLettreBean implements Serializable {
 
 			}
 
-		}
 
-		if (acte.length() == 0)
-
-		{
-			System.out.println(" is null");
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "veullez saisi le date de l'acte "));
-			addValid = false;
-			System.out.println(addValid);
-		}
-		if (acte.length() > 0) {
+		
 			if (Module.corigerDate(acte) != null) {
 				this.setActe(Module.corigerDate(acte));
 			}
@@ -934,7 +911,7 @@ public class historiqueLettreBean implements Serializable {
 				blocage = true;
 				face.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-								Module.verifierDate(acte)));
+								"Le date du l'acte "+Module.verifierDate(acte)));
 				addValid = false;
 
 			} else {
@@ -943,18 +920,16 @@ public class historiqueLettreBean implements Serializable {
 
 			}
 
-		}
 		addValid = false;
 		if (face.getMessageList().size() == 0) {
+			let.setNomProprietaire(nomProprietaire);
 			addValid = true;
 
 			let.setCode(code);
 			let.setClinique(clinique);
 			let.setDescription(description);
-			System.out.println("nomLettre" + nomLettre);
 			Lettre c = new LettreService()
 					.recherchelettreParLibellelettre(nomLettre);
-			System.out.println("nom apres " + c.getNomLettre());
 			let.setLettre(c);
 			if (c != null)
 				if (c.getTextLettre() != null) {
@@ -977,6 +952,7 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				initialitationDonneesLettre();
 			}
 
 			if (action.equals("Modification")) {
@@ -995,12 +971,14 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				
+				initialitationDonneesLettre();
 			}
 		}
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
-		initialitationDonneesLettre();
+		
 	}
 
 	public void ajoutLettreAccouchement() throws SQLException, Exception {
@@ -1014,16 +992,7 @@ public class historiqueLettreBean implements Serializable {
 		historiqueLettre let = new historiqueLettre();
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if (dateLettreAccouchem.length() == 0)
-
-		{
-			System.out.println(" is null");
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "veullez saisi le date de lettre"));
-			addValid = false;
-		}
-		if (dateLettreAccouchem.length() != 0) {
+		
 			if (Module.corigerDate(dateLettreAccouchem) != null) {
 				this.setDateLettreAccouchem(Module
 						.corigerDate(dateLettreAccouchem));
@@ -1034,7 +1003,7 @@ public class historiqueLettreBean implements Serializable {
 				blocage = true;
 				face.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-								Module.verifierDate(dateLettreAccouchem)));
+								"Le date du lettre "+Module.verifierDate(dateLettreAccouchem)));
 				addValid = false;
 
 			} else {
@@ -1044,9 +1013,9 @@ public class historiqueLettreBean implements Serializable {
 
 			}
 
-		}
 
 		if (face.getMessageList().size() == 0) {
+			let.setNomProprietaire(nomProprietaire);
 			let.setCfclient(cfclient);
 
 			// let.setDatelettre(sdf.parse(dateDelettre));
@@ -1083,6 +1052,7 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				//initialitationDonneesLettre();
 			}
 			if (action.equals("Modification")) {
 				historiqueLettreService serc = new historiqueLettreService();
@@ -1098,11 +1068,12 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				//initialitationDonneesLettre();
 			}
 		}
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
-		initialitationDonneesLettre();
+		
 	}
 
 	public void ajoutLettreReponse() throws SQLException, Exception {
@@ -1148,6 +1119,7 @@ public class historiqueLettreBean implements Serializable {
 			if (lettr != null && lettr.size() > 0) {
 				historiqueLettre o = lettr.get(0);
 				selectedhistolettre = o;
+				initialitationDonneesLettre();
 			}
 		}
 		if (action.equals("Modification")) {
@@ -1161,12 +1133,12 @@ public class historiqueLettreBean implements Serializable {
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Lettre modifiée avec succées"));
 			RequestContext.getCurrentInstance().update("f1:growl");
+			initialitationDonneesLettre();
 		}
-		initialitationDonneesLettre();
+		
 	}
 
 	public void ajoutLettrePriseEnCharge() throws SQLException, Exception {
-		System.out.println("twila");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		boolean addValid = false;
 		FacesContext face = FacesContext.getCurrentInstance();
@@ -1176,16 +1148,7 @@ public class historiqueLettreBean implements Serializable {
 		historiqueLettre let = new historiqueLettre();
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if (dateDelettrepriseencharge.length() == 0)
-
-		{
-			System.out.println(" is null");
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "veullez saisi le date de lettre"));
-			addValid = false;
-		}
-		if (dateDelettrepriseencharge.length() != 0) {
+		
 			if (Module.corigerDate(dateDelettrepriseencharge) != null) {
 				this.setDateDelettre(Module
 						.corigerDate(dateDelettrepriseencharge));
@@ -1196,7 +1159,7 @@ public class historiqueLettreBean implements Serializable {
 				blocage = true;
 				face.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-								Module.verifierDate(dateDelettrepriseencharge)));
+								"Le date du lettre "+Module.verifierDate(dateDelettrepriseencharge)));
 				addValid = false;
 
 			} else {
@@ -1206,9 +1169,10 @@ public class historiqueLettreBean implements Serializable {
 
 			}
 
-		}
+		
 
 		if (face.getMessageList().size() == 0) {
+			let.setNomProprietaire(nomProprietaire);
 
 			let.setCfclient(cfclient);
 
@@ -1238,6 +1202,7 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				initialitationDonneesLettre();
 			}
 			if (action.equals("Modification")) {
 				historiqueLettreService serc = new historiqueLettreService();
@@ -1252,18 +1217,18 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				//initialitationDonneesLettre();
 			}
 			addValid = true;
 		}
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
-		initialitationDonneesLettre();
+	
 	}
 
 	public void ajoutLettrereponceaunedemandedePriseEnCharge()
 			throws SQLException, Exception {
-		System.out.println("twila");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		boolean addValid = false;
 		FacesContext face = FacesContext.getCurrentInstance();
@@ -1273,16 +1238,7 @@ public class historiqueLettreBean implements Serializable {
 		historiqueLettre let = new historiqueLettre();
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if (dateDelettre.length() == 0)
-
-		{
-			System.out.println(" is null");
-			blocage = true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "veullez saisi le date de lettre"));
-			addValid = false;
-		}
-		if (dateDelettre.length() != 0) {
+		
 			if (Module.corigerDate(dateDelettre) != null) {
 				this.setDateDelettre(Module.corigerDate(dateDelettre));
 			}
@@ -1292,7 +1248,7 @@ public class historiqueLettreBean implements Serializable {
 				blocage = true;
 				face.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-								Module.verifierDate(dateDelettre)));
+								"Le date du lettre "+Module.verifierDate(dateDelettre)));
 				addValid = false;
 
 			} else {
@@ -1302,9 +1258,10 @@ public class historiqueLettreBean implements Serializable {
 
 			}
 
-		}
+		
 
 		if (face.getMessageList().size() == 0) {
+			let.setNomProprietaire(nomProprietaire);
 
 			let.setCfclient(cfclient);
 			let.setDiagnostic(diagnostic);
@@ -1332,6 +1289,7 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				//initialitationDonneesLettre();
 			}
 			if (action.equals("Modification")) {
 				historiqueLettreService serc = new historiqueLettreService();
@@ -1346,17 +1304,20 @@ public class historiqueLettreBean implements Serializable {
 				selectedhistolettre = let;
 				textLettre = let.getTextLettre();
 				afficheImpr = false;
+				initialitationDonneesLettre();
 			}
 			addValid = true;
 		}
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
-		initialitationDonneesLettre();
+		
 	}
 
 	public void intialiserDonneLettreConf() {
+		initialitationDonneesLettre();
 		action = "Ajout";
+		titreDiag="Ajout du";
 		Date actuelle = new Date();
 		// * Definition du format utilise pour les dates DateFormat
 
@@ -1370,6 +1331,7 @@ public class historiqueLettreBean implements Serializable {
 
 	public void intialiserDonteLettreAccouchement() {
 		action = "Ajout";
+		titreDiag="Ajout du";
 		Date actuelle = new Date();
 		// * Definition du format utilise pour les dates DateFormat
 
@@ -1377,13 +1339,16 @@ public class historiqueLettreBean implements Serializable {
 		String dateLettre = format.format(actuelle);
 		acte = dateLettre;
 		dateLettreAccouchem = dateLettre;
-		selectedhistolettre = null;
 		nomLettre = "Lettre d'accouchement";
+		selectedhistolettre = null;
+		
 
 	}
 
 	public void intialiserDonteLettrereponceaunedemande() {
+		initialitationDonneesLettre();
 		action = "Ajout";
+		titreDiag="Ajout du";
 		Date actuelle = new Date();
 		// * Definition du format utilise pour les dates DateFormat
 
@@ -1391,13 +1356,16 @@ public class historiqueLettreBean implements Serializable {
 		String dateLettre = format.format(actuelle);
 		acte = dateLettre;
 		dateDelettrepriseencharge = dateLettre;
-		selectedhistolettre = null;
 		nomLettre = "Lettre de prise en charge";
+		selectedhistolettre = null;
+	
 
 	}
 
 	public void intialiserDonteLettrereponceaunedemandedeprise() {
+		initialitationDonneesLettre();
 		action = "Ajout";
+		titreDiag="Ajout du";
 		Date actuelle = new Date();
 		// * Definition du format utilise pour les dates DateFormat
 
@@ -1405,9 +1373,10 @@ public class historiqueLettreBean implements Serializable {
 		String dateLettre = format.format(actuelle);
 		acte = dateLettre;
 		dateDelettre = dateLettre;
+		nomLettre = "Lettre de réponse a une demande de prise en charge";
 
 		selectedhistolettre = null;
-		nomLettre = "Lettre de réponse a une demande de prise en charge";
+		
 
 	}
 
@@ -1439,6 +1408,7 @@ public class historiqueLettreBean implements Serializable {
 	public void intialiserDonneesLettreAccouchement() {
 		// initialisation les champs de lettre d'accouchement
 		action = "Ajout";
+		titreDiag="Ajout du";
 		Date actuelle = new Date();
 		// * Definition du format utilise pour les dates DateFormat
 		Format format = new SimpleDateFormat("dd/MM/yyyy");
@@ -1465,6 +1435,7 @@ public class historiqueLettreBean implements Serializable {
 
 		tpha = cfclient.getTpha();
 		selectedhistolettre = null;
+		nomLettre="Lettre d'accouchement";
 
 	}
 
@@ -1491,7 +1462,7 @@ public class historiqueLettreBean implements Serializable {
 	public void initialitationDonneesLettre() {
 		// textLettre = null;
 		// idHistoriquelettre = null;
-		nomLettre = "";
+		//nomLettre = "";
 		dateDelettrepriseencharge = "";
 		dateLet = "";
 		dateLettreAccouchem = "";
@@ -1506,7 +1477,7 @@ public class historiqueLettreBean implements Serializable {
 		rh = null;
 		rubeoole = null;
 		termeactuel = null;
-		lettre = null;
+		//lettre = null;
 		resultatfrotti = null;
 		termeprevue = null;
 		code = null;
@@ -1621,6 +1592,7 @@ public class historiqueLettreBean implements Serializable {
 
 	public void modifierLettre(historiqueLettre h) {
 		action = "Modification";
+		titreDiag="Modification du";
 		selectedhistolettre=h;
 		RequestContext context = RequestContext.getCurrentInstance();
 		if (h != null) {
@@ -1631,7 +1603,10 @@ public class historiqueLettreBean implements Serializable {
 			Format format = new SimpleDateFormat("dd/MM/yyyy");
 			if (h.getDatelettre() != null)
 				dateDelettre = format.format(h.getDatelettre());
-
+dateLettreConf=format.format(h.getDatelettre());
+dateDelettrepriseencharge=format.format(h.getDatelettre());
+dateLettreAccouchem=format.format(h.getDatelettre());
+dateLet=format.format(h.getDatelettre());
 			ddr = h.getDdr();
 			debutGross = h.getDebutGross();
 
@@ -1731,7 +1706,6 @@ public class historiqueLettreBean implements Serializable {
 	}
 
 	public void setDateDelettre(String dateDelettre) {
-		System.out.println("date de lettre" + dateDelettre);
 		this.dateDelettre = dateDelettre;
 	}
 
@@ -1766,5 +1740,50 @@ public class historiqueLettreBean implements Serializable {
 	public void setDateDelettrepriseencharge(String dateDelettrepriseencharge) {
 		this.dateDelettrepriseencharge = dateDelettrepriseencharge;
 	}
+
+	public String getTitreDiag() {
+		return titreDiag;
+	}
+
+	public void setTitreDiag(String titreDiag) {
+		this.titreDiag = titreDiag;
+	}
+	
+	
+	public String getProprietaire() {
+		return proprietaire;
+	}
+
+	public void setProprietaire(String proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+
+	public String getNomProprietaire() {
+		return nomProprietaire;
+	}
+
+	public void setNomProprietaire(String nomProprietaire) {
+		this.nomProprietaire = nomProprietaire;
+	}
+	
+	
+	public void changeProp()
+	{
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		idPatient = (Integer) session.getAttribute("idu");
+
+		CfclientService se = new CfclientService();
+		cfclient = se.RechercheCfclient(idPatient);
+		if(proprietaire!=null)
+		{if(proprietaire.equals("Patiente"))
+		{nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();}
+		else
+		{nomProprietaire="M"+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+
+		}
+	}
+	
+
 
 }

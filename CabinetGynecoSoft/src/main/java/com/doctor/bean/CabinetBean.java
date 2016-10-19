@@ -1,14 +1,10 @@
 package com.doctor.bean;
 
-import java.io.RandomAccessFile;
 import java.io.Serializable;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Random;
-import java.io.IOException;
-import java.net.*;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
