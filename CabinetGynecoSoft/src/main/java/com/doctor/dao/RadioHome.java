@@ -186,6 +186,19 @@ public class RadioHome {
 
 		return crit.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Radio> findByIdPatient(Integer idPatient) {
+
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(Radio.class)
+				.setFetchMode("patient", FetchMode.JOIN)
+				.createCriteria("patient")
+				.add(Restrictions.eq("code", idPatient));
+
+		return crit.list();
+	}
+	
 
 	public Radio findByIdWithJoin(Integer idradio) {
 		Criteria crit = sessionFactory.getCurrentSession()

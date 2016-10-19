@@ -157,6 +157,23 @@ public class RadioService {
 		}
 		return (liste);
 	}
+	
+	public List<Radio> rechercheRadioParIdPatient(Integer idPatient) {
+		List<Radio> liste = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			liste = dao.findByIdPatient(idPatient);
+			tx.commit();
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return (liste);
+	}
 
 	public Radio rechercheRadioAvecJoin(Integer idradio) {
 		Radio radio = new Radio();

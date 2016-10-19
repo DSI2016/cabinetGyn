@@ -1386,10 +1386,12 @@ public class RendezVousBean implements Serializable {
 		}
 	}
 
-	public void selectClient(Cfclient obj) {
+	public void selectClient(Integer id) {
 		init();
-		codeclient = obj;
-		codeclientCode = obj.getCode();
+		Cfclient patient= new Cfclient();
+		CfclientService cfSer= new CfclientService();
+		codeclient= cfSer.RechercheCfclient(id);
+		codeclientCode = id;
 		// action1 = "Patients";
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);

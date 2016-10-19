@@ -2435,7 +2435,8 @@ public class ConnectionBean implements java.io.Serializable {
 						detAnal = u.isDetHistoAnal();
 						modifRadio = u.isModifRadio();
 						supRadio = u.isSupRadio();
-						ajoutDemandeOrd = u.isAjoutDemandeRad();
+						ajoutDemandeOrd = u.isAjoutDemandeOrd();
+						ajoutDemandeRad=u.isAjoutDemandeRad();
 						affectEtoile = u.isAffectEtoile();
 						detRad = u.isDetHistoRad();
 						modifOrdnce = u.isModifOrdnce();

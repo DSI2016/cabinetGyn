@@ -175,9 +175,6 @@ public class CfclientHome {
 		if (attribut.equals("Dernier Consultation")&&(ordre.equals("décroissante")))
 			crit = crit.addOrder(Property.forName("dernierVisite").desc());
 		
-		
-		
-
 		return crit.list();
 	}
 	@SuppressWarnings("unchecked")
@@ -443,8 +440,8 @@ public class CfclientHome {
 				.setFetchMode("steriles", FetchMode.JOIN)
 				.setFetchMode("historiqueGrosss", FetchMode.JOIN)
 				.setFetchMode("histoirs", FetchMode.JOIN)
-				.setFetchMode("contraceptions", FetchMode.JOIN)
-				.setFetchMode("antMeds", FetchMode.JOIN)
+				.setFetchMode("contraMedsceptions", FetchMode.JOIN)
+				.setFetchMode("ant", FetchMode.JOIN)
 				.addOrder(Property.forName("code").desc());
 
 		return (List<Cfclient>) crit.list();
@@ -476,7 +473,8 @@ public class CfclientHome {
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(Cfclient.class)
 				.setFetchMode("doctor", FetchMode.JOIN)
-				.createCriteria("doctor").add(Restrictions.eq("iddoctor", id));
+				.createCriteria("doctor")
+				.add(Restrictions.eq("iddoctor", id));
 		List<Cfclient> l = crit.list();
 		return l;
 	}
@@ -526,4 +524,23 @@ public class CfclientHome {
 		return l;
 	}
 
+	
+	
+	public Cfclient findByIdPatWithJoin(Integer id) {
+
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(Cfclient.class)
+				.setFetchMode("ville", FetchMode.JOIN)
+				.setFetchMode("clinique", FetchMode.JOIN)
+				.setFetchMode("doctor", FetchMode.JOIN)
+				.setFetchMode("professionByProfesscp", FetchMode.JOIN)
+				.setFetchMode("professionByProfessp", FetchMode.JOIN)
+			      .add(Restrictions.eq("code", id));
+				
+
+		 return (Cfclient) crit.uniqueResult();
+	}
+	
+	
+	
 }
