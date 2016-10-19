@@ -336,5 +336,28 @@ public List<Cfclient> RechercheParClinique(Integer id) {
 		return (l);
 
 	}
+	
+	public Cfclient RechercheCfclientAvecId(Integer idcl) {
+		Cfclient client = new Cfclient();
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+
+			tx = session.beginTransaction();
+
+			client = dao.findByIdPatWithJoin(idcl);
+			tx.commit();
+
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return (client);
+
+	}
+	
 
 }

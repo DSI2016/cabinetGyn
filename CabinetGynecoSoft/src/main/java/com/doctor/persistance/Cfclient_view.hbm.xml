@@ -2,36 +2,13 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.doctor.persistance.Cfclient"
+	<class name="com.doctor.persistance.Cfclient_view"
 		>
 		<id name="code" type="java.lang.Integer">
 			<column name="code" />
-			<generator class="increment" />
+			
 		</id>
-		<many-to-one class="com.doctor.persistance.Ville" fetch="select"
-			name="ville">
-			<column name="ville" />
-		</many-to-one>
-
-		<many-to-one class="com.doctor.persistance.Clinique"
-			fetch="select" name="clinique">
-			<column name="idclinique" />
-		</many-to-one>
-
-		<many-to-one class="com.doctor.persistance.Profession"
-			fetch="select" name="professionByProfesscp">
-			<column name="professcp" />
-		</many-to-one>
-
-		<many-to-one class="com.doctor.persistance.Docteur" fetch="select"
-			name="doctor">
-			<column name="iddoctor" />
-		</many-to-one>
-
-		<many-to-one class="com.doctor.persistance.Profession"
-			fetch="select" name="professionByProfessp">
-			<column name="professp" />
-		</many-to-one>
+		
 
 		<property generated="never" lazy="false" name="prefix" type="string">
 			<column length="45" name="prefix" />
@@ -343,12 +320,6 @@
 		</property>
 
 
-		<set fetch="select" inverse="true" lazy="true" name="historiqueCertifs"
-			table="historiquecertif">
-			<key>
-				<column name="idPatient" />
-			</key>
-			<one-to-many class="com.doctor.persistance.HistoriqueCertif" />
-		</set>
+		
 	</class>
 </hibernate-mapping>

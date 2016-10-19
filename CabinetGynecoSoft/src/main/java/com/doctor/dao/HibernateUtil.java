@@ -122,6 +122,8 @@ public class HibernateUtil {
 			cfg.addClass(com.doctor.persistance.EnLigne.class);
 			cfg.addClass(com.doctor.persistance.AnnuleSalle.class);
 			cfg.addClass(com.doctor.persistance.TabSalle.class);
+			cfg.addClass(com.doctor.persistance.Cfclient_view.class);
+
 			sessionFactory = cfg.buildSessionFactory();
 		} catch (Throwable ex) {
 			throw new ExceptionInInitializerError(ex);

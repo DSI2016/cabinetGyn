@@ -156,7 +156,7 @@
 
 					<p:commandButton update=":f1:formulaire:patientinfo"
 						rendered="#{connectionBean.detailPat}"
-						actionListener="#{cfclientBean.info(Patient)}"
+						actionListener="#{cfclientBean.info(Patient.code)}"
 						title="Détails Patient" icon="ui-icon-search"
 						style="font-size:small;width:33pt;font-weight:bold" />
 
@@ -292,7 +292,7 @@
 						</p:panel>
 						<h:panelGrid columns="2">
 							<p:commandButton value="Supprimer"
-								actionListener="#{cfclientBean.supprimPatientCascadArchi()}"></p:commandButton>
+								actionListener="#{cfclientBean.supprimPatientCascad()}"></p:commandButton>
 							<p:commandButton value="Annuler"
 							    icon="ui-icon-closethick"
 								oncomplete="PF('suppression').hide();"></p:commandButton>
@@ -314,7 +314,7 @@
 						</p:panel>
 						<h:panelGrid columns="2">
 							<p:commandButton value="Supprimer"
-								actionListener="#{cfclientBean.supprimPatienteArchi()}"
+								actionListener="#{cfclientBean.supprimPatiente()}"
 								update=":f1:growl"></p:commandButton>
 							<p:commandButton value="Annuler"
 							    icon="ui-icon-closethick"

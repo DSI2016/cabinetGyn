@@ -31,6 +31,7 @@
 					<td><p:outputLabel value="Modéles"
 							rendered="#{connectionBean.selectModeleord}"></p:outputLabel></td>
 					<td><p:selectOneMenu id="idMod"
+					        disabled="#{ordonnanceBean.consultation}" 
 							rendered="#{connectionBean.selectModeleord}"
 							value="#{ordonnanceBean.idModeleOrd}" style="width:400px;"
 							filter="true" filterMatchMode="startsWith" effect="fade"
@@ -44,7 +45,7 @@
 						</p:selectOneMenu></td>
 					<td></td>
 					<td><p:commandButton title="Appliquer le Modéle"
-							icon="ui-icon-check" disabled="#{ordonnanceBean.app}"
+							icon="ui-icon-check" disabled="#{ordonnanceBean.app or ordonnanceBean.consultation}"
 							rendered="#{connectionBean.selectModeleord}"
 							actionListener="#{ordonnanceBean.appliquerModeleOrd()}"
 							update=":f1:list">
@@ -52,13 +53,13 @@
 					<td><p:commandButton title="Ajouter Comme Modéle"
 							icon="ui-icon-plusthick"
 							rendered="#{connectionBean.ajoutModeleord}"
-							disabled="#{ordonnanceBean.nvMod}">
+							disabled="#{ordonnanceBean.nvMod or ordonnanceBean.consultation}">
 							<p:ajax listener="#{ordonnanceBean.ajoutModel()}"></p:ajax>
 						</p:commandButton></td>
 
 					<td><p:commandButton icon="ui-icon-trash"
-							title="Suppression Modéle" disabled="#{ordonnanceBean.app}"
-							rendered="#{connectionBean.suppModeleOrd}"
+							title="Suppression Modéle" disabled="#{ordonnanceBean.app or ordonnanceBean.consultation}"
+							rendered="#{connectionBean.suppModeleOrd }"
 							actionListener="#{ordonnanceBean.supprimerModeleOrdonnance(ordonnanceBean.idModeleOrd)}"
 							update=":f1">
 
@@ -145,7 +146,8 @@
 																itemLabel="#{a.designation}	* #{a.formeMed.forme}"
 																itemValue="#{a.idMedicament}" />
 														</p:selectOneMenu>
-														<p:commandButton icon="ui-icon-plusthick">
+														<p:commandButton icon="ui-icon-plusthick"
+														  disabled="#{ordonnanceBean.consultation}">
 															<p:ajax listener="#{ordonnanceBean.initMed()}"></p:ajax>
 														</p:commandButton>
 													</h:panelGrid>
@@ -303,14 +305,14 @@
 
 										<p:commandButton value="Annuler"
 										    icon="ui-icon-closethick"
-											actionListener="#{ordonnanceBean.annulation()}" update=":f1"
+											actionListener="#{ordonnanceBean.annulation()}" 
 											rendered="#{!connectionBean.consultDetOrd}">
 										</p:commandButton>
 									
 										<p:commandButton update=":f1:growl,:f1" icon="ui-icon-print"
 											actionListener="#{ordonnanceBean.viewOrd}" value="Imprimer"
 											rendered="#{connectionBean.imprOrd}"
-											disabled="#{not ordonnanceBean.consultation}"
+											disabled="#{ordonnanceBean.afficheBtnAnnul}"
 										    immediate="true"
 											ajax="false" >
 										</p:commandButton>	
@@ -344,6 +346,7 @@
 										itemValue="#{pro.idFormeMedicament}" />
 								</p:selectOneMenu>
 								<p:commandButton icon="ui-icon-plusthick"
+								    
 									update=":f1:fmed:f4:dialog1"
 									actionListener="#{ordonnanceBean.initForme}"
 									oncomplete="PF('dialogforme').show()" />
@@ -404,26 +407,7 @@
 
 
 
-			<p:dialog widgetVar="ajoutModel" closable="false" modal="true"
-				resizable="false ">
-				<h:form id="f2">
-					<p:panel id="p1">
-						<h:panelGrid columns="2">
-							<h:outputText value="Nom Modèle: " />
-							<p:inputText value="#{ordonnanceBean.nomModeleOrd}"></p:inputText>
-							<p:commandButton value="Valider" icon="ui-icon-check">
-								<p:ajax listener="#{ordonnanceBean.ajouterModeleOrdonnance()}"
-									update=":f1,:f1:growl"></p:ajax>
-							</p:commandButton>
-							<p:commandButton icon="ui-icon-closethick"
-								oncomplete="PF('ajoutModel').hide();" value="Annuler"
-								update=":f1" />
-
-
-						</h:panelGrid>
-					</p:panel>
-				</h:form>
-			</p:dialog>
+			
 
 <p:dialog id="sup" widgetVar="suppOrd" resizable="false" header="Suppression"
 					closable="false" model="true"  >
@@ -479,6 +463,42 @@
 }
 </style>
 		</h:form>
+	
+	 <h:form id="f2" >
+	    <p:dialog widgetVar="ajoutModel" closable="false" modal="true"
+				resizable="false ">
+				
+					<p:panel id="p1">
+						<h:panelGrid columns="2">
+							<h:outputText value="Nom Modèle: " />
+							<p:inputText value="#{ordonnanceBean.nomModeleOrd}"></p:inputText>
+							<p:commandButton value="Valider" icon="ui-icon-check" 
+							   actionListener="#{ordonnanceBean.ajouterModeleOrdonnance()}"
+							   oncomplete="handleLoginRequest(xhr, status, args)" 
+							   update=":f1,:f1:growl">
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-closethick"
+								oncomplete="PF('ajoutModel').hide();" value="Annuler"
+								update=":f1" />
+
+
+						</h:panelGrid>
+					</p:panel>
+			</p:dialog>
+	 </h:form>
+	 <script type="text/javascript">
+					function handleLoginRequest2(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('ajoutModel').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('ajoutModel').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+	 
 	</ui:define>
 </ui:composition>
 </html>

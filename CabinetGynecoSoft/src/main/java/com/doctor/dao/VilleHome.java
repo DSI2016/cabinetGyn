@@ -2,6 +2,7 @@ package com.doctor.dao;
 
 import static org.hibernate.criterion.Example.create;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -125,9 +126,10 @@ public class VilleHome {
 
 	@SuppressWarnings("unchecked")
 	public List<Ville> findAll() {
+		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 				Ville.class);
-
+		
 		return crit.list();
 	}
 
