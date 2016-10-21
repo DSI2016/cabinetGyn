@@ -103,12 +103,11 @@
 							actionListener="#{cfclientBean.decroissante()}"
 							style="font-size:small;width:33pt;font-weight:bold"></p:commandButton>
 					</td>
-					<td align="right" width="33%"><p:commandButton value="Nouveau"
-							rendered="#{connectionBean.ajouterPat}" immediate="true"
-							icon="ui-icon-plusthick" title="Ajouter Patient"
-							style="font-size:small">
-							<p:ajax update=":f1:formulaire:idDlgValidation"
-								listener="#{cfclientBean.ajout()}"></p:ajax>
+					<td align="right" width="33%"><p:commandButton value="Nouveau" 	 
+							rendered="#{connectionBean.ajouterPat}" oncomplete="PF('dlgValidation').show();"
+							icon="ui-icon-plusthick" title="Ajouter Patient" actionListener="#{cfclientBean.ajout()}"
+							style="font-size:small" update="f1:formulaire:idDlgValidation">
+					
 						</p:commandButton></td>
 
 				</tr>
@@ -139,7 +138,7 @@
 				value="#{cfclientBean.patientsView}" emptyMessage="Pas de Patients !"
 				paginator="true" paginatorPosition="bottom"
 				paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-				rows="10">
+				rows="16">
 				
 				<p:column headerText="" width="4%"
 					style="font-size:small;font-weight:bold">
@@ -209,8 +208,9 @@
 				  <p:commandButton icon="ui-icon-arrowthickstop-1-e"
 						rendered="#{connectionBean.verSalle}" title="Vers salle d'attente"
 						actionListener="#{cfclientBean.initVersSalle(Patient.code)}"
-						update=":f1:formulaire:idDlgsalle"
+						update=":f1:formulaire:idDlgsalle,:f1:growl"
 						style="font-size:small;width:33pt;font-weight:bold" />
+						
 						<p:commandButton icon="ui-icon-pencil" title="Modification Patient"
 						rendered="#{connectionBean.modifPatient}"
 						update=":f1:formulaire:k"
@@ -256,10 +256,11 @@
 			<br />
 			<div align="center">
 				<h:form id="formulaire">
+				
 					<p:dialog id="idDlgsalle" widgetVar="dlgsalle" resizable="false"
 						closable="false" modal="true" showHeader="false" model="true"
 						width="400pt" height="250pt" hideEffect="explode">
-						<p:panel id="n" header="Envoi vers salle d'attente">
+						<p:panel id="n" header="Envoi du patient vers salle d'attente">
 							<div align="left">
 								<h:panelGrid columns="1" rendered="#{cfclientBean.aRDV}">
 									<h:outputLabel
@@ -273,7 +274,7 @@
 									value="#{cfclientBean.prenom} #{cfclientBean.nom} [#{cfclientBean.dernierVisite}]" />
 								<h:outputText value="Heure : " />
 								<h:outputText value="#{cfclientBean.heure}" />
-								<h:outputText value="Consultation: " />
+								<h:outputText value="Type salle: " />
 								<p:selectOneMenu value="#{cfclientBean.motif}"
 									style="font-size:small;font-weight:bold;width:300px;"
 									filter="true" filterMatchMode="startsWith" effect="fade">
@@ -292,14 +293,15 @@
 
 						<br />
 						<div align="center">
-							<p:commandButton value="Envoyer" update=":f1:growl"
+							<p:commandButton value="Envoyer" update=":f1:growl" 
 								oncomplete="handleLoginRequestSalle(xhr, status, args)"
-								actionListener="#{cfclientBean.versSalleAttente()}"></p:commandButton>
+								
+								actionListener="#{cfclientBean.versSalleAttente()}"  ></p:commandButton>
 							&nbsp;&nbsp;
 							<p:commandButton value="Annuler"
-							   icon="ui-icon-closethick"
-								actionListener="#{cfclientBean.initialisation()}"
-								oncomplete="PF('dlgsalle').hide();" ajax="false"></p:commandButton>
+							   icon="ui-icon-closethick" 
+								actionListener="#{cfclientBean.initialeSalle()}"
+								oncomplete="PF('dlgsalle').hide();" ></p:commandButton>
 						</div>
 
 					</p:dialog>
@@ -565,14 +567,15 @@
 						</p:outputPanel>
 					</p:dialog>
 
-					<p:dialog id="idDlgValidation" widgetVar="dlgValidation"
-						resizable="false" modal="true" closable="false" showHeader="false">
+					<p:dialog id="idDlgValidation" widgetVar="dlgValidation" resizable="false"
+						closable="false" modal="true" showHeader="false" model="true"
+						 hideEffect="explode">
 						<p:panel header="#{cfclientBean.action} patiente"
-							style="height: 500px; width: 900px;" id="k">
-							<p:tabView id="tab" orientation="left" style="font-size:12pt"
-								activeIndex="#{cfclientBean.index}">
+							style="height: 520px; width: 900px;" id="k">
+							<p:tabView id="tab" orientation="left" 
+								activeIndex="#{cfclientBean.index}" >
 
-								<p:tab title="Informations Générales"
+								<p:tab title="Informations Générales" 
 									rendered="#{connectionBean.tabInfGnrAjtPat}">
 									<h:panelGrid columns="2" cellspacing="5">
 										<h:outputLabel for="prenomp" value="Prénom:* "
@@ -976,7 +979,7 @@
 
 										<p:commandButton icon="ui-icon-closethick"
 											actionListener="#{cfclientBean.initialisation()}"
-											value="Annuler" oncomplete="PF('dlgValidation').hide();"
+											value="Annuler" oncomplete="PF('dlgValidation').hide();" update=":f1:growl"
 											style="font-size:small;font-weight:bold" /></td>
 
 									<td align="left"><p:inputText

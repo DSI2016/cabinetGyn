@@ -38,6 +38,27 @@ public class CfclientService {
 			ex.printStackTrace();
 		}
 	}
+	public Cfclient RechercheCfclientSansjointure(Integer cl) {
+		Cfclient client = new Cfclient();
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+
+			tx = session.beginTransaction();
+
+			client = dao.findById(cl);
+			tx.commit();
+
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return (client);
+
+	}
 	public Cfclient RechercheCfclient(Integer cl) {
 		Cfclient client = new Cfclient();
 

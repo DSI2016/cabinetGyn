@@ -2,7 +2,6 @@ package com.doctor.dao;
 
 import static org.hibernate.criterion.Example.create;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;

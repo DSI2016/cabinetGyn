@@ -321,6 +321,7 @@ public class FichePatientBean implements Serializable {
 					.getCurrentInstance().getExternalContext()
 					.getSession(false);
 			session.setAttribute("idu", idPatient);
+			
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("Lettres");
 		} catch (Exception e) {

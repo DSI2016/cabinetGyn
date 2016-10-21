@@ -187,7 +187,6 @@ public class ProfessionBean implements java.io.Serializable {
 						FacesMessage.SEVERITY_ERROR,
 						"Veuillez donner le nom de la profession.", null));
 				addValid = false;
-				System.out.println("addValid  "+addValid);
 			} else {
 				Profession pp02 = ser.rechercheParProfession(libprofession);
 				if (pp02 != null

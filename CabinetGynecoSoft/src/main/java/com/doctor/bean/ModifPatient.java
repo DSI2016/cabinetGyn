@@ -103,11 +103,7 @@ public class ModifPatient {
 		CabinetService serCabinet = new CabinetService();
 		cab = serCabinet.rechercheTousCabinet().get(0);
 		if (histo.getLivreele() != null) {
-			// par sa
-			// System.out.println("livree le 1" + livreele);
-			// Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-			// String l = formatter.format(livreele);
-			// System.out.println("livree le" + livreele);
+			
 			rem = remplaceMot(rem, "$livreele", histo.getLivreele());// remplaser
 																		// $livree
 

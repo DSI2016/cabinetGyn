@@ -64,9 +64,9 @@ public class AccueilBean {
 	}
 
 	public void goToPatient() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-		session.setAttribute("retourPatient", "Accueil");
+//		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+//				.getExternalContext().getSession(false);
+//		session.setAttribute("retourPatient", "Accueil");
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("Patients");

@@ -838,7 +838,6 @@ private boolean addValid=false;
 	}
 
 	public void dateMariageChange() {
-		System.out.println("entree methode verification mariage ");
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		idPatient = (Integer) session.getAttribute("idu");
@@ -853,7 +852,6 @@ private boolean addValid=false;
 			
 			String verifDate = Module.verifierDate(dateMariage);
 			if ((verifDate.equals(""))==false) {
-				System.out.println("entre verification");
 				addValid=false;
 				this.blocage = true;
 				face.addMessage(null, new FacesMessage(
@@ -969,34 +967,7 @@ private boolean addValid=false;
 			s.setCfclient(cfclient);
 			ser.ajouterSterile(s);
 
-			// ConsultaionService sercons = new ConsultaionService();
-			// ConsultationDetailService serconsdetail = new
-			// ConsultationDetailService();
-			// System.out.println("motif"+consultationmotif);
-			// this.consultationmotif = "Stérilité";
-			// System.out.println("motif"+consultationmotif);
-			// if (consultationmotif != null) {
-			// System.out.println("entree ajout sterilitee comme consultation");
-			// Consultation cons1 =
-			// sercons.rechercheParConsultation(consultationmotif);
-			// ConsultationDetail consultdetail = new ConsultationDetail();
-			// consultdetail.setConsultation(cons1);
-			// consultdetail.setSterilite(s);
-			// consultdetail.setDateConsultation("02/02/2012");
-			// serconsdetail.ajouterConsultationDetail(consultdetail);
-			//
-			//
-			// }
-			// if(s.getCfclient()!=null)
-			// {
-			// CfclientService sercl =new CfclientService();
-			// Cfclient clt=new Cfclient();
-			// clt=sercl.RechercheCfclient(cfclient.getCode());
-			// clt.setDernierVisite(dateDepuis);
-			// clt.setNbCons(clt.getNbCons()+1);
-			// clt.setTypCons(consultationmotif);
-			//
-			// }
+		
 		}
 
 	}
@@ -1300,7 +1271,6 @@ private boolean addValid=false;
 	}
 
 	public void depuisChange() {
-		System.out.println("entree methode depuis");
 		//setDateDepuis(dateDepuis);
 		SterileService ser = new SterileService();
 		Sterile s;

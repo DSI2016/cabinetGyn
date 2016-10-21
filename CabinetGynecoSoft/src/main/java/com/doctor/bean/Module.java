@@ -553,7 +553,34 @@ if((verifierDate(dateNaiss).equals(""))&&(verifierDate(dateNaiss).equals("")))
 		FacesContext.getCurrentInstance().responseComplete();
 
 	}
-
+	
+	public static String AjoutSerpTel(int nbc,String ch,char sep )
+	{
+		String res="";
+		if(nbc==2)
+		{for(int i = 0;i<ch.length();i++)
+		{
+			
+			if(i==2 ||i==nbc*2||i==nbc*3)
+				res=res+sep+ch.charAt(i);
+			else
+				res=res+ch.charAt(i);
+			}}
+		if(nbc==3)
+		{for(int i = 0;i<ch.length();i++)
+		{
+			
+			if(i==2 ||i==nbc*2-1)
+				res=res+sep+ch.charAt(i);
+			else
+				res=res+ch.charAt(i);
+			}}
+		return(res);
+		
+	}
+	
+	
+	
 	static String menuSal;
 	static String menuGestPat;
 	static String menuParametre;

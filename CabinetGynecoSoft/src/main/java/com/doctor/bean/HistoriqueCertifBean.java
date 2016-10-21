@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -44,6 +45,9 @@ private String titreDiag;
 	private String type1;
 	private Integer idPatient;
 	private Cfclient cfclient;
+	HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+			.getExternalContext().getSession(false);
+	
 	private String remarques;
 	private Integer idCertificat;
 	private String motifCertificat;
@@ -51,7 +55,8 @@ private String titreDiag;
 	private String dateCertifPrese;
 	private String dateCertifPreseAccomp;
 	private String proprietaire="Patiente";
-	private String nomProprietaire="";
+	
+	private String nomProprietaire;
 
 	private boolean afficheImp = true;
 	private String datereprise;
@@ -126,7 +131,17 @@ private String titreDiag;
 				.rechercheTousHistoriqueCertifByPatient(idpatient);
 		return historiqueCertifs;
 	}
-
+@PostConstruct
+	public void init ()
+	{
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext()
+				.getSession(false);
+		session.setAttribute("idu", idPatient);
+		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
+	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
+	}
+	
 	public void setHistoriqueCertifs(List<HistoriqueCertif> historiqueCertifs) {
 		this.historiqueCertifs = historiqueCertifs;
 	}
@@ -140,7 +155,6 @@ private String titreDiag;
 	}
 
 	public String getDateCertif() {
-		System.out.println("dateceertif get" + dateCertif);
 		return dateCertif;
 	}
 
@@ -879,7 +893,6 @@ private String titreDiag;
 
 		// verification de livree le
 		if (Module.corigerDate(livreele) != null) {
-			System.out.println("livrele" + livreele);
 			this.setLivreele(Module.corigerDate(livreele));
 		}
 		// verification de livrele
@@ -928,7 +941,6 @@ private String titreDiag;
 			cert.setNomProprietaire(nomProprietaire);
 			addValid = true;
 			cert.setDateCertif(sdf.parse(dateCertif));
-			System.out.println("pas de prob");
 			cert.setA(a);
 			cert.setRemarques(remarques);
 
@@ -938,12 +950,9 @@ private String titreDiag;
 					.rechercheCertifParMotif(motifCertificat);
 			cert.setCertificat(c);
 			if (c != null) {
-				System.out.println("remplir remarque");
 				if (c.getRemarque() != null) {
 					String textelettre = c.getRemarque();
 					textelettre = intialeTextCertificats();
-					System.out.println("text certif **** " + textelettre
-							+ " ****");
 					cert.setRemarque(textelettre);
 				}
 			}
@@ -980,7 +989,6 @@ private String titreDiag;
 
 			}
 		}
-		System.out.println("addvalide" + addValid);
 		intialecertif();
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam("addValid", addValid);
@@ -1076,7 +1084,6 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
-			System.out.println("pas de probleme");
 			cert.setDureederepos(dureederepos);
 			cert.setType(type1);
 
@@ -1231,7 +1238,6 @@ private String titreDiag;
 
 	public void ajoutCertifPresenceAcompgnement() throws SQLException,
 			Exception {
-		System.out.println("methode presence accompagnemant");
 
 		FacesContext face = FacesContext.getCurrentInstance();
 		RequestContext context = RequestContext.getCurrentInstance();
@@ -1347,7 +1353,6 @@ private String titreDiag;
 	}
 
 	public void ajoutCertifReposAccomp() throws SQLException, Exception {
-		System.out.println("entre methode accomp");
 		boolean addValid = false;
 		FacesContext face = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -1395,7 +1400,6 @@ private String titreDiag;
 			if ((Module.verifierDate(dateCertif).equals("")) == false)
 
 			{
-				System.out.println("problem datecrtif");
 				blocage = true;
 				face.addMessage(
 						null,
@@ -1405,7 +1409,6 @@ private String titreDiag;
 				addValid = false;
 
 			} else {
-				System.out.println("date certifcv");
 				try {
 					cert.setDateCertif(sdf.parse(dateCertif));
 				} catch (ParseException e) {
@@ -1422,7 +1425,6 @@ private String titreDiag;
 			if ((Module.verifierDate(adaterdu).equals("")) == false)
 
 			{
-				System.out.println("adater invalide");
 				blocage = true;
 				face.addMessage(
 						null,
@@ -1651,7 +1653,6 @@ private String titreDiag;
 		if ((Module.verifierDate(dateCertif).equals("")) == false)
 
 		{
-			System.out.println("problem datecrtif");
 			blocage = true;
 			face.addMessage(
 					null,
@@ -1661,7 +1662,6 @@ private String titreDiag;
 			addValid = false;
 
 		} else {
-			System.out.println("date certifcv");
 			try {
 				cert.setDateCertif(sdf.parse(dateCertif));
 			} catch (ParseException e) {
@@ -1677,7 +1677,6 @@ private String titreDiag;
 		if ((Module.verifierDate(adaterdu).equals("")) == false)
 
 		{
-			System.out.println("adater invalide");
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"", "a dater " + Module.verifierDate(dateCertif)));
@@ -2125,7 +2124,6 @@ private String titreDiag;
 		idCertificat = h.getIdHistoriqueCertif();
 		dateCertif = formater.format(h.getDateCertif());
 		dateCertifPrese = formater.format(h.getDateCertif());
-		System.out.println("datecertif prese" + dateCertifPrese);
 		dateCertifPreseAccomp = formater.format(h.getDateCertif());
 		a = h.getA();
 		remarque = h.getRemarque();
@@ -2136,7 +2134,6 @@ private String titreDiag;
 		dureedereposString = h.getDureederepos() + "";
 		dateCertif = formater.format(h.getDateCertif());
 
-		System.out.println("datecertif" + dateCertif);
 
 		if (h.getAdaterdu() != null)
 			adaterdu = formater.format(h.getAdaterdu());
@@ -2144,7 +2141,6 @@ private String titreDiag;
 			datedelagression = formater.format(h.getDatedelagression());
 
 		accompagnant = h.getAccompagnant();
-		System.out.println("accompagnemant" + accompagnant);
 		lesions = h.getLesions();
 		heurelagr = h.getHeurelagr();
 		minutelagr = h.getMinutelagr();

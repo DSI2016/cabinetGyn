@@ -996,6 +996,7 @@ EtatBebeService setetab=new EtatBebeService();
 		lieu = h.getLieu();
 		nbBebe = 0;
 		nbBebeAncien = 0;
+		notes=h.getNotes();
 
 		sexeBebe = h.getSexeBebe();
 		sexeBebe2 = h.getSexeBebe2();
@@ -1078,6 +1079,7 @@ EtatBebeService setetab=new EtatBebeService();
 		finGross = null;
 		notes = null;
 		honoraires = null;
+		
 		etatFinGross = null;
 		etatFinGrossAncien = null;
 		terme = cf.gettActuel();
@@ -1232,6 +1234,7 @@ EtatBebeService setetab=new EtatBebeService();
 				EtatFinGross eFinG = ser.rechercheParEtatFinGross(etatFinGross);
 				hg.setEtatFinGross(eFinG);
 				hg.setLieu(lieu);
+				hg.setNotes(notes);
 				hg.setTerme(terme);
 				hg.setDateFinGross(dateFinGross);
 
@@ -2628,8 +2631,8 @@ EtatBebeService setetab=new EtatBebeService();
 
 		// Calcul nbr fille et nbr garcon
 		// CALCUL NBR FILLE et Garcon
-
-		if (h.getEtatFinGross().isIncrementation()) {
+if(h.getEtatFinGross()!=null)
+{	if (h.getEtatFinGross().isIncrementation()) {
 
 			// nbr ==1
 			if ((h.getEtatBebe() != null) && (h.getEtatBebe2() == null)
@@ -2774,15 +2777,19 @@ EtatBebeService setetab=new EtatBebeService();
 			}
 
 		}
-
-		if (cf.getGestite() >= 1) {
+}
+if (cf.getGestite() >= 1) {
 			cf.setGestite(cf.getGestite() - 1);
 		}
 		sercf.modifierPatient(cf);
 		Integer code = h.getIdhistoriqueGross();
 		ser.supprimerHistoriqueGross(code);
+
+		
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
-				"Grossesse supprimé avec succés"));
+				"Grossesse est supprimé avec succès"));
+		
+		
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
@@ -2795,10 +2802,10 @@ EtatBebeService setetab=new EtatBebeService();
 			System.out.println(e.getMessage());
 		}
 		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
-				"Grossesse supprimé avec succés"));
+				"Grossesse est supprimé avec succès"));
 		index = 2;
-
 	}
+
 
 	public List<AntFamCfclient> getAntecedentfs() {
 		AntFamCfclientService s = new AntFamCfclientService();
@@ -3100,9 +3107,25 @@ EtatBebeService setetab=new EtatBebeService();
 		ser.supprimerContraception(id);
 		FacesContext face = FacesContext.getCurrentInstance();
 
+		
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+				"Moyen de contraception est supprimé avec succès"));
+		
+		
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		try {
+			index = 3;
+			
+			context.getExternalContext()
+					.redirect("Antecedent");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+				"Moyen de contraception est supprimé avec succès"));
 		index = 3;
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Moyen de contraception est supprimé avec succès.", ""));
 	}
 
 	public void modifAntMed(AntMedCfclient ant) {
@@ -4097,6 +4120,10 @@ sexeBebe3=null;
 
 	public void setHistoriqueModif(HistoriqueGross historiqueModif) {
 		HistoriqueModif = historiqueModif;
+	}
+	public void onchangeNotes()
+	{
+		setNotes(notes);
 	}
 
 }

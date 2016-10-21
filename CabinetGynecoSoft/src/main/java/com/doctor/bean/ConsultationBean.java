@@ -125,7 +125,6 @@ public class ConsultationBean {
 		if (honoraire != null && honoraire.trim().length() > 0)
 			try {
 				honoraire = honoraire.replaceAll(",", ".");
-				System.out.println("honoraire aprs rempalcement  " + honoraire);
 				hon = Float.parseFloat(honoraire);
 			} catch (Exception e) {
 				faces.addMessage(
@@ -161,7 +160,6 @@ public class ConsultationBean {
 		nomConsultation = null;
 		honoraire = null;
 		
-		System.out.println("nomConsultation==**"+nomConsultation);
 	}
 	
 	
@@ -175,7 +173,6 @@ public void validerModif() {
 	boolean addValid = false;
 	ConsultaionService ser = new ConsultaionService();
 	Consultation cons = new Consultation();
-	System.out.println("honoraire==   " + honoraire);
 
 	if (honoraire == null || (honoraire.trim().length() == 0)) {// tester si
 		// cette zone de
@@ -194,7 +191,6 @@ public void validerModif() {
 		} catch (Exception e) {
 
 			addValid = false;
-			System.out.println("hon   " + hon);
 			faces.addMessage(
 					null,
 					new FacesMessage(

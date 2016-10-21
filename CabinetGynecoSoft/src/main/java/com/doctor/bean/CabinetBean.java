@@ -1,14 +1,11 @@
 package com.doctor.bean;
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import com.doctor.persistance.Cabinet;
 import com.doctor.service.CabinetService;
 
@@ -153,49 +150,10 @@ return adresse;
 			Random r = new Random();
 					int n = 100000 + r.nextInt(900000);
 					String nString=n+"";
-					System.out.println("nstring "+nString);
-			System.out.println("random"+nString.substring(0, 3)+nbrPost+2+nString.substring(3, nString.length()));
 			nbrposttraiter=nString.substring(0, 3)+nbrPost+nString.substring(3, nString.length());
 			c.setNbPost(nbrposttraiter);
 			
-			InetAddress[] adrServeurs;
-			try {
-				adrServeurs = InetAddress.getAllByName("www.microsoft.com");
-			
-			
-			System.out.println("Adresses Microsoft : ");
-			for (int i = 0; i > adrServeurs.length; i++) {
-			System.out.println("     "+adrServeurs[i].getHostAddress());
-			}
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
-			}
-			
-		//	ServerSocket server = null; //Initialize server socket here.
-
-//			try {
-//				Socket client = server.accept();
-//				String hostName = client.getInetAddress().getHostName();
-//	            System.out.println("pc connecter"+hostName);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			
-//            
-//			}
-//			try {
-//				InetAddress[] adr= InetAddress.
-//				String address = InetAddress.getLocalHost().getHostName();
-//				for(int i=0;i<adr.length;i++)
-//				{
-//				System.out.println("pc connecter"+adr[i]);
-//				}
-//			} catch (UnknownHostException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+		
 		}
 		else
 		

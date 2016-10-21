@@ -1,15 +1,11 @@
 package com.doctor.service;
 
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.doctor.dao.Cfclient_viewHome;
 import com.doctor.dao.HibernateUtil;
-import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Cfclient_view;
-import com.doctor.persistance.Ville;
 
 
 public class Cfclient_viewService {

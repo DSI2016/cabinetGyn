@@ -14,7 +14,6 @@ public class MyBean
 private String text;
 
 public String getText() {
-	System.out.println("test"+text);
     return text;
 }
 
@@ -27,6 +26,5 @@ public void enregistrer()
 	Uterus d = new Uterus();
 	d.setUterus(text);
 	ser.ajoutUterus(d);
-	System.out.println("enregistrer");
 }
 }
