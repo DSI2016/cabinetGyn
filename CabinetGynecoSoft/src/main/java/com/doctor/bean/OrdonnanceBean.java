@@ -720,6 +720,8 @@ public class OrdonnanceBean implements Serializable {
 		// validation = true;
 		consultation=true;
 		afficheBtnAnnul=true;
+		//RequestContext.getCurrentInstance().update("f1");
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -756,12 +758,9 @@ public class OrdonnanceBean implements Serializable {
 	}
 
 	public void ajouterModeleOrdonnance() {
-		
 		FacesContext face = FacesContext.getCurrentInstance();
-		
+		boolean addValid = false;
 		nomModeleOrd=nomModeleOrd.replaceAll("\\s+", " ");
-		@SuppressWarnings("unused")
-		boolean addValid=false;
 		// tester si  le nom modèle est vide
 		if (nomModeleOrd == null || (nomModeleOrd.trim().length() == 0)) {
 			addValid = false;
@@ -803,6 +802,9 @@ public class OrdonnanceBean implements Serializable {
 			blocage = false;
 			tempsface = 3000;
              addValid=true;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Modèle ajouté avec succés "));
+			
 			FacesContext context2 = FacesContext.getCurrentInstance();
 			context2.getExternalContext().getFlash().setKeepMessages(true);
 			try {

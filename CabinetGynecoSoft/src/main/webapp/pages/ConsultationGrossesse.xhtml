@@ -134,12 +134,12 @@
 														<h:outputText value="DDR"
 															style="font-size:small;font-weight:bold" />
 															<h:panelGrid columns="2">
-														<h:inputText value="#{consultationDetailBean.ddr}"
+														<p:inputMask mask="99/99/9999" value="#{consultationDetailBean.ddr}"
 															style="width:70px;font-size:small;font-weight:bold"
 															disabled="#{consultationDetailBean.lireReadOnly()}">
 															<p:ajax event="blur" update=":f1"
 																listener="#{consultationDetailBean.calculDate() }" />
-														</h:inputText>
+														</p:inputMask>
 														<p:graphicImage value="/images/c.png" width="18" height="18" rendered="#{consultationDetailBean.ddgCorigee}"></p:graphicImage>
 														
 														</h:panelGrid>

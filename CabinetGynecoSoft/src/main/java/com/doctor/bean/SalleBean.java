@@ -690,6 +690,8 @@ public class SalleBean implements java.io.Serializable {
 
 	
 	}
+	
+	
 	public void getParameter(Salle s) {
 		code = s.getCode();
 		motif = s.getMotif();
@@ -699,7 +701,7 @@ public class SalleBean implements java.io.Serializable {
 		cfclient = s.getCfclient();
 		heure = s.getHeure();
 		cause = null;
-		//ordreDifferent = t/s.isOrdreDifferent();
+		//ordreDifferent = ts.isOrdreDifferent();
 
 	
 	}
