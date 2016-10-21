@@ -690,6 +690,19 @@ public class SalleBean implements java.io.Serializable {
 
 	
 	}
+	public void getParameter(Salle s) {
+		code = s.getCode();
+		motif = s.getMotif();
+		notes = s.getNotes();
+		nouveauOrdre = s.getOrdre();
+		ordre = s.getOrdre();
+		cfclient = s.getCfclient();
+		heure = s.getHeure();
+		cause = null;
+		//ordreDifferent = t/s.isOrdreDifferent();
+
+	
+	}
 
 	public void getParameter(Salle s,Boolean permut) {
 		if(permut){

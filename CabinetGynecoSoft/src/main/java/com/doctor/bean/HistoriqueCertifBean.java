@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -44,6 +45,9 @@ private String titreDiag;
 	private String type1;
 	private Integer idPatient;
 	private Cfclient cfclient;
+	HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+			.getExternalContext().getSession(false);
+	
 	private String remarques;
 	private Integer idCertificat;
 	private String motifCertificat;
@@ -51,7 +55,8 @@ private String titreDiag;
 	private String dateCertifPrese;
 	private String dateCertifPreseAccomp;
 	private String proprietaire="Patiente";
-	private String nomProprietaire="";
+	
+	private String nomProprietaire;
 
 	private boolean afficheImp = true;
 	private String datereprise;
@@ -126,7 +131,17 @@ private String titreDiag;
 				.rechercheTousHistoriqueCertifByPatient(idpatient);
 		return historiqueCertifs;
 	}
-
+@PostConstruct
+	public void init ()
+	{
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext()
+				.getSession(false);
+		session.setAttribute("idu", idPatient);
+		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
+	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
+	}
+	
 	public void setHistoriqueCertifs(List<HistoriqueCertif> historiqueCertifs) {
 		this.historiqueCertifs = historiqueCertifs;
 	}

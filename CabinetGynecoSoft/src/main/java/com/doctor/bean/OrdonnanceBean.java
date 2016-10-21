@@ -132,12 +132,10 @@ public class OrdonnanceBean implements Serializable {
 	}
 
 	public Date getDateOrd() {
-		System.out.println("get   " + dateOrd);
 		return dateOrd;
 	}
 
 	public void setDateOrd(Date dateOrd) {
-		System.out.println("set   " + dateOrd);
 		this.dateOrd = dateOrd;
 	}
 
@@ -697,7 +695,6 @@ public class OrdonnanceBean implements Serializable {
 
 		List<MedOrd> l;
 		
-		System.out.println("action=="+action);
 		if (action != null && action.equals("Ajout")) {
 			// suppression l'ordonnance ajoutée et les medord liés
 			l = new MedOrdService().rechercheParIdOrd(idOrdonnance);
@@ -723,9 +720,6 @@ public class OrdonnanceBean implements Serializable {
 		// validation = true;
 		consultation=true;
 		afficheBtnAnnul=true;
-		System.out.println("consultation==>>"+consultation);
-		//RequestContext.getCurrentInstance().update("f1");
-		
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -762,9 +756,12 @@ public class OrdonnanceBean implements Serializable {
 	}
 
 	public void ajouterModeleOrdonnance() {
+		
 		FacesContext face = FacesContext.getCurrentInstance();
-		boolean addValid = false;
+		
 		nomModeleOrd=nomModeleOrd.replaceAll("\\s+", " ");
+		@SuppressWarnings("unused")
+		boolean addValid=false;
 		// tester si  le nom modèle est vide
 		if (nomModeleOrd == null || (nomModeleOrd.trim().length() == 0)) {
 			addValid = false;
@@ -787,17 +784,11 @@ public class OrdonnanceBean implements Serializable {
 		}
 		if (face.getMessageList().size() == 0) {
 			ModeleOrdonnance mOrd = new ModeleOrdonnance();
-			System.out.println("nomModeleOrd===>> "+nomModeleOrd);
 			mOrd.setNomModele(nomModeleOrd);
 			ser.ajoutModeleOrdonnance(mOrd);
-
 			List<ModeleOrdonnance> ords = ser.rechercheTousModeleOrdonnance();
 			ModeleOrdonnance o = ords.get(ords.size() - 1);
-
 			MedOrdService se = new MedOrdService();
-
-			System.out.println("medOrds.size()== "+medOrds.size());
-			
 			Iterator<MedOrd> itr = medOrds.iterator();
 			while (itr.hasNext()) {
 				MedOrd m = itr.next();
@@ -812,9 +803,6 @@ public class OrdonnanceBean implements Serializable {
 			blocage = false;
 			tempsface = 3000;
              addValid=true;
-			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Modèle ajouté avec succés "));
-			
 			FacesContext context2 = FacesContext.getCurrentInstance();
 			context2.getExternalContext().getFlash().setKeepMessages(true);
 			try {
@@ -1000,11 +988,6 @@ public class OrdonnanceBean implements Serializable {
 			consult.setNbOrd(consult.getNbOrd() - 1);
 			new ConsultationDetailService().modifierConsultationDetail(consult);
 		}
-		 //System.out.println(idOrdonnance);
-		
-
-		// supression des medOrd avec cet idOrd
-
 		MedOrdService s = new MedOrdService();
 		List<MedOrd> listMed = s.rechercheParIdOrd(idOrdonnance);
 		for (int i = 0; i < listMed.size(); i++)
@@ -1137,7 +1120,6 @@ public class OrdonnanceBean implements Serializable {
 					Cfclient c = serc.RechercheCfclient(idPatient);
 					ord.setPatient(c);
 				}
-				System.out.println("la date valide  " + dateOrd);
 				ord.setDateOrd(dateOrd);
 				consult = new ConsultationDetailService()
 						.rechercheConsultationDetailAvecJoint(idConsult);

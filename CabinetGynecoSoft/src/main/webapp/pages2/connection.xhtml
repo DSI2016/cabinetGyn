@@ -124,6 +124,17 @@
 									</p:column>
 								</p:dataTable>
 							</p:panel>
+							<h:panelGrid columns="2">
+											<p:commandButton value="Connecter" icon="ui-icon-key"
+												actionListener="#{connectionBean.connecter()}" update=":fsession:idSession"  />
+													
+												
+												
+											
+											<p:commandButton value="Annuler" ajax="false"
+												icon=" ui-icon-arrowreturnthick-1-n"
+												action="#{connectionBean.annuler()}" />
+											</h:panelGrid>
 						</h:form>
 					</p:dialog>
 				</div>

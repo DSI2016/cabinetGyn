@@ -163,15 +163,13 @@ public class CertificatBean implements java.io.Serializable {
 	}
 
 	public String getRemarque() {
-		System.out.println("*****getremarque**********" + remarque
-				+ "***************");
+		
 		return remarque;
 	}
 
 	public void setRemarque(String remarque) {
 		this.remarque = remarque;
-		System.out.println("*****setremarque**********" + remarque
-				+ "***************");
+		
 	}
 
 	public String getRemarques() {
@@ -595,15 +593,10 @@ public class CertificatBean implements java.io.Serializable {
 
 	public void modifierCertificat(Certificat cert) {
 
-		System.out.println("cert" + cert);
 		idcertificat = cert.getIdcertificat();
 		nomCertificat = cert.getNomCertificat();
 		remarque = cert.getRemarque();
 		action = "Modifier";
-		System.out.println("action" + action);
-
-		// selectedCertif=cert;
-
 	}
 
 	public void ajouterCertificat() {
@@ -629,27 +622,19 @@ public class CertificatBean implements java.io.Serializable {
 
 		Certificat c = (Certificat) event.getObject();
 		selectedCertif = c;
-		System.out.println("********************remarque = " + c.getRemarque()
-				+ "*************************");
 		nomCertificat = c.getNomCertificat();
 		remarque = c.getRemarque();
 		idcertificat = c.getIdcertificat();
 		action = "Modifier";
-		System.out.println("**************action = " + action
-				+ "*******************");
 
 	}
 
 	public void validation() {
-		System.out
-				.println("**********entree methode validation*****************");
 		CertificatService ser = new CertificatService();
 
 		FacesContext faces = FacesContext.getCurrentInstance();
 
 		if (action.equals("Modifier")) {
-			System.out
-					.println("******************modifier cv action ************");
 			if (nomCertificat == null || (nomCertificat.trim().length() == 0)) {// tester
 																				// si
 																				// cette
@@ -686,26 +671,12 @@ public class CertificatBean implements java.io.Serializable {
 
 				else {
 					d.setIdcertificat(idcertificat);
-					System.out.println("*************idcertificat*******"
-							+ idcertificat);
 					d.setRemarque(remarque);
-					System.out.println("************remarque*****************"
-							+ remarque);
 					ser.modifierCertificat(d);
-
-//					try {
-//
-//						FacesContext.getCurrentInstance().getExternalContext()
-//								.redirect("Modélle-Certificat");
-//					} catch (Exception e) {
-//						System.out.println(e.getMessage());
-//					}
 
 					faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"", "Certificat modifiée avec succès."));	
 					
-					System.out
-							.println("***********modification avec sucee****************");
 				}
 
 			}

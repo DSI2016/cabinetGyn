@@ -261,11 +261,10 @@
 								<p:commandButton icon="ui-icon-help"
 									rendered="#{connectionBean.chargerPat}" title="charger patient"
 									actionListener="#{cfclientBean.versFiche(rendezVous.codeclient.code)}" />
-
-								<p:commandButton
-									actionListener="#{rendezVousBean.supprimerRendezVous(rendezVous.idrendezVous)}"
+                                <p:commandButton
+									oncomplete="PF('dlgsuppRendez').show()"
 									icon="ui-icon-trash" title="Suppression Rendez-Vous"
-									update=":formeGenerale" oncomplete="PF('eventDialog').show()">
+									update=":formeGenerale" >
 									<p:confirm header="Suppression Rendez-vous"
 										message="Voulez-vous vraiment supprimer cet rendez-vous ?"
 										icon="ui-icon-alert" />
@@ -281,20 +280,19 @@
 					</h:panelGroup>
 				</div>
 			</p:dialog>
-
-			<p:dialog id="vsa" widgetVar="dlgsalle" resizable="false"
-				closable="false" model="true" width="300pt" height="200pt"
-				hideEffect="explode">
-				<p:outputPanel id="n">
-					<h:panelGrid columns="2" cellspacing="5">
-						<h:outputText value="Patiente: " />
-						<h:outputText
-							value="#{rendezVousBean.codeclient.prenom} #{rendezVousBean.codeclient.nom} " />
-						<h:outputText value="Heure : " />
-						<h:outputText
-							value="#{rendezVousBean.avoirHeure(rendezVousBean.selectedDate)}" />
-						<h:outputText value="Consultation: " />
-						<p:selectOneMenu value="#{rendezVousBean.motif}"
+<p:dialog id="vsa" widgetVar="dlgsalle" resizable="false"
+						closable="false" modal="true" showHeader="false" model="true"
+						width="400pt" height="250pt" hideEffect="explode">
+						<p:panel id="n" header="Envoi du patient vers salle d'attente">
+							
+							<h:panelGrid columns="2" cellspacing="5">
+								<h:outputText value="Patiente: " />
+								<h:outputText
+									value="#{rendezVousBean.codeclient.prenom} #{rendezVousBean.codeclient.nom} [#{rendezVousBean.codeclient.dernierVisite}]" />
+								<h:outputText value="Heure : " />
+								<h:outputText value="#{rendezVousBean.avoirHeure(rendezVousBean.selectedDate)}" />
+								<h:outputText value="Type salle: " />
+								<p:selectOneMenu value="#{rendezVousBean.motif}"
 							style="font-size:small;font-weight:bold;width:200px;"
 							filter="true" filterMatchMode="startsWith" effect="fade">
 							<f:selectItem itemLabel="--Selectioner--" itemValue="" />
@@ -302,25 +300,57 @@
 								itemLabel="#{s.nomTab}" itemValue="#{s.nomTab}" />
 						</p:selectOneMenu>
 
+								<h:outputText value="Notes : " />
+								<p:inputTextarea value="#{rendezVousBean.noteSalle}" 
+									style=" width:325px" />
+							</h:panelGrid>
+						</p:panel>
 
-
-						<h:outputText value="Notes : " />
-						<p:inputTextarea value="#{rendezVousBean.noteSalle}" />
-
-
-					</h:panelGrid>
-					<br></br>
-					<div align="center">
-						<p:commandButton value="Envoyer" oncomplete="dlgsalle.hide();"
+						<br />
+						<div align="center">
+						<p:commandButton value="Envoyer" oncomplete="handleLoginRequestdlgsalle(xhr, status, args)" update=":formeGenerale:growl"
 						    icon="ui-icon-arrowthickstop-1-e"
-							ajax="false" actionListener="#{rendezVousBean.versSalle()}" />
+							 actionListener="#{rendezVousBean.versSalle()}" />
 						<p:commandButton value="Annuler"
 						icon="ui-icon-closethick" oncomplete="dlgsalle.hide();"
 							ajax="false"></p:commandButton>
 					</div>
-				</p:outputPanel>
-			</p:dialog>
-
+						</p:dialog>
+						<script type="text/javascript">
+					function handleLoginRequestdlgsalle(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dlgsalle').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							PF('dlgsalle').hide();
+							$('#loginLink').fadeOut();
+						}
+					}
+				</script>
+				<p:dialog id="sup" widgetVar="dlgsuppRendez" resizable="false" header="Suppression"
+					closable="false" model="true"  >
+					<p:outputPanel>
+						<p:panel>
+						<h:panelGrid columns="2">
+						<p:graphicImage value="/images/warning.png"></p:graphicImage>
+						<h:outputText
+							
+								value="#{historiqueCertifBean.msg}"></h:outputText>
+							</h:panelGrid>
+							<hr></hr>
+							<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{rendezVousBean.supprimerRendezVous(rendezVous.idrendezVous)}"
+									update=":formeGenerale,:formeGenerale:growl" oncomplete="PF('dlgsuppRendez').hide();"></p:commandButton>
+								<p:commandButton value="Non"
+									oncomplete="PF('dlgsuppRendez').hide();"></p:commandButton>
+							</h:panelGrid>
+						</div>
+						</p:panel>
+					</p:outputPanel>
+				</p:dialog>
 			<p:dialog id="modif" widgetVar="modifDialog" closeOnEscape="true"
 				width="50%" modal="true" header="Modifier Rendez-vous"
 				showEffect="clip" hideEffect="fade">
@@ -340,14 +370,14 @@
 						style="width: 100%" />
 				</h:panelGrid>
 				<p:separator />
-				<h:panelGrid columns="2">
+				<div align="center">
 					<p:commandButton value="Valider" icon="ui-icon-check"
-						update=":formeGenerale" oncomplete="PF('eventDialog').show();"
+						update=":formeGenerale" oncomplete="PF('eventDialog').hide();"
 						actionListener="#{rendezVousBean.modifier()}" />
 					<p:commandButton value="Annuler"
 						icon="ui-icon-closethick" update=":formeGenerale"
 						oncomplete="PF('eventDialog').show();" />
-				</h:panelGrid>
+				</div>
 			</p:dialog>
 
 

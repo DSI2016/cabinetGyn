@@ -39,7 +39,6 @@ public class ConfigSalleBean {
 	}
 
 	public void setNomTab2(String nomTab2) {
-		System.out.println("nomTab2====>>>>>" + nomTab2);
 		this.nomTab2 = nomTab2;
 	}
 
@@ -85,8 +84,6 @@ public class ConfigSalleBean {
 
 			ordres.add(i);
 		}
-		System.out.println("valeur de i == " + i);
-
 		ordres.add(i);
 		return ordres;
 	}
@@ -135,7 +132,6 @@ public class ConfigSalleBean {
 	}
 
 	public void setNomTab(String nomTab) {
-		System.out.println("nom tab set" + nomTab);
 		this.nomTab = nomTab;
 	}
 
@@ -170,11 +166,12 @@ public class ConfigSalleBean {
 	public void validation() {
 		nomTab2 = nomTab2.replaceAll("\\s+", " ");
 		TabSalleService ser = new TabSalleService();
-		System.out.println("nomTab2== " + nomTab2);
 		List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
 		tabSallesActiv = ser.rechercheParActive();
 		FacesContext faces = FacesContext.getCurrentInstance();
+		@SuppressWarnings("unused")
 		RequestContext context = RequestContext.getCurrentInstance();
+		@SuppressWarnings("unused")
 		boolean addValid = false;
 
 		if (nomTab2 == null || (nomTab2.trim().length() == 0)) {
@@ -203,7 +200,6 @@ public class ConfigSalleBean {
 
 			else {// nom tab n'existe pas
 
-				System.out.println("index===" + index);
 
 				if (index == null) {
 
@@ -328,29 +324,15 @@ public class ConfigSalleBean {
 	public void activerTab(TabSalle tabSal) {
 		tab = tabSal;
 
-		/*
-		 * int i; ordres.clear(); TabSalleService ser= new TabSalleService();
-		 * List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
-		 * tabSallesActiv= ser.rechercheParActive(); for(i=1; i<=
-		 * tabSallesActiv.size();i++){
-		 * 
-		 * ordres.add(i); } System.out.println("valeur de i == "+i);
-		 * 
-		 * ordres.add(i);
-		 */
-
 	}
 
 	public void onchageOrdr() {
 
-		System.out.println("get in order methode");
 		TabSalleService ser = new TabSalleService();
 		List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
 		List<TabSalle> tabSallesParOrdr = new ArrayList<TabSalle>();
 		tabSallesActiv = ser.rechercheParActive();
 		tabSallesParOrdr = ser.rechercheParOrd(index);
-
-		System.out.println("l'index dans onchange ordr== " + index);
 
 		if (tabSallesActiv.size() > 0 && tabSallesParOrdr.size() > 0) {
 
@@ -375,13 +357,11 @@ public class ConfigSalleBean {
 		ordreDiff = ts.isOrdreDifferent();
 		index = ts.getOrdre();
 
-		System.out.println("index dans recup donné" + index);
-
-		System.out.println("recup donn; idTabSalle== " + idTabSalle);
 
 	}
 
 	public void validationModif() {
+		@SuppressWarnings("unused")
 		boolean addValid = false;
 		nomTab2 = nomTab2.replaceAll("\\s+", " ");
 		TabSalleService ser = new TabSalleService();
@@ -389,6 +369,7 @@ public class ConfigSalleBean {
 		List<TabSalle> tabSallesActiv = new ArrayList<TabSalle>();
 		tabSallesActiv = ser.rechercheParActive();
 		FacesContext faces = FacesContext.getCurrentInstance();
+		@SuppressWarnings("unused")
 		RequestContext context = RequestContext.getCurrentInstance();
 
 		if (nomTab2 == null || (nomTab2.trim().length() == 0)) {

@@ -2187,12 +2187,7 @@ public class CfclientBean implements java.io.Serializable {
 		setAction("Ajout");
 		action = "Ajout";
 		index = 0;
-		RequestContext context = RequestContext.getCurrentInstance();
-		initialisation();
-		context.execute("PF('dlgValidation').show();");
-		RequestContext.getCurrentInstance().update(
-				"f1:formulaire:idDlgValidation");
-
+		
 	}
 
 	public void ajoutDoublet() {
@@ -2562,6 +2557,7 @@ public class CfclientBean implements java.io.Serializable {
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_INFO, "",
 						"Patiente modifié avec succés"));
+				initialisation();
 				init();
 				RequestContext.getCurrentInstance().update("f1");
 
@@ -2569,7 +2565,7 @@ public class CfclientBean implements java.io.Serializable {
 			}
 		}
 
-		initialisation();
+		
 
 		context.addCallbackParam("addValid", addValid);
 	}
@@ -2791,8 +2787,7 @@ public class CfclientBean implements java.io.Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idu", c);
-	//  HttpServletRequest request=null ;
-	//	HttpSession session= request.getSession(true);
+
 		session.setAttribute("retouraction", "Rendez-Vous");
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -2807,7 +2802,18 @@ public class CfclientBean implements java.io.Serializable {
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.execute("PF('dlg1').hide();");
 	}
+public void initialeSalle()
+{
+	code = null;
+	nom = null;
+	prenom=null;
+	prefix=null;
+	dernierVisite=null;
+	motif=null;
+	heure=null;
+	RequestContext.getCurrentInstance().update(":f1:formulaire:idDlgsalle");
 
+}
 	public void initialisation() {
 		code = null;
 		nom = null;
@@ -2895,15 +2901,16 @@ public class CfclientBean implements java.io.Serializable {
 	public void initVersSalle(Integer idpatient) {
 		Cfclient patient= new Cfclient();
 		CfclientService cfSer= new CfclientService();
-		patient= cfSer.RechercheCfclient(idpatient);
+		patient= cfSer.RechercheCfclientSansjointure(idpatient);
 		code = patient.getCode();
+		
 		nom = patient.getNom();
 		prenom = patient.getPrenom();
 		SalleService serv = new SalleService();
 		Salle sal = serv.rechercheSalleParPatient(code);
 		if (sal == null) {
-
 			prefix = patient.getPrefix();
+		
 			dernierVisite = patient.getDernierVisite();
 			motif = null;
 			Date v = new Date();
@@ -2926,20 +2933,18 @@ public class CfclientBean implements java.io.Serializable {
 			RequestContext.getCurrentInstance().update(
 					":f1:formulaire:idDlgsalle");
 			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('dlgsalle').show();");
+			context.execute("PF('dlgsalle').show();");                 
 		} else {
-
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attention!",
-							"\"" + prenom + " " + nom
-									+ "\" déja dans la salle d'attente"));
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getFlash().setKeepMessages(true);
+							"" + prenom + " " + nom
+									+ " déja dans la salle d'attente"));
+			initialeSalle();
 
-			initialisation();
-			RequestContext.getCurrentInstance().update("f1");
 		}
+	
+		
 	}
 
 	private RendezVous rdv;
@@ -2961,11 +2966,7 @@ public class CfclientBean implements java.io.Serializable {
 		boolean addValid = false;
 		CfclientService se = new CfclientService();
 		Cfclient cl = se.RechercheCfclient(code);
-		//TabSalle ts= new TabSalle();
-		//ts=ser.rechercheParId(idTabSalle);
-		//motif=ts.getNomTab();
 		boolean ordrDiff;
-		//ordrDiff=ts.isOrdreDifferent();
 	
 		tsList=ser.rechercheParOrdDiff(false);//list tabsalle while orddiff==false
 		for(int i=0; i<tsList.size();i++){
@@ -3007,14 +3008,15 @@ public class CfclientBean implements java.io.Serializable {
 
 			addValid = true;
 
-			initialisation();
-			RequestContext.getCurrentInstance().update("f1");
+			initialeSalle();
+			RequestContext.getCurrentInstance().update(":f1:formulaire:idDlgsalle,:f1:growl");
 
 		} else {
 			addValid = false;
 			blocage = true;
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"", "Veuillez choisir motif."));
+					"",  "Veuillez choisir un type du salle d'attente"));
+			
 		}
 
 		context2.addCallbackParam("addValid", addValid);

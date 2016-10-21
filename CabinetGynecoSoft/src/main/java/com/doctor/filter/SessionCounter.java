@@ -38,6 +38,7 @@ public static List<EnLigne> sesionEnLigne = new ArrayList<EnLigne>();
 			if(sessionTemp==false)
 			{
 				EnLigne enligneASupp=ser1.rechercheEnLigne(Listesession.get(k).getIdenligne());
+				System.out.println("en ligne a supprimer session counter"+enligneASupp);
 				if(enligneASupp!=null)
 					{ser1.supprimerEnLigne(enligneASupp);}
 						

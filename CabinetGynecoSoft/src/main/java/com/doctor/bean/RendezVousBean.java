@@ -841,6 +841,10 @@ public class RendezVousBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		String action = (String) session.getAttribute("actionRDV");
+		if(action == null)
+		{
+			action="consulter";
+		}
 		if (action.equals("affecter")) {
 			if (view.equals("month")) {
 				view = "agendaDay";
@@ -1029,6 +1033,7 @@ public class RendezVousBean implements Serializable {
 				permenent = false;
 			}
 		}
+		
 	}
 
 	public void horsHoraire() {
@@ -1385,7 +1390,6 @@ public class RendezVousBean implements Serializable {
 
 	public void selectClient(Integer id) {
 		init();
-		Cfclient patient= new Cfclient();
 		CfclientService cfSer= new CfclientService();
 		codeclient= cfSer.RechercheCfclient(id);
 		codeclientCode = id;
@@ -1403,6 +1407,7 @@ public class RendezVousBean implements Serializable {
 	}
 
 	public void versSalle(RendezVous obj) {
+		System.out.println("entree methode");
 		try {
 			setSelectedDate(new Date());
 		} catch (ParseException e) {
@@ -1410,6 +1415,7 @@ public class RendezVousBean implements Serializable {
 		}
 		codeclient = obj.getCodeclient();
 		selectedRendezVous = obj;
+		
 	}
 
 	@SuppressWarnings("deprecation")
@@ -1429,6 +1435,9 @@ public class RendezVousBean implements Serializable {
 	}
 
 	public void versSalle() {
+		System.out.println("entree methode 2");
+		boolean addValid=false;
+	
 		// recherche si patient existe dans la salle
 		SalleService serv = new SalleService();
 		Salle sal = serv.rechercheSalleParPatient(codeclient.getCode());
@@ -1446,7 +1455,7 @@ public class RendezVousBean implements Serializable {
 
 		CfclientService se = new CfclientService();
 		Cfclient cl = se.RechercheCfclient(codeclient.getCode());
-
+		if (motif != null && motif.length() > 0) {
 		if (sal == null) {
 
 			if (motifsList.contains(motif)) {
@@ -1464,12 +1473,17 @@ public class RendezVousBean implements Serializable {
 
 			// ///souuuuuu
 			ser.ajouterSalle(s, motif, tsList, ordrDiff);
+			
 			((RendezVous) selectedRendezVous).setEtat(1);
 			RendezVousService ser02 = new RendezVousService();
 			ser02.modifierRendezVous((RendezVous) selectedRendezVous);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"", "Patiente ajoutée à la salle d'attente avec succès."));
+			addValid = true;
 		}
 
 		else {
+			addValid = true;
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attention!",
@@ -1477,11 +1491,22 @@ public class RendezVousBean implements Serializable {
 									+ "\" déjà dans la salle d'attente"));
 			permenent = true;
 		}
+		
+		}
+		else
+		{addValid = false;
+		permenent = true;
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"", "Veuillez choisir un type du salle d'attente"));
+		}
+		RequestContext context2 = RequestContext.getCurrentInstance();
+		context2.addCallbackParam("addValid", addValid);
 		codeclient = null;
 		codeclientCode = null;
 		motif = null;
 		noteSalle = null;
 	}
+	
 
 	public void toDay() {
 		selectedDate = new Date();

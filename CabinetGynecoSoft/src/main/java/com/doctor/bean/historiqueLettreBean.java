@@ -11,12 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+
+
 
 
 
@@ -160,7 +163,16 @@ public class historiqueLettreBean implements Serializable {
 	public void setAction(String action) {
 		this.action = action;
 	}
-
+	@PostConstruct
+	public void init ()
+	{
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext()
+				.getSession(false);
+		session.setAttribute("idu", idPatient);
+		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
+	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
+	}
 	private List<historiqueLettre> historiqueLettres = new ArrayList<historiqueLettre>();
 
 	public Lettre getLettre() {

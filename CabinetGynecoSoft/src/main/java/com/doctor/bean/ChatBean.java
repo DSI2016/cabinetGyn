@@ -64,7 +64,6 @@ users=enligneser.rechercheTousEnLigne();
 	}
 
 	public void sendGlobal() {
-		//System.out.println("msg    " + globalMessage);
 		HistoriqueMsg hm = new HistoriqueMsg();
 		hm.setTexte(globalMessage);
 		hm.setLu(false);
