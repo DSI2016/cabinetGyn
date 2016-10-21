@@ -119,9 +119,10 @@ public class OrdonnanceBean implements Serializable {
 				consultation = true;
 				afficheBtnAnnul=false;
 			}
-			else
+			else if (action != null && action.equals("Ajout")){
 				consultation = false;
 			    afficheBtnAnnul=true;
+			    }
 		}
 
 		return consultation;
@@ -723,7 +724,7 @@ public class OrdonnanceBean implements Serializable {
 		// validation = true;
 		consultation=true;
 		afficheBtnAnnul=true;
-		System.out.println("consultation==>>"+consultation);
+		
 		//RequestContext.getCurrentInstance().update("f1");
 		
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -734,6 +735,7 @@ public class OrdonnanceBean implements Serializable {
 			System.out.println(e.getMessage());
 		}
 		
+		System.out.println("consultation==>>"+consultation);
 	}
 
 	public void retour() {

@@ -9,7 +9,7 @@
 <ui:composition template="../templates/templateGyneco.xhtml">
 	<ui:define name="title">ConfigSalle</ui:define>
 	<ui:define name="body">
-		<p:graphicImage value="/imagesTitre/Consultations.png" width="100%"></p:graphicImage>
+		<p:graphicImage value="/imagesTitre/configurationsalleattente.png" width="100%"></p:graphicImage>
 		<br />
 
 		<h:form id="f1">
@@ -40,7 +40,7 @@
 						paginatorPosition="bottom"
 						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 						rows="10">
-						<p:column width="40%">
+						<p:column >
 							<f:facet name="header">
 								<h:outputLabel value="Nom Tab" />
 							</f:facet>
@@ -62,7 +62,7 @@
 							<f:facet name="header">
 								<h:outputLabel value="Ordre" />
 							</f:facet>
-						    #{tabSal.ordreDifferent}
+						    #{not tabSal.ordreDifferent}
 						</p:column>
 						<p:column style="width:20%">
 
