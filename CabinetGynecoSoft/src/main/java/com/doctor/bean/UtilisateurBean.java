@@ -377,7 +377,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean consultHistoAnalPriv;
 	private boolean supHistoAnalPriv;
 	private boolean ajoutDemandAnalPriv;
-	
 
 	private boolean rapportFichePriv;
 
@@ -386,7 +385,7 @@ public class UtilisateurBean implements java.io.Serializable {
 	private boolean consultHistoRadPriv;
 	private boolean supHistoRadPriv;
 	private boolean ajoutDemandRadPriv;
-	
+
 	private boolean ordonceFichePriv;
 	private boolean consultOrdLibrePriv;
 	private boolean modifHistoOrdPriv;
@@ -421,8 +420,6 @@ public class UtilisateurBean implements java.io.Serializable {
 
 	private boolean consultAnalActiv = true;
 	private boolean desactivSessPriv;
-	
-	
 
 	public boolean isDesactivSessPriv() {
 		return desactivSessPriv;
@@ -447,8 +444,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setAjoutDemandRadPriv(boolean ajoutDemandRadPriv) {
 		this.ajoutDemandRadPriv = ajoutDemandRadPriv;
 	}
-
-	
 
 	public boolean isAjoutDemandOrdPriv() {
 		return ajoutDemandOrdPriv;
@@ -509,8 +504,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setAnulSalPriv(boolean anulSalPriv) {
 		this.anulSalPriv = anulSalPriv;
 	}
-	
-	
 
 	public boolean isSupAnulSalPriv() {
 		return supAnulSalPriv;
@@ -1783,8 +1776,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	public void setModifAntPriv(boolean modifAntPriv) {
 		this.modifAntPriv = modifAntPriv;
 	}
-	
-	
 
 	public boolean isNouvAntPriv() {
 		return nouvAntPriv;
@@ -2154,8 +2145,6 @@ public class UtilisateurBean implements java.io.Serializable {
 		this.gestDocPriv = gestDocPriv;
 	}
 
-	
-	
 	public boolean isAffectEtoilPatPriv() {
 		return affectEtoilPatPriv;
 	}
@@ -2417,17 +2406,11 @@ public class UtilisateurBean implements java.io.Serializable {
 				String verif = Module.verifierDate(dn);
 				if (verif != null && !(verif.equals(""))) {
 					String msg = verif + "";
-					System.out.println("le msg  " + msg);
 					faces.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_ERROR, msg, null));
-				} else {
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					Date d = sdf.parse(dn);
-					System.out.println("date=  " + d);
 				}
 			} catch (Exception e) {
-
-				System.out.println("pb date");
+				System.out.println(e.getMessage());
 			}
 
 		}
@@ -2439,39 +2422,33 @@ public class UtilisateurBean implements java.io.Serializable {
 															// vide
 
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Login vide",
-					null));
+					FacesMessage.SEVERITY_ERROR, "Login vide", null));
 		} else if (utlBylog.size() > 0) {
 
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Login existe déja",
-					null));
+					FacesMessage.SEVERITY_ERROR, "Login existe déja", null));
 		}
 
 		if (motPasse == null || (motPasse.trim().length() == 0)) {
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Mot de Passe vide",
-					null));
+					FacesMessage.SEVERITY_ERROR, "Mot de Passe vide", null));
 		}
 
 		if (nom == null || (nom.trim().length() == 0)) {
 
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Nom est vide",
-					null));
+					FacesMessage.SEVERITY_ERROR, "Nom est vide", null));
 		}
-		if ( prenom == null || (prenom.trim().length() == 0)) {
+		if (prenom == null || (prenom.trim().length() == 0)) {
 
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Prenom est vide",
-					null));
+					FacesMessage.SEVERITY_ERROR, "Prenom est vide", null));
 		}
-		
+
 		if (!b) {
 
 			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Format email invalide",
-					null));
+					FacesMessage.SEVERITY_ERROR, "Format email invalide", null));
 
 		}
 
@@ -2811,8 +2788,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setConfSession(false);
 			}
-			
-			
+
 			if (ajoutDemandRadPriv) {
 				u.setAjoutDemandeRad(true);
 			} else {
@@ -2823,7 +2799,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setAjoutDemandeOrd(false);
 			}
-			
+
 			if (radioFichePriv) {
 				u.setRadioFiche("1");
 			} else {
@@ -3031,9 +3007,9 @@ public class UtilisateurBean implements java.io.Serializable {
 			if (affectEtoilPatPriv) {
 				u.setAffectEtoile(true);
 			} else {
-				u.setAffectEtoile(false);;
+				u.setAffectEtoile(false);
+				;
 			}
-			
 
 			if (gestDocPriv) {
 				u.setGestDoc("1");
@@ -3538,7 +3514,6 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSelectAntecedent(false);
 			}
-			
 
 			if (tabGynecoObsPriv) {
 				u.setTabGynecoObs("1");
@@ -3685,12 +3660,6 @@ public class UtilisateurBean implements java.io.Serializable {
 
 			ser.ajoutUtilisateur(u);
 
-			/*
-			 * try { FacesContext.getCurrentInstance().getExternalContext()
-			 * .redirect("GestionUtilisateur.xhtml"); } catch (Exception e) {
-			 * System.out.println(e.getMessage()); }
-			 */
-
 			initialisation();
 			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Utilisateur ajouté avec succès", "Invalid credentials"));
@@ -3711,30 +3680,14 @@ public class UtilisateurBean implements java.io.Serializable {
 
 	}
 
-	/*
-	 * public void redirectverGestUtl(){
-	 * 
-	 * 
-	 * FacesContext context2 = FacesContext.getCurrentInstance();
-	 * 
-	 * try { System.out.println("**********************");
-	 * context2.getExternalContext().redirect("GestionUtilisateur.xhtml");
-	 * }catch(Exception e){ System.out.println(e.getMessage()); }
-	 * 
-	 * }
-	 */
+	
 
 	public void modifierUtilisateur() {
 		FacesContext face = FacesContext.getCurrentInstance();
 
 		UtilisateurService utlser = new UtilisateurService();
 		List<Utilisateur> utlBylog = utlser.rechercheUtilisateurByLogin(login);
-		// List<Utilisateur> utlBymotPss = utlser
-		// .rechercheUtilisateurByMotPass(motPasse);
-
-		
-		
-		
+	
 		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		Boolean b = true;
 		if (email != null && email.trim().length() > 0)
@@ -3763,17 +3716,16 @@ public class UtilisateurBean implements java.io.Serializable {
 					"Mot de Passe vide", null));
 		}
 
-		if (nom == null || (nom.trim().length() == 0))
-				 {
+		if (nom == null || (nom.trim().length() == 0)) {
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Nom est vide", null));
 		}
 
-		if(prenom == null || (prenom.trim().length() == 0))
-		{face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"Prenom est vide", null));
-			
+		if (prenom == null || (prenom.trim().length() == 0)) {
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Prenom est vide", null));
+
 		}
 		if (dn != null && dn.length() > 0) {
 			try {
@@ -3783,21 +3735,15 @@ public class UtilisateurBean implements java.io.Serializable {
 				String verif = Module.verifierDate(dn);
 				if (verif != null && !(verif.equals(""))) {
 					String msg = verif + "";
-					System.out.println("le msg  " + msg);
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_ERROR, msg, null));
-				} else {
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					Date d = sdf.parse(dn);
-					System.out.println("date=  " + d);
-				}
+				} 
 			} catch (Exception e) {
-
-				System.out.println("pb date");
+				System.out.println(e.getMessage());
 			}
 
 		}
-		
+
 		if (!b) {
 
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -4364,7 +4310,8 @@ public class UtilisateurBean implements java.io.Serializable {
 				if (affectEtoilPatPriv) {
 					u.setAffectEtoile(true);
 				} else {
-					u.setAffectEtoile(false);;
+					u.setAffectEtoile(false);
+					;
 				}
 
 				if (gestDocPriv) {
@@ -4634,7 +4581,7 @@ public class UtilisateurBean implements java.io.Serializable {
 				} else {
 					u.setAnulSal(false);
 				}
-				
+
 				if (supAnulSalPriv) {
 					u.setSupAnulSal(true);
 				} else {
@@ -4854,7 +4801,7 @@ public class UtilisateurBean implements java.io.Serializable {
 				} else {
 					u.setSelectAntecedent(false);
 				}
-				
+
 				if (tabGynecoObsPriv) {
 					u.setTabGynecoObs("1");
 				} else {
@@ -5030,7 +4977,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		index = 0;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		date_naiss = u.getDate_naiss();
-		dn=u.getDate_naiss();
+		dn = u.getDate_naiss();
 		try {
 
 			if (date_naiss != null && !date_naiss.equals(""))
@@ -5484,28 +5431,26 @@ public class UtilisateurBean implements java.io.Serializable {
 			supHistoAnalPriv = false;
 		}
 		if (u.isAjoutDemandeAnal()) {
-			ajoutDemandAnalPriv= true;
+			ajoutDemandAnalPriv = true;
 		} else {
 			ajoutDemandAnalPriv = false;
 		}
 		if (u.isConfSession()) {
-			desactivSessPriv= true;
+			desactivSessPriv = true;
 		} else {
 			desactivSessPriv = false;
 		}
-		
+
 		if (u.isAjoutDemandeRad()) {
-			ajoutDemandRadPriv= true;
+			ajoutDemandRadPriv = true;
 		} else {
 			ajoutDemandRadPriv = false;
 		}
 		if (u.isAjoutDemandeOrd()) {
-			ajoutDemandOrdPriv= true;
+			ajoutDemandOrdPriv = true;
 		} else {
 			ajoutDemandOrdPriv = false;
 		}
-		
-		
 
 		if (radioFiche.equals("1")) {
 			radioFichePriv = true;
@@ -6452,7 +6397,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabContctPatPriv = false;
 		tabInfoConjAjtPatPriv = false;
 		tabAtreInfAjtPatPriv = false;
-		affectEtoilPatPriv=false;
+		affectEtoilPatPriv = false;
 		gestDocPriv = false;
 		gestAntecedentParamPriv = false;
 		paramtabAntMedPriv = false;
@@ -6508,7 +6453,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		reponseSalPriv = false;
 		tabAnulSalPriv = false;
 		anulSalPriv = false;
-		supAnulSalPriv=false;
+		supAnulSalPriv = false;
 		donnerRdvPriv = false;
 		archiverPatPriv = false;
 		consultArchivePriv = false;
@@ -6548,7 +6493,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabAntecedentPriv = false;
 		modifGynObsPriv = false;
 		modifAntPriv = false;
-		nouvAntPriv=false;
+		nouvAntPriv = false;
 		suppAntPriv = false;
 		tabGynecoObsPriv = false;
 		tabHistGrossPriv = false;
@@ -6593,8 +6538,8 @@ public class UtilisateurBean implements java.io.Serializable {
 		modifHistoAnalPriv = false;
 		consultHistoAnalPriv = false;
 		supHistoAnalPriv = false;
-		ajoutDemandAnalPriv=false;
-		desactivSessPriv=false;
+		ajoutDemandAnalPriv = false;
+		desactivSessPriv = false;
 
 		radioFichePriv = false;
 		modifHistoRadPriv = false;
@@ -6602,7 +6547,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoRadPriv = false;
 		imprAnalPriv = false;
 		imprRadioPriv = false;
-		ajoutDemandRadPriv=false;
+		ajoutDemandRadPriv = false;
 
 		rapportFichePriv = false;
 
@@ -6612,7 +6557,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = false;
 		rechercheOrdPriv = false;
 		imprOrdPriv = false;
-		ajoutDemandOrdPriv=false;
+		ajoutDemandOrdPriv = false;
 
 		ajoutModeleordPriv = false;
 		selectModeleordPriv = false;
@@ -6620,12 +6565,6 @@ public class UtilisateurBean implements java.io.Serializable {
 		consultertHistoConsultationPriv = false;
 
 		gestSaisPriv = false;
-
-		/*
-		 * try { FacesContext.getCurrentInstance().getExternalContext()
-		 * .redirect("AjouterUtilisateur.xhtml"); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); }
-		 */
 
 	}
 
@@ -6694,7 +6633,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		reponseSalPriv = true;
 		tabAnulSalPriv = true;
 		anulSalPriv = true;
-		supAnulSalPriv=true;
+		supAnulSalPriv = true;
 		// donnerRdvPriv=true;
 
 	}
@@ -6712,7 +6651,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		reponseSalPriv = false;
 		tabAnulSalPriv = false;
 		anulSalPriv = false;
-		supAnulSalPriv=false;
+		supAnulSalPriv = false;
 		// donnerRdvPriv=false;
 
 	}
@@ -6725,7 +6664,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabContctPatPriv = true;
 		tabInfoConjAjtPatPriv = true;
 		tabAtreInfAjtPatPriv = true;
-		affectEtoilPatPriv=true;
+		affectEtoilPatPriv = true;
 		verSalPriv = true;
 		modifPatPriv = true;
 		detPatPriv = true;
@@ -6745,7 +6684,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		tabContctPatPriv = false;
 		tabInfoConjAjtPatPriv = false;
 		tabAtreInfAjtPatPriv = false;
-		affectEtoilPatPriv=false;
+		affectEtoilPatPriv = false;
 		verSalPriv = false;
 		modifPatPriv = false;
 		detPatPriv = false;
@@ -6871,8 +6810,6 @@ public class UtilisateurBean implements java.io.Serializable {
 		menuRappPriv = true;
 		rappCertifPriv = true;
 		rappLettrePriv = true;
-		
-		
 
 	}
 
@@ -6988,7 +6925,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		gestSaisPriv = false;
 
 		gestCabinetPriv = false;
-		
+
 		menuRappPriv = false;
 		rappCertifPriv = false;
 		rappLettrePriv = false;
@@ -7010,7 +6947,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		modifGynObsPriv = true;
 		modifAntPriv = true;
 		suppAntPriv = true;
-		nouvAntPriv=true;
+		nouvAntPriv = true;
 
 	}
 
@@ -7030,7 +6967,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		modifGynObsPriv = false;
 		modifAntPriv = false;
 		suppAntPriv = false;
-		nouvAntPriv=false;
+		nouvAntPriv = false;
 
 	}
 
@@ -7193,10 +7130,10 @@ public class UtilisateurBean implements java.io.Serializable {
 
 		analyseFichePriv = true;
 		modifHistoAnalPriv = true;
-		//consultHistoAnalPriv = true;
+		// consultHistoAnalPriv = true;
 		supHistoAnalPriv = true;
 		imprAnalPriv = true;
-		ajoutDemandAnalPriv=true;
+		ajoutDemandAnalPriv = true;
 	}
 
 	public void touDecocherAnalFich() {
@@ -7205,7 +7142,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		consultHistoAnalPriv = false;
 		supHistoAnalPriv = false;
 		imprAnalPriv = false;
-		ajoutDemandAnalPriv=false;
+		ajoutDemandAnalPriv = false;
 
 	}
 
@@ -7216,7 +7153,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoRadPriv = true;
 		imprAnalPriv = true;
 		imprRadioPriv = true;
-		ajoutDemandRadPriv=true;
+		ajoutDemandRadPriv = true;
 
 	}
 
@@ -7227,7 +7164,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoRadPriv = false;
 		imprRadioPriv = false;
 		imprAnalPriv = false;
-		ajoutDemandRadPriv=false;
+		ajoutDemandRadPriv = false;
 	}
 
 	public void touCocherOrdFich() {
@@ -7237,7 +7174,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = true;
 		rechercheOrdPriv = true;
 		imprOrdPriv = true;
-		ajoutDemandOrdPriv=true;
+		ajoutDemandOrdPriv = true;
 
 	}
 
@@ -7247,7 +7184,7 @@ public class UtilisateurBean implements java.io.Serializable {
 		supHistoOrdPriv = false;
 		rechercheOrdPriv = false;
 		imprOrdPriv = false;
-		ajoutDemandOrdPriv=false;
+		ajoutDemandOrdPriv = false;
 	}
 
 	public void touCocherOrdLbreFich() {
@@ -7395,12 +7332,6 @@ public class UtilisateurBean implements java.io.Serializable {
 	}
 
 	public void redirectUtl() {
-
-		/*
-		 * try { FacesContext.getCurrentInstance().getExternalContext()
-		 * .redirect("GestionUtilisateur.xhtml"); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); }
-		 */
 
 		FacesContext context2 = FacesContext.getCurrentInstance();
 		context2.getExternalContext().getFlash().setKeepMessages(true);
@@ -7759,7 +7690,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSupAnalyse(false);
 			}
-			
+
 			if (ajoutDemandAnalPriv) {
 				u.setAjoutDemandeAnal(true);
 			} else {
@@ -7770,7 +7701,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setConfSession(false);
 			}
-			
+
 			if (ajoutDemandRadPriv) {
 				u.setAjoutDemandeRad(true);
 			} else {
@@ -7982,12 +7913,13 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setTabAutreInfAjoutPat("0");
 			}
-			
-			 if (affectEtoilPatPriv) {
-					u.setAffectEtoile(true);
-				} else {
-					u.setAffectEtoile(false);;
-				}
+
+			if (affectEtoilPatPriv) {
+				u.setAffectEtoile(true);
+			} else {
+				u.setAffectEtoile(false);
+				;
+			}
 
 			if (gestDocPriv) {
 				u.setGestDoc("1");
@@ -8472,11 +8404,11 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				u.setSuppAnt(false);
 			}
-			 if (nouvAntPriv) {
-					u.setSelectAntecedent(true);
-				} else {
-					u.setSelectAntecedent(false);
-				}
+			if (nouvAntPriv) {
+				u.setSelectAntecedent(true);
+			} else {
+				u.setSelectAntecedent(false);
+			}
 
 			if (tabGynecoObsPriv) {
 				u.setTabGynecoObs("1");
@@ -9074,23 +9006,23 @@ public class UtilisateurBean implements java.io.Serializable {
 				supHistoAnalPriv = false;
 			}
 			if (u.isAjoutDemandeAnal()) {
-				ajoutDemandAnalPriv= true;
+				ajoutDemandAnalPriv = true;
 			} else {
 				ajoutDemandAnalPriv = false;
 			}
 			if (u.isConfSession()) {
-				desactivSessPriv= true;
+				desactivSessPriv = true;
 			} else {
 				desactivSessPriv = false;
 			}
-			
+
 			if (u.isAjoutDemandeRad()) {
-				ajoutDemandRadPriv= true;
+				ajoutDemandRadPriv = true;
 			} else {
 				ajoutDemandRadPriv = false;
 			}
 			if (u.isAjoutDemandeOrd()) {
-				ajoutDemandOrdPriv= true;
+				ajoutDemandOrdPriv = true;
 			} else {
 				ajoutDemandOrdPriv = false;
 			}
@@ -9297,7 +9229,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				tabAtreInfAjtPatPriv = false;
 			}
-			
+
 			if (u.isAffectEtoile()) {
 				affectEtoilPatPriv = true;
 			} else {
@@ -9578,10 +9510,10 @@ public class UtilisateurBean implements java.io.Serializable {
 			}
 
 			if (u.isSupAnulSal()) {
-			supAnulSalPriv = true;
-		    } else {
-			supAnulSalPriv = false;
-		    }
+				supAnulSalPriv = true;
+			} else {
+				supAnulSalPriv = false;
+			}
 
 			if (u.isDonnerRdv()) {
 				donnerRdvPriv = true;
@@ -9799,7 +9731,7 @@ public class UtilisateurBean implements java.io.Serializable {
 			} else {
 				nouvAntPriv = false;
 			}
-			
+
 			if (tabGynecoObs.equals("1")) {
 				tabGynecoObsPriv = true;
 			} else {

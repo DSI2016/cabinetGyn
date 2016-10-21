@@ -541,13 +541,6 @@ public class lettreBean {
 					d.setTextLettre(textLettre);
 					ser.modifierlettre(d);
 
-//					try {
-//
-//						FacesContext.getCurrentInstance().getExternalContext()
-//								.redirect("Modélle-Lettre");
-//					} catch (Exception e) {
-//						System.out.println(e.getMessage());
-//					}
 					faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"", "Lettre modifiée avec succès."));
 					

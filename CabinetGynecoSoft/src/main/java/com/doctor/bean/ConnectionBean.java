@@ -2749,8 +2749,7 @@ public class ConnectionBean implements java.io.Serializable {
 		if (connect != null) {
 			new ConnecteService().supprimerConnecte(connect.getIdConnecte());
 			loggedIn = false;
-			if (Test.currentConnect > 0 && !login.equals("superadmin"))
-				Test.currentConnect--;
+			
 			if (login.equals("superadmin") == false) {
 
 				HttpServletRequest request = (HttpServletRequest) FacesContext

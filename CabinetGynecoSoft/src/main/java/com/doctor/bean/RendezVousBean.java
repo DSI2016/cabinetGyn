@@ -1407,7 +1407,6 @@ public class RendezVousBean implements Serializable {
 	}
 
 	public void versSalle(RendezVous obj) {
-		System.out.println("entree methode");
 		try {
 			setSelectedDate(new Date());
 		} catch (ParseException e) {

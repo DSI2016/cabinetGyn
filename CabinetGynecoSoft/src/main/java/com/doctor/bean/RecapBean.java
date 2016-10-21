@@ -77,19 +77,6 @@ public class RecapBean implements Serializable {
 	}
 	public int getTotalCons() {
 		ConsultationDetailService ser= new ConsultationDetailService();
-		/*Date actuelle = new Date();
-		Date d=null;
-		// * Definition du format utilise pour les dates
-		Format dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		String dateConsultation = dateFormat.format(new Date());
-		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			System.out.println(f.parse(dateConsultation));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-	
 		totalCons=ser.rechercheConsultationByDate(new Date()).size();
 		
 		
@@ -128,7 +115,6 @@ public class RecapBean implements Serializable {
 	public void lePatient(Integer c) {
 		// Module.idpatient = c;
 
-		System.out.println("get in lepatient idPatient== "+c);
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.setAttribute("idu", c);

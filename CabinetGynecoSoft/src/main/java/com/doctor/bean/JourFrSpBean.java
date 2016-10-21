@@ -177,7 +177,6 @@ public class JourFrSpBean implements Serializable{
 	
 	public void Validation(){
 		FacesContext faces = FacesContext.getCurrentInstance();
-		//System.out.println("Validation.Clique : \nDebut : "+debut+"\nFin : "+fin+"\nDiscription : "+disc);
 
 		if(action.equals("Ajouter")){
 			ajouterJourFrSp();

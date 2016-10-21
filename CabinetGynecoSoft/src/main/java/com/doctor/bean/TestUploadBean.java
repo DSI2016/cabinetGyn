@@ -54,13 +54,11 @@ public class TestUploadBean {
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
-		System.out.println("entrer" + event.getFile());
 		FacesMessage message = new FacesMessage("Succesful", event.getFile()
 				.getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		FacesContext faces = FacesContext.getCurrentInstance();
 		faces.addMessage(null, new FacesMessage(event.getFile().getFileName()));
-		System.out.println(event.getFile());
 		// enregistrer le ficher dan c:\temp
 	}
 
@@ -71,12 +69,10 @@ public class TestUploadBean {
 		int resultatEnregistrer = filechoose.showDialog(filechoose, approve);
 		if (resultatEnregistrer == JFileChooser.APPROVE_OPTION) {
 			destination = filechoose.getSelectedFile().getAbsolutePath();
-			System.out.println("chemin dest.   " + destination);
 		}
 	}
 
 	public void upload() {
-		// System.out.println("source   " + uploadedFile.getFileName());
 		destination = "C:\\temp";
 		if (uploadedFile != null) {
 			System.out.println(uploadedFile);
@@ -100,7 +96,6 @@ public class TestUploadBean {
 						try {
 							outputStream.close();
 						} catch (IOException e) {
-							System.out.println("premier excep");
 							e.printStackTrace();
 						}
 					}
@@ -108,7 +103,6 @@ public class TestUploadBean {
 						try {
 							inputStream.close();
 						} catch (IOException e) {
-							System.out.println("2ème excep");
 							e.printStackTrace();
 						}
 					}
