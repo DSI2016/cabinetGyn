@@ -250,8 +250,27 @@
 				</p:column>
 			</p:dataTable>
 
+            <div align="center">
+				<h:panelGrid columns="8">
+					<h:outputText value="Patientes actives: "
+						style="font-size:small;font-weight:bold;color:#045FB4" />
+					<h:outputText value="#{cfclientBean.nbPatientAct()}"
+						style="font-size:small;font-weight:bold" />
+					<p:spacer width="50px"></p:spacer>
+					<h:outputText value="Patientes archivées: "
+						style="font-size:small;font-weight:bold;color:#045FB4" />
+					<h:outputText value="#{cfclientBean.nbPatientArch()}"
+						style="font-size:small;font-weight:bold" />
+					<p:spacer width="50px"></p:spacer>
+					<h:outputText value="Total Patientes:"
+						style="font-size:small;font-weight:bold;color:#045FB4" />
+					<h:outputText value="#{cfclientBean.TotalPatient()}"
+						style="font-size:small;font-weight:bold" />
+				</h:panelGrid>
+			</div>
 
-			
+			<br />
+						
 
 			<br />
 			<div align="center">
