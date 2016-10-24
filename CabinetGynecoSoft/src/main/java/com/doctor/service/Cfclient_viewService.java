@@ -79,4 +79,61 @@ private Cfclient_viewHome dao;
 	}
 	
 
+	public Integer  total() {
+		Integer nbtotal = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			nbtotal = dao.Nbrtotal();
+			tx.commit();
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return nbtotal;
+
+	}
+	
+	public Integer  totalArchive() {
+		Integer nbtotal = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			nbtotal = dao.NbrArchive();
+			tx.commit();
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return nbtotal;
+
+	}
+	
+	public Integer  totalActive() {
+		Integer nbtotal = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			nbtotal = dao.NbrActive();
+			tx.commit();
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return nbtotal;
+
+	}
+	
+	
+	
+	
 }

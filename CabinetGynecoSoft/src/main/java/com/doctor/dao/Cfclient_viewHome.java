@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import com.doctor.bean.Module;
@@ -186,5 +187,32 @@ public class Cfclient_viewHome {
 		crit.addOrder(Property.forName("code").desc());
 		return crit.list();
 	}
-
+	public Integer Nbrtotal (){
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(Cfclient_view.class);
+				
+		Integer total=crit.setProjection(Projections.rowCount()).uniqueResult().hashCode();
+		  
+		  return total;
+	}
+	
+	public Integer NbrArchive (){
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(Cfclient_view.class)
+				.add(Restrictions.eq("archive", true));
+		
+		Integer totalArchive=crit.setProjection(Projections.rowCount()).uniqueResult().hashCode();
+		  
+		  return totalArchive;
+	}
+	
+	public Integer NbrActive (){
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(Cfclient_view.class)
+				.add(Restrictions.eq("archive", false));
+		
+		Integer totalArchive=crit.setProjection(Projections.rowCount()).uniqueResult().hashCode();
+		  
+		  return totalArchive;
+	}
 }

@@ -3920,15 +3920,15 @@ public void initialeSalle()
 
 	public int nbPatientAct() {
 
-		return new CfclientService().rechercheParArchive(false).size();
+		return new Cfclient_viewService().totalActive();
 	}
 
 	public int nbPatientArch() {
-		return new CfclientService().rechercheParArchive(true).size();
+		return new Cfclient_viewService().totalArchive();
 	}
 
 	public int TotalPatient() {
-		return nbPatientAct() + nbPatientArch();
+		return new Cfclient_viewService().total() ;
 	}
 
 	public void setListestris(List<String> listestris) {

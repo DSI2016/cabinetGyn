@@ -87,6 +87,8 @@ public class RendezVousBean implements Serializable {
 	private Date selectedDate = new Date();
 	private boolean permenent;
 	private String dateChoisi;
+	
+	private Integer idRenedezVous;
 //^pjkjkghgfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfg
 //	@PostConstruct
 //	public void mettreAJourSaison() {
@@ -133,9 +135,19 @@ public class RendezVousBean implements Serializable {
 //		}
 //
 //	}
+	
+	
 
 	public String getDateChoisi() {
 		return dateChoisi;
+	}
+
+	public Integer getIdRenedezVous() {
+		return idRenedezVous;
+	}
+
+	public void setIdRenedezVous(Integer idRenedezVous) {
+		this.idRenedezVous = idRenedezVous;
 	}
 
 	public void setDateChoisi(String dateChoisi) {
@@ -812,13 +824,28 @@ public class RendezVousBean implements Serializable {
 		permenent = false;
 		init();
 	}
+	
 
 	public void supprimerRendezVous(Integer id) {
+		
+		idRenedezVous= id;
+	}
+	
+	public void validerSuppRendezVous(){
+		RequestContext context = RequestContext.getCurrentInstance();
 		RendezVousService ser = new RendezVousService();
-		ser.supprimerRendezVous(id);
+		ser.supprimerRendezVous(idRenedezVous);
 		FacesContext faces = FacesContext.getCurrentInstance();
 		faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
 				"Rendez-vous est supprimé avec succès"));
+		
+		//RequestContext.getCurrentInstance().update(
+			//	":formeGenerale,:formeGenerale:growl");
+		context.execute("PF('dlgsuppRendez').hide();");
+		context.execute("PF('eventDialog').hide();");
+		//context.execute("PF('eventDialog').show();");
+		
+		
 	}
 
 	public void onDateSelect(SelectEvent selectEvent) throws ParseException {
@@ -1413,7 +1440,12 @@ public class RendezVousBean implements Serializable {
 			e.printStackTrace();
 		}
 		codeclient = obj.getCodeclient();
+		System.out.println(codeclient);
 		selectedRendezVous = obj;
+		//RequestContext context = RequestContext.getCurrentInstance();
+		//RequestContext.getCurrentInstance().update(
+				//	":formeGenerale:vsa");
+		//context.execute("PF('dlgsalle').show();");
 		
 	}
 
@@ -1434,7 +1466,7 @@ public class RendezVousBean implements Serializable {
 	}
 
 	public void versSalle() {
-		System.out.println("entree methode 2");
+		
 		boolean addValid=false;
 	
 		// recherche si patient existe dans la salle
