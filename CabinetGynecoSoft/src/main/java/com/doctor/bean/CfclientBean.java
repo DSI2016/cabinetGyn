@@ -35,6 +35,7 @@ import com.doctor.persistance.AntMedCfclient;
 import com.doctor.persistance.Cfclient;
 import com.doctor.persistance.Cfclient_view;
 import com.doctor.persistance.Clinique;
+import com.doctor.persistance.Connecte;
 import com.doctor.persistance.ConsultationDetail;
 import com.doctor.persistance.Contraception;
 import com.doctor.persistance.Docteur;
@@ -49,6 +50,7 @@ import com.doctor.persistance.RendezVous;
 import com.doctor.persistance.Salle;
 import com.doctor.persistance.Sterile;
 import com.doctor.persistance.TabSalle;
+import com.doctor.persistance.Utilisateur;
 import com.doctor.persistance.Ville;
 import com.doctor.persistance.historiqueLettre;
 import com.doctor.service.AnalyseDemandeeService;
@@ -59,6 +61,7 @@ import com.doctor.service.AntMedCfclientService;
 import com.doctor.service.CfclientService;
 import com.doctor.service.Cfclient_viewService;
 import com.doctor.service.CliniqueService;
+import com.doctor.service.ConnecteService;
 import com.doctor.service.ConsultationDetailService;
 import com.doctor.service.ContraceptionService;
 import com.doctor.service.DocteurService;
@@ -72,6 +75,7 @@ import com.doctor.service.RendezVousService;
 import com.doctor.service.SalleService;
 import com.doctor.service.SterileService;
 import com.doctor.service.TabSalleService;
+import com.doctor.service.UtilisateurService;
 import com.doctor.service.VilleService;
 import com.doctor.service.historiqueLettreService;
 import com.mysql.jdbc.Connection;
@@ -108,7 +112,7 @@ public class CfclientBean implements java.io.Serializable {
 	private String prefix;
 	private String nomprenom;
 	private String prenomnom;
-	private String ordre;
+	private String ordre="Croissante";
 	private String ordreArchive;
 	private int nbCons;
 	private String glycemie;
@@ -164,7 +168,7 @@ public class CfclientBean implements java.io.Serializable {
 	private String taille;
 	private String poids;
 	private String gs;
-	private String attributTri;
+	private String attributTri="Patiente";
 	private String attributTriArchive;
 	private int age;
 
@@ -1166,11 +1170,30 @@ public class CfclientBean implements java.io.Serializable {
 
 	@PostConstruct
 	public void init() {
-		//patients = new CfclientService().rechercheParArchive(false);
-		patientsView= new Cfclient_viewService().rechercheTousCfclient_view(false);
+		ordre="Croissante";
+		attributTri="Patiente";
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext()
+				.getSession(false);
+		String nomUtilisateur =(String) session.getAttribute("name");
+		Utilisateur ut = new UtilisateurService().rechercheUtilisateurByLogin(nomUtilisateur).get(0);
 		
-		//patientArchives = new CfclientService().rechercheParArchive(true);
-	}
+		if((ut!=null)&&(ut.getOrdreTrie()!=null)&&(ut.getAttributTrie()!=null))
+		{ordre=ut.getOrdreTrie();
+		attributTri=ut.getAttributTrie();
+		}
+		if ((attributTri.equals("") == false) &&(attributTri != null)&&(ordre.length()>0)) {
+			patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
+					ordre);
+		}
+		else
+			{patientsView= new Cfclient_viewService().rechercheTousCfclient_view(false);	}
+		
+
+	
+		
+		
+			}
 
 
 
@@ -1287,7 +1310,7 @@ public class CfclientBean implements java.io.Serializable {
 
 	public void triePatient() {
 
-		ordre = "croissante";
+		
 		patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
 				ordre);
 		RequestContext.getCurrentInstance().update("f1:patiente");
@@ -1299,6 +1322,7 @@ public class CfclientBean implements java.io.Serializable {
 
 		 patientArchives = new Cfclient_viewService().rechercherTriePatient(true,attributTriArchive,
 				ordreArchive);
+		 
 		RequestContext.getCurrentInstance().update("f1:patiente");
 	}
 
@@ -3919,23 +3943,40 @@ public void initialeSalle()
 		this.attributTri = attributTri;
 	}
 
-	public void croissante() {
-		ordre = "croissante";
+	public void ordonnerPatient() //cette methode ordonner la liste des patient non archivé
+	{
+		
 		if ((attributTri.equals("") == false) || (attribut != null)) {
 			patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
 					ordre);
+			HttpSession session = (HttpSession) FacesContext
+					.getCurrentInstance().getExternalContext()
+					.getSession(false);
+		String nomUtilisateur =(String) session.getAttribute("name");
+		Utilisateur ut = new UtilisateurService().rechercheUtilisateurByLogin(nomUtilisateur).get(0);
+		
+if(ut!=null)
+	{ut.setAttributTrie(attributTri);
+	ut.setOrdreTrie(ordre);
+	new UtilisateurService().modifierUtilisateur(ut);
+	
+	
+	}
+
+			Connecte connect = new ConnecteService()
+					.rechercheParConnecte("name");
 			RequestContext.getCurrentInstance().update("f1:patiente");
 		}
 	}
 
-	public void decroissante() {
-		ordre = "décroissante";
-		if ((attributTri.equals("") == false) || (attribut != null)) {
-			patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
-					ordre);
-			RequestContext.getCurrentInstance().update("f1:patiente");
-		}
-	}
+//	public void decroissante() {
+//		ordre = "décroissante";
+//		if ((attributTri.equals("") == false) || (attribut != null)) {
+//			patientsView = new Cfclient_viewService().rechercherTriePatient(false,attributTri,
+//					ordre);
+//			RequestContext.getCurrentInstance().update("f1:patiente");
+//		}
+//	}
 	public void croissanteArchive() {
 		ordreArchive = "croissante";
 		if ((attributTriArchive.equals("") == false) || (attributTriArchive != null)) {

@@ -64,12 +64,28 @@
 							<h:outputText value="#{salle.heure}"
 								style="font-size:small;font-weight:bold" />
 						</p:column>
-
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+	<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
 
 						<p:column style="width:10%">
@@ -193,14 +209,32 @@
 							<h:outputText value="#{salle.heure}"
 								style="font-size:small;font-weight:bold" />
 						</p:column>
-
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
 
+
+					
 						<p:column style="width:10%">
 							<f:facet name="header">
 								<h:outputLabel value="Ville" />
@@ -280,13 +314,30 @@
 							<h:outputText value="#{salle.heure}"
 								style="font-size:small;font-weight:bold" />
 						</p:column>
-
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 						<p:column style="width:10%">
 							<f:facet name="header">
@@ -367,13 +418,30 @@
 							<h:outputText value="#{salle.heure}"
 								style="font-size:small;font-weight:bold" />
 						</p:column>
-
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 						<p:column style="width:10%">
 							<f:facet name="header">
@@ -455,13 +523,30 @@
 							<h:outputText value="#{salle.heure}"
 								style="font-size:small;font-weight:bold" />
 						</p:column>
-
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 						<p:column style="width:10%">
 							<f:facet name="header">
@@ -544,12 +629,30 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 						<p:column style="width:10%">
 							<f:facet name="header">
@@ -633,12 +736,30 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 						<p:column style="width:10%">
 							<f:facet name="header">
@@ -723,12 +844,30 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 						<p:column style="width:10%">
 							<f:facet name="header">
@@ -813,11 +952,28 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
 
 						<p:column style="width:10%">
@@ -903,11 +1059,28 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
 
 						<p:column style="width:10%">
@@ -986,12 +1159,30 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column style="width:20%">
-							<f:facet name="header">
-								<h:outputLabel value="Patient" />
-							</f:facet>
-						     #{salle.cfclient.prenom} #{salle.cfclient.nom}
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
+								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
+								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 
 						<p:column style="width:10%">
@@ -1055,12 +1246,30 @@
 								style="font-size:small;font-weight:bold" />
 						</p:column>
 
-						<p:column headerText="Patient" style="width:20%">
-							<h:outputText
+<p:column headerText="Patient" style="width:26%">
+										<h:outputText
 								value="#{salle.cfclient.prenom} #{salle.cfclient.nom}" />
-							<h:outputText value=" [#{salle.cfclient.dernierVisite}]"
+							<h:outputText value=" [#{salle.cfclient.dernierVisite}]  "
 								style="font-size:small;font-weight:bold;color:#045FB4" />
+								<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative1(salle.cfclient)}"></p:graphicImage> <p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative2(salle.cfclient)}"></p:graphicImage>
+											<p:graphicImage
+											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{salleBean.changerRendredNegative3(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage
+											value="/imagesMenu/starVert.png" width="12px" height="12px" rendered="#{salleBean.changerRendredMoyen(salle.cfclient)}"></p:graphicImage> 
+										
+										
+										<p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive1(salle.cfclient)}"></p:graphicImage>
+									 <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive2(salle.cfclient)}"></p:graphicImage>
+									  <p:graphicImage value="/imagesMenu/starJaune.png" width="12px" height="12px" rendered="#{salleBean.changerRendredPositive3(salle.cfclient)}"></p:graphicImage>
+									   <p:graphicImage value="/imagesMenu/starOrange.png" width="12px" height="12px" rendered="#{salleBean.changerRendredExtra(salle.cfclient)}"></p:graphicImage>
+					
+		
+						
+		
 						</p:column>
+
 
 
 						<p:column style="width:10%">

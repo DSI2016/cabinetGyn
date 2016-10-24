@@ -481,28 +481,7 @@ public class SalleBean implements java.io.Serializable {
 		codePatient = codeClient;
 	}
 
-	// public void ajoutSalle() {
-	// String minu = "";
-	// Calendar c = Calendar.getInstance();
-	// Integer minute = c.get(Calendar.MINUTE);
-	// if (minute < 10)
-	// minu = "0" + minute;
-	// else
-	// minu = minute.toString();
-	//
-	// SalleService ser = new SalleService();
-	// Salle sal = new Salle();
-	// Cfclient cl = new Cfclient();
-	// CfclientService ser1 = new CfclientService();
-	// cl = ser1.RechercheCfclient(codePatient);
-	// sal.setCfclient(cl);
-	// sal.setHeure(c.get(Calendar.HOUR_OF_DAY) + ":" + minu);
-	// sal.setMotif(motif);
-	// sal.setNotes(notes);
-	// ser.ajouterSalle(sal, motif);
-	// initialiser();
-	//
-	// }
+
 
 	public List<Salle> getSallesAvecJointure() {
 
@@ -1059,5 +1038,112 @@ public class SalleBean implements java.io.Serializable {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+
+	public boolean changerRendredNegative1(Cfclient cl) throws Exception {
+
+		if (cl != null) {
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative1"))
+				return (true);
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative2")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative3")) {
+				return (true);
+			}
+
+		}
+		return (false);
+	}
+
+	public boolean changerRendredNegative2(Cfclient cl) throws Exception {
+		if (cl != null) {
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative2")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative3")) {
+				return (true);
+			}
+
+		}
+		return (false);
+	}
+
+	public boolean changerRendredNegative3(Cfclient cl) throws Exception {
+		if (cl != null) {
+
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileNegative3")) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+
+	public boolean changerRendredMoyen(Cfclient cl) throws Exception {
+		if (cl != null) {
+
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileMoyen")) {
+				return (true);
+			}
+		}
+		return (false);
+
+	}
+
+	public boolean changerRendredPositive1(Cfclient cl) throws Exception {
+
+		if (cl != null) {
+			if (cl.getCategoriEtoile()!=null && cl.getCategoriEtoile().equals("etoilePositive1"))
+				return (true);
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive2")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive3")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileExtra")) {
+				return (true);
+			}
+
+		}
+		return (false);
+	}
+
+	public boolean changerRendredPositive2(Cfclient cl) throws Exception {
+		if (cl != null) {
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive2")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive3")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileExtra")) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+
+	public boolean changerRendredPositive3(Cfclient cl) throws Exception {
+		if (cl != null) {
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoilePositive3")) {
+				return (true);
+			}
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileExtra")) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+
+	public boolean changerRendredExtra(Cfclient cl) throws Exception {
+		if (cl != null) {
+			if (cl.getCategoriEtoile()!=null &&cl.getCategoriEtoile().equals("etoileExtra")) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 
 }
