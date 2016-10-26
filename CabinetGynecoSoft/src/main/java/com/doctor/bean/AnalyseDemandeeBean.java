@@ -238,6 +238,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		dateAna = null;
 		desibledImpr = false;
 		impress = true;
+		
 		viewImprim = true;
 
 	}
@@ -466,10 +467,10 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 				clt.setRubeole(rubeole);
 				new CfclientService().modifierPatient(clt);
 
-				viewImprim = false;
-				desibledImpr = true;
-				selectedAnalyse = ana;
-				initApresValidation();
+				//viewImprim = false;
+				//desibledImpr = true;
+				//selectedAnalyse = ana;
+				//initApresValidation();
 			}
 			if (action != null && action.equals("Modif")) {
 				ana.setIdanalyseDemandee(idanalyseDemandee);
@@ -482,9 +483,17 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 				clt.setTpha(tpha);
 				clt.setRubeole(rubeole);
 				new CfclientService().modifierPatient(clt);
-				viewImprim = false;
-				initApresValidation();
+				//viewImprim = false;
+				//desibledImpr = true;
+				//selectedAnalyse = ana;
+				//initApresValidation();
 			}
+			selectedAnalyse = ana;
+			desibledImpr = false;
+			//initialisationAnalysea()
+			consultation = false;
+			action=null;
+			viewImprim = false;
 		}
 	}
 
@@ -533,7 +542,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			ana.setIdanalyseDemandee(idanalyseDemandee);
 			ser.modifierAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Demande analyse modifiée avec succès"));
+					"Demande analyse modifiée avec succès", ""));
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
@@ -571,6 +580,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			frottis = analy.getFrottis();
 			nomProprietaire = analy.getProprietaire();
 			proprietaire = analy.getPossesseur();
+			selectedAnalyse=analy;
 			HttpSession session = (HttpSession) FacesContext
 					.getCurrentInstance().getExternalContext()
 					.getSession(false);
@@ -594,7 +604,9 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		selectedAnalyse=ana;
+		action = "Modif";
+		
+		
 		idPatient = (Integer) session.getAttribute("idu");
 		idConsultationDetail = (Integer) session.getAttribute("idConsultD");
 		dateAna = ana.getDateAnalyse();
@@ -608,8 +620,10 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		agHbs = ana.getAgHbs();
 		glycemie = ana.getGlycemie();
 		frottis = ana.getFrottis();
-		action = "Modif";
+		selectedAnalyse=ana;
+		System.out.println("selectedAnalyse== "+selectedAnalyse);
 		viewImprim = true;
+		RequestContext.getCurrentInstance().update("f1");		
 
 	}
 
@@ -764,8 +778,8 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 
 		new AnalyseDemandeeService().supprimerAnalyseDemandee(idanalyseDemandee);
 		FacesContext face = FacesContext.getCurrentInstance();
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
-				"Demande d'analyse supprimée avec succés"));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Demande d'analyse supprimée avec succés",
+				""));
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
 		try {
@@ -816,8 +830,9 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 				}
 				FacesContext face = FacesContext.getCurrentInstance();
 				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_INFO, "",
-						"Demande d'analyse supprimée avec succés"));
+						FacesMessage.SEVERITY_INFO, "Demande d'analyse supprimée avec succés",
+						""));
+				impress=true;
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.getExternalContext().getFlash().setKeepMessages(true);
 				try {
@@ -830,6 +845,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 	}
 
 	public void retourliste() {
+		impress=true;
 		desibledImpr = true;
 		selectedAnalyse = null;
 		idanalyseDemandee = null;
@@ -922,7 +938,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		if (action.equals("ajout")) {
 			ser.ajoutAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Démande analyse ajoutée avec succés"));
+					"Démande analyse ajoutée avec succés", ""));
 			initialisationAnalyse();
 
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -938,7 +954,7 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 			ana.setIdanalyseDemandee(idanalyseDemandee);
 			ser.modifierAnalyseDemandee(ana);
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Démande analyse modifiée avec succés"));
+					"Démande analyse modifiée avec succés", ""));
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
@@ -1017,17 +1033,40 @@ public class AnalyseDemandeeBean implements java.io.Serializable {
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
+		String age1;
+		String age;
+		//String nomReport = "demandeAnalyse";
+		///String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+		
+		if (selectedAnalyse != null) {
+			String nomReport = "demandeAnalyse";
+			if (selectedAnalyse.getPossesseur().equals("Patiente")) {
+				if (clt.getDateNaiss() != null)
+					age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+				else
+					age1 = "";
+			} else {
+				if (clt.getDateNaissC() != null)
+					age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+				else
+					age1 = "";
+			}
 
-		String nomReport = "demandeAnalyse";
-		String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-		String age = "(" + age1 + ")";
+			if (age1.equals("")) {
+				age = age1;
+			} else {
+				age = "( " + age1 + " )" + " Ans";
+			}
 
-		Map<String, Object> param = new HashMap<String, Object>();
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("idAnalyse", selectedAnalyse.getIdanalyseDemandee());
+			param.put("age", age);
+			Module.imprimer(nomReport, param);
 
-		param.put("idAnalyse", selectedAnalyse.getIdanalyseDemandee());
-		param.put("age", age);
+		}
+		
 
-		Module.imprimer(nomReport, param);
+		
 	}
 
 	public Boolean getDesibledImpr() {

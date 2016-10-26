@@ -16,7 +16,7 @@ Historique Analyses</ui:define>
 		<br />
 		<div align="left">
 			<h:form id="f1">
-				<p:growl id="growl" showDetail="true" life="3000" />
+				<p:growl id="growl" showDetail="false" life="3000" />
 				<table border="0" width="100%">
 					<tr>
 						<td width="90%"><h:commandLink
@@ -68,7 +68,7 @@ Historique Analyses</ui:define>
 						emptyMessage="Pas des analyses !" paginator="true"
 						currentPageReportTemplate="{currentPage} / {totalPages}"
 						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-						rows="10" selectionMode="single" paginatorPosition="bottom"
+						rows="9" selectionMode="single" paginatorPosition="bottom"
 						rowKey="#{ana.idanalyseDemandee}"
 						selection="#{analyseDemandeeBean.selectedAnalyse}">
 						<p:ajax event="rowSelect"
@@ -133,12 +133,12 @@ Historique Analyses</ui:define>
 								rendered="#{connectionBean.modifAnalyse}"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.idanalyseDemandee)}"
-								oncomplete="PF('modifAnalyse').show();" update=":f1:ma" />
+								oncomplete="PF('modifAnalyse').show();" update=":f1:ma,:f1:patiente" />
 
 							<p:commandButton icon="ui-icon-search" title="Detail Analyse"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{analyseDemandeeBean.modifAnalyse(ana.idanalyseDemandee)}"
-								oncomplete="PF('detailAnalyse').show();" update=":f1:madetail" />
+								oncomplete="PF('detailAnalyse').show();" update=":f1:madetail,:f1:patiente" />
 
 							<p:commandButton update=":f1" actionListener="#{analyseDemandeeBean.supressionAnalyse(ana)}"
 								rendered="#{connectionBean.supAnalyse}" icon="ui-icon-trash"
@@ -175,9 +175,12 @@ Historique Analyses</ui:define>
 									<tr>
 										<td><h:outputText value="Date:"
 												style="font-size:12pt;font-weight:bold" /> <p:calendar
+												converterMessage="Veuillez vérifier la date que vous avez saisi"
 												id="button" value="#{analyseDemandeeBean.dateAna}"
 												disabled="#{analyseDemandeeBean.consultation}"
-												showOn="button" size="7" pattern="dd/MM/yyyy" /></td>
+												showOn="button" size="7" pattern="dd/MM/yyyy" >
+												<p:ajax event="blur" update=":f1:button"></p:ajax>
+												</p:calendar></td>
 										<td align="right"><h:panelGrid columns="3">
 												<h:outputText value="Analyse pour : "
 													style="font-size:13pt;font-weight:bold" />
@@ -209,7 +212,7 @@ Historique Analyses</ui:define>
 								<h:panelGrid columns="4">
 									<h:outputText value="Analyses demandées :"
 										style="font-size:12pt;font-weight:bold" />
-									<p:selectOneMenu value="#{analyseDemandeeBean.analyseDemandee}"
+									<p:selectOneMenu id="idAnalDem" value="#{analyseDemandeeBean.analyseDemandee}"
 										style="width:20px" panelStyle="width:180px" filter="true"
 										filterMatchMode="startsWith" effect="fade">
 										<p:ajax listener="#{analyseDemandeeBean.onanalyseChange}"
@@ -281,6 +284,7 @@ Historique Analyses</ui:define>
 									</p:commandButton>
 
 									<p:commandButton value="Annuler"
+									    actionListener="#{analyseDemandeeBean.closedialog()}"
 									    icon="ui-icon-closethick"
 										oncomplete="PF('modifAnalyse').hide();" update=":f1"
 										style="font-size:small;font-weight:bold"></p:commandButton>
@@ -291,7 +295,7 @@ Historique Analyses</ui:define>
 
 				</p:dialog>
 				<p:dialog id="madetail" widgetVar="detailAnalyse" resizable="false"
-					closable="false" model="true" width="620pt" showHeader="false">
+					closable="false" model="true" modal="true" width="630pt" showHeader="false">
 					<p:outputPanel>
 						<p:panel>
 							<table border="0" style="width: 100%; heigth: 2cm">
@@ -399,8 +403,9 @@ Historique Analyses</ui:define>
 							<div align="center">
 
 								<p:commandButton value="OK"
-									actionListener="#{analyseDemandeeBean.closedialog}"
-									oncomplete="PF('modifAnalysedetail').hide();" update=":f1"
+								    actionListener="#{analyseDemandeeBean.closedialog()}"
+									update=":f1"
+									oncomplete="PF('modifAnalysedetail').hide();" 
 									style="font-size:small;font-weight:bold"></p:commandButton>
 
 							</div>
@@ -410,7 +415,7 @@ Historique Analyses</ui:define>
 				</p:dialog>
 
 				<p:dialog id="sup" widgetVar="suppAnalyse" resizable="false" header="Suppression"
-					closable="false" model="true"  >
+					closable="false" modal="true" model="true"  >
 					<p:outputPanel>
 						<p:panel>
 						<h:panelGrid columns="2">

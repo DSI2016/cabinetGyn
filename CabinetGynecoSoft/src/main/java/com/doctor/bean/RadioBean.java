@@ -536,12 +536,12 @@ public class RadioBean implements java.io.Serializable {
 						"Demande radio ajoutée avec succés", ""));
 
 				FacesContext context = FacesContext.getCurrentInstance();
-				try {
+				/*try {
 
 					context.getExternalContext().redirect("DemandeRadio");
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
-				}
+				}*/
 				selectedRAdio = r;
 				consultRadio = r;
 				desibledImpr = true;
@@ -551,8 +551,8 @@ public class RadioBean implements java.io.Serializable {
 				r.setIdradio(idradio);
 				new RadioService().modifierRadio(r);
 				face.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_INFO, "",
-						"Demande radio modifiée avec succès"));
+						FacesMessage.SEVERITY_INFO, "Demande radio modifiée avec succès",
+						""));
 
 			}
 			exam = null;
@@ -592,8 +592,8 @@ public class RadioBean implements java.io.Serializable {
 
 		r.setIdradio(idradio);
 		new RadioService().modifierRadio(r);
-		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "",
-				"Demande radio modifiée avec succès"));
+		face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Demande radio modifiée avec succès",
+				""));
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);
@@ -812,7 +812,7 @@ public class RadioBean implements java.io.Serializable {
 			ser.modifierRadio(r);
 			initialeRadio();
 			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"", "Démande radio modifiée avec succés"));
+					"Démande radio modifiée avec succés", ""));
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
@@ -828,6 +828,7 @@ public class RadioBean implements java.io.Serializable {
 	}
 
 	public void retourliste() {
+		impress=true;
 		desibledImpr = false;
 		selectedRAdio = null;
 		idradio = null;
@@ -903,6 +904,7 @@ public class RadioBean implements java.io.Serializable {
 			nomProprietaire = radi.getProprietaire();
 			proprietaire = radi.getPossesseur();
 			action = "modification";
+			selectedRAdio=radi;
 
 		}
 
@@ -976,6 +978,7 @@ public class RadioBean implements java.io.Serializable {
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_INFO,
 						"Radio supprimé avec succés", ""));
+				impress=true;
 
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.getExternalContext().getFlash().setKeepMessages(true);
@@ -1038,17 +1041,39 @@ public class RadioBean implements java.io.Serializable {
 		idPatient = (Integer) session.getAttribute("idu");
 		CfclientService serclt = new CfclientService();
 		Cfclient clt = serclt.RechercheCfclient(idPatient);
+		String age1;
+		String age;
+		if (selectedRAdio != null) {
+			String nomReport = "demandeRadio";
+			if (selectedRAdio.getPossesseur().equals("Patiente")) {
+				if (clt.getDateNaiss() != null)
+					age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
+				else
+					age1 = "";
+			} else {
+				if (clt.getDateNaissC() != null)
+					age1 = Module.age(clt.getDateNaissC()).substring(0, 2);
+				else
+					age1 = "";
+			}
 
-		String nomReport = "demandeRadio";
-		String age1 = Module.age(clt.getDateNaiss()).substring(0, 2);
-		String age = "(" + age1 + ")";
+			if (age1.equals("")) {
+				age = age1;
+			} else {
+				age = "( " + age1 + " )" + " Ans";
+			}
 
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("idrad", selectedRAdio.getIdradio());
-		param.put("age", age);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("idrad", selectedRAdio.getIdradio());
+			param.put("age", age);
+			Module.imprimer(nomReport, param);
+			
 
-		Module.imprimer(nomReport, param);
+		}
+		
 	}
+	
+	
 
 	public Radio getSelectedRAdio() {
 		return selectedRAdio;
