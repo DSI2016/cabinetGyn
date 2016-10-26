@@ -30,14 +30,17 @@ public static List<EnLigne> sesionEnLigne = new ArrayList<EnLigne>();
 		
 		
 
-		List<EnLigne> Listesession=ser1.rechercheTousEnLigne();//retourne liste des utilisateurs connecter dans la base
+		List<EnLigne> Listesession=new ArrayList<EnLigne>();
+		Listesession.clear();
+		Listesession=ser1.rechercheTousEnLigne();//retourne liste des utilisateurs connecter dans la base
 		int k=0;
 		while(k<Listesession.size()&&(Listesession.size()>0))
 		{
 			boolean sessionTemp =findSession(Listesession.get(k).getIdSession());//si une session enregistrer dans la base mais ne sont pas dans notre map on la supprimer
 			if(sessionTemp==false)
 			{
-				EnLigne enligneASupp=ser1.rechercheEnLigne(Listesession.get(k).getIdenligne());
+				EnLigne enligneASupp;
+				enligneASupp=ser1.rechercheEnLigne(Listesession.get(k).getIdenligne());
 				System.out.println("en ligne a supprimer session counter"+enligneASupp);
 				if(enligneASupp!=null)
 					{ser1.supprimerEnLigne(enligneASupp);}

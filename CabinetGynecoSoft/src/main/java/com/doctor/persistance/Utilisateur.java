@@ -105,7 +105,7 @@ public class Utilisateur implements Serializable {
 	private String gestDiag;
 	private String gestSyn;
 	private String gestExmComp;
-	
+
 	
 	private String gestEFG;
 	
@@ -281,7 +281,8 @@ public class Utilisateur implements Serializable {
     
     private boolean affectEtoile;
     private boolean confSession;
-    
+private String attributTrie;
+private String ordreTrie;
     
 	public boolean isAffectEtoile() {
 		return affectEtoile;
@@ -1702,6 +1703,8 @@ public class Utilisateur implements Serializable {
 		result = prime * result + (appliquemodelechogyneco ? 1231 : 1237);
 		result = prime * result + (archiverPat ? 1231 : 1237);
 		result = prime * result
+				+ ((attributTrie == null) ? 0 : attributTrie.hashCode());
+		result = prime * result
 				+ ((certifFiche == null) ? 0 : certifFiche.hashCode());
 		result = prime * result
 				+ ((chargPatSal == null) ? 0 : chargPatSal.hashCode());
@@ -1883,6 +1886,8 @@ public class Utilisateur implements Serializable {
 		result = prime * result
 				+ ((ordnanceFiche == null) ? 0 : ordnanceFiche.hashCode());
 		result = prime * result + (ordonanceLibreFiche ? 1231 : 1237);
+		result = prime * result
+				+ ((ordreTrie == null) ? 0 : ordreTrie.hashCode());
 		result = prime * result + (passif ? 1231 : 1237);
 		result = prime * result
 				+ ((permutPatSal == null) ? 0 : permutPatSal.hashCode());
@@ -2100,6 +2105,11 @@ public class Utilisateur implements Serializable {
 		if (appliquemodelechogyneco != other.appliquemodelechogyneco)
 			return false;
 		if (archiverPat != other.archiverPat)
+			return false;
+		if (attributTrie == null) {
+			if (other.attributTrie != null)
+				return false;
+		} else if (!attributTrie.equals(other.attributTrie))
 			return false;
 		if (certifFiche == null) {
 			if (other.certifFiche != null)
@@ -2539,6 +2549,11 @@ public class Utilisateur implements Serializable {
 			return false;
 		if (ordonanceLibreFiche != other.ordonanceLibreFiche)
 			return false;
+		if (ordreTrie == null) {
+			if (other.ordreTrie != null)
+				return false;
+		} else if (!ordreTrie.equals(other.ordreTrie))
+			return false;
 		if (passif != other.passif)
 			return false;
 		if (permutPatSal == null) {
@@ -2929,7 +2944,9 @@ public class Utilisateur implements Serializable {
 				+ ", modifGynObs=" + modifGynObs + ", ajoutDemandeOrd="
 				+ ajoutDemandeOrd + ", ajoutDemandeRad=" + ajoutDemandeRad
 				+ ", ajoutDemandeAnal=" + ajoutDemandeAnal + ", affectEtoile="
-				+ affectEtoile + ", confSession=" + confSession + "]";
+				+ affectEtoile + ", confSession=" + confSession
+				+ ", attributTrie=" + attributTrie + ", ordreTrie=" + ordreTrie
+				+ "]";
 	}
 
 	public boolean isNbrEnfentFiche() {
@@ -3558,6 +3575,22 @@ public class Utilisateur implements Serializable {
 
 	public void setGestLettre(boolean gestLettre) {
 		this.gestLettre = gestLettre;
+	}
+
+	public String getAttributTrie() {
+		return attributTrie;
+	}
+
+	public void setAttributTrie(String attributTrie) {
+		this.attributTrie = attributTrie;
+	}
+
+	public String getOrdreTrie() {
+		return ordreTrie;
+	}
+
+	public void setOrdreTrie(String ordreTrie) {
+		this.ordreTrie = ordreTrie;
 	}
 	
 

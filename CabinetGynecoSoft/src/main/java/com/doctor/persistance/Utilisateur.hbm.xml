@@ -930,6 +930,13 @@
 		<property name="confSession" type="boolean">
 			<column name="confSession" length="1" default="false" />
 		</property>
+		<property name="attributTrie" type="string">
+			<column name="attributTrie" length="45" />
+		</property>
+		<property name="ordreTrie" type="string">
+			<column name="ordreTrie" length="45" />
+		</property>
+		
 
 	</class>
 </hibernate-mapping>

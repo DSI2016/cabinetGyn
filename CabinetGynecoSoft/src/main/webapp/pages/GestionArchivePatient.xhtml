@@ -16,14 +16,23 @@
 				sticky="#{cfclientBean.blocage}" life="#{cfclientBean.tempsface}" />
 			<table width="100%" border="0">
 				<tr>
-					<td width="30%"><h:commandLink
+					<td><h:commandLink
 							actionListener="#{cfclientBean.goToAccueil()}">
 							<p:graphicImage value="/imagesMenu/accueil.png"></p:graphicImage>
 						</h:commandLink> <h:commandLink
 							actionListener="#{cfclientBean.goToListePatients()}">
 							<p:graphicImage value="/images/retour.png"></p:graphicImage>
-						</h:commandLink></td>
-					<td align="left"><h:panelGrid columns="5">
+						</h:commandLink>
+					 <h:commandLink
+							actionListener="#{cfclientBean.goToSalleattente()}">
+							<p:graphicImage rendered="#{!connectionBean.menuSalle}"
+								value="/imagesMenu/salleAtt3.png" />
+						</h:commandLink> <h:commandLink
+							actionListener="#{rendezVousBean.goToRendezVous()}">
+							<p:graphicImage rendered="#{!connectionBean.menuGestRdv}"
+								value="/imagesMenu/calendar.png" width="50px" height="50px" />
+						</h:commandLink> </td>
+					<td><h:panelGrid columns="5">
 							<h:outputText value="Recherche: "
 								style="font-size:small;font-weight:bold" />
 							<p:inputText value="#{cfclientBean.valeurRechercheArchive}"
