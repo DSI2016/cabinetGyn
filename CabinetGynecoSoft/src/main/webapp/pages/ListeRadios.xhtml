@@ -15,7 +15,7 @@ Historique Radios</ui:define>
 		<p:graphicImage value="/imagesTitre/histoRadios.png" width="100%"></p:graphicImage>
 		<div align="left">
 			<h:form id="f1">
-				<p:growl id="growl" showDetail="true" life="3000" />
+				<p:growl id="growl" showDetail="false" life="3000" />
 				<table border="0" width="100%">
 					<tr>
 						<td width="90%"><h:commandLink
@@ -24,7 +24,8 @@ Historique Radios</ui:define>
 							</h:commandLink> <h:commandLink actionListener="#{radioBean.retourliste()}">
 								<p:graphicImage value="/images/retour.png"></p:graphicImage>
 							</h:commandLink></td>
-						<td><h:commandLink rendered="#{radioBean.desibledImpr}and false"
+						<td><h:commandLink
+								rendered="#{radioBean.desibledImpr}and false"
 								actionListener="#{radioBean.viewHistoriqueRadio}"
 								target="_blanc">
 								<p:graphicImage value="/imagesMenu/imprimente10.png">
@@ -42,24 +43,22 @@ Historique Radios</ui:define>
 							</h:panelGrid></td>
 					</tr>
 				</table>
-				
+
 				<p:panel style="height:450px">
 					<table border="0" width="100%">
-						<tr> 
+						<tr>
 							<td width="60%" align="right"><h:outputText
-							value="Patiente : #{radioBean.cfclient.prenom} #{radioBean.cfclient.nom} "
-							style="font-size:15pt;font-weight:bold" /></td>
-							<td align="right">
-							<p:commandButton value="Imprimer" disabled="#{radioBean.impress}"
-							        rendered="#{connectionBean.imprRad}"
+									value="Patiente : #{radioBean.cfclient.prenom} #{radioBean.cfclient.nom} "
+									style="font-size:15pt;font-weight:bold" /></td>
+							<td align="right"><p:commandButton value="Imprimer"
+									disabled="#{radioBean.impress}"
+									rendered="#{connectionBean.imprRad}"
 									style="font-size:small;font-weight:bold" icon="ui-icon-print"
 									ajax="false" actionListener="#{radioBean.viewHistoriqueRadio}"></p:commandButton>
 							</td>
 						</tr>
 					</table>
-					<div align="center">
-						
-					</div>
+					<div align="center"></div>
 
 					<p:dataTable id="patiente" var="rad"
 						style="font-size:small;font-weight:bold"
@@ -107,21 +106,20 @@ Historique Radios</ui:define>
 								rendered="#{connectionBean.modifRadio}"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{radioBean.modifRadio(rad.idradio)}"
-								oncomplete="PF('modifRadios').show();" update=":f1:ma" />
+								oncomplete="PF('modifRadios').show();" update=":f1:ma,:f1:patiente" />
 
 							<p:commandButton icon="ui-icon-search" title="Détail Radio"
 								style="font-size:small;font-weight:bold"
 								actionListener="#{radioBean.modifRadio(rad.idradio)}"
 								oncomplete="PF('modifRadiosdetail').show();"
-								update=":f1:madetail" />
+								update=":f1:madetail,:f1:patiente" />
 
 							<p:commandButton update=":f1"
 								rendered="#{connectionBean.supRadio}" icon="ui-icon-trash"
 								title="Suppression Radio"
 								style="font-size:small;font-weight:bold"
-								
 								actionListener="#{radioBean.suppressionRAdio(rad)}">
-								
+
 							</p:commandButton>
 
 						</p:column>
@@ -153,89 +151,90 @@ Historique Radios</ui:define>
 								</table>
 								<br></br>
 								<table border="0" align="center" width="100%">
-								<tr>
-									<td><h:outputText value="Date:"
-											style="font-size:12pt;font-weight:bold" /> <p:calendar
-											id="button" value="#{radioBean.datRadios}"
-											disabled="#{radioBean.consultation}" showOn="button"
-											size="7" pattern="dd/MM/yyyy" >
+									<tr>
+										<td><h:outputText value="Date:"
+												style="font-size:12pt;font-weight:bold" /> <p:calendar
+												converterMessage="Veuillez vérifier la date que vous avez saisi"
+												id="button" value="#{radioBean.datRadios}"
+												disabled="#{radioBean.consultation}" showOn="button"
+												size="7" pattern="dd/MM/yyyy">
 											</p:calendar></td>
-									<td align="right"><h:panelGrid columns="3">
-											<h:outputText value="Radio pour : "
-												style="font-size:13pt;font-weight:bold" />
+										<td align="right"><h:panelGrid columns="3">
+												<h:outputText value="Radio pour : "
+													style="font-size:13pt;font-weight:bold" />
+												<h:panelGrid columns="2">
+													<h:selectOneRadio id="consolee" layout="grid" columns="2"
+														style="font-size:13pt;font-weight:bold"
+														disabled="#{radioBean.consultation}"
+														value="#{radioBean.proprietaire}">
+														<p:ajax event="change" listener="#{radioBean.changeProp}"
+															update="nomP"></p:ajax>
+														<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+														<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+
+													</h:selectOneRadio>
+												</h:panelGrid>
+												<h:inputText id="nomP" value="#{radioBean.nomProprietaire}"
+													disabled="#{radioBean.consultation}" size="35"></h:inputText>
+
+											</h:panelGrid></td>
+									</tr>
+								</table>
+
+								<div align="center">
+									<h:panelGrid columns="2">
+										<h:panelGrid columns="1">
 											<h:panelGrid columns="2">
-												<h:selectOneRadio id="consolee" layout="grid" columns="2"
-													style="font-size:13pt;font-weight:bold"
-													disabled="#{radioBean.consultation}"
-													value="#{radioBean.proprietaire}">
-													<p:ajax event="change" listener="#{radioBean.changeProp}"
-														update="nomP"></p:ajax>
-													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
-													<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+												<h:panelGrid columns="2">
+													<h:outputText value="Examens Complémentaires:"
+														style="font-size:12pt;font-weight:bold" />
 
-												</h:selectOneRadio>
-											</h:panelGrid>
-											<h:inputText id="nomP" value="#{radioBean.nomProprietaire}"
-												disabled="#{radioBean.consultation}" size="35"></h:inputText>
+													<p:selectOneMenu value="#{radioBean.exam}"
+														style="width:20px" panelStyle="width:180px" filter="true"
+														filterMatchMode="startsWith" effect="fade">
+														<p:ajax listener="#{radioBean.onRadioChange}"
+															event="change" update=":f1:exam,:f1" />
 
-										</h:panelGrid></td>
-								</tr>
-							</table>
+														<f:selectItem itemLabel="--- Examens ---" itemValue="" />
+														<f:selectItems value="#{radioBean.examenComplementaires}"
+															var="k" itemLabel="#{k.libExamenComplementaire}"
+															itemValue="#{k.libExamenComplementaire}" />
+													</p:selectOneMenu>
+												</h:panelGrid>
 
-<div align="center">
-								<h:panelGrid columns="2">
-									<h:panelGrid columns="1">
-										<h:panelGrid columns="2">
-											<h:panelGrid columns="2">
-												<h:outputText value="Examens Complémentaires:"
+												<h:inputTextarea id="exam"
+													value="#{radioBean.examenComplementaire}"
+													style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+													<p:ajax listener="#{radioBean.ontextexamenChange}"
+														event="blur" />
+												</h:inputTextarea>
+
+												<h:outputText value="Renseignements cliniques :"
 													style="font-size:12pt;font-weight:bold" />
 
-												<p:selectOneMenu value="#{radioBean.exam}"
-													style="width:20px" panelStyle="width:180px" filter="true"
-													filterMatchMode="startsWith" effect="fade">
-													<p:ajax listener="#{radioBean.onRadioChange}"
-														event="change" update=":f1:exam,:f1" />
+												<h:inputTextarea value="#{radioBean.renseignementClinique}"
+													style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+													<p:ajax event="blur"
+														listener="#{radioBean.onchangeRenseignementClinique()}">
+													</p:ajax>
+												</h:inputTextarea>
 
-													<f:selectItem itemLabel="--- Examens ---" itemValue="" />
-													<f:selectItems value="#{radioBean.examenComplementaires}"
-														var="k" itemLabel="#{k.libExamenComplementaire}"
-														itemValue="#{k.libExamenComplementaire}" />
-												</p:selectOneMenu>
 											</h:panelGrid>
+										</h:panelGrid>
 
-											<h:inputTextarea id="exam"
-												value="#{radioBean.examenComplementaire}"
-												style="font-size:12pt;font-weight:bold;height:100px;width:260px">
-												<p:ajax listener="#{radioBean.ontextexamenChange}"
-													event="blur" />
-											</h:inputTextarea>
-
-											<h:outputText value="Renseignements cliniques :"
+										<h:panelGrid columns="2">
+											<h:outputText value="Résultat:"
 												style="font-size:12pt;font-weight:bold" />
 
-											<h:inputTextarea value="#{radioBean.renseignementClinique}"
-												style="font-size:12pt;font-weight:bold;height:100px;width:260px">
+											<h:inputTextarea value="#{radioBean.resultat}"
+												style="font-size:12pt;font-weight:bold;height:200px;width:260px">
 												<p:ajax event="blur"
-													listener="#{radioBean.onchangeRenseignementClinique()}">
+													listener="#{radioBean.onchangeresultat()}">
 												</p:ajax>
 											</h:inputTextarea>
 
 										</h:panelGrid>
 									</h:panelGrid>
-
-									<h:panelGrid columns="2">
-										<h:outputText value="Résultat:"
-											style="font-size:12pt;font-weight:bold" />
-
-										<h:inputTextarea value="#{radioBean.resultat}"
-											style="font-size:12pt;font-weight:bold;height:200px;width:260px">
-											<p:ajax event="blur"
-												listener="#{radioBean.onchangeresultat()}">
-											</p:ajax>
-										</h:inputTextarea>
-
-									</h:panelGrid>
-								</h:panelGrid>
 								</div>
 								<div align="center">
 									<h:panelGrid columns="2">
@@ -254,7 +253,7 @@ Historique Radios</ui:define>
 						</div>
 					</p:outputPanel>
 				</p:dialog>
-				
+
 				<p:dialog id="madetail" widgetVar="modifRadiosdetail"
 					resizable="false" closable="false" model="true" width="740pt"
 					showHeader="false">
@@ -272,30 +271,30 @@ Historique Radios</ui:define>
 								<br></br>
 								<table>
 									<tr>
-											<td><h:outputText value="Date:"
-											style="font-size:12pt;font-weight:bold" /> <p:calendar
-											id="butt" value="#{radioBean.dateRadios}"
-											disabled="false" showOn="button"
-											size="7" pattern="dd/MM/yyyy" /></td>
-									<td align="right"><h:panelGrid columns="3">
-											<h:outputText value="Radio pour : "
-												style="font-size:13pt;font-weight:bold" />
-											<h:panelGrid columns="2">
-												<h:selectOneRadio id="cons" layout="grid" columns="2"
-													style="font-size:13pt;font-weight:bold"
-													disabled="false"
-													value="#{radioBean.proprietaire}">
-													<p:ajax event="change" listener="#{radioBean.changeProp}"
-														update="nomPat"></p:ajax>
-													<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
-													<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
+										<td><h:outputText value="Date:"
+												style="font-size:12pt;font-weight:bold" /> <p:calendar
+												
+												id="butt" value="#{radioBean.dateRadios}" disabled="true"
+												 size="7" pattern="dd/MM/yyyy" /></td>
+										<td align="right"><h:panelGrid columns="3">
+												<h:outputText value="Radio pour : "
+													style="font-size:13pt;font-weight:bold" />
+												<h:panelGrid columns="2">
+													<h:selectOneRadio id="cons" layout="grid" columns="2"
+														style="font-size:13pt;font-weight:bold" disabled="true"
+														value="#{radioBean.proprietaire}"  >
+														<p:ajax event="change" listener="#{radioBean.changeProp}"
+															update="nomPat"></p:ajax>
+														<f:selectItem itemLabel="Patiente" itemValue="Patiente" />
+														<f:selectItem itemLabel="Conjoint" itemValue="Conjoint" />
 
-												</h:selectOneRadio>
-											</h:panelGrid>
-											<h:inputText id="nomPat" value="#{radioBean.nomProprietaire}"
-												readonly="true" size="35"></h:inputText>
+													</h:selectOneRadio>
+												</h:panelGrid>
+												<h:inputText id="nomPat"
+													value="#{radioBean.nomProprietaire}" readonly="true"
+													size="35"></h:inputText>
 
-										</h:panelGrid></td>
+											</h:panelGrid></td>
 									</tr>
 								</table>
 
@@ -360,7 +359,7 @@ Historique Radios</ui:define>
 
 										<p:commandButton value="ok"
 											oncomplete="PF('modifRadiosdetail').hide();" update=":f1"
-											style="font-size:small;font-weight:bold"></p:commandButton>
+											style="font-size:middel;font-weight:bold"></p:commandButton>
 									</h:panelGrid>
 								</div>
 							</p:panel>
@@ -370,30 +369,29 @@ Historique Radios</ui:define>
 
 					</p:outputPanel>
 				</p:dialog>
-		
-		<p:dialog id="sup" widgetVar="suppRadio" resizable="false" header="Suppression"
-					closable="false" model="true"  >
+
+				<p:dialog id="sup" widgetVar="suppRadio" resizable="false"
+					header="Suppression" closable="false" model="true">
 					<p:outputPanel>
 						<p:panel>
-						<h:panelGrid columns="2">
-						<p:graphicImage value="/images/warning.png"></p:graphicImage>
-						<h:outputText	
-								value="#{radioBean.msg}"></h:outputText>
+							<h:panelGrid columns="2">
+								<p:graphicImage value="/images/warning.png"></p:graphicImage>
+								<h:outputText value="#{radioBean.msg}"></h:outputText>
 							</h:panelGrid>
 							<hr></hr>
 							<div align="center">
-							<h:panelGrid columns="2">
-								<p:commandButton value="Oui"
-									actionListener="#{radioBean.SupprimerRadio()}"
-									update=":f1,:f1:growl"></p:commandButton>
-								<p:commandButton value="Non"
-									oncomplete="PF('suppRadio').hide();"></p:commandButton>
-							</h:panelGrid>
-						</div>
+								<h:panelGrid columns="2">
+									<p:commandButton value="Oui"
+										actionListener="#{radioBean.SupprimerRadio()}"
+										update=":f1,:f1:growl"></p:commandButton>
+									<p:commandButton value="Non"
+										oncomplete="PF('suppRadio').hide();"></p:commandButton>
+								</h:panelGrid>
+							</div>
 						</p:panel>
 					</p:outputPanel>
 				</p:dialog>
-		
+
 			</h:form>
 		</div>
 
