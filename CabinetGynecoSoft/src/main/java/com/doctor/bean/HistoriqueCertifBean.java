@@ -137,7 +137,7 @@ private String titreDiag;
 		HttpSession session = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext()
 				.getSession(false);
-		session.setAttribute("idu", idPatient);
+		idPatient=(Integer) session.getAttribute("idu");
 		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
 	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
 	}
@@ -2477,7 +2477,7 @@ private String titreDiag;
 		this.nomProprietaire = nomProprietaire;
 	}
 	
-	
+
 	public void changeProp()
 	{
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -2488,13 +2488,38 @@ private String titreDiag;
 		cfclient = se.RechercheCfclient(idPatient);
 		if(proprietaire!=null)
 		{if(proprietaire.equals("Patiente"))
-		{nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();}
+		{if((cfclient.getPrenom()!=null)&&((cfclient.getNom()!=null))&&(cfclient.getNom().trim().length()>0)&&(cfclient.getPrenom().trim().length()>0))
+		{nomProprietaire="M "+cfclient.getPrenom()+" "+cfclient.getNom();}
 		else
-		{nomProprietaire="M"+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+			if(cfclient.getPrenom()!=null &&(cfclient.getPrenom().trim().length()>0))
+			nomProprietaire="M "+cfclient.getPrenom();
+			else
+				if(cfclient.getNom()!=null &&(cfclient.getNom().trim().length()>0))
+					nomProprietaire="M "+cfclient.getNom();
+				else
+					if((cfclient.getPrenom()==null)&&((cfclient.getNom()==null))&&(cfclient.getNom().trim().length()==0)&&(cfclient.getPrenom().trim().length()==0))
+					nomProprietaire="";	
+	
 		}
-	}
 	
 
+
+		else
+		{if((cfclient.getPrenomC()!=null)&&((cfclient.getNomC()!=null))&&(cfclient.getNomC().trim().length()>0)&&(cfclient.getPrenomC().trim().length()>0))
+		{nomProprietaire="M "+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+		else
+			if(cfclient.getPrenomC()!=null &&(cfclient.getPrenomC().trim().length()>0))
+			nomProprietaire="M "+cfclient.getPrenomC();
+			else
+				if(cfclient.getNomC()!=null &&(cfclient.getNomC().trim().length()>0))
+					nomProprietaire="M "+cfclient.getNomC();
+				else
+					if((cfclient.getPrenomC()==null)&&((cfclient.getNomC()==null))&&(cfclient.getNomC().trim().length()==0)&&(cfclient.getPrenomC().trim().length()==0))
+					nomProprietaire="";	
 	
+		}}
+	
+
+}
 
 }

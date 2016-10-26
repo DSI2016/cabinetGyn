@@ -24,6 +24,9 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -166,12 +169,14 @@ public class historiqueLettreBean implements Serializable {
 	@PostConstruct
 	public void init ()
 	{
+	
 		HttpSession session = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext()
 				.getSession(false);
-		session.setAttribute("idu", idPatient);
+		idPatient=(Integer) session.getAttribute("idu");
 		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
 	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
+		
 	}
 	private List<historiqueLettre> historiqueLettres = new ArrayList<historiqueLettre>();
 
@@ -1789,13 +1794,44 @@ dateLet=format.format(h.getDatelettre());
 		cfclient = se.RechercheCfclient(idPatient);
 		if(proprietaire!=null)
 		{if(proprietaire.equals("Patiente"))
-		{nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();}
+		{if((cfclient.getPrenom()!=null)&&((cfclient.getNom()!=null))&&(cfclient.getNom().trim().length()>0)&&(cfclient.getPrenom().trim().length()>0))
+		{nomProprietaire="M "+cfclient.getPrenom()+" "+cfclient.getNom();}
 		else
-		{nomProprietaire="M"+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+			if(cfclient.getPrenom()!=null &&(cfclient.getPrenom().trim().length()>0))
+			nomProprietaire="M "+cfclient.getPrenom();
+			else
+				if(cfclient.getNom()!=null &&(cfclient.getNom().trim().length()>0))
+					nomProprietaire="M "+cfclient.getNom();
 
+		if(((cfclient.getPrenom()==null)&&(cfclient.getNom()==null)))
+		nomProprietaire="";	
+		if((cfclient.getNom()!=null)&&(cfclient.getPrenom()!=null))
+		{if(cfclient.getNom().trim().length()==0 && cfclient.getPrenom().trim().length()==0)
+			nomProprietaire="";	
 		}
-	}
+		}
 	
 
 
+		else
+		{if((cfclient.getPrenomC()!=null)&&((cfclient.getNomC()!=null))&&(cfclient.getNomC().trim().length()>0)&&(cfclient.getPrenomC().trim().length()>0))
+		{nomProprietaire="M "+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+		else
+			if(cfclient.getPrenomC()!=null &&(cfclient.getPrenomC().trim().length()>0))
+			nomProprietaire="M "+cfclient.getPrenomC();
+			else
+				if(cfclient.getNomC()!=null &&(cfclient.getNomC().trim().length()>0))
+					nomProprietaire="M "+cfclient.getNomC();
+				
+					if(((cfclient.getPrenomC()==null)&&(cfclient.getNomC()==null)))
+					nomProprietaire="";	
+					if((cfclient.getNomC()!=null)&&(cfclient.getPrenomC()!=null))
+					{if(cfclient.getNomC().trim().length()==0 && cfclient.getPrenomC().trim().length()==0)
+						nomProprietaire="";	
+					}
+	
+		}}
+	
+
+}
 }
