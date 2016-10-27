@@ -121,7 +121,6 @@ public class Cfclient_viewHome {
 			String valeurRecherche3 = valeurRecherche;
 			String valeurRecherche4 = Module.AjoutSerpTel(3, temp, '.');
 			String valeurRecherche5 = Module.AjoutSerpTel(3, temp, ' ');
-			System.out.println("val rech1 . "+valeurRecherche1+"valrech2  "+valeurRecherche2+"val rech 3  . "+valeurRecherche3+"val rech 4  "+valeurRecherche4+"val rech 5  "+valeurRecherche5);
 
 			crit = crit
 					.add(Restrictions.or(Restrictions.like("telephone",

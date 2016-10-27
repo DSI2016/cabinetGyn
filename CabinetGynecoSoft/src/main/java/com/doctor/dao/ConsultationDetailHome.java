@@ -180,7 +180,6 @@ public class ConsultationDetailHome {
 	@SuppressWarnings("unchecked")
 	public List<ConsultationDetail> findAll(Integer idPatient,
 			String nomConsultation, Uterus uterus) {
-		System.out.println("home uterus "+uterus);
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(ConsultationDetail.class, "CD")
 				.addOrder(Property.forName("CD.idConsultationDetail").desc());

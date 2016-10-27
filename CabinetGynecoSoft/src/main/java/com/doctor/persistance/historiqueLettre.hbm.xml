@@ -170,6 +170,12 @@
 			<property name="nomProprietaire" type="string">
 			<column name="nomProprietaire" length="255" />
 		</property>
+		
+		<property name="prosseseur" type="string">
+			<column name="prosseseur" length="45" />
+		</property>
+		
+		
 		<many-to-one class="com.doctor.persistance.Cfclient"
 			fetch="select" name="cfclient">
 			<column name="idPatient" />
