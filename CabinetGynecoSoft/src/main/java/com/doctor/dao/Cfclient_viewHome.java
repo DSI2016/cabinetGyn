@@ -71,10 +71,14 @@ public class Cfclient_viewHome {
 		if (attribut.equals("Dernier Consultation")) {
 			attribut = "dernierVisite";
 		}
-
-		if (ordre.equals("croissante"))
+		if (attribut.equals("Par saisie")) {
+			attribut = "code";
+		}
+		
+		
+		if (ordre.equals("Croissante"))
 			crit = crit.addOrder(Property.forName(attribut).asc());
-		if (ordre.equals("décroissante"))
+		if (ordre.equals("Décroissante"))
 			crit = crit.addOrder(Property.forName(attribut).desc());
 
 		return crit.list();

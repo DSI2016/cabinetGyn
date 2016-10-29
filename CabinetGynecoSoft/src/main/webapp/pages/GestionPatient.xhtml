@@ -89,7 +89,7 @@
 													<f:selectItem itemLabel="Prenom" itemValue="Prenom" />
 													<f:selectItem itemLabel="Nbr Consultation" itemValue="Nbr Consultation" />
 													<f:selectItem itemLabel="Dernier Consultation" itemValue="Dernier Consultation" />
-							
+								<f:selectItem itemLabel="Par saisie" itemValue="Par saisie" />
 <!-- 							<f:selectItems value="#{cfclientBean.listestris}" var="tr" -->
 <!-- 								itemLabel="#{tr.toString()}" itemValue="#{tr}" /> -->
 							<p:ajax envent="change" listener="#{cfclientBean.ordonnerPatient()}"></p:ajax> 
@@ -102,8 +102,8 @@
 											
 											<p:ajax event="change"
 												listener="#{cfclientBean.ordonnerPatient()}"></p:ajax>
-											<f:selectItem itemLabel="Croissante" itemValue="croissante"   selected="true"/>
-											<f:selectItem itemLabel="Décroissante" itemValue="décroissante"  />
+											<f:selectItem itemLabel="Croissante" itemValue="Croissante"   selected="true"/>
+											<f:selectItem itemLabel="Décroissante" itemValue="Décroissante"  />
 										</p:selectOneRadio>
 									</td>
 					<td align="right" width="60%"><p:commandButton value="Nouveau" 	 
@@ -143,7 +143,7 @@
 				paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 				rows="16">
 				
-				<p:column headerText="" width="4%"
+				<p:column headerText="" width="6%"
 					style="font-size:small;font-weight:bold">
 					<p:graphicImage
 											value="/imagesMenu/starRouge.png" width="12px" height="12px" rendered="#{cfclientBean.changerRendredNegative1(Patient)}"></p:graphicImage> <p:graphicImage
@@ -1244,7 +1244,7 @@
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:commandButton value="Valider" icon="ui-icon-check"
-							update=":f1:formulaire:idDlgValidation"
+							update=":f1:formulaire:idDlgValidation,:f1"
 							actionListener="#{cfclientBean.validationVille()}"
 							oncomplete="handleLoginRequestVille(xhr, status, args)" />
 
