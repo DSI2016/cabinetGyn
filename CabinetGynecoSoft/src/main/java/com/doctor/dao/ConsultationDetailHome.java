@@ -180,7 +180,7 @@ public class ConsultationDetailHome {
 	@SuppressWarnings("unchecked")
 	public List<ConsultationDetail> findAll(Integer idPatient,
 			String nomConsultation, Uterus uterus) {
-		
+
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(ConsultationDetail.class, "CD")
 				.addOrder(Property.forName("CD.idConsultationDetail").desc());
@@ -197,7 +197,6 @@ public class ConsultationDetailHome {
 		if (uterus == null) {
 			crit.createAlias("CD.consultation", "cons");
 			crit.createAlias("CD.cfclient", "cf");
-			
 			
 		}
 

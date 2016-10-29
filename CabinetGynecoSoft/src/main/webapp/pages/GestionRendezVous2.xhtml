@@ -245,14 +245,15 @@
 								<f:facet name="header">
 									<h:outputLabel value="Remarque" />
 								</f:facet>
+								      
 		    					#{rendezVous.note}
 							</p:column>
 							<p:column style="width:60%"
 								styleClass="#{rendezVousBean.getClasse(rendezVous.date, rendezVous)}">
 								<p:commandButton icon="ui-icon-arrowthickstop-1-e"
-									title="Vers salle d'attente"
-									actionListener="#{rendezVousBean.versSalle(rendezVous)}"
-									update=":formeGenerale:vsa" oncomplete="PF('dlgsalle').show()" />
+									title="Vers salle d'attente"     actionListener="#{rendezVousBean.remplirSalle(rendezVous.codeclient,rendezVous)}"                         
+									update=":formeGenerale:vsa" oncomplete="PF('dlgsalle').show()" >
+									</p:commandButton>
 								<p:commandButton title="Modification" icon="ui-icon-pencil"
 									update=":formeGenerale:modif"
 									oncomplete="PF('modifDialog').show()"
@@ -303,10 +304,11 @@
 				<div align="center">
 					<p:commandButton value="Envoyer"
 						oncomplete="handleLoginRequestdlgsalle(xhr, status, args)"
+		
 						update=":formeGenerale:growl" icon="ui-icon-arrowthickstop-1-e"
 						actionListener="#{rendezVousBean.versSalle()}" />
-					<p:commandButton value="Annuler" icon="ui-icon-closethick"
-						oncomplete="dlgsalle.hide();" ajax="false"></p:commandButton>
+					<p:commandButton value="Annuler" icon="ui-icon-closethick"  update=":formeGenerale" oncomplete="PF('eventDialog').show();"
+							></p:commandButton>
 				</div>
 			</p:dialog>
 			<script type="text/javascript">
@@ -316,9 +318,16 @@
 								times : 5
 							}, 100);
 						} else {
+							
 							PF('dlgsalle').hide();
+							
+						
+							
+							
+							
 							$('#loginLink').fadeOut();
 						}
+					
 					}
 				</script>
 			<p:dialog id="sup" widgetVar="dlgsuppRendez" resizable="false"

@@ -24,6 +24,10 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
+
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -113,7 +117,7 @@ public class historiqueLettreBean implements Serializable {
 	private boolean blocage;
 	private String proprietaire="Patiente";
 	private String nomProprietaire;
-
+private String datePourAge;
 
 	public String getAncienValeurDateCertif() {
 		return ancienValeurDateCertif;
@@ -166,12 +170,16 @@ public class historiqueLettreBean implements Serializable {
 	@PostConstruct
 	public void init ()
 	{
+	
 		HttpSession session = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext()
 				.getSession(false);
-		session.setAttribute("idu", idPatient);
+		idPatient=(Integer) session.getAttribute("idu");
 		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
+		nomProprietaire="";
+		if(cfclient!=null)
 	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
+		
 	}
 	private List<historiqueLettre> historiqueLettres = new ArrayList<historiqueLettre>();
 
@@ -733,6 +741,23 @@ public class historiqueLettreBean implements Serializable {
 	}
 
 	public String intialeTextLettre() {
+		datePourAge="";
+		if(lettre!=null)
+		{if(lettre.equals("Lettre d'accouchement"))
+				{
+			datePourAge=dateLettreAccouchem;
+				}
+		else if(lettre.equals("Lettre de prise en charge"))
+			datePourAge=dateDelettrepriseencharge;
+			
+		else if(lettre.equals("Lettre de réponse a une demande de prise en charge"))
+			datePourAge=dateDelettre;
+		else
+			datePourAge=dateLettreConf;
+			
+		}	
+			
+			
 		Lettre lett = new Lettre();
 		LettreService ser = new LettreService();
 		lett = ser.recherchelettreParLibellelettre(nomLettre);
@@ -750,15 +775,62 @@ public class historiqueLettreBean implements Serializable {
 			rem = remplaceMot(rem, "$NP",nomProprietaire);
 		else
 			rem = remplaceMot(rem, "$NP", "");
-		if (Module.age(cfclient.getDateNaiss()) != null) {
-			rem = remplaceMot(
-					rem,
-					"$Age",
-					Module.calculAgeEnAnsParRapportDateRapport(
-							cfclient.getDateNaiss(), dateDelettre)
-							+ " Ans");
-		} else
-			rem = remplaceMot(rem, "$Age", "");
+		if(proprietaire!=null)
+		{
+			if(proprietaire.equals("Patiente"))
+			{ 
+				System.out.println("entre  patient");
+				
+				if(cfclient.getDateNaiss()!=null)
+					
+				{
+					System.out.println("cfclient not null");
+					if(Module.calculAgeEnAnsParRapportDateRapport(
+						cfclient.getDateNaiss(), datePourAge)!=0) {
+					System.out.println("age==>"+Module.age(cfclient.getDateNaiss()));
+				rem = remplaceMot(
+						rem,
+						"$Age",
+						Module.calculAgeEnAnsParRapportDateRapport(
+								cfclient.getDateNaiss(),datePourAge)
+								+ " Ans");
+			} else
+				{
+				rem = remplaceMot(rem, "$Age", " ");
+				}
+			}
+			
+			else
+				{rem = remplaceMot(rem, "$Age", " ");}
+		}
+		
+			else if (proprietaire.equals("Conjoint"))
+			{
+					if(cfclient.getDateNaissC()!=null)
+					{if(Module.calculAgeEnAnsParRapportDateRapport(
+							cfclient.getDateNaissC(), datePourAge)!=0) {
+						System.out.println("age conjoint "+Module.calculAgeEnAnsParRapportDateRapport(
+							cfclient.getDateNaissC(), datePourAge));
+					rem = remplaceMot(
+							rem,
+							"$Age",
+							Module.calculAgeEnAnsParRapportDateRapport(
+									cfclient.getDateNaissC(), datePourAge)
+									+ " Ans");
+				} else
+					{
+					rem = remplaceMot(rem, "$Age", " ");
+					}
+				}
+				
+				else
+					{
+					System.out.println("date nais conjoint is null");
+					rem = remplaceMot(rem, "$Age", " ");}
+			}
+		}
+		
+		
 
 		if (cab.getDocteur() != null)
 			rem = remplaceMot(rem, "$Docteur", cab.getDocteur());
@@ -935,6 +1007,7 @@ public class historiqueLettreBean implements Serializable {
 		addValid = false;
 		if (face.getMessageList().size() == 0) {
 			let.setNomProprietaire(nomProprietaire);
+			let.setProsseseur(proprietaire);
 			addValid = true;
 
 			let.setCode(code);
@@ -1028,6 +1101,7 @@ public class historiqueLettreBean implements Serializable {
 
 		if (face.getMessageList().size() == 0) {
 			let.setNomProprietaire(nomProprietaire);
+			let.setProsseseur(proprietaire);
 			let.setCfclient(cfclient);
 
 			// let.setDatelettre(sdf.parse(dateDelettre));
@@ -1185,6 +1259,7 @@ public class historiqueLettreBean implements Serializable {
 
 		if (face.getMessageList().size() == 0) {
 			let.setNomProprietaire(nomProprietaire);
+			let.setProsseseur(proprietaire);
 
 			let.setCfclient(cfclient);
 
@@ -1274,6 +1349,7 @@ public class historiqueLettreBean implements Serializable {
 
 		if (face.getMessageList().size() == 0) {
 			let.setNomProprietaire(nomProprietaire);
+			let.setProsseseur(proprietaire);
 
 			let.setCfclient(cfclient);
 			let.setDiagnostic(diagnostic);
@@ -1787,15 +1863,32 @@ dateLet=format.format(h.getDatelettre());
 
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if(proprietaire!=null)
+		if(cfclient!=null)
+		{if(proprietaire!=null)
 		{if(proprietaire.equals("Patiente"))
-		{nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();}
-		else
-		{nomProprietaire="M"+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+		
+		{
+			nomProprietaire="Mm "+cfclient.getPrenom()+" "+cfclient.getNom();
+		
+		}
+		
 
+
+		else
+		
+		{if((cfclient.getNomC()==null)&&(cfclient.getPrenomC()==null))
+		{	nomProprietaire="M ";}
+		else if((cfclient.getNomC()==null)&&(cfclient.getPrenomC()!=null))
+		{	nomProprietaire="M "+cfclient.getPrenomC();}
+		else if((cfclient.getNomC()!=null)&&(cfclient.getPrenomC()==null))
+		{	nomProprietaire="M "+cfclient.getNomC();}
+		
+		else
+		{
+			nomProprietaire="M "+cfclient.getPrenomC()+" "+cfclient.getNomC();
+		}
+}
 		}
 	}
-	
-
-
+	}
 }

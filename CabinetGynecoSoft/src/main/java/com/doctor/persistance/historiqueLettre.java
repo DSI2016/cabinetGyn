@@ -63,6 +63,7 @@ public class historiqueLettre {
 	private String autre;
 	private String textLettre;
 	private String nomProprietaire;
+	private String prosseseur;
 
 	public Lettre getLettre() {
 
@@ -501,7 +502,8 @@ public class historiqueLettre {
 				+ ", v24=" + v24 + ", v25=" + v25 + ", v26=" + v26 + ", v27="
 				+ v27 + ", v28=" + v28 + ", v29=" + v29 + ", v30=" + v30
 				+ ", autre=" + autre + ", textLettre=" + textLettre
-				+ ", nomProprietaire=" + nomProprietaire + "]";
+				+ ", nomProprietaire=" + nomProprietaire + ", prosseseur="
+				+ prosseseur + "]";
 	}
 
 	@Override
@@ -531,6 +533,8 @@ public class historiqueLettre {
 						.hashCode());
 		result = prime * result
 				+ ((nomProprietaire == null) ? 0 : nomProprietaire.hashCode());
+		result = prime * result
+				+ ((prosseseur == null) ? 0 : prosseseur.hashCode());
 		result = prime * result
 				+ ((resultatfrotti == null) ? 0 : resultatfrotti.hashCode());
 		result = prime * result + ((rh == null) ? 0 : rh.hashCode());
@@ -650,6 +654,11 @@ public class historiqueLettre {
 			if (other.nomProprietaire != null)
 				return false;
 		} else if (!nomProprietaire.equals(other.nomProprietaire))
+			return false;
+		if (prosseseur == null) {
+			if (other.prosseseur != null)
+				return false;
+		} else if (!prosseseur.equals(other.prosseseur))
 			return false;
 		if (resultatfrotti == null) {
 			if (other.resultatfrotti != null)
@@ -851,5 +860,14 @@ public class historiqueLettre {
 	public void setNomProprietaire(String nomProprietaire) {
 		this.nomProprietaire = nomProprietaire;
 	}
+
+	public String getProsseseur() {
+		return prosseseur;
+	}
+
+	public void setProsseseur(String prosseseur) {
+		this.prosseseur = prosseseur;
+	}
+	
 
 }

@@ -2210,7 +2210,9 @@ public class CfclientBean implements java.io.Serializable {
 	public void ajout() {
 		setAction("Ajout");
 		action = "Ajout";
+		categorieEtoile="etoileMoyen";
 		index = 0;
+		initialisation();
 		
 	}
 
@@ -2403,11 +2405,14 @@ public class CfclientBean implements java.io.Serializable {
 																// date
 					}
 
-					cl.setCategoriEtoile(categorieEtoile);
+				
 					cl.setNom(nom);
 					cl.setPrefix(prefix);
 					cl.setAghbs(aghbs);
 					cl.setGlycemie(glycemie);
+					if(categorieEtoile==null);
+					categorieEtoile="etoileMoyen";
+					cl.setCategoriEtoile(categorieEtoile);
 					cl.setCategorie(categorie);
 					cl.setNomprenom(nom + " " + prenom);
 					cl.setPrenomnom(prenom + " " + nom);
@@ -2487,8 +2492,22 @@ public class CfclientBean implements java.io.Serializable {
 					face.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_INFO, "",
 							"Patiente ajouté avec succés"));
-					init();
-					RequestContext.getCurrentInstance().update("f1");
+					addValid=true;
+					patientsView= new Cfclient_viewService().rechercheTousCfclient_view(false);
+//					FacesContext context1 = FacesContext.getCurrentInstance();
+//					context1.getExternalContext().getFlash().setKeepMessages(true);
+//					RequestContext context2 = RequestContext.getCurrentInstance();
+					//context2.execute("PF('dlgValidation').hide();");
+//					try {
+//
+//						FacesContext.getCurrentInstance().getExternalContext()
+//								.redirect("Patients");
+//					} catch (Exception e) {
+//						System.out.println(e.getMessage());
+//					}
+				
+			//init();
+	RequestContext.getCurrentInstance().update("f1:patiente");
 					action = ""; 
 				}
 			} else if (action.equals("Modification")) {
@@ -2581,12 +2600,13 @@ public class CfclientBean implements java.io.Serializable {
 				face.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_INFO, "",
 						"Patiente modifié avec succés"));
-				initialisation();
 				init();
-				RequestContext.getCurrentInstance().update("f1");
+				RequestContext.getCurrentInstance().update("f1:patiente");
+
 
 				action = "";
 			}
+			
 		}
 
 		

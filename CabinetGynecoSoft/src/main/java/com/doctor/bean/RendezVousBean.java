@@ -48,7 +48,7 @@ public class RendezVousBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Date dateSys = new Date();
 	private Integer idrendezVous;
-	private Cfclient codeclient = null;
+	private Cfclient codeclient;
 	private Date date;
 	private String note;
 	private int heure;
@@ -786,6 +786,13 @@ public class RendezVousBean implements Serializable {
 	}
 
 	public void modifierRendezVous(RendezVous r) throws ParseException {
+		codeclient = null;
+		codeclientCode = null;
+		selectedRendezVous = null;
+		idrendezVous = null;
+		
+		date =null;
+		note = null;
 		selectedRendezVous = r;
 		idrendezVous = r.getIdrendezVous();
 		codeclient = r.getCodeclient();
@@ -1334,6 +1341,7 @@ public class RendezVousBean implements Serializable {
 
 	@SuppressWarnings("deprecation")
 	public String selectedDateToString() {
+		System.out.println("date selectionner"+selectedDate);
 		String yyyy = "" + (selectedDate.getYear() + 1900);
 		String mm = "" + (selectedDate.getMonth() + 1);
 		if (mm.length() == 1)
@@ -1433,19 +1441,27 @@ public class RendezVousBean implements Serializable {
 		}
 	}
 
-	public void versSalle(RendezVous obj) {
+	public void remplirSalle(Cfclient cf,RendezVous obj) {
+		System.out.println("entree clique envoie vers salle");
+		codeclient = null;
+		codeclientCode = null;
+		motif = null;
+		noteSalle = null;
+		motif="--Selectioner--";
+		selectedRendezVous = obj;
+		idrendezVous = obj.getIdrendezVous();
+		date = obj.getDate();
 		try {
-			setSelectedDate(new Date());
+			setSelectedDate(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		codeclient = obj.getCodeclient();
-		System.out.println(codeclient);
+		System.out.println("code="+cf.getNom());
+		codeclient = cf;
+		
+		System.out.println("code="+codeclient.getNom());
 		selectedRendezVous = obj;
-		//RequestContext context = RequestContext.getCurrentInstance();
-		//RequestContext.getCurrentInstance().update(
-				//	":formeGenerale:vsa");
-		//context.execute("PF('dlgsalle').show();");
+		
 		
 	}
 
@@ -1466,7 +1482,7 @@ public class RendezVousBean implements Serializable {
 	}
 
 	public void versSalle() {
-		
+		FacesContext face = FacesContext.getCurrentInstance();
 		boolean addValid=false;
 	
 		// recherche si patient existe dans la salle
@@ -1486,9 +1502,27 @@ public class RendezVousBean implements Serializable {
 
 		CfclientService se = new CfclientService();
 		Cfclient cl = se.RechercheCfclient(codeclient.getCode());
+		
+		if (motif == null || motif.length() <= 0) {
+			permenent = true;
+			addValid=false;
+			face.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"", "Veuillez choisir un type du salle d'attente"));
+	
+				}
+		if(sal!=null)
+		{			addValid = false;
+		face.addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+						"\"" + cl.getPrenom() + " " + cl.getNom()
+								+ "\" déjà dans la salle d'attente"));
+	}
+	if(face.getMessageList().size()==0)	
+	{ 
 		if (motif != null && motif.length() > 0) {
 		if (sal == null) {
-
+addValid=true;
 			if (motifsList.contains(motif)) {
 				ordrDiff = false;
 			} else {
@@ -1511,31 +1545,21 @@ public class RendezVousBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"", "Patiente ajoutée à la salle d'attente avec succès."));
 			addValid = true;
+			codeclient = null;
+			codeclientCode = null;
+			motif = null;
+			noteSalle = null;
+			motif="--Selectioner--";
 		}
 
-		else {
-			addValid = true;
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attention!",
-							"\"" + cl.getPrenom() + " " + cl.getNom()
-									+ "\" déjà dans la salle d'attente"));
-			permenent = true;
-		}
 		
 		}
-		else
-		{addValid = false;
-		permenent = true;
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"", "Veuillez choisir un type du salle d'attente"));
-		}
+	}
 		RequestContext context2 = RequestContext.getCurrentInstance();
 		context2.addCallbackParam("addValid", addValid);
-		codeclient = null;
-		codeclientCode = null;
-		motif = null;
-		noteSalle = null;
+//		RequestContext.getCurrentInstance().update(
+//			":formeGenerale:gestionRendezVous");
+		
 	}
 	
 

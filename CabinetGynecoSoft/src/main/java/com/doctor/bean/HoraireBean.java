@@ -126,57 +126,80 @@ public class HoraireBean implements java.io.Serializable {
 	}
 
 	public void ajout() {
+		boolean addValid=false;
 		FacesContext faces = FacesContext.getCurrentInstance();
 		HoraireService ser = new HoraireService();
 		List<Horaire> l = ser.rechercheParDates(debut, fin);
 		if (debut == null || fin == null)
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Erreur !",
-					"Il faut remplir tout les champs !"));
+			{faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "",
+					"Veuillez remplir tous les champs !"));
+			addValid=false;
+			}
 		else if (l.size() != 0)
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Erreur !",
+		 {	faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "",
 					"Cette horaire existe déjà !"));
+		 addValid=false;
+		 }
 		else if (debut.after(fin))
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_FATAL, "Impossible !",
+			{faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_FATAL, "",
 					"Intervalle horaire invalide !(" + Time(debut) + " - "
 							+ Time(fin) + ")"));
-		else {
+			addValid=false;
+			}
+		if(faces.getMessageList().size()==0) {
+			addValid=true;
 			Horaire obj = new Horaire(debut, fin);
 			ser.ajoutHoraire(obj);
 			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Succès !", "Nouvelle horaire est ajouté avec succès."));
+					"", "Nouvelle horaire est ajouté avec succès."));
 		}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
+
+		
 	}
 
 	public void modif() {
+		boolean addValid=false;
 		FacesContext faces = FacesContext.getCurrentInstance();
 		HoraireService ser = new HoraireService();
 		List<Horaire> l = ser.rechercheParDates(debut, fin);
 		if (debut == null || fin == null)
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Erreur !",
-					"Il faut remplir tout les champs !"));
-		else if (l.size() != 0)
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Erreur !",
-					"Cette horaire existe déjà !"));
-		else if (debut.after(fin))
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_FATAL, "Impossible !",
-					"Intervalle horaire invalide !(" + Time(debut) + " - "
-							+ Time(fin) + ")"));
-		else {
+		{faces.addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_ERROR, "",
+				"Veuillez remplir tous les champs !"));
+		addValid=false;
+		}
+	else if (l.size() != 0)
+	 {	faces.addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_ERROR, "",
+				"Cette horaire existe déjà !"));
+	 addValid=false;
+	 }
+	else if (debut.after(fin))
+		{faces.addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_FATAL, "",
+				"Intervalle horaire invalide !(" + Time(debut) + " - "
+						+ Time(fin) + ")"));
+		addValid=false;
+		}
+	if(faces.getMessageList().size()==0) {
+		addValid=true;
 			selectedHoraire.setDebut(debut);
 			selectedHoraire.setFin(fin);
 			ser.modifierHoraire(selectedHoraire);
 			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Succès !", "Horaire est modifiée avec succès."));
+					"", "Horaire est modifiée avec succès."));
 		}
+	RequestContext context = RequestContext.getCurrentInstance();
+	context.addCallbackParam("addValid", addValid);
 	}
-
-	public void Supprimer(Integer id) {
+	public void Supprimer() {
+		int id=idHoraire;
+		boolean addValid=false;
 		FacesContext faces = FacesContext.getCurrentInstance();
 		HoraireService ser = new HoraireService();
 		JourService ser02 = new JourService();
@@ -185,11 +208,25 @@ public class HoraireBean implements java.io.Serializable {
 		if (liste.size() == 0 && liste2.size() == 0) {
 			ser.supprimerHoraire(id);
 			faces.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Succès !", "Horaire est supprimée avec succès."));
+					"", "Horaire est supprimée avec succès."));
+			addValid=true;
 		} else
-			faces.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_FATAL, "Impossible !",
-					"Horaire est utilisé."));
+			{faces.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_FATAL, "",
+					"Cet horaire est utilisé."));
+			addValid=false;
+			}
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.addCallbackParam("addValid", addValid);
+		
+	}
+	public void ouvrirSupp(Integer id)
+	{
+		RequestContext context = RequestContext.getCurrentInstance();
+		idHoraire=id;
+		
+		RequestContext.getCurrentInstance().update("sup");
+		context.execute("PF('dlgsuppRendez').show();");
 	}
 
 	public void validation() {

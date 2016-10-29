@@ -182,7 +182,7 @@ public class ConsultationDetail implements Serializable {
 	}
 
 	public Date getDateConsultation() {
-		
+
 		return dateConsultation;
 	}
 

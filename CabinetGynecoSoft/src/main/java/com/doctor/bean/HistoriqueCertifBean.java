@@ -137,9 +137,11 @@ private String titreDiag;
 		HttpSession session = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext()
 				.getSession(false);
-		session.setAttribute("idu", idPatient);
+		idPatient=(Integer) session.getAttribute("idu");
 		cfclient=new CfclientService().RechercheCfclientSansjointure(idPatient);
-	nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
+		nomProprietaire="";
+		if(cfclient!=null)
+			nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();
 	}
 	
 	public void setHistoriqueCertifs(List<HistoriqueCertif> historiqueCertifs) {
@@ -753,7 +755,7 @@ private String titreDiag;
 		CabinetService serCabinet = new CabinetService();
 		cab = serCabinet.rechercheTousCabinet().get(0);
 		if (livreele != null) {
-			rem = remplaceMot(rem, "$livreele", livreele);// remplaser $livree
+			rem = remplaceMot(rem, "$livreele", livreele);// remplacer $livree
 
 		} else
 			rem = remplaceMot(rem, "$livreele", "");
@@ -939,6 +941,7 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			addValid = true;
 			cert.setDateCertif(sdf.parse(dateCertif));
 			cert.setA(a);
@@ -1084,6 +1087,7 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			cert.setDureederepos(dureederepos);
 			cert.setType(type1);
 
@@ -1189,6 +1193,9 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+		
+			
+			cert.setProsseseur(proprietaire);
 			addValid = true;
 
 			Certificat c = new CertificatService()
@@ -1291,6 +1298,7 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			cert.setCfclient(cfclient);
 
 			Certificat c = new CertificatService()
@@ -1443,6 +1451,7 @@ private String titreDiag;
 		}
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			cert.setDureederepos(dureederepos);
 			cert.setType(type1);
 			cert.setAccompagnant(accompagnant);
@@ -1585,6 +1594,7 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			Certificat c = new CertificatService()
 					.rechercheCertifParMotif(motifCertificat);
 			cert.setCertificat(c);
@@ -1717,6 +1727,7 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 
 			addValid = true;
 			cert.setHeuresys(heuresys);
@@ -1822,6 +1833,7 @@ private String titreDiag;
 		}
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			cert.setRemarques(remarques);
 			Certificat c = new CertificatService()
 					.rechercheCertifParMotif(motifCertificat);
@@ -1921,6 +1933,7 @@ private String titreDiag;
 
 		if (face.getMessageList().size() == 0) {
 			cert.setNomProprietaire(nomProprietaire);
+			cert.setProsseseur(proprietaire);
 			cert.setInapte(inapte);
 			Certificat c = new CertificatService()
 					.rechercheCertifParMotif(motifCertificat);
@@ -2477,7 +2490,7 @@ private String titreDiag;
 		this.nomProprietaire = nomProprietaire;
 	}
 	
-	
+
 	public void changeProp()
 	{
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -2486,15 +2499,32 @@ private String titreDiag;
 
 		CfclientService se = new CfclientService();
 		cfclient = se.RechercheCfclient(idPatient);
-		if(proprietaire!=null)
+		if(cfclient!=null)
+		{if(proprietaire!=null)
 		{if(proprietaire.equals("Patiente"))
-		{nomProprietaire="Mme"+cfclient.getPrenom()+" "+cfclient.getNom();}
+		
+		{
+			nomProprietaire="Mm "+cfclient.getPrenom()+" "+cfclient.getNom();
+		
+		}
+		
+
+
 		else
-		{nomProprietaire="M"+cfclient.getPrenomC()+" "+cfclient.getNomC();}
+		
+		{if((cfclient.getNomC()==null)&&(cfclient.getPrenomC()==null))
+		{	nomProprietaire="M ";}
+		else if((cfclient.getNomC()==null)&&(cfclient.getPrenomC()!=null))
+		{	nomProprietaire="M "+cfclient.getPrenomC();}
+		else if((cfclient.getNomC()!=null)&&(cfclient.getPrenomC()==null))
+		{	nomProprietaire="M "+cfclient.getNomC();}
+		
+		else
+		{
+			nomProprietaire="M "+cfclient.getPrenomC()+" "+cfclient.getNomC();
+		}
+}
 		}
 	}
-	
-
-	
-
+	}
 }

@@ -95,7 +95,7 @@ Gestion Des Horaire</ui:define>
 											rows="10">
 											<p:column style="width:10%">
 												<f:facet name="header">
-													<h:outputLabel value="Code"
+													<h:outputLabel value="Num"
 														style="font-size:small;font-weight:bold" />
 												</f:facet>
 												<h:outputText value="#{horaire.idHoraire}" escape="false"
@@ -124,25 +124,18 @@ Gestion Des Horaire</ui:define>
 													update=":f1:f2:dialog"
 													rendered="#{connectionBean.modifierHeurTrav}" />
 												<p:commandButton title="Suppression " icon="ui-icon-trash"
-													actionListener="#{horaireBean.Supprimer(horaire.idHoraire)}"
-													rendered="#{connectionBean.supprimHeurTrav}" update=":f1">
-													<p:confirm header="Suppression Docteur"
-														icon="ui-icon-alert"
-														message="Voulez-vous vraiment supprimer cet horaire ?" />
+													actionListener="#{horaireBean.ouvrirSupp(horaire.idHoraire)}" 
+													rendered="#{connectionBean.supprimHeurTrav}" update=":f3:sup">
+													
 												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</div>
-									<p:confirmDialog global="true" showEffect="clip"
-										hideEffect="puff">
-										<p:commandButton value="Oui" type="button"
-											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-										<p:commandButton value="Non" type="button"
-											styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-									</p:confirmDialog>
+									
 								</p:panel></td>
 						</tr>
 					</table>
+					
 
 					<h:form id="f2">
 						<p:dialog widgetVar="ajoutModif" modal="true" closable="false"
@@ -164,18 +157,77 @@ Gestion Des Horaire</ui:define>
 								</h:panelGrid>
 								<p:separator />
 								<p:commandButton value="Valider" icon="ui-icon-check"
-									actionListener="#{horaireBean.validation()}" update=":f1" />
+									actionListener="#{horaireBean.validation()}" update=":f1:growl" oncomplete="handleLoginRequestdlgajoutModif(xhr, status, args)" />
 								<p:commandButton value="Annuler"
 									icon="ui-icon-closethick"
 									actionListener="#{horaireBean.init()}" update=":f1" />
 							</p:panel>
 						</p:dialog>
+						<script type="text/javascript">
+					function handleLoginRequestdlgajoutModif(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('ajoutModif').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							
+							PF('ajoutModif').hide();
+							
+						
+							
+							
+							
+							$('#loginLink').fadeOut();
+						}
+					
+					}
+				</script>
+						
+						
 					</h:form>
 				</p:panel>
 			</div>
 
 		</h:form>
 		<h:form id="f3">
+		<p:dialog id="sup" widgetVar="dlgsuppRendez" resizable="false"
+				header="Suppression" closable="false" model="true" modal="true" >
+				<p:outputPanel>
+					<p:panel>
+						<h:panelGrid columns="2">
+							<p:graphicImage value="/images/warning.png"></p:graphicImage>
+							<p:outputLabel
+								value="Voulez-vous vraiment supprimer cet horaire ?" />
+						</h:panelGrid>
+						<hr></hr>
+						<div align="center">
+							<h:panelGrid columns="2">
+								<p:commandButton value="Oui"
+									actionListener="#{horaireBean.Supprimer()}"
+									update=":f1,:f1:growl"
+									oncomplete="handleLoginRequestdlgsuppRendez(xhr, status, args)"></p:commandButton>
+								<p:commandButton value="Non" oncomplete="PF('dlgsuppRendez').hide();"
+									update=":f1" ></p:commandButton>
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</p:dialog>
+			<script type="text/javascript">
+					function handleLoginRequestdlgsuppRendez(xhr, status, args) {
+						if (args.validationFailed || !args.addValid) {
+							PF('dlgsuppRendez').jq.effect("shake", {
+								times : 5
+							}, 100);
+						} else {
+							
+							PF('dlgsuppRendez').hide();
+							$('#loginLink').fadeOut();
+						}
+					
+					}
+				</script>
+		
 			<p:dialog widgetVar="dialogSaison" modal="true" showHeader="false"
 				closable="false" resizable="false">
 				<p:panel>
