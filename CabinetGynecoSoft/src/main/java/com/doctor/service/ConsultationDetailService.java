@@ -293,6 +293,28 @@ public class ConsultationDetailService {
 		return (liste);
 	}
 	
+	public List<ConsultationDetail> rechercheConsultationDeuxDate(Date d1,Date d2) {
+		List<ConsultationDetail> liste = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+
+			tx = session.beginTransaction();
+
+			liste = dao.findByTwoDate(d1, d2);
+			tx.commit();
+
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return (liste);
+	}
+	
+	
+	
 	public List<ConsultationDetail> rechercheConsultationByIdCons(Integer idcons, Date d) {
 		List<ConsultationDetail> liste = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -312,6 +334,28 @@ public class ConsultationDetailService {
 		}
 		return (liste);
 	}
+	
+	public List<ConsultationDetail> rechercheConsultationByIdConsEntreDeuxDate(Integer idcons, Date d1,Date d2) {
+		List<ConsultationDetail> liste = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+
+			tx = session.beginTransaction();
+
+			liste = dao.findByIdConsBetweenDate(idcons,d1,d2);
+			tx.commit();
+
+		} catch (RuntimeException ex) {
+
+			if (tx != null)
+				tx.rollback();
+			ex.printStackTrace();
+		}
+		return (liste);
+	}
+	
+	
 	
 	public List<ConsultationDetail> rechercheConsultationByIdCons(Integer idcons) {
 		List<ConsultationDetail> liste = null;

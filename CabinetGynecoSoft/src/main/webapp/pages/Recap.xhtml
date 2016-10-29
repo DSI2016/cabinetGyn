@@ -12,7 +12,7 @@
 		<p:graphicImage value="/imagesTitre/recap.png" width="100%"></p:graphicImage>
 
 		<h:form id="f1">
-			<p:growl id="growl" showDetail="true" life="2000" />
+			<p:growl id="growl" showDetail="true" life="3000" />
 
 
 			<table width="100%">
@@ -40,19 +40,41 @@
 						</h:panelGrid></td>
 				</tr>
 			</table>
-
+            <div align="center">
 			<table border="0" width="100%">
 				<tr>
 					<td align="left"><h:outputText
 							value="Total Consultations: #{recapBean.totalCons}"
 							style="font-size:24px;font-weight:bold" /></td>
+							<td align="center">
+					<h:panelGrid columns="5" cellspacing="5">	
+					<h:outputText value="Date du :"
+						style="font-weight:bold" />
+						<p:inputMask mask="99/99/9999" id="idate1"
+						  value="#{recapBean.dateRecapDeb}"
+						  style="width:130px;font-weight:bold"
+						   ></p:inputMask>
+						 <h:outputText value="   au :  "
+						style="font-weight:bold" />
+						<p:inputMask mask="99/99/9999" id="idate2"
+						  value="#{recapBean.dateRecapFin}"
+						  style="width:130px;font-weight:bold"
+						  ></p:inputMask> 
+						  <p:commandButton icon="ui-icon-search" title="Recherche "
+								actionListener="#{recapBean.recchercher()}"
+								update=":f1:growl" />
+						</h:panelGrid>		
+					</td>
 					<td align="right"><h:outputText
 							value="Total honnoraire: #{recapBean.totalHon} DT"
 							style="font-size:24px;font-weight:bold" /></td>
+							
+							
+							
 				</tr>
 			</table>
-
-			<p:accordionPanel multiple="true"  >
+             </div>
+			<p:accordionPanel multiple="true" id="accId" >
 				<p:tab rendered="#{recapBean.consultations.get(0).active}"
 					title="#{recapBean.consultations.get(0).nomConsultation} (#{recapBean.calculerTotalCons(recapBean.consultations.get(0).idconsultation)})">
 

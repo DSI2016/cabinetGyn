@@ -180,7 +180,7 @@ public class ConsultationDetailHome {
 	@SuppressWarnings("unchecked")
 	public List<ConsultationDetail> findAll(Integer idPatient,
 			String nomConsultation, Uterus uterus) {
-		System.out.println("home uterus "+uterus);
+		
 		Criteria crit = sessionFactory.getCurrentSession()
 				.createCriteria(ConsultationDetail.class, "CD")
 				.addOrder(Property.forName("CD.idConsultationDetail").desc());
@@ -189,7 +189,7 @@ public class ConsultationDetailHome {
 		        
 		if (nomConsultation.equals("E. Gyneco"))
 			if (uterus != null) {
-				//System.out.println("ut   "+uterus);
+				
 				crit.createAlias("CD.consultation", "cons");
 				crit.createAlias("CD.cfclient", "cf");
 				crit.createAlias("CD.uterus", "ut");
@@ -197,7 +197,7 @@ public class ConsultationDetailHome {
 		if (uterus == null) {
 			crit.createAlias("CD.consultation", "cons");
 			crit.createAlias("CD.cfclient", "cf");
-			//System.out.println("ut   "+uterus);
+			
 			
 		}
 
@@ -254,6 +254,21 @@ public class ConsultationDetailHome {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<ConsultationDetail> findByTwoDate(Date d1, Date d2) {
+
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(ConsultationDetail.class, "CD")
+				.createAlias("CD.consultation", "cons")
+				.createAlias("CD.cfclient", "cf")
+				 .add(Restrictions.ge("CD.dateConsultation", d1))
+                .add(Restrictions.lt("CD.dateConsultation", d2));
+				
+	
+
+		return (List<ConsultationDetail>) crit.list();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<ConsultationDetail> findByIdCons(Integer idcons, Date d) {
 
 		Criteria crit = sessionFactory.getCurrentSession()
@@ -266,6 +281,21 @@ public class ConsultationDetailHome {
 				
 	
 
+		return (List<ConsultationDetail>) crit.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ConsultationDetail> findByIdConsBetweenDate(Integer idcons, Date d1,Date d2) {
+
+		Criteria crit = sessionFactory.getCurrentSession()
+				.createCriteria(ConsultationDetail.class, "CD")
+				.createAlias("CD.consultation", "cons")
+				.add(Restrictions.eq("cons.idconsultation",idcons))
+				.createAlias("CD.cfclient", "cf")
+			    .add(Restrictions.ge("CD.dateConsultation", d1))
+                .add(Restrictions.lt("CD.dateConsultation", d2))
+				.addOrder(Property.forName("CD.dateConsultation").desc());
+				
 		return (List<ConsultationDetail>) crit.list();
 	}
 	

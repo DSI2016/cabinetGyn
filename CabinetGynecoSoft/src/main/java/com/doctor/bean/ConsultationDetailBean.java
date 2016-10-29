@@ -2236,8 +2236,10 @@ public class ConsultationDetailBean implements Serializable {
 				ConsultaionService serf = new ConsultaionService();
 				Consultation consf = serf
 						.rechercheParConsultation(consultationmotif);
+				if(honorairestring == null){
 				honoraire = consf.getHonoraire();
 				honorairestring = Double.toString(honoraire);
+				}
 				cd.setTas(tas);
 				cd.setDdgCorigee(ddgCorigee);
 				cd.setCfclient(clt);
